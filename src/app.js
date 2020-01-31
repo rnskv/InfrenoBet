@@ -1,7 +1,7 @@
 import 'dotenv/config';
-import config from './config.js';
 import Koa from 'koa';
-import { useMiddlewares } from "./middlewares";
+import config from './config.js';
+import { useMiddlewares } from './middlewares';
 import { connectMongo } from './modules/mongo';
 import controllers from './controllers';
 

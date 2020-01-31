@@ -36,14 +36,14 @@ router.post('/login', async (ctx) => {
         const payload = {
             id: user.id,
             name: user.name,
-            email: user.email
+            email: user.email,
         };
 
         const token = jwt.sign(payload, config.jwtSecret, { expiresIn: 1000 * 60 * 60 * 24 });
 
-        ctx.body = { token: `Bearer: ${token}`}
+        ctx.body = { token: `Bearer: ${token}` };
     } else {
-        ctx.throw(400, 'Password incorrect')
+        ctx.throw(400, 'Password incorrect');
     }
 });
 

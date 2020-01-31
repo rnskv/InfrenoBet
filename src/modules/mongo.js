@@ -6,10 +6,10 @@ export const connectMongo = () => {
 
     const options = {
         useNewUrlParser: true,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
     };
 
     mongoose.connect(config.mongoUri, options)
         .then(() => console.log('MongoDB has been connected'))
-        .catch((err) => console.log('Error on MongoDB', err))
+        .catch((err) => console.log('Error on MongoDB', err));
 };

@@ -4,7 +4,7 @@ import User from 'src/models/User';
 
 const options = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: config.jwtSecret
+    secretOrKey: config.jwtSecret,
 };
 
 export const useAuthentificator = (passport) => {
@@ -12,11 +12,11 @@ export const useAuthentificator = (passport) => {
         const user = await User.findById(payload.id);
 
         if (user) {
-            done(null, user)
+            done(null, user);
         } else {
-            done(null, false)
+            done(null, false);
         }
     });
 
-    passport.use(JwtStrategy)
+    passport.use(JwtStrategy);
 };

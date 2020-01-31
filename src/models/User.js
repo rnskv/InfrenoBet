@@ -1,12 +1,12 @@
 import mongoose from 'mongoose';
 import privatePaths from 'mongoose-private-paths';
 
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
 
 const userSchema = new Schema({
     name: {
         type: String,
-        required: true
+        required: true,
     },
     email: {
         type: String,
@@ -15,12 +15,12 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: true,
-        private: true
+        private: true,
     },
     createDate: {
         type: Date,
-        default: Date.now()
-    }
+        default: Date.now(),
+    },
 });
 
 userSchema.plugin(privatePaths);
