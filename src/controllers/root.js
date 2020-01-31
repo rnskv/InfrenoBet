@@ -1,14 +1,6 @@
 import Router from 'koa-router';
 import passport from 'koa-passport';
 
-const router = new Router().prefix('/root');
+import RootController from './root/index.js';
 
-router.post(
-    '/',
-    passport.authenticate('jwt', { session: false }),
-    async (ctx) => {
-        ctx.status = 200;
-    },
-);
-
-export default router.routes();
+export default RootController.routes;
