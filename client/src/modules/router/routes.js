@@ -1,7 +1,6 @@
-import Home from 'src/containers/Home.jsx';
-
-export default {
-  '/': { component: Home, exact: true },
-  '/test1': { component: Home },
-  '/test2': { component: Home },
-};
+export default [
+    { name: 'inbox', path: '/inbox' },
+    { name: 'inbox.message', path: '/message/:id' },
+    { name: 'compose', path: '/compose' },
+    { name: 'contacts', path: '/contacts' }
+]

@@ -1,6 +1,13 @@
-import router from './router';
-import routes from './routes';
+import createRouter from 'router5'
+import browserPlugin from 'router5-plugin-browser'
+import routes from './routes'
 
-export { routes, router };
-
-export default router;
+export default function configureRouter() {
+    return createRouter(routes, {
+        defaultRoute: 'inbox'
+    }).usePlugin(
+        browserPlugin({
+            useHash: true
+        })
+    )
+}

@@ -1,8 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from 'src/containers/App.jsx'
 
-import './styles/default.css'
-import MainStore from 'src/stores/Main'
+import App from './core/App';
 
-ReactDOM.render(<App store={MainStore} />, document.getElementById('root'))
+ReactDOM.render(<App />, document.getElementById('root'));
