@@ -1,5 +1,5 @@
 import Action from 'src/core/Action';
-import passport from "koa-passport";
+import passport from 'koa-passport';
 
 const getHandler = async (ctx) => {
     ctx.status = 200;

@@ -1,13 +1,10 @@
-import Router from 'koa-router';
+import Action from 'src/core/Action';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import User from '../../models/User';
+import config from '../../config';
 
-import User from 'src/models/User';
-import config from 'src/config';
-
-const router = new Router().prefix('/auth');
-
-router.post('/register', async (ctx) => {
+const registerHandler = async (ctx) => {
     const { name, email, password } = ctx.request.body;
     const user = await User.findOne({ email });
 
@@ -20,9 +17,9 @@ router.post('/register', async (ctx) => {
 
     await new User({ email, name, password: hash }).save();
     ctx.status = 200;
-});
+};
 
-router.post('/login', async (ctx) => {
+const loginHandler = async (ctx) => {
     const { email, password } = ctx.request.body;
     const user = await User.findOne({ email });
 
@@ -45,6 +42,17 @@ router.post('/login', async (ctx) => {
     } else {
         ctx.throw(400, 'Password incorrect');
     }
+};
+
+
+export const login = new Action({
+    method: 'post',
+    url: '/login',
+    handler: loginHandler,
 });
 
-export default router.routes();
+export const post = new Action({
+    method: 'post',
+    url: '/register',
+    handler: registerHandler,
+});
