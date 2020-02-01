@@ -1,11 +1,25 @@
 import Action from 'src/core/Action';
+import passport from "koa-passport";
+
+const getHandler = async (ctx) => {
+    ctx.status = 200;
+    ctx.body = 'Hello from action get';
+};
+
+const postHandler = async (ctx) => {
+    ctx.status = 200;
+    ctx.body = 'Hello from action post';
+};
 
 export const root = new Action({
     method: 'get',
     url: '/',
-    callback: async (ctx) => {
-        console.log('callback');
-        ctx.status = 200;
-        ctx.body = 'Hello from action';
-    },
+    middleware: passport.authenticate('jwt'),
+    handler: getHandler,
+});
+
+export const post = new Action({
+    method: 'post',
+    url: '/',
+    handler: postHandler,
 });
