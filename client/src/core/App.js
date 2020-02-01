@@ -9,6 +9,7 @@ import {
     useParams
 } from "react-router-dom";
 
+import './cssVariables.css';
 import './globalStyles.css';
 
 import Login from "ui/pages/Login";
