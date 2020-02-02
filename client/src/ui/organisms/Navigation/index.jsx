@@ -60,6 +60,7 @@ const NavigationContainer = styled.div`
     background: var(--color-grey-500);
     box-sizing: border-box;
     transition: .3s;
+    box-shadow: 0px 0px 6px 3px var(--color-shadow);
 `;
 
 const NavigationList = styled.ul`
