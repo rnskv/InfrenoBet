@@ -12,6 +12,7 @@ export const logIn = ({ email, password }) => async (dispatch) => {
     });
 
     if (response.token) {
+        window.localStorage.setItem('token', response.token);
         dispatch(actions.logIn({ token: response.token }));
     } else {
         dispatch(actions.error({ error: response.error }));

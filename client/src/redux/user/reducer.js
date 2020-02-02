@@ -2,7 +2,7 @@ import * as actionTypes from './actionsTypes';
 
 const initialState = {
     name: 'Roma',
-    token: '',
+    token: window.localStorage.getItem('token') || '',
     isLoading: false,
     error: '',
 };
