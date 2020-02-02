@@ -16,6 +16,7 @@ import './cssVariables.css';
 import './globalStyles.css';
 
 import Login from 'ui/pages/Login';
+import Main from 'ui/pages/Main';
 
 function App() {
     return (
@@ -26,7 +27,7 @@ function App() {
                         <Login />
                     </Route>
                     <Route path="/" exact>
-                        <div>Hello</div>
+                        <Main />
                     </Route>
                     <Route>
                         <div>404</div>
