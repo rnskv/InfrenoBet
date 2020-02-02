@@ -8,6 +8,7 @@ module.exports = {
         filename: 'index_bundle.js',
     },
     resolve: {
+        extensions: ['.js', '.jsx'],
         alias: {
             src: path.resolve(__dirname, 'src'),
             ui: path.resolve(__dirname, 'src/ui'),
