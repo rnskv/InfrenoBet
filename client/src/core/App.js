@@ -1,4 +1,9 @@
 import React from 'react';
+import { Provider } from "react-redux";
+
+import { connect } from 'react-redux';
+
+import { store } from "src/redux";
 
 import {
     BrowserRouter as Router,
@@ -16,7 +21,7 @@ import Login from "ui/pages/Login";
 
 function App({...props}) {
     return (
-        <React.Fragment>
+        <Provider store={store}>
             <Router>
                 <Switch>
                     <Route path={'/login'}>
@@ -30,7 +35,7 @@ function App({...props}) {
                     </Route>
                 </Switch>
             </Router>
-        </React.Fragment>
+        </Provider>
     )
 }
 
