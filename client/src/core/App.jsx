@@ -2,7 +2,7 @@ import 'babel-polyfill';
 import React from 'react';
 import history from 'src/modules/router/history';
 
-import { Provider, connect } from 'react-redux';
+import { Provider } from 'react-redux';
 
 import { store } from 'src/redux';
 
@@ -10,9 +10,6 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Link,
-    useRouteMatch,
-    useParams,
 } from 'react-router-dom';
 
 import './cssVariables.css';
@@ -20,7 +17,7 @@ import './globalStyles.css';
 
 import Login from 'ui/pages/Login';
 
-function App({ ...props }) {
+function App() {
     return (
         <Provider store={store}>
             <Router history={history}>
