@@ -22,7 +22,7 @@ export default class Api {
 
     execute(requestName, {
         headers,
-        body
+        body,
     }) {
         return this.requests[requestName]
             .execute({

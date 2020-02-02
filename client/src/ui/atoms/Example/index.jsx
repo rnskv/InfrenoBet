@@ -11,7 +11,7 @@ function Example({ children }) {
         <StyledDiv>
             { children }
         </StyledDiv>
-    )
+    );
 }
 
 Example.propTypes = {

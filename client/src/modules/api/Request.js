@@ -29,11 +29,11 @@ export default class Request {
             window.fetch(url, resultOptions)
                 .then((response) => {
                     response.json().then((result) => {
-                        resolve(result)
+                        resolve(result);
                     });
                 }, (err) => {
                     alert(err);
-                    reject(err)
+                    reject(err);
                 });
         });
     }

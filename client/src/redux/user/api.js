@@ -10,6 +10,6 @@ export const authApi = new Api({
 authApi.addRequests({
     logIn: new Request({
         url: '/login',
-        method: 'post'
+        method: 'post',
     }),
 });

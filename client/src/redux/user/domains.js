@@ -5,14 +5,14 @@ export const logIn = ({ email, password }) => async (dispatch) => {
     const response = await authApi.execute('logIn', {
         body: {
             email,
-            password
+            password,
         },
     });
 
     if (response.token) {
-        dispatch(actions.logIn({ token: response.token }))
+        dispatch(actions.logIn({ token: response.token }));
     } else {
-        alert(response.error)
+        alert(response.error);
     }
 };
 

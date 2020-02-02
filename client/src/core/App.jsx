@@ -1,10 +1,9 @@
 import 'babel-polyfill';
 import React from 'react';
-import { Provider } from "react-redux";
+import { Provider, connect } from 'react-redux';
 
-import { connect } from 'react-redux';
 
-import { store } from "src/redux";
+import { store } from 'src/redux';
 
 import {
     BrowserRouter as Router,
@@ -12,20 +11,20 @@ import {
     Route,
     Link,
     useRouteMatch,
-    useParams
-} from "react-router-dom";
+    useParams,
+} from 'react-router-dom';
 
 import './cssVariables.css';
 import './globalStyles.css';
 
-import Login from "ui/pages/Login";
+import Login from 'ui/pages/Login';
 
-function App({...props}) {
+function App({ ...props }) {
     return (
         <Provider store={store}>
             <Router>
                 <Switch>
-                    <Route path={'/login'}>
+                    <Route path="/login">
                         <Login />
                     </Route>
                     <Route path="/" exact>
@@ -37,7 +36,7 @@ function App({...props}) {
                 </Switch>
             </Router>
         </Provider>
-    )
+    );
 }
 
 export default App;
