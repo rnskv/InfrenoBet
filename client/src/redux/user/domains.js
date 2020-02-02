@@ -2,6 +2,8 @@ import * as actions from './actions';
 import { authApi } from './api';
 
 export const logIn = ({ email, password }) => async (dispatch) => {
+    dispatch(actions.loading());
+
     const response = await authApi.execute('logIn', {
         body: {
             email,
@@ -12,7 +14,7 @@ export const logIn = ({ email, password }) => async (dispatch) => {
     if (response.token) {
         dispatch(actions.logIn({ token: response.token }));
     } else {
-        alert(response.error);
+        dispatch(actions.error({ error: response.error }));
     }
 };
 

@@ -14,3 +14,12 @@ export const register = (payload) => ({
     type: actionTypes.REGISTER_USER,
     payload,
 });
+
+export const error = (payload) => ({
+    type: actionTypes.ERROR_USER,
+    payload,
+});
+
+export const loading = () => ({
+    type: actionTypes.LOADING_USER
+});

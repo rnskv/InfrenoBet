@@ -1,7 +1,8 @@
 import 'babel-polyfill';
 import React from 'react';
-import { Provider, connect } from 'react-redux';
+import history from 'src/modules/router/history';
 
+import { Provider, connect } from 'react-redux';
 
 import { store } from 'src/redux';
 
@@ -22,7 +23,7 @@ import Login from 'ui/pages/Login';
 function App({ ...props }) {
     return (
         <Provider store={store}>
-            <Router>
+            <Router history={history}>
                 <Switch>
                     <Route path="/login">
                         <Login />
