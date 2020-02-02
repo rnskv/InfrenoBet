@@ -14,10 +14,3 @@ export const register = (payload) => ({
     type: actionTypes.REGISTER_USER,
     payload,
 });
-
-export const test = () => (dispatch) => {
-    dispatch(logIn());
-
-    setTimeout(dispatch, 1000, logOut());
-    setTimeout(dispatch, 2000, register());
-};

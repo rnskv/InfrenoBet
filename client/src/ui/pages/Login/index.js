@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import LoginForm from 'ui/organisms/LoginForm';
 import DefaultTemplate from 'ui/templates/Default';
 
-import * as userActions from 'src/redux/user/actions';
+import * as userDomains from 'src/redux/user/domains';
 
 function Login({ token, test }) {
     return (
@@ -20,7 +20,7 @@ function Login({ token, test }) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        test: () => dispatch(userActions.test()),
+        test: () => dispatch(userDomains.test()),
     };
 }
 
