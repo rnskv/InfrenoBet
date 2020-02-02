@@ -20,11 +20,15 @@ export default class Api {
         this.requests = requests;
     }
 
-    execute(requestName, params) {
-        this.requests[requestName]
+    execute(requestName, {
+        headers,
+        body
+    }) {
+        return this.requests[requestName]
             .execute({
-                ...params,
-                headers: { ...this.headers, ...params.headers },
+                apiUrl: this.url,
+                headers: { ...this.headers, ...headers },
+                body: { ...this.body, ...body },
             });
     }
 }

@@ -12,14 +12,29 @@ export default class Request {
     }
 
     execute({
+        apiUrl,
         body = {},
         headers = {},
     }) {
-        const resultParams = {
-            body: { ...body, ...this.body },
-            headers: { ...headers, ...this.headers },
-        };
+        return new Promise((resolve, reject) => {
+            const url = `${apiUrl}${this.url}`;
 
-        console.log('execute', resultParams);
+            const resultOptions = {
+                method: this.method,
+                body: JSON.stringify({ ...body, ...this.body }),
+                headers: { ...headers, ...this.headers },
+            };
+
+
+            window.fetch(url, resultOptions)
+                .then((response) => {
+                    response.json().then((result) => {
+                        resolve(result)
+                    });
+                }, (err) => {
+                    alert(err);
+                    reject(err)
+                });
+        });
     }
 }

@@ -1,13 +1,11 @@
 import * as actions from './actions';
 import { authApi } from './api';
 
-export const test = () => (dispatch) => {
+export const test = () => async (dispatch) => {
 
-    authApi.execute('logIn', {
-        headers: {
-            // token: '555'
-        }
-    });
+    const response = await authApi.execute('logIn', {});
+
+    console.log(response);
 
     dispatch(actions.logIn());
 

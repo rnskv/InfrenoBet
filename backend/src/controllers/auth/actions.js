@@ -23,7 +23,10 @@ const loginHandler = async (ctx) => {
     const { email, password } = ctx.request.body;
     const user = await User.findOne({ email });
 
+    console.log('Execute login handler', ctx.request.body);
+
     if (!user) {
+        ctx.status = 400;
         ctx.throw(400, 'User is not found');
     }
 
