@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import React from 'react';
 import styled from 'styled-components';
 import Title from 'ui/atoms/Title';
@@ -23,5 +25,10 @@ function AuthenticationForm({ children, title, ...props }) {
         </StyledForm>
     );
 }
+
+AuthenticationForm.propTypes = {
+    children: PropTypes.node.isRequired,
+    title: PropTypes.string.isRequired,
+};
 
 export default AuthenticationForm;

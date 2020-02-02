@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import React, { useRef } from 'react';
 import styled from 'styled-components';
 
@@ -11,7 +13,7 @@ const Container = styled.div`
     justify-content: center;
 `;
 
-const LoginForm = styled(AuthenticationForm)`
+const StyledForm = styled(AuthenticationForm)`
     ${Input} {
         width: 100%;
         box-sizing: border-box;
@@ -32,7 +34,7 @@ const Name = styled.span`
     display: block;
 `;
 
-function Login({ logIn }) {
+function LoginForm({ logIn }) {
     const emailInput = useRef(null);
     const passwordInput = useRef(null);
 
@@ -50,7 +52,7 @@ function Login({ logIn }) {
 
     return (
         <Container>
-            <LoginForm onSubmit={onSubmit} title="Sign In">
+            <StyledForm onSubmit={onSubmit} title="Sign In">
                 <Label>
                     <Name>Email:</Name>
                     <Input ref={emailInput} type="email" name="email" />
@@ -61,9 +63,13 @@ function Login({ logIn }) {
                     <Input ref={passwordInput} type="password" name="password" />
                 </Label>
                 <Button>SIGN IN</Button>
-            </LoginForm>
+            </StyledForm>
         </Container>
     );
 }
 
-export default Login;
+LoginForm.propTypes = {
+    logIn: PropTypes.func.isRequired,
+};
+
+export default LoginForm;

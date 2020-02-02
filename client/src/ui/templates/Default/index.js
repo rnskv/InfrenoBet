@@ -1,7 +1,7 @@
-import React from 'react';
-import styled from 'styled-components'
+import PropTypes from 'prop-types';
 
-import LoginForm from "ui/organisms/LoginForm";
+import React from 'react';
+import styled from 'styled-components';
 
 const Header = styled.header`
     width: 100%;
@@ -19,13 +19,18 @@ const Content = styled.header`
 `;
 
 
-function Default({children, ...props}) {
+function Default({ children, ...props }) {
     return (
-        <div>
+        <div {...props}>
             <Header>Шапка</Header>
             { children }
         </div>
-    )
+    );
 }
+
+
+Default.propTypes = {
+    children: PropTypes.node.isRequired,
+};
 
 export default Default;
