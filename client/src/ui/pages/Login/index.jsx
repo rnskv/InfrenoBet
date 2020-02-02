@@ -11,8 +11,7 @@ import * as userDomains from 'src/redux/user/domains';
 function Login({ token, logIn }) {
     return (
         <DefaultTemplate>
-            { token || 'test'}
-            <button> Try </button>
+            { token || 'You are not auth'}
             <LoginForm logIn={logIn} />
         </DefaultTemplate>
     );
