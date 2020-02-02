@@ -38,10 +38,13 @@ function Login({ logIn }) {
 
     function onSubmit(e) {
         e.preventDefault();
-        console.log(emailInput.current.value, passwordInput.current.value)
+
+        const email = emailInput.current.value;
+        const password = passwordInput.current.value;
+
         logIn({
-            email: emailInput.current.value,
-            password: passwordInput.current.value
+            email,
+            password,
         });
     }
 
