@@ -8,19 +8,19 @@ import DefaultTemplate from 'ui/templates/Default';
 
 import * as userDomains from 'src/redux/user/domains';
 
-function Login({ token, test }) {
+function Login({ token, logIn }) {
     return (
         <DefaultTemplate>
             { token || 'test'}
-            <button onClick={test}> Try </button>
-            <LoginForm />
+            <button> Try </button>
+            <LoginForm logIn={logIn} />
         </DefaultTemplate>
     );
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        test: () => dispatch(userDomains.test()),
+        logIn: ({ email, password }) => dispatch(userDomains.logIn({ email, password })),
     };
 }
 

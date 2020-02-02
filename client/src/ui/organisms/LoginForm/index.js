@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 
 import Button from 'ui/atoms/Button';
@@ -32,23 +32,30 @@ const Name = styled.span`
     display: block;
 `;
 
-function onSubmit(e) {
-    e.preventDefault();
-    alert('Log In');
-}
+function Login({ logIn }) {
+    const emailInput = useRef(null);
+    const passwordInput = useRef(null);
 
-function Login({ ...props }) {
+    function onSubmit(e) {
+        e.preventDefault();
+        console.log(emailInput.current.value, passwordInput.current.value)
+        logIn({
+            email: emailInput.current.value,
+            password: passwordInput.current.value
+        });
+    }
+
     return (
         <Container>
-            <LoginForm onSubmit={onSubmit} title={'Sign In'} >
+            <LoginForm onSubmit={onSubmit} title="Sign In">
                 <Label>
                     <Name>Email:</Name>
-                    <Input type="email" name="email" />
+                    <Input ref={emailInput} type="email" name="email" />
                 </Label>
 
                 <Label>
                     <Name>Password:</Name>
-                    <Input type="password" name="password" />
+                    <Input ref={passwordInput} type="password" name="password" />
                 </Label>
                 <Button>SIGN IN</Button>
             </LoginForm>

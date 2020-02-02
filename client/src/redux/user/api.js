@@ -10,10 +10,6 @@ export const authApi = new Api({
 authApi.addRequests({
     logIn: new Request({
         url: '/login',
-        method: 'post',
-        body: {
-            email: 'web.rnskv@gmail.com',
-            password: 'qwerty'
-        },
+        method: 'post'
     }),
 });
