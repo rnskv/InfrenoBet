@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import React, { useRef } from 'react';
+import React, { useState } from 'react';
 
 import {
     Link,
@@ -37,23 +37,29 @@ const NavigationText = styled.div`
     color: var(--color-white);
     text-decoration: none;
     font-weight: 700;
+    min-width: 150px;
 `;
 
 const NavigationDescription = styled.div`
     color: var(--color-grey);
     font-size: 14px;
     text-decoration: none !important;
+    min-width: 150px;
 `;
 
 const NavigationName = styled.div`
-    margin-left: 20px;
+    margin-left: ${(props) => (props.isOpened ? '20px' : '-20')};
+    width: ${(props) => (props.isOpened ? '150px' : '0')};
+    opacity: ${(props) => (props.isOpened ? '1' : '0')};
+    overflow: hidden;
+    transition: width .4s, opacity .2s, margin-left .2s;
 `;
 
 const NavigationContainer = styled.div`
-    width: 300px;
     height: calc(100vh - 50px);
     background: var(--color-grey-500);
     box-sizing: border-box;
+    transition: .3s;
 `;
 
 const NavigationList = styled.ul`
@@ -103,25 +109,33 @@ const NavigationItem = styled.li`
     &:hover {
         ${NavigationText} {
             color: var(--color-yellow); 
+        }
+        
+        ${NavigationIcon} {
+            transition: .3s;
+            border-radius: ${props => props.isOpened ? '50%' : '10px'};
+            box-sizing: border-box;
         } 
     }
 `;
 
 function Navigation() {
+    const [isOpened, setIsOpened] = useState(true);
+    console.log('isOpened', isOpened);
     return (
-        <NavigationContainer>
+        <NavigationContainer isOpened={isOpened}>
             <NavigationList>
-                <NavigationTitle> What the fuck? </NavigationTitle>
+                <NavigationTitle onClick={() => setIsOpened(!isOpened)}> WTF? </NavigationTitle>
                 <ItemsGroupPVP>
                     <Link to="/">
-                        <NavigationItem>
+                        <NavigationItem isOpened={isOpened}>
                             <NavigationIcon src="https://sun9-12.userapi.com/c206516/v206516687/49d7a/c7wnfazUB98.jpg?ava=1" />
-                            <NavigationName>
+                            <NavigationName isOpened={isOpened} >
                                 <NavigationText>
-                                    Main
+                                    Classic
                                 </NavigationText>
                                 <NavigationDescription>
-                                    Welcome home
+                                    You lose all money
                                 </NavigationDescription>
                             </NavigationName>
                         </NavigationItem>
@@ -129,14 +143,14 @@ function Navigation() {
                 </ItemsGroupPVP>
                 <ItemsGroupSystem>
                     <Link to="/login">
-                        <NavigationItem>
+                        <NavigationItem isOpened={isOpened}>
                             <NavigationIcon src="https://sun9-37.userapi.com/c830400/v830400985/c0fdb/9CIryApwPMY.jpg?ava=1" />
-                            <NavigationName>
+                            <NavigationName isOpened={isOpened} >
                                 <NavigationText>
-                                    Login
+                                    Log In
                                 </NavigationText>
                                 <NavigationDescription>
-                                    Go to auth
+                                    If you already log up
                                 </NavigationDescription>
                             </NavigationName>
                         </NavigationItem>
@@ -145,12 +159,12 @@ function Navigation() {
                     <Link to="/register">
                         <NavigationItem>
                             <NavigationIcon src="https://sun9-18.userapi.com/c855436/v855436451/13e812/7UJN6TT9F8k.jpg?ava=1" />
-                            <NavigationName>
+                            <NavigationName isOpened={isOpened} >
                                 <NavigationText>
-                                    Register
+                                    Log Up
                                 </NavigationText>
                                 <NavigationDescription>
-                                    Go to reg mfucka
+                                    Show must go on
                                 </NavigationDescription>
                             </NavigationName>
                         </NavigationItem>
