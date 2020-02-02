@@ -3,21 +3,15 @@ import styled from 'styled-components';
 
 import Button from 'ui/atoms/Button';
 import Input from 'ui/atoms/Input';
-import Title from 'ui/atoms/Title';
+
+import AuthenticationForm from 'ui/molecules/AuthenticationForm';
 
 const Container = styled.div`
     display: flex;
     justify-content: center;
 `;
 
-const Form = styled.form`
-    width: 400px;
-    background: var(--color-darkblue);
-    
-    padding: 25px;
-    margin: 25px;
-    border-radius: 8px;
-    
+const LoginForm = styled(AuthenticationForm)`
     ${Input} {
         width: 100%;
         box-sizing: border-box;
@@ -26,10 +20,6 @@ const Form = styled.form`
     
     ${Button} {
         margin: 0 0;
-    }
-    
-    ${Title} {
-        margin: 0 0 25px;
     }
 `;
 
@@ -42,11 +32,15 @@ const Name = styled.span`
     display: block;
 `;
 
+function onSubmit(e) {
+    e.preventDefault();
+    alert('Log In');
+}
+
 function Login({ ...props }) {
     return (
         <Container>
-            <Form>
-                <Title>Sign in</Title>
+            <LoginForm onSubmit={onSubmit} title={'Sign In'} >
                 <Label>
                     <Name>Email:</Name>
                     <Input type="email" name="email" />
@@ -57,7 +51,7 @@ function Login({ ...props }) {
                     <Input type="password" name="password" />
                 </Label>
                 <Button>SIGN IN</Button>
-            </Form>
+            </LoginForm>
         </Container>
     );
 }
