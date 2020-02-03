@@ -1,3 +1,5 @@
+import { checkResponseStatus } from './ErrorsHandler';
+
 export default class Request {
     constructor({
         url = '/',
@@ -28,38 +30,12 @@ export default class Request {
                 resultOptions.body = JSON.stringify({ ...body, ...this.body });
             }
 
-            console.log(resultOptions);
             window.fetch(url, resultOptions)
                 .then((response) => {
-                    console.log(response);
-                    switch (response.status) {
-                    case 401: {
-                        alert('Unauth');
+                    if (!checkResponseStatus(response.status)) {
                         return;
                     }
-
-                    case 500: {
-                        alert('INERVAL HACK GO GO GO ERROR');
-                        return;
-                    }
-
-                    case 400: {
-                        break;
-                    }
-
-                    case 200: {
-                        console.log('Good request');
-                        break;
-                    }
-
-                    default: {
-                        alert('Unhandler error');
-                        return;
-                    }
-                    }
-
                     response.json().then((result) => {
-                        console.log('Bearer', result);
                         resolve(result);
                     });
                 }, (err) => {

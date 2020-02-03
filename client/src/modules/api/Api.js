@@ -13,6 +13,10 @@ export default class Api {
     setHeader(headerName, value) {
         this.headers[headerName] = value;
     }
+
+    setBearerFromLocalStorage() {
+        this.setHeader('Authorization', window.localStorage.getItem('token'));
+    }
     //
     // removeHeader() {
     //

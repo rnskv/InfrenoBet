@@ -13,11 +13,10 @@ import {
 
 import { rootApi } from 'src/redux/root/api';
 
-rootApi.setHeader('Authorization', window.localStorage.getItem('token'));
+rootApi.setBearerFromLocalStorage();
 
 const handler = async () => {
     const result = await rootApi.execute('test');
-
     alert(result.body)
 };
 
