@@ -82,7 +82,7 @@ function LogupForm({ logUp, error }) {
 
 LogupForm.propTypes = {
     logUp: PropTypes.func.isRequired,
-    error: PropTypes.string
+    error: PropTypes.string,
 };
 
 export default LogupForm;

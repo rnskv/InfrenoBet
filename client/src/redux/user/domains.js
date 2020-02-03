@@ -1,6 +1,6 @@
+import history from 'src/modules/router/history';
 import * as actions from './actions';
 import { authApi } from './api';
-import history from 'src/modules/router/history';
 
 export const logUp = ({ email, name, password }) => async (dispatch) => {
     dispatch(actions.loading());

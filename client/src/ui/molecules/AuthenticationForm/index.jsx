@@ -19,11 +19,13 @@ const StyledForm = styled.form`
     }
 `;
 
-function AuthenticationForm({ children, title, error,...props }) {
+function AuthenticationForm({
+    children, title, error, ...props
+}) {
     return (
         <StyledForm {...props}>
             <Title>{title}</Title>
-            <ErrorNotification error={error}/>
+            <ErrorNotification error={error} />
             { children }
         </StyledForm>
     );

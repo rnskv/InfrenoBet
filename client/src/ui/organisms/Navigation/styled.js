@@ -104,7 +104,7 @@ export const NavigationItem = styled.li`
         
         ${NavigationIcon} {
             transition: .3s;
-            border-radius: ${props => props.isOpened ? '50%' : '10px'};
+            border-radius: ${(props) => (props.isOpened ? '50%' : '10px')};
             box-sizing: border-box;
         } 
     }

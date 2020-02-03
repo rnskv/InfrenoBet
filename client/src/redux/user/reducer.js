@@ -34,7 +34,7 @@ function userReducer(state = initialState, action) {
         return {
             ...state,
             isLoading: false,
-            ...action.payload
+            ...action.payload,
         };
     }
 

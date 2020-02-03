@@ -14,11 +14,13 @@ import {
     NavigationText,
 } from './styled';
 
-function NavigationLink({ to, isOpened, text, description, iconSrc }) {
+function NavigationLink({
+    to, isOpened, text, description, iconSrc,
+}) {
     return (
         <Link to={to}>
             <NavigationItem isOpened={isOpened}>
-                <NavigationIcon src={ iconSrc } />
+                <NavigationIcon src={iconSrc} />
                 <NavigationName isOpened={isOpened}>
                     <NavigationText>
                         { text }
@@ -37,7 +39,7 @@ NavigationLink.propTypes = {
     isOpened: PropTypes.bool.isRequired,
     text: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    iconSrc: PropTypes.string.isRequired
+    iconSrc: PropTypes.string.isRequired,
 };
 
 export default NavigationLink;

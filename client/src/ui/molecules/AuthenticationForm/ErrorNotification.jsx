@@ -19,12 +19,16 @@ function ErrorNotification({ error }) {
     if (!error) return null;
 
     return (
-        <Container> {error} </Container>
+        <Container>
+            {' '}
+            {error}
+            {' '}
+        </Container>
     );
 }
 
 ErrorNotification.propTypes = {
-    error: PropTypes.string
+    error: PropTypes.string,
 };
 
 export default ErrorNotification;

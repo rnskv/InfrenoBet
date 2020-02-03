@@ -74,7 +74,7 @@ function LoginForm({ logIn, error }) {
 
 LoginForm.propTypes = {
     logIn: PropTypes.func.isRequired,
-    error: PropTypes.string.isRequired
+    error: PropTypes.string.isRequired,
 };
 
 export default LoginForm;

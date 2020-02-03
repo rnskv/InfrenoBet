@@ -23,7 +23,7 @@ function Main({ token }) {
     return (
         <DefaultTemplate>
             <div>
-            { !token ? <Link to="/login">Go to login</Link> : token}
+                { !token ? <Link to="/login">Go to login</Link> : token}
             </div>
             <Button onClick={handler}>Test action with token</Button>
         </DefaultTemplate>

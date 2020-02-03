@@ -8,7 +8,6 @@ import Link from 'ui/atoms/Link';
 import Button from 'ui/atoms/Button';
 
 
-
 const Container = styled.div`
     padding: 25px;
     background-color: var(--color-grey-400);
@@ -29,7 +28,7 @@ const Description = styled.p`
 `;
 
 
-function AfterLogup({reset}) {
+function AfterLogup({ reset }) {
     return (
         <Container>
             <Title>THANK YOU FOR REGISTRATION!</Title>
@@ -37,7 +36,7 @@ function AfterLogup({reset}) {
                 You was register successfully!. Now, you can go to log in page and join to the game!
             </Description>
             <div>
-                <Link to={'/login'}>
+                <Link to="/login">
                     <Button>GO TO LOG IN</Button>
                 </Link>
 
@@ -48,7 +47,7 @@ function AfterLogup({reset}) {
 }
 
 AfterLogup.propTypes = {
-    reset: PropTypes.func.isRequired
+    reset: PropTypes.func.isRequired,
 };
 
 export default AfterLogup;
