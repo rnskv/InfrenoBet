@@ -2,9 +2,9 @@ import Action from 'src/core/Action';
 import passport from 'koa-passport';
 
 const getHandler = async (ctx) => {
-    console.log('???')
+    console.log(ctx.state.user)
     ctx.body = {
-        body: 'Hello from action get'
+        body: 'Hello from action get ' + ctx.state.user.name
     };
 };
 

@@ -15,8 +15,10 @@ import { rootApi } from 'src/redux/root/api';
 
 rootApi.setHeader('Authorization', window.localStorage.getItem('token'));
 
-const handler = () => {
-    rootApi.execute('test');
+const handler = async () => {
+    const result = await rootApi.execute('test');
+
+    alert(result.body)
 };
 
 function Main({ token }) {
