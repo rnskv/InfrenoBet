@@ -1,32 +1,15 @@
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 
-import React, { useState } from 'react';
+import React from 'react';
 
 import Title from 'ui/atoms/Title';
 import Link from 'ui/atoms/Link';
 import Button from 'ui/atoms/Button';
 
-
-const Container = styled.div`
-    padding: 25px;
-    background-color: var(--color-grey-400);
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    border-radius: 5px;
-    
-    ${Button} {
-        margin: 15px;
-    }
-`;
-
-const Description = styled.p`
-    color: var(--color-grey);
-    max-width: 420px;
-    text-align: center;
-`;
-
+import {
+    Container,
+    Description,
+} from './styled';
 
 function AfterLogup({ reset }) {
     return (

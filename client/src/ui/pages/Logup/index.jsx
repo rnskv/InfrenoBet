@@ -8,12 +8,10 @@ import {
 } from 'react-router-dom';
 
 import LogupForm from 'ui/organisms/LogupForm';
+import AfterLogup from 'ui/organisms/AfterLogup';
 import PopupTemplate from 'ui/templates/Popup';
 
-
-import * as userDomains from 'src/redux/user/domains';
-import * as userActions from 'src/redux/user/actions';
-import AfterLogup from './AfterLogup';
+import { mapStateToProps, mapDispatchToProps } from './connect';
 
 function Logup({
     isLoading, isRegister, error, token, logUp, reset,
@@ -24,26 +22,21 @@ function Logup({
         <PopupTemplate>
             { isLoading ? 'Loading...' : null}
 
-            { isRegister ? <AfterLogup reset={reset} /> : <LogupForm logUp={logUp} error={error} /> }
+            { isRegister
+                ? (
+                    <AfterLogup
+                        reset={reset}
+                    />
+                )
+                : (
+                    <LogupForm
+                        logUp={logUp}
+                        error={error}
+                    />
+                )}
 
         </PopupTemplate>
     );
-}
-
-function mapDispatchToProps(dispatch) {
-    return {
-        logUp: (data) => dispatch(userDomains.logUp(data)),
-        reset: () => dispatch(userActions.reset()),
-    };
-}
-
-function mapStateToProps(state) {
-    return {
-        token: state.user.token,
-        isLoading: state.user.isLoading,
-        isRegister: state.user.isRegister,
-        error: state.user.logupError,
-    };
 }
 
 Logup.propTypes = {

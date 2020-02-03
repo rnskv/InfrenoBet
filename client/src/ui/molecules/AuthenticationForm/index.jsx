@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import styled from 'styled-components';
 import Title from 'ui/atoms/Title';
-
-import ErrorNotification from './ErrorNotification';
+import ErrorNotification from 'ui/atoms/FormErrorNotification';
 
 const StyledForm = styled.form`
     width: 500px;

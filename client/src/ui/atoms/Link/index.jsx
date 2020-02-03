@@ -1,17 +1,9 @@
 import React from 'react';
 
-import styled from 'styled-components';
-
-import {
-    Link as RouterLink,
-} from 'react-router-dom';
-
-const StyledLink = styled(RouterLink)`
-
-`;
+import { Container } from './styled';
 
 function Link(props) {
-    return <StyledLink {...props} />;
+    return <Container {...props} />;
 }
 
 export default Link;

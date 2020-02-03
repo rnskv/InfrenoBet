@@ -1,16 +1,13 @@
 import PropTypes from 'prop-types';
-
 import React from 'react';
-import { connect } from 'react-redux';
 
-import {
-    Redirect,
-} from 'react-router-dom';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 import LoginForm from 'ui/organisms/LoginForm';
 import PopupTemplate from 'ui/templates/Popup';
 
-import * as userDomains from 'src/redux/user/domains';
+import { mapStateToProps, mapDispatchToProps } from './connect';
 
 function Login({
     isLoading, error, token, logIn,
@@ -22,20 +19,6 @@ function Login({
             <LoginForm logIn={logIn} error={error} />
         </PopupTemplate>
     );
-}
-
-function mapDispatchToProps(dispatch) {
-    return {
-        logIn: ({ email, password }) => dispatch(userDomains.logIn({ email, password })),
-    };
-}
-
-function mapStateToProps(state) {
-    return {
-        token: state.user.token,
-        isLoading: state.user.isLoading,
-        error: state.user.loginError,
-    };
 }
 
 Login.propTypes = {

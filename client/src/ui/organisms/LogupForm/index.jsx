@@ -1,38 +1,16 @@
 import PropTypes from 'prop-types';
 
 import React, { useRef } from 'react';
-import styled from 'styled-components';
 
 import Button from 'ui/atoms/Button';
 import Input from 'ui/atoms/Input';
 
-import AuthenticationForm from 'ui/molecules/AuthenticationForm';
-
-const Container = styled.div`
-    display: flex;
-    justify-content: center;
-`;
-
-const StyledForm = styled(AuthenticationForm)`
-    ${Input} {
-        width: 100%;
-        box-sizing: border-box;
-        margin-bottom: 20px;
-    }
-    
-    ${Button} {
-        margin: 0 0;
-    }
-`;
-
-const Label = styled.label`
-`;
-
-const Name = styled.span`
-    color: var(--color-grey);
-    margin: 10px 0;
-    display: block;
-`;
+import {
+    Container,
+    StyledForm,
+    Label,
+    Name,
+} from './styled';
 
 function LogupForm({ logUp, error }) {
     const emailInput = useRef(null);
@@ -82,7 +60,7 @@ function LogupForm({ logUp, error }) {
 
 LogupForm.propTypes = {
     logUp: PropTypes.func.isRequired,
-    error: PropTypes.string,
+    error: PropTypes.string.isRequired,
 };
 
 export default LogupForm;

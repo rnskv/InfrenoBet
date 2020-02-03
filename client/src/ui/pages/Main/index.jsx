@@ -1,17 +1,13 @@
 import PropTypes from 'prop-types';
-
 import React from 'react';
 import { connect } from 'react-redux';
-
-import DefaultTemplate from 'ui/templates/Default';
+import { Link } from 'react-router-dom';
 
 import Button from 'ui/atoms/Button';
-
-import {
-    Link,
-} from 'react-router-dom';
+import DefaultTemplate from 'ui/templates/Default';
 
 import { rootApi } from 'src/redux/root/api';
+import { mapStateToProps, mapDispatchToProps } from './connect';
 
 rootApi.setBearerFromLocalStorage();
 
@@ -29,18 +25,6 @@ function Main({ token }) {
             <Button onClick={handler}>Test action with token</Button>
         </DefaultTemplate>
     );
-}
-
-function mapDispatchToProps() {
-    return {
-
-    };
-}
-
-function mapStateToProps(state) {
-    return {
-        token: state.user.token,
-    };
 }
 
 Main.propTypes = {
