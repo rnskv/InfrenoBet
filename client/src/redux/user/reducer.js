@@ -1,10 +1,14 @@
 import * as actionTypes from './actionsTypes';
 
-const initialState = {
-    name: 'Roma',
-    token: window.localStorage.getItem('token') || '',
+const getClearState = () => ({
     isLoading: false,
+    isRegister: false,
     error: '',
+});
+
+const initialState = {
+    token: window.localStorage.getItem('token') || '',
+    ...getClearState(),
 };
 
 function userReducer(state = initialState, action) {
@@ -45,6 +49,14 @@ function userReducer(state = initialState, action) {
         return {
             ...state,
             isLoading: false,
+            isRegister: true,
+        };
+    }
+
+    case actionTypes.RESET_USER: {
+        return {
+            ...state,
+            ...getClearState(),
         };
     }
 

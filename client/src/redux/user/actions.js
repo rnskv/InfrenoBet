@@ -23,3 +23,7 @@ export const error = (payload) => ({
 export const loading = () => ({
     type: actionTypes.LOADING_USER
 });
+
+export const reset = () => ({
+    type: actionTypes.RESET_USER
+});

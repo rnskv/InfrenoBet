@@ -55,8 +55,15 @@ function Navigation() {
                     text: 'Log In',
                     description: 'You really ready?',
                 },
+                {
+                    id: 1,
+                    to: '/logup',
+                    iconSrc: 'https://sun9-37.userapi.com/c830400/v830400985/c0fdb/9CIryApwPMY.jpg?ava=1',
+                    text: 'Log Up',
+                    description: 'Last chance go back',
+                },
             ],
-        }
+        },
     ];
 
     return (
@@ -65,11 +72,11 @@ function Navigation() {
                 <NavigationTitle onClick={() => setIsOpened(!isOpened)}> WTF? </NavigationTitle>
                 {
                     GROUPS.map((group) => (
-                        <group.WRAPPER key = {group.id}>
+                        <group.WRAPPER key={group.id}>
                             {
                                 group.items.map((item) => (
                                     <NavigationLink
-                                        key = {item.id}
+                                        key={item.id}
                                         {...item}
                                         isOpened={isOpened}
                                     />

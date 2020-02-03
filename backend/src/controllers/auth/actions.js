@@ -16,7 +16,10 @@ const registerHandler = async (ctx) => {
     const hash = await bcrypt.hash(password, salt);
 
     await new User({ email, name, password: hash }).save();
-    ctx.status = 200;
+
+    ctx.body = {
+        ok: true
+    }
 };
 
 const loginHandler = async (ctx) => {

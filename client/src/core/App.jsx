@@ -16,6 +16,8 @@ import './cssVariables.css';
 import './globalStyles.css';
 
 import Login from 'ui/pages/Login';
+import Logup from 'ui/pages/Logup';
+
 import Main from 'ui/pages/Main';
 
 function App() {
@@ -25,6 +27,9 @@ function App() {
                 <Switch>
                     <Route path="/login">
                         <Login />
+                    </Route>
+                    <Route path="/logup">
+                        <Logup />
                     </Route>
                     <Route path="/" exact>
                         <Main />

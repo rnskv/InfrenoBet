@@ -13,3 +13,10 @@ authApi.addRequests({
         method: 'post',
     }),
 });
+
+authApi.addRequests({
+    logUp: new Request({
+        url: '/register',
+        method: 'post',
+    }),
+});
