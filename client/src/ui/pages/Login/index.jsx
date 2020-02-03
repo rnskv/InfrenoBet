@@ -8,18 +8,18 @@ import {
 } from 'react-router-dom';
 
 import LoginForm from 'ui/organisms/LoginForm';
-import DefaultTemplate from 'ui/templates/Default';
+import PopupTemplate from 'ui/templates/Popup';
 
 import * as userDomains from 'src/redux/user/domains';
 
 function Login({ isLoading, error, token, logIn }) {
     if (token) return <Redirect to={'/'} />
     return (
-        <DefaultTemplate>
+        <PopupTemplate>
             { error }
             { isLoading ? 'Loading...' : null}
             <LoginForm logIn={logIn} />
-        </DefaultTemplate>
+        </PopupTemplate>
     );
 }
 
