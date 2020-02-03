@@ -16,7 +16,7 @@ export const logUp = ({ email, name, password }) => async (dispatch) => {
     if (response.ok) {
         dispatch(actions.register());
     } else {
-        dispatch(actions.error({ error: response.error }));
+        dispatch(actions.error({ logupError: response.error }));
     }
 };
 
@@ -34,7 +34,7 @@ export const logIn = ({ email, password }) => async (dispatch) => {
         window.localStorage.setItem('token', response.token);
         dispatch(actions.logIn({ token: response.token }));
     } else {
-        dispatch(actions.error({ error: response.error }));
+        dispatch(actions.error({ loginError: response.error }));
     }
 };
 

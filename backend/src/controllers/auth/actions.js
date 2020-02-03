@@ -44,7 +44,7 @@ const loginHandler = async (ctx) => {
 
         const token = jwt.sign(payload, config.jwtSecret, { expiresIn: 1000 * 60 * 60 * 24 });
 
-        ctx.body = { token: `Bearer: ${token}` };
+        ctx.body = { token: `Bearer ${token}` };
     } else {
         ctx.throw(400, 'Password incorrect');
     }

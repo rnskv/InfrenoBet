@@ -16,16 +16,15 @@ import * as userActions from 'src/redux/user/actions';
 import AfterLogup from './AfterLogup';
 
 function Logup({
-    isLoading, isRegister, error, token, logUp, reset
+    isLoading, isRegister, error, token, logUp, reset,
 }) {
     if (token) return <Redirect to="/" />;
 
     return (
         <PopupTemplate>
-            { error }
             { isLoading ? 'Loading...' : null}
 
-            { isRegister ? <AfterLogup reset={reset}/> : <LogupForm logUp={logUp} /> }
+            { isRegister ? <AfterLogup reset={reset} /> : <LogupForm logUp={logUp} error={error} /> }
 
         </PopupTemplate>
     );
@@ -43,7 +42,7 @@ function mapStateToProps(state) {
         token: state.user.token,
         isLoading: state.user.isLoading,
         isRegister: state.user.isRegister,
-        error: state.user.error,
+        error: state.user.logupError,
     };
 }
 

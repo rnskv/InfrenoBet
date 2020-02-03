@@ -34,7 +34,7 @@ const Name = styled.span`
     display: block;
 `;
 
-function LogupForm({ logUp }) {
+function LogupForm({ logUp, error }) {
     const emailInput = useRef(null);
     const passwordInput = useRef(null);
     const nameInput = useRef(null);
@@ -55,7 +55,11 @@ function LogupForm({ logUp }) {
 
     return (
         <Container>
-            <StyledForm onSubmit={onSubmit} title="Sign Up">
+            <StyledForm
+                onSubmit={onSubmit}
+                title="Sign Up"
+                error={error}
+            >
                 <Label>
                     <Name>First Name:</Name>
                     <Input ref={nameInput} type="name" name="name" />
@@ -78,6 +82,7 @@ function LogupForm({ logUp }) {
 
 LogupForm.propTypes = {
     logUp: PropTypes.func.isRequired,
+    error: PropTypes.string
 };
 
 export default LogupForm;

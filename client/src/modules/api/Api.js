@@ -1,16 +1,18 @@
 export default class Api {
     constructor({
-        url,
-        headers,
+        url = '/',
+        headers = {},
+        body = {},
     }) {
         this.url = url;
         this.headers = headers;
+        this.body = body;
         this.requests = {};
     }
 
-    // setHeader() {
-    //
-    // }
+    setHeader(headerName, value) {
+        this.headers[headerName] = value;
+    }
     //
     // removeHeader() {
     //
@@ -23,7 +25,7 @@ export default class Api {
     execute(requestName, {
         headers,
         body,
-    }) {
+    } = {}) {
         return this.requests[requestName]
             .execute({
                 apiUrl: this.url,

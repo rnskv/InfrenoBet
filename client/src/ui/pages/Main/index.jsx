@@ -5,15 +5,27 @@ import { connect } from 'react-redux';
 
 import DefaultTemplate from 'ui/templates/Default';
 
+import Button from 'ui/atoms/Button';
+
 import {
     Link,
 } from 'react-router-dom';
 
+import { rootApi } from 'src/redux/root/api';
+
+rootApi.setHeader('Authorization', window.localStorage.getItem('token'));
+
+const handler = () => {
+    rootApi.execute('test');
+};
+
 function Main({ token }) {
     return (
         <DefaultTemplate>
-            Welcome Home,
+            <div>
             { !token ? <Link to="/login">Go to login</Link> : token}
+            </div>
+            <Button onClick={handler}>Test action with token</Button>
         </DefaultTemplate>
     );
 }

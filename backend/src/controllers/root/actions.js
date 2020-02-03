@@ -2,13 +2,17 @@ import Action from 'src/core/Action';
 import passport from 'koa-passport';
 
 const getHandler = async (ctx) => {
-    ctx.status = 200;
-    ctx.body = 'Hello from action get';
+    console.log('???')
+    ctx.body = {
+        body: 'Hello from action get'
+    };
 };
 
 const postHandler = async (ctx) => {
     ctx.status = 200;
-    ctx.body = 'Hello from action post';
+    ctx.body = {
+        body: 'Hello from action post'
+    };
 };
 
 export const root = new Action({

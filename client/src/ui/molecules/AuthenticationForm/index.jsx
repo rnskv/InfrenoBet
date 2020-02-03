@@ -4,6 +4,8 @@ import React from 'react';
 import styled from 'styled-components';
 import Title from 'ui/atoms/Title';
 
+import ErrorNotification from './ErrorNotification';
+
 const StyledForm = styled.form`
     width: 500px;
     background: var(--color-darkblue);
@@ -17,10 +19,11 @@ const StyledForm = styled.form`
     }
 `;
 
-function AuthenticationForm({ children, title, ...props }) {
+function AuthenticationForm({ children, title, error,...props }) {
     return (
         <StyledForm {...props}>
             <Title>{title}</Title>
+            <ErrorNotification error={error}/>
             { children }
         </StyledForm>
     );
@@ -29,6 +32,7 @@ function AuthenticationForm({ children, title, ...props }) {
 AuthenticationForm.propTypes = {
     children: PropTypes.node.isRequired,
     title: PropTypes.string.isRequired,
+    error: PropTypes.string.isRequired,
 };
 
 export default AuthenticationForm;

@@ -4,7 +4,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import {
-    Redirect
+    Redirect,
 } from 'react-router-dom';
 
 import LoginForm from 'ui/organisms/LoginForm';
@@ -12,13 +12,14 @@ import PopupTemplate from 'ui/templates/Popup';
 
 import * as userDomains from 'src/redux/user/domains';
 
-function Login({ isLoading, error, token, logIn }) {
-    if (token) return <Redirect to={'/'} />
+function Login({
+    isLoading, error, token, logIn,
+}) {
+    if (token) return <Redirect to="/" />;
     return (
         <PopupTemplate>
-            { error }
             { isLoading ? 'Loading...' : null}
-            <LoginForm logIn={logIn} />
+            <LoginForm logIn={logIn} error={error} />
         </PopupTemplate>
     );
 }
@@ -33,7 +34,7 @@ function mapStateToProps(state) {
     return {
         token: state.user.token,
         isLoading: state.user.isLoading,
-        error: state.user.error,
+        error: state.user.loginError,
     };
 }
 

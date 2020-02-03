@@ -3,7 +3,8 @@ import * as actionTypes from './actionsTypes';
 const getClearState = () => ({
     isLoading: false,
     isRegister: false,
-    error: '',
+    loginError: '',
+    logupError: '',
 });
 
 const initialState = {
@@ -25,15 +26,15 @@ function userReducer(state = initialState, action) {
         return {
             ...state,
             isLoading: false,
-            error: action.payload.error,
+            ...action.payload,
         };
     }
 
     case actionTypes.LOGIN_USER: {
         return {
             ...state,
-            token: action.payload.token,
             isLoading: false,
+            ...action.payload
         };
     }
 

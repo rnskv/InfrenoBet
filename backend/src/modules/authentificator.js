@@ -5,6 +5,7 @@ import User from 'src/models/User';
 const options = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey: config.jwtSecret,
+    session: false
 };
 
 export const useAuthentificator = (passport) => {
