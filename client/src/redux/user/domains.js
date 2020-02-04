@@ -1,4 +1,6 @@
 import history from 'src/modules/router/history';
+import { ws } from 'src/modules/realtime';
+
 import * as actions from './actions';
 import { authApi } from './api';
 
@@ -33,6 +35,7 @@ export const logIn = ({ email, password }) => async (dispatch) => {
     if (response.token) {
         window.localStorage.setItem('token', response.token);
         dispatch(actions.logIn({ token: response.token }));
+        ws.io.emit('project.auth', response.token);
     } else {
         dispatch(actions.error({ loginError: response.error }));
     }

@@ -1,3 +1,4 @@
+import fetcher from 'node-fetch';
 import { checkResponseStatus } from './ErrorsHandler';
 
 export default class Request {
@@ -30,7 +31,7 @@ export default class Request {
                 resultOptions.body = JSON.stringify({ ...body, ...this.body });
             }
 
-            window.fetch(url, resultOptions)
+            fetcher(url, resultOptions)
                 .then((response) => {
                     if (!checkResponseStatus(response.status)) {
                         return;

@@ -28,7 +28,7 @@ function gameReducer(state = initialState, action) {
         console.log('GAME_TRANSACTION');
         return {
             ...state,
-            transactions: [state.transactions, action.payload.transactionData]
+            transactions: [...state.transactions, action.payload.transactionData]
         };
     }
 

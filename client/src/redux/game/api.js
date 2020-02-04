@@ -1,4 +1,4 @@
-import { Api, Request } from 'src/modules/api';
+import { Api, Request } from 'shared/api';
 
 const { SERVER_PROTOCOL, SERVER_PORT, SERVER_HOST } = process.env;
 

@@ -4,10 +4,16 @@ import crypto from 'crypto';
 
 // import SocketIO from 'socket.io';
 import Game from './modules/Game';
+import { userApi} from './modules/api';
 
 let app = express();
 let server = http.Server(app);
 const io = require('socket.io')(server, { serveClient: false });
+
+function getRandomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max));
+}
+
 
 class Room {
     constructor(io) {
@@ -20,9 +26,9 @@ class Room {
     initialize() {
         console.log('reset game');
         this.gamesCount++;
+        const secret = Math.random();
+        const hash = crypto.createHash('md5').update(String(secret)).digest("hex");
 
-        const hash = crypto.createHash('md5').update(String(this.gamesCount)).digest("hex");
-        const secret = this.gamesCount;
 
         this.game = new Game({
             hash,
@@ -43,11 +49,24 @@ const room = new Room({ sockets: io.sockets });
 
 room.initialize();
 
+io.use((socket, next) => {
+   next();
+});
+
 io.on('connection', (socket) => {
     console.log('connected');
+    socket.on('project.auth', (token) => {
+        socket.jwtToken = token;
+    });
 
-    socket.on('game.join', (userData) => {
-        room.game.join(userData);
+    socket.on('game.transaction', (transactionData) => {
+        if (!socket.jwtToken) {
+            socket.emit('project.error', { message: 'Unauthorization' });
+            return;
+        }
+        setTimeout(() => {
+            room.game.transaction({ user: { name: socket.id }, value: 50});
+        }, getRandomInt(4000))
     });
 
     socket.on('game.sync', () => {

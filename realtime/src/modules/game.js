@@ -1,3 +1,7 @@
+function getRandomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max));
+}
+
 class Game {
     constructor({ hash, secret, sockets, onFinish }) {
         this.sockets = sockets;
@@ -7,7 +11,7 @@ class Game {
 
         this.users = [];
         this.transactions = [];
-        this.time = 30;
+        this.time = 10;
         this.isStarted = false;
         this.isFinished = false;
 
@@ -46,7 +50,7 @@ class Game {
     }
 
     getWinner() {
-        const winner = this.users[0]; // 1-st user win!;
+        const winner = this.users[getRandomInt(this.users.length - 1)]; // 1-st user win!;
         this.sockets.emit('game.getWinner', {
             winner,
             secret: this.secret
@@ -65,8 +69,22 @@ class Game {
         }
     }
 
+    isFirstUserTransaction(user) {
+        return !this.users.filter((_user) => _user.name === user.name).length;
+    }
+
     transaction(transactionData) {
         console.log('transaction', transactionData);
+        console.log('isFirst', this.isFirstUserTransaction(transactionData.user));
+
+        const tickets = {
+            from: 0,
+            to: 10,
+        };
+
+        if (this.isFirstUserTransaction(transactionData.user)) {
+            this.join(transactionData.user)
+        }
 
         this.transactions.push(transactionData);
         this.sockets.emit('game.transaction', transactionData);

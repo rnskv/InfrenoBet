@@ -16,10 +16,13 @@ const handler = async () => {
     alert(result.body);
 };
 
+let isSubscribed = false;
+
 function Main({
-    time, hash, secret, transactions, winner, users, join, subscribe, token,
+    time, hash, secret, transactions, winner, users, join, transaction, subscribe, token,
 }) {
     useEffect(() => {
+        if (isSubscribed) return;
         subscribe();
     }, []);
     return (
@@ -27,8 +30,8 @@ function Main({
             <div>
                 { !token ? <Link to="/login">Go to login</Link> : token}
             </div>
-            <Button onClick={handler}>Test action with token</Button>
-            <Button onClick={join}>Join</Button>
+            <Button onClick={handler}>Test action with token</Button><br/><br/>
+            <Button onClick={transaction}>Make transaction</Button>
             <p>
                 Время до конца -
                 { time }
@@ -47,14 +50,24 @@ function Main({
 
             <p>
                 Секретно число раунда -
-                { secret ? secret : 'secret'}
+                { secret || 'secret'}
             </p>
-            <p>
+            <div>
                 Игроки в банке:
                 {
                     users.map((user, index) => <div key={index}>{ user ? user.name : 'test' }</div>)
                 }
-            </p>
+            </div>
+
+            <div>
+                Транзакции
+                {
+                    transactions.map((transaction, index) => (
+                        <div key={index}>{ index }.) { transaction.user.name } - { transaction.value }</div>
+                    ))
+                }
+            </div>
+
         </DefaultTemplate>
     );
 }

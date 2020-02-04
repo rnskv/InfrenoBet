@@ -22,6 +22,7 @@ module.exports = () => {
             alias: {
                 src: path.resolve(__dirname, 'src'),
                 ui: path.resolve(__dirname, 'src/ui'),
+                shared: path.resolve(__dirname, '../shared'),
             },
         },
         module: {
@@ -54,4 +55,4 @@ module.exports = () => {
             port: 9000,
         },
     });
-}
+};

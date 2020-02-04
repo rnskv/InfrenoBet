@@ -4,6 +4,10 @@ import privatePaths from 'mongoose-private-paths';
 const { Schema } = mongoose;
 
 const userSchema = new Schema({
+    login: {
+        type: String,
+        required: true,
+    },
     name: {
         type: String,
         required: true,
@@ -16,6 +20,14 @@ const userSchema = new Schema({
         type: String,
         required: true,
         private: true,
+    },
+    balance: {
+        type: Number,
+        default: 0,
+    },
+    isConfirmed: {
+        type: Boolean,
+        default: false,
     },
     createDate: {
         type: Date,

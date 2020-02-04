@@ -1,4 +1,4 @@
-import { Api, Request } from 'src/modules/api';
+import { Api, Request } from 'shared/api';
 
 export const rootApi = new Api({
     url: 'http://localhost:2020/api/root',

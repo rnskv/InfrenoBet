@@ -6,7 +6,6 @@ import { authApi } from '../user/api';
 export const subscribe = () => async (dispatch) => {
     console.log('Subscribed to something');
 
-
     ws.io.emit('game.sync');
 
     ws.io.on('game.join', (userData) => {
@@ -14,7 +13,7 @@ export const subscribe = () => async (dispatch) => {
     });
 
     ws.io.on('game.transaction', (transactionData) => {
-        dispatch(actions.transaction({transactionData}));
+        dispatch(actions.transaction({ transactionData }));
     });
 
     ws.io.on('game.start', (game) => {
@@ -37,12 +36,17 @@ export const subscribe = () => async (dispatch) => {
         dispatch(actions.sync({ state }));
     });
 
-    setTimeout(() => {
-    }, 5000);
+    ws.io.on('project.error', (error) => {
+        alert(error.message);
+    });
 };
 
 export const join = () => async (dispatch) => {
     ws.io.emit('game.join', { name: 'Roma' });
+};
+
+export const transaction = () => async (dispatch) => {
+    ws.io.emit('game.transaction', { user: { name: 'Roma' }, value: 100 });
 };
 // ws.io.emit('game.sync');
 // ws.io.emit('game.join');

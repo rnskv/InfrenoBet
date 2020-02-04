@@ -1,4 +1,5 @@
 import * as actionTypes from './actionsTypes';
+import { ws } from 'src/modules/realtime';
 
 const getClearState = () => ({
     isLoading: false,
@@ -11,6 +12,11 @@ const initialState = {
     token: window.localStorage.getItem('token') || '',
     ...getClearState(),
 };
+
+//@todo remove later
+if (initialState.token) {
+    ws.io.emit('project.auth', initialState.token);
+}
 
 function userReducer(state = initialState, action) {
     switch (action.type) {

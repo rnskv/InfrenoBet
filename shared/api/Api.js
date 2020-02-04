@@ -2,7 +2,7 @@ export default class Api {
     constructor({
         url = '/',
         headers = {},
-        body = {},
+        body = {}
     }) {
         this.url = url;
         this.headers = headers;
@@ -14,8 +14,12 @@ export default class Api {
         this.headers[headerName] = value;
     }
 
-    setBearerFromLocalStorage() {
+    setBearer(token) {
         this.setHeader('Authorization', window.localStorage.getItem('token'));
+    }
+
+    setBearerFromLocalStorage() {
+        this.setHeader('Authorization', localStorage.getItem('token'));
     }
     //
     // removeHeader() {

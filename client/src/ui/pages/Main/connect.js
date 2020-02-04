@@ -4,6 +4,7 @@ export function mapDispatchToProps(dispatch) {
     return {
         subscribe: () => dispatch(gameDomains.subscribe()),
         join: () => dispatch(gameDomains.join()),
+        transaction: () => dispatch(gameDomains.transaction()),
     };
 }
 
