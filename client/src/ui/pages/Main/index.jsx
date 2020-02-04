@@ -13,13 +13,15 @@ rootApi.setBearerFromLocalStorage();
 
 const handler = async () => {
     const result = await rootApi.execute('test');
-    alert(result.body)
+    alert(result.body);
 };
 
-function Main({ users, join, subscribe, token }) {
+function Main({
+    time, hash, secret, transactions, winner, users, join, subscribe, token,
+}) {
     useEffect(() => {
-        subscribe()
-    },[])
+        subscribe();
+    }, []);
     return (
         <DefaultTemplate>
             <div>
@@ -27,13 +29,32 @@ function Main({ users, join, subscribe, token }) {
             </div>
             <Button onClick={handler}>Test action with token</Button>
             <Button onClick={join}>Join</Button>
+            <p>
+                Время до конца -
+                { time }
+            </p>
 
-            {
-                users.map((user, index) => {
-                    return <div key={index}>{ user.name }</div>
-                })
-            }
 
+            <p>
+                Хэш раунда -
+                { hash }
+            </p>
+
+            <p>
+                Победитель раунда -
+                { winner.name }
+            </p>
+
+            <p>
+                Секретно число раунда -
+                { secret ? secret : 'secret'}
+            </p>
+            <p>
+                Игроки в банке:
+                {
+                    users.map((user, index) => <div key={index}>{ user ? user.name : 'test' }</div>)
+                }
+            </p>
         </DefaultTemplate>
     );
 }

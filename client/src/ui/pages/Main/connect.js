@@ -10,6 +10,11 @@ export function mapDispatchToProps(dispatch) {
 export function mapStateToProps(state) {
     return {
         token: state.user.token,
-        users: state.game.users
+        users: state.game.users,
+        time: state.game.time,
+        transactions: state.game.transactions,
+        hash: state.game.hash,
+        winner: state.game.winner,
+        secret: state.game.secret,
     };
 }

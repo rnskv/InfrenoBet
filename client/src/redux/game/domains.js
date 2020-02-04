@@ -5,13 +5,36 @@ import { authApi } from '../user/api';
 
 export const subscribe = () => async (dispatch) => {
     console.log('Subscribed to something');
-    ws.io.on('connection', () => {
-        console.log('connect');
-    });
+
+
+    ws.io.emit('game.sync');
 
     ws.io.on('game.join', (userData) => {
-        console.log(userData)
-        dispatch(actions.join({ user: { name: 'Roma' } }));
+        dispatch(actions.join({userData}));
+    });
+
+    ws.io.on('game.transaction', (transactionData) => {
+        dispatch(actions.transaction({transactionData}));
+    });
+
+    ws.io.on('game.start', (game) => {
+        dispatch(actions.start({ game }));
+    });
+
+    ws.io.on('game.tick', (time) => {
+        dispatch(actions.tick({ time }));
+    });
+
+    ws.io.on('game.getWinner', ({winner, secret}) => {
+        dispatch(actions.getWinner({ winner, secret }));
+    });
+
+    ws.io.on('game.reset', (state) => {
+        dispatch(actions.reset({ state }));
+    });
+
+    ws.io.on('game.sync', (state) => {
+        dispatch(actions.sync({ state }));
     });
 
     setTimeout(() => {

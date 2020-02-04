@@ -1,10 +1,13 @@
 class Game {
-    constructor({ sockets, onFinish }) {
+    constructor({ hash, secret, sockets, onFinish }) {
         this.sockets = sockets;
-        this.hash = '';
+
+        this.hash = hash;
+        this.secret = secret;
+
         this.users = [];
         this.transactions = [];
-        this.time = 10;
+        this.time = 30;
         this.isStarted = false;
         this.isFinished = false;
 
@@ -23,9 +26,9 @@ class Game {
     start() {
         console.log('start');
         this.isStarted = true;
-        this.tick();
 
-        this.sockets.emit('game.start');
+        this.sockets.emit('game.start', this.time);
+        this.tick();
     }
 
     tick() {
@@ -34,7 +37,7 @@ class Game {
         this.time -= 1;
         this.sockets.emit('game.tick', this.time);
 
-        if (this.time >= 0) {
+        if (this.time > 0) {
             setTimeout(this.tick.bind(this), 1000)
         } else {
             this.getWinner();
@@ -44,7 +47,10 @@ class Game {
 
     getWinner() {
         const winner = this.users[0]; // 1-st user win!;
-        this.sockets.emit('game.getWinner', winner);
+        this.sockets.emit('game.getWinner', {
+            winner,
+            secret: this.secret
+        });
         console.log('getWinner', winner);
     }
 
@@ -64,6 +70,10 @@ class Game {
 
         this.transactions.push(transactionData);
         this.sockets.emit('game.transaction', transactionData);
+    }
+
+    sync(socket) {
+        socket.emit('game.sync', this.state);
     }
 }
 
