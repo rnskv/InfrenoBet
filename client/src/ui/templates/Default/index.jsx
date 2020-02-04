@@ -38,7 +38,7 @@ function Default({ children, ...props }) {
         <div {...props}>
             <Header>Header</Header>
             <Page>
-                <Navigation />
+                <Navigation/>
                 <Content>
                     { children }
                 </Content>

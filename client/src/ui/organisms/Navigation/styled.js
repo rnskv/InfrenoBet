@@ -65,6 +65,8 @@ export const NavigationList = styled.ul`
 export const ItemsGroupPVP = styled.div`
     border-left: 30px solid var(--color-violet);
     position: relative;
+    min-height: 40px;
+
     &::after {
         content: 'PVP';
         position: absolute;
@@ -79,6 +81,7 @@ export const ItemsGroupPVP = styled.div`
 export const ItemsGroupSystem = styled.div`
     border-left: 30px solid var(--color-greyblue);
     position: relative;
+    min-height: 80px;
     &::after {
         content: 'SYSTEM';
         position: absolute;
@@ -96,6 +99,8 @@ export const NavigationItem = styled.li`
     padding: 10px 25px;
     border-bottom: 1px solid var(--color-grey-400);
     cursor: pointer;
+    
+    background-color: ${({ isActive }) => (isActive ? 'var(--color-grey-800)' : 'none')};
     
     &:hover {
         ${NavigationText} {

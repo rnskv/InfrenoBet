@@ -1,16 +1,11 @@
 import PropTypes from 'prop-types';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-import React, { useState } from 'react';
+import NavigationLink from './Link';
 
-import {
-    Link,
-} from 'react-router-dom';
-
-import styled from 'styled-components';
-
-import Button from 'ui/atoms/Button';
-import Input from 'ui/atoms/Input';
-import Title from 'ui/atoms/Title';
+import { mapDispatchToProps, mapStateToProps } from './connect';
 
 import {
     NavigationContainer,
@@ -18,58 +13,92 @@ import {
     NavigationTitle,
     ItemsGroupPVP,
     ItemsGroupSystem,
-    NavigationItem,
-    NavigationIcon,
-    NavigationName,
-    NavigationText,
-    NavigationDescription,
 } from './styled';
 
-import NavigationLink from './Link';
+const GROUPS = [
+    {
+        id: 0,
+        WRAPPER: ItemsGroupPVP,
+        items: [
+            {
+                id: 0,
+                to: '/',
+                iconSrc: 'https://sun9-12.userapi.com/c206516/v206516687/49d7a/c7wnfazUB98.jpg?ava=1',
+                text: 'Classic',
+                description: 'You lose all money',
+                onlyGuest: false,
+                accessLevel: 0,
+            },
+            {
+                id: 1,
+                to: '/double',
+                iconSrc: 'https://sun1-20.userapi.com/c841433/v841433631/50d57/5uZuwLPBHvk.jpg?ava=1',
+                text: 'Double',
+                description: 'Good luck!',
+                onlyGuest: false,
+                accessLevel: 0,
+            },
+        ],
+    },
+    {
+        id: 1,
+        WRAPPER: ItemsGroupSystem,
+        items: [
+            {
+                id: 0,
+                to: '/login',
+                iconSrc: 'https://sun9-37.userapi.com/c830400/v830400985/c0fdb/9CIryApwPMY.jpg?ava=1',
+                text: 'Log In',
+                description: 'You really ready?',
+                accessLevel: -1,
+            },
+            {
+                id: 1,
+                to: '/logup',
+                iconSrc: 'https://sun9-70.userapi.com/c851232/v851232275/1a81ed/u3H5ShX-82Q.jpg?ava=1',
+                text: 'Log Up',
+                description: 'Last chance go back',
+                accessLevel: -1,
+            },
+            {
+                id: 2,
+                to: '/support',
+                iconSrc: 'https://sun9-37.userapi.com/c830400/v830400985/c0fdb/9CIryApwPMY.jpg?ava=1',
+                text: 'Support',
+                description: 'Oooooo oborona',
+                accessLevel: 1,
+            },
+            {
+                id: 3,
+                to: '/faq',
+                iconSrc: 'https://sun1-16.userapi.com/c840525/v840525178/3be2/gAaI4F_usnE.jpg?ava=1',
+                text: 'FAQ',
+                description: 'Help me i help you',
+                accessLevel: 0,
+            },
+        ],
+    },
+];
 
-function Navigation() {
-    const [isOpened, setIsOpened] = useState(true);
+const state = {
+    isOpened: true,
+};
 
-    const GROUPS = [
-        {
-            id: 0,
-            WRAPPER: ItemsGroupPVP,
-            items: [
-                {
-                    id: 0,
-                    to: '/',
-                    iconSrc: 'https://sun9-12.userapi.com/c206516/v206516687/49d7a/c7wnfazUB98.jpg?ava=1',
-                    text: 'Classic',
-                    description: 'You lose all money',
-                },
-            ],
-        },
-        {
-            id: 1,
-            WRAPPER: ItemsGroupSystem,
-            items: [
-                {
-                    id: 0,
-                    to: '/login',
-                    iconSrc: 'https://sun9-37.userapi.com/c830400/v830400985/c0fdb/9CIryApwPMY.jpg?ava=1',
-                    text: 'Log In',
-                    description: 'You really ready?',
-                },
-                {
-                    id: 1,
-                    to: '/logup',
-                    iconSrc: 'https://sun9-37.userapi.com/c830400/v830400985/c0fdb/9CIryApwPMY.jpg?ava=1',
-                    text: 'Log Up',
-                    description: 'Last chance go back',
-                },
-            ],
-        },
-    ];
+function Navigation({ token }) {
+    const [isOpened, setIsOpened] = useState(state.isOpened);
+
+    useEffect(() => {
+        state.isOpened = isOpened;
+    });
+
+    const location = useLocation();
 
     return (
         <NavigationContainer isOpened={isOpened}>
             <NavigationList>
-                <NavigationTitle onClick={() => setIsOpened(!isOpened)}> WTF? </NavigationTitle>
+                <NavigationTitle onClick={() => setIsOpened(!isOpened)}>
+                    WTF
+                </NavigationTitle>
                 {
                     GROUPS.map((group) => (
                         <group.WRAPPER key={group.id}>
@@ -79,6 +108,12 @@ function Navigation() {
                                         key={item.id}
                                         {...item}
                                         isOpened={isOpened}
+                                        isActive={item.to === location.pathname}
+                                        isVisible={
+                                            token
+                                                ? item.accessLevel > -1 && item.accessLevel < 666  //replace from token
+                                                : item.accessLevel >= -1 && item.accessLevel <= 0
+                                        }
                                     />
                                 ))
                             }
@@ -91,6 +126,7 @@ function Navigation() {
 }
 
 Navigation.propTypes = {
+    token: PropTypes.string.isRequired,
 };
 
-export default Navigation;
+export default connect(mapStateToProps, mapDispatchToProps)(Navigation);

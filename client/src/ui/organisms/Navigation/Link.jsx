@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-
 import React from 'react';
 
 import {
@@ -15,11 +14,13 @@ import {
 } from './styled';
 
 function NavigationLink({
-    to, isOpened, text, description, iconSrc,
+    to, isOpened, text, description, iconSrc, isActive, isVisible,
 }) {
+    if (!isVisible) return null;
+
     return (
         <Link to={to}>
-            <NavigationItem isOpened={isOpened}>
+            <NavigationItem isOpened={isOpened} isActive={isActive}>
                 <NavigationIcon src={iconSrc} />
                 <NavigationName isOpened={isOpened}>
                     <NavigationText>
@@ -40,6 +41,8 @@ NavigationLink.propTypes = {
     text: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     iconSrc: PropTypes.string.isRequired,
+    isActive: PropTypes.bool.isRequired,
+    isVisible: PropTypes.bool.isRequired
 };
 
 export default NavigationLink;

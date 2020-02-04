@@ -5,6 +5,7 @@ import history from 'src/modules/router/history';
 import { Provider } from 'react-redux';
 
 import { store } from 'src/redux';
+import { ws } from 'src/modules/realtime';
 
 import {
     BrowserRouter as Router,
