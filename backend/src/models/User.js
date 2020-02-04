@@ -6,7 +6,7 @@ const { Schema } = mongoose;
 const userSchema = new Schema({
     login: {
         type: String,
-        required: true,
+        default: 'Player Unknown',
     },
     name: {
         type: String,

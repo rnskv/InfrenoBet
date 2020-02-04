@@ -1,6 +1,7 @@
 import express from 'express';
 import http from 'http';
 import crypto from 'crypto';
+import jwtDecode from 'jwt-decode';
 
 // import SocketIO from 'socket.io';
 import Game from './modules/Game';
@@ -57,6 +58,8 @@ io.on('connection', (socket) => {
     console.log('connected');
     socket.on('project.auth', (token) => {
         socket.jwtToken = token;
+        socket.user = jwtDecode(token);
+        console.log(socket.user)
     });
 
     socket.on('game.transaction', (transactionData) => {
@@ -65,14 +68,13 @@ io.on('connection', (socket) => {
             return;
         }
         setTimeout(() => {
-            room.game.transaction({ user: { name: socket.id }, value: 50});
+            room.game.transaction({ user: socket.user, value: 50});
         }, getRandomInt(4000))
     });
 
     socket.on('game.sync', () => {
-        console.log('TRY SYNC USER')
         room.game.sync(socket);
     });
 });
 
-server.listen(3000)
+server.listen(3000);

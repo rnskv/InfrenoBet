@@ -7,15 +7,18 @@ import config from '../../config';
 const registerHandler = async (ctx) => {
     const { name, email, password } = ctx.request.body;
     const user = await User.findOne({ email });
-
+    console.log('register')
     if (user) {
+        console.log('already')
         ctx.throw(400, 'User already exist');
     }
 
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
+    console.log('salt')
 
     await new User({ email, name, password: hash }).save();
+    console.log('save')
 
     ctx.body = {
         ok: true
