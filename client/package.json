@@ -47,6 +47,9 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
+    "dotenv": "^8.2.0",
+    "dotenv-webpack": "^1.7.0",
+    "fs": "0.0.1-security",
     "history": "^4.10.1",
     "mobx": "5.9.4",
     "prop-types": "^15.7.2",
