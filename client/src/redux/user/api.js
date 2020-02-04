@@ -1,7 +1,9 @@
 import { Api, Request } from 'src/modules/api';
 
+const { SERVER_PROTOCOL, SERVER_PORT, SERVER_HOST } = process.env;
+
 export const authApi = new Api({
-    url: 'http://localhost:2020/api/auth',
+    url: `${SERVER_PROTOCOL}://${SERVER_HOST}:${SERVER_PORT}/api/auth`,
     headers: {
         'Content-Type': 'application/json',
     },

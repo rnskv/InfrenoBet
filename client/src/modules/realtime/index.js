@@ -1,8 +1,9 @@
 import Socket from 'src/modules/sockets';
 
-console.log('123', process.env)
+const { REALTIME_PROTOCOL, REALTIME_PORT, REALTIME_HOST } = process.env;
+
 export const ws = new Socket({
-    url: 'http://localhost:3000',
+    url: `${REALTIME_PROTOCOL}://${REALTIME_HOST}:${REALTIME_PORT}`,
 });
 
 ws.io.on('connection', () => {
