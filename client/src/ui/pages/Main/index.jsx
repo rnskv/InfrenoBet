@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -16,19 +16,33 @@ const handler = async () => {
     alert(result.body)
 };
 
-function Main({ token }) {
+function Main({ users, join, subscribe, token }) {
+    useEffect(() => {
+        subscribe()
+    },[])
     return (
         <DefaultTemplate>
             <div>
                 { !token ? <Link to="/login">Go to login</Link> : token}
             </div>
             <Button onClick={handler}>Test action with token</Button>
+            <Button onClick={join}>Join</Button>
+
+            {
+                users.map((user, index) => {
+                    return <div key={index}>{ user.name }</div>
+                })
+            }
+
         </DefaultTemplate>
     );
 }
 
 Main.propTypes = {
     token: PropTypes.string.isRequired,
+    subscribe: PropTypes.func.isRequired,
+    users: PropTypes.arrayOf(PropTypes.object).isRequired,
+    join: PropTypes.func.isRequired,
 };
 
 Main.defaultProps = {

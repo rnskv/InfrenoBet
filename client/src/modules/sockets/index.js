@@ -1,4 +1,5 @@
 import IO from 'socket.io-client';
+import { ws } from '../realtime';
 
 class Socket {
     constructor({ url }) {
