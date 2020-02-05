@@ -28,35 +28,41 @@ const createHandler = async (ctx) => {
             }
         },
         { $limit: 1 },
-        { "$lookup": {
-            "from": "transactions",
-            "let": { "transactions": "$transactions" },
-            "pipeline": [
-                { "$match": { "$expr": { "$in": [ "$_id", "$$transactions" ] } } },
-                { "$lookup": {
-                    "from": "users",
-                    "let": { "ownerId": "$ownerId" },
-                    "pipeline": [
+        { $lookup: {
+            from: "transactions",
+            let: { "transactions": "$transactions" },
+            pipeline: [
+                { $match: { "$expr": { "$in": [ "$_id", "$$transactions" ] } } },
+                { $lookup: {
+                    from: "users",
+                    let: { "ownerId": "$ownerId" },
+                    pipeline: [
                         { "$match": { "$expr": { "$eq": [ "$_id", "$$ownerId" ] } } }
                     ],
-                    "as": "user"
+                    as: "user"
                 }},
-                { "$addFields": {
+                { $addFields: {
                     "user": { "$arrayElemAt": [ "$user", 0 ] }
                 }}
             ],
-            "as": "transactions"
+            as: "transactions"
+        }},
+        { $lookup: {
+            from: "users",
+            let: { "users": "$users" },
+            pipeline: [
+                { $match: { "$expr": { "$in": [ "$_id", "$$users" ] } } },
+            ],
+            as: "users"
         }},
     ]);
 
-    console.log(existedGame);
     if (existedGame[0]) {
         ctx.body = await existedGame[0];
     } else {
         const game = await new Game({ secret, hash }).save();
         ctx.body = game
     }
-
 };
 
 export const create = new Action({

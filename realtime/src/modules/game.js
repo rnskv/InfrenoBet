@@ -91,23 +91,18 @@ class Game {
     }
 
     isFirstUserTransaction(user) {
-        return !this.users.filter((_user) => _user.name === user.name).length;
+        return !this.users.filter((_user) => _user._id === user.id).length;
     }
 
     async transaction(transactionData) {
-        console.log(transactionData)
-        try {
-            const transaction = await transactionsApi.execute('create', {
-                body: {
-                    type: 'GAME_CLASSIC',
-                    destinationId: this._id,
-                    ownerId: transactionData.user.id,
-                    value: transactionData.value,
-                }
-            });
-        } catch (err) {
-            console.log(err)
-        }
+        const transaction = await transactionsApi.execute('create', {
+            body: {
+                type: 'GAME_CLASSIC',
+                destinationId: this._id,
+                ownerId: transactionData.user.id,
+                value: transactionData.value,
+            }
+        });
 
         const tickets = {
             from: 0,
