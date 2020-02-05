@@ -14,7 +14,7 @@ export const checkResponseStatus = (status) => {
 
     if (status >= 400) {
         console.log(CLIENT_ERROR);
-        return true;
+        return false;
     }
 
     if (status >= 300) {

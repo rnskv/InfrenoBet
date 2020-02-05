@@ -1,21 +1,30 @@
+import { gameApi, transactionsApi } from './api';
+
 function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
 }
 
 class Game {
     constructor({ hash, secret, sockets, onFinish }) {
+        this.onFinish = onFinish;
         this.sockets = sockets;
-
-        this.hash = hash;
-        this.secret = secret;
-
-        this.users = [];
-        this.transactions = [];
         this.time = 10;
         this.isStarted = false;
         this.isFinished = false;
 
-        this.onFinish = onFinish;
+        gameApi.execute('create', {
+            body: {
+                hash,
+                secret
+            }
+        }).then((game) => {
+            console.log('Create game', game);
+            this.init({ ...game })
+        }).catch((err) => {
+            console.log(err)
+        });
+
+        console.log('Game was created on server serverCopy');
     }
 
     get state() {
@@ -25,6 +34,18 @@ class Game {
             hash: this.hash,
             time: this.time
         }
+    }
+
+    init({ _id, hash, secret, users, transactions }) {
+        console.log('init', { _id, hash, secret, users, transactions });
+        this._id = _id;
+        this.hash = hash;
+        this.secret = secret;
+
+        this.users = users;
+        this.transactions = transactions;
+
+        this.sockets.emit('game.reset', this.state);
     }
 
     start() {
@@ -73,9 +94,20 @@ class Game {
         return !this.users.filter((_user) => _user.name === user.name).length;
     }
 
-    transaction(transactionData) {
-        console.log('transaction', transactionData);
-        console.log('isFirst', this.isFirstUserTransaction(transactionData.user));
+    async transaction(transactionData) {
+        console.log(transactionData)
+        try {
+            const transaction = await transactionsApi.execute('create', {
+                body: {
+                    type: 'GAME_CLASSIC',
+                    destinationId: this._id,
+                    ownerId: transactionData.user.id,
+                    value: transactionData.value,
+                }
+            });
+        } catch (err) {
+            console.log(err)
+        }
 
         const tickets = {
             from: 0,

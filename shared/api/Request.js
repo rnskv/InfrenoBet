@@ -34,15 +34,22 @@ export default class Request {
             fetcher(url, resultOptions)
                 .then((response) => {
                     if (!checkResponseStatus(response.status)) {
+                        reject({ 'ok': false });
                         return;
                     }
-                    response.json().then((result) => {
-                        resolve(result);
-                    });
+
+                    response.json()
+                        .then((result) => {
+                            resolve(result);
+                        })
+                        .catch(err => {
+                            reject(response.statusText)
+                        });
                 }, (err) => {
                     alert(err);
                     reject(err);
-                });
+                })
+                .catch(err => console.log(err));
         });
     }
 }
