@@ -46,15 +46,7 @@ const createHandler = async (ctx) => {
                 }}
             ],
             as: "transactions"
-        }},
-        { $lookup: {
-            from: "users",
-            let: { "users": "$users" },
-            pipeline: [
-                { $match: { "$expr": { "$in": [ "$_id", "$$users" ] } } },
-            ],
-            as: "users"
-        }},
+        }}
     ]);
 
     if (existedGame[0]) {

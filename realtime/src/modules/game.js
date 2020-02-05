@@ -19,7 +19,6 @@ class Game {
                 secret
             }
         }).then((game) => {
-            console.log('Create game', game);
             this.init({ ...game })
         }).catch((err) => {
             console.log(err)
@@ -48,11 +47,10 @@ class Game {
     }
 
     init({ _id, hash, secret, users, transactions }) {
-        console.log('init', { _id, hash, secret, users, transactions });
+        console.log('init', { _id, hash, secret, transactions });
         this._id = _id;
         this.hash = hash;
         this.secret = secret;
-
         this.transactions = transactions;
 
         this.sockets.emit('game.reset', this.state);
@@ -76,7 +74,7 @@ class Game {
             setTimeout(this.tick.bind(this), 1000)
         } else {
             this.getWinner();
-            setTimeout(this.onFinish, 2000);
+            setTimeout(this.onFinish, 5000);
         }
     }
 
@@ -115,11 +113,12 @@ class Game {
             to: 10,
         };
 
+
+        this.transactions.push(transaction);
+
         if (this.users.length >= 2 && !this.isStarted) {
             this.start();
         }
-
-        this.transactions.push(transaction);
 
         console.log(transaction);
         this.sockets.emit('game.transaction', transactionData);
