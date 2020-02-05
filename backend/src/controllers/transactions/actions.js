@@ -19,7 +19,7 @@ const getAllHandler = async (ctx) => {
 const createHandler = async (ctx) => {
     console.log('try create transaction', ctx.request.body);
     const {
-        ownerId,
+        user,
         value,
         destinationId,
         type
@@ -27,7 +27,7 @@ const createHandler = async (ctx) => {
 
 
     const transaction = await new Transaction({
-        ownerId: mongoose.Types.ObjectId(ownerId),
+        user: mongoose.Types.ObjectId(user),
         value,
         destinationId: mongoose.Types.ObjectId(destinationId),
         type
@@ -40,13 +40,17 @@ const createHandler = async (ctx) => {
             _id: mongoose.Types.ObjectId(transaction.destinationId)
         });
 
-        console.log('lol', game)
         game.transactions.push(transaction._id);
 
         await game.save();
     }
     //тут пушим траназкцию в игру destinationId если type === 'CLASSIC_GAME';
-    ctx.body = transaction
+    const response = await Transaction
+        .findOne({ _id: mongoose.Types.ObjectId(transaction._id)})
+        .populate('user')
+
+    console.log(response);
+    ctx.body = response;
 
 };
 

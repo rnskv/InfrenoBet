@@ -4,14 +4,10 @@ import privatePaths from 'mongoose-private-paths';
 const { Schema } = mongoose;
 
 const gameSchema = new Schema({
-    users: {
-        type: [mongoose.Types.ObjectId],
-        default: [],
-    },
     transactions: {
         type: [mongoose.Types.ObjectId],
         default: [],
-        ref: 'Transaction'
+        ref: 'transaction'
     },
     secret: {
         type: Number,

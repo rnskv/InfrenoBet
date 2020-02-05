@@ -6,6 +6,7 @@ function getRandomInt(max) {
 
 class Game {
     constructor({ hash, secret, sockets, onFinish }) {
+        this.transactions = [];
         this.onFinish = onFinish;
         this.sockets = sockets;
         this.time = 10;
@@ -27,6 +28,16 @@ class Game {
         console.log('Game was created on server serverCopy');
     }
 
+    get users() {
+        const uniqueUsers = {};
+
+        this.transactions.map(transaction => {
+            uniqueUsers[transaction.user._id] = transaction.user;
+        });
+
+        return Object.values(uniqueUsers);
+    }
+
     get state() {
         return {
             users: this.users,
@@ -42,7 +53,6 @@ class Game {
         this.hash = hash;
         this.secret = secret;
 
-        this.users = users;
         this.transactions = transactions;
 
         this.sockets.emit('game.reset', this.state);
@@ -82,12 +92,8 @@ class Game {
     join(userData) {
         console.log('join', userData);
 
-        this.users.push(userData);
         this.sockets.emit('game.join', userData);
 
-        if (this.users.length >= 2 && !this.isStarted) {
-            this.start();
-        }
     }
 
     isFirstUserTransaction(user) {
@@ -99,7 +105,7 @@ class Game {
             body: {
                 type: 'GAME_CLASSIC',
                 destinationId: this._id,
-                ownerId: transactionData.user.id,
+                user: transactionData.user.id,
                 value: transactionData.value,
             }
         });
@@ -109,11 +115,13 @@ class Game {
             to: 10,
         };
 
-        if (this.isFirstUserTransaction(transactionData.user)) {
-            this.join(transactionData.user)
+        if (this.users.length >= 2 && !this.isStarted) {
+            this.start();
         }
 
-        this.transactions.push(transactionData);
+        this.transactions.push(transaction);
+
+        console.log(transaction);
         this.sockets.emit('game.transaction', transactionData);
     }
 

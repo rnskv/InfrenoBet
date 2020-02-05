@@ -35,9 +35,9 @@ const createHandler = async (ctx) => {
                 { $match: { "$expr": { "$in": [ "$_id", "$$transactions" ] } } },
                 { $lookup: {
                     from: "users",
-                    let: { "ownerId": "$ownerId" },
+                    let: { "user": "$user" },
                     pipeline: [
-                        { "$match": { "$expr": { "$eq": [ "$_id", "$$ownerId" ] } } }
+                        { "$match": { "$expr": { "$eq": [ "$_id", "$$user" ] } } }
                     ],
                     as: "user"
                 }},
@@ -58,7 +58,8 @@ const createHandler = async (ctx) => {
     ]);
 
     if (existedGame[0]) {
-        ctx.body = await existedGame[0];
+        console.log(existedGame[0])
+        ctx.body = existedGame[0];
     } else {
         const game = await new Game({ secret, hash }).save();
         ctx.body = game

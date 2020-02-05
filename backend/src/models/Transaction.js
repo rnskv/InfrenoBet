@@ -4,15 +4,15 @@ import privatePaths from 'mongoose-private-paths';
 const { Schema } = mongoose;
 
 const transactionSchema = new Schema({
-    ownerId: {
+    user: {
         type: mongoose.Types.ObjectId,
         isRequired: true,
-        ref: 'User'
+        ref: 'user'
     },
     destinationId: {
         type: mongoose.Types.ObjectId,
         isRequired: true,
-        ref: 'Game'
+        ref: 'game'
     },
     type: { //GAME_CLASSIC, USER_TRANSFER
         type: String,
