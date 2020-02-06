@@ -36,6 +36,14 @@ gameApi.addRequests({
     create: new Request({
         url: '/',
         method: 'post',
+    }),
+    getWinnerById: new Request({
+        url: '/winner',
+        method: 'post'
+    }),
+    finish: new Request({
+        url: '/finish',
+        method: 'post'
     })
 });
 

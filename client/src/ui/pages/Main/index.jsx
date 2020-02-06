@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 import Button from 'ui/atoms/Button';
 import DefaultTemplate from 'ui/templates/Default';
+import Transaction from 'ui/molecules/Transaction';
 
 import { rootApi } from 'src/redux/root/api';
 import { mapStateToProps, mapDispatchToProps } from './connect';
@@ -16,13 +17,25 @@ const handler = async () => {
     alert(result.body);
 };
 
-let isSubscribed = false;
+const isSubscribed = false;
 
 function Main({
-    time, hash, secret, transactions, winner, users, join, transaction, subscribe, token,
+    time,
+    hash,
+    secret,
+    transactions,
+    winner,
+    users,
+    join,
+    transaction,
+    subscribe,
+    token,
+    transactionsPoolLength,
+    isWaitingTransactions,
 }) {
     useEffect(() => {
         if (isSubscribed) return;
+        console.log('subscribed');
         subscribe();
     }, []);
     return (
@@ -30,13 +43,18 @@ function Main({
             <div>
                 { !token ? <Link to="/login">Go to login</Link> : token}
             </div>
-            <Button onClick={handler}>Test action with token</Button><br/><br/>
+            <Button onClick={handler}>Test action with token</Button>
+            <br />
+            <br />
             <Button onClick={transaction}>Make transaction</Button>
             <p>
                 Время до конца -
                 { time }
             </p>
 
+            {
+                isWaitingTransactions ? `Не все транзакции этой игры обработаны, в очереди на обработку еще ${ transactionsPoolLength } траназкции` : '123123'
+            }
 
             <p>
                 Хэш раунда -
@@ -45,7 +63,12 @@ function Main({
 
             <p>
                 Победитель раунда -
-                { winner.name }
+                { winner.transaction && winner.transaction.user.name }
+            </p>
+
+            <p>
+                Победный билет -
+                { winner && winner.ticket }
             </p>
 
             <p>
@@ -63,9 +86,14 @@ function Main({
                 Транзакции
                 {
                     transactions.map((transaction, index) => (
-                        <div key={index}>
-                            { index }.) { transaction.user.name } - { transaction.value }. Билеты от {transaction.ticketFrom } до { transaction.ticketTo }
-                        </div>
+                        <Transaction
+                            key={transaction.id}
+                            index={index}
+                            user={transaction.user}
+                            value={transaction.value}
+                            ticketFrom={transaction.ticketFrom}
+                            ticketTo={transaction.ticketTo}
+                        />
                     ))
                 }
             </div>

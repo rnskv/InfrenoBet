@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import privatePaths from 'mongoose-private-paths';
+import Transaction from 'src/models/Transaction';
 
 const { Schema } = mongoose;
 
@@ -73,7 +74,36 @@ Game.findById = async (id) => {
 };
 
 Game.update = async (data) => {
+    return await Game.update()
+};
 
+Game.getWinnerById = async (id) => {
+    const game = await Game.findById(id);
+    const lastGameTransaction = await Transaction.getLastInGameByGameId(id);
+
+    const ticketsCount = lastGameTransaction.ticketTo;
+
+    const secret = game.secret;
+    const winnerTicket = Math.floor(secret * ticketsCount);
+
+    const winnerTransaction = await Transaction.findOne({
+        game: mongoose.Types.ObjectId(id),
+        ticketFrom: { $lte: winnerTicket },
+        ticketTo: { $gte: winnerTicket }
+    }).populate('user');
+
+    console.log('Получил победную транзакцию', winnerTransaction);
+    winnerTransaction.winnerTicket = winnerTicket;
+    return {
+        transaction: winnerTransaction,
+        ticket: winnerTicket
+    };
+    //Получаем игру
+    //Получаем все транзакции из игры
+    //Считаем количество билетов в игре (получаем последнюю транзакцию и берем tickerTo);
+    //Берем secret из Game
+    //Умножаем secret на кол-во билетов
+    //Фильтруем 1 траназкцию где победное число > tickerFrom и меньше tickerTo. Возвращаем победную транзакцию.
 };
 
 export default Game;

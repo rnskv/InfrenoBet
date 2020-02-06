@@ -21,7 +21,7 @@ const createHandler = async (ctx) => {
     } = ctx.request.body;
 
     const existedGame = await Game.getLastCreated();
-
+    console.log('Game is exist', existedGame)
     if (existedGame) {
         ctx.body = existedGame;
     } else {
@@ -29,8 +29,42 @@ const createHandler = async (ctx) => {
     }
 };
 
+const getWinner = async (ctx) => {
+    const {
+        id
+    } = ctx.request.body;
+
+    ctx.body = await Game.getWinnerById(id);
+};
+
+const finishGame = async (ctx) => {
+    const {
+        id
+    } = ctx.request.body;
+
+    await Game.updateOne({ _id: mongoose.Types.ObjectId(id)}, { $set: {
+        status: 'FINISHED'
+    }});
+
+    ctx.body = {
+        ok: true
+    }
+};
+
 export const create = new Action({
     method: 'post',
     url: '/',
     handler: createHandler,
+});
+
+export const getWinnerById = new Action({
+    method: 'post',
+    url: '/winner',
+    handler: getWinner,
+});
+
+export const finishById = new Action({
+    method: 'post',
+    url: '/finish',
+    handler: finishGame,
 });

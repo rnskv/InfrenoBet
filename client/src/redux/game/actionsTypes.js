@@ -15,3 +15,4 @@ export const GAME_END = 'GAME_END';
 export const GAME_GET_WINNER = 'GAME_GET_WINNER';
 export const GAME_RESET = 'GAME_RESET';
 export const GAME_SYNC = 'GAME_SYNC';
+export const GAME_WAITING_TRANSACTIONS= 'GAME_WAITING_TRANSACTIONS';

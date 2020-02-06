@@ -7,11 +7,13 @@ const getClearGameState = () => ({
     hash: '',
     winner: {},
     secret: '',
+    isWaitingTransactions: false,
+    transactionsPoolLength: 0,
 });
 
 const initialState = {
     token: window.localStorage.getItem('token') || '',
-    ...getClearGameState()
+    ...getClearGameState(),
 };
 
 function gameReducer(state = initialState, action) {
@@ -28,7 +30,7 @@ function gameReducer(state = initialState, action) {
         console.log('GAME_TRANSACTION');
         return {
             ...state,
-            transactions: [...state.transactions, action.payload.transactionData]
+            transactions: [action.payload.transactionData, ...state.transactions],
         };
     }
 
@@ -74,6 +76,15 @@ function gameReducer(state = initialState, action) {
             ...state,
             ...action.payload.state,
         };
+    }
+
+    case actionTypes.GAME_WAITING_TRANSACTIONS: {
+        console.log(action.payload)
+        return {
+            ...state,
+            isWaitingTransactions: true,
+            transactionsPoolLength: action.payload.transactionsPoolLength,
+        }
     }
 
     default: {

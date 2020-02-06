@@ -3,13 +3,15 @@ import { ws } from 'src/modules/realtime';
 import * as actions from './actions';
 import { authApi } from '../user/api';
 
+let isSubscribed = false;
 export const subscribe = () => async (dispatch) => {
+    if (isSubscribed) return;
     console.log('Subscribed to something');
 
     ws.io.emit('game.sync');
 
     ws.io.on('game.join', (userData) => {
-        dispatch(actions.join({userData}));
+        dispatch(actions.join({ userData }));
     });
 
     ws.io.on('game.transaction', (transactionData) => {
@@ -24,7 +26,7 @@ export const subscribe = () => async (dispatch) => {
         dispatch(actions.tick({ time }));
     });
 
-    ws.io.on('game.getWinner', ({winner, secret}) => {
+    ws.io.on('game.getWinner', ({ winner, secret }) => {
         dispatch(actions.getWinner({ winner, secret }));
     });
 
@@ -36,9 +38,15 @@ export const subscribe = () => async (dispatch) => {
         dispatch(actions.sync({ state }));
     });
 
+    ws.io.on('game.waitingTransactions', ({ transactionsPoolLength }) => {
+        dispatch(actions.waitingTransactions({ transactionsPoolLength }));
+    });
+
     ws.io.on('project.error', (error) => {
         alert(error.message);
     });
+
+    isSubscribed = true;
 };
 
 export const join = () => async (dispatch) => {

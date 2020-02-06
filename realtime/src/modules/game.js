@@ -12,8 +12,9 @@ class Game {
         this.time = 10;
         this.isStarted = false;
         this.isFinished = false;
+        this.isClosedForTransactions = false;
         this.transactionsPool = [];
-
+        this.isWaitingTransactions = false;
         gameApi.execute('create', {
             body: {
                 hash,
@@ -40,14 +41,15 @@ class Game {
 
     get state() {
         return {
-            users: this.users,
-            transactions: this.transactions,
+            transactions: this.transactions.reverse(),
             hash: this.hash,
-            time: this.time
+            time: this.time,
+            isWaitingTransactions: this.isWaitingTransactions,
+            transactionsPoolLength: this.transactionsPool.length
         }
     }
 
-    init({ _id, hash, secret, users, transactions }) {
+    init({ _id, hash, secret, transactions }) {
         this._id = _id;
         this.hash = hash;
         this.secret = secret;
@@ -64,24 +66,57 @@ class Game {
         this.tick();
     }
 
-    tick() {
+    async tick() {
         console.log('tick', this.time);
 
-        this.time -= 1;
+        if (this.time > 0) {
+            this.time -= 1;
+        } else {
+            this.sockets.emit('game.waitingTransactions', { transactionsPoolLength: this.state.transactionsPoolLength });
+            this.isWaitingTransactions = true;
+        }
+
         this.sockets.emit('game.tick', this.time);
+
+        if (this.time < 5) {
+            this.isClosedForTransactions = true;
+        }
 
         if (this.time > 0) {
             setTimeout(this.tick.bind(this), 1000)
         } else {
-            this.getWinner();
-            setTimeout(this.onFinish, 5000);
+            if (this.transactionsPool.length) {
+                setTimeout(this.tick.bind(this), 1000);
+                console.log('Ожидаем все транзакции', this.transactionsPool.length)
+            } else {
+                this.getWinner();
+
+                this.isFinished = true;
+                setTimeout(this.onGameEnd.bind(this), 7000)
+            }
         }
     }
 
-    getWinner() {
-        const winner = this.users[getRandomInt(this.users.length - 1)]; // 1-st user win!;
+    async onGameEnd() {
+        //обновляем игру
+        await gameApi.execute('finish', {
+            body: {
+                id: this._id
+            }
+        });
+        this.isFinished = true;
+        this.onFinish();
+    }
+
+    async getWinner() {
+        const winner = await gameApi.execute('getWinnerById', {
+            body: {
+                id: this._id
+            }
+        });
+
         this.sockets.emit('game.getWinner', {
-            winner,
+            winner: winner,
             secret: this.secret
         });
         console.log('getWinner', winner);
@@ -120,6 +155,7 @@ class Game {
                 this.transactions.push(transaction);
 
                 if (this.users.length >= 2 && !this.isStarted) {
+                // if (!this.isStarted) {
                     this.start();
                 }
 
@@ -132,6 +168,11 @@ class Game {
     }
 
     async registerTransaction(data) {
+        if (this.isClosedForTransactions) {
+            console.log('Closed for transactions');
+            return;
+        }
+
         if (this.transactionsPool.length) {
             this.transactionsPool.push(data);
         } else {
@@ -146,6 +187,7 @@ class Game {
                 this.transactionsPool.shift();
             }
             await this.transaction(this.transactionsPool[0]);
+            this.transactionsPool.shift();
             this.loopTransaction();
         }
     }

@@ -34,3 +34,8 @@ export const sync = (payload) => ({
     type: actionTypes.GAME_SYNC,
     payload,
 });
+
+export const waitingTransactions = (payload) => ({
+    type: actionTypes.GAME_WAITING_TRANSACTIONS,
+    payload,
+});
