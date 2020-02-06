@@ -15,46 +15,17 @@ const getAllHandler = async (ctx) => {
 };
 
 const createHandler = async (ctx) => {
-    console.log('try create game', ctx.request.body);
     const {
         secret,
         hash
     } = ctx.request.body;
 
-    const existedGame = await Game.aggregate([
-        {
-            $match: {
-                status: 'CREATED'
-            }
-        },
-        { $limit: 1 },
-        { $lookup: {
-            from: "transactions",
-            let: { "transactions": "$transactions" },
-            pipeline: [
-                { $match: { "$expr": { "$in": [ "$_id", "$$transactions" ] } } },
-                { $lookup: {
-                    from: "users",
-                    let: { "user": "$user" },
-                    pipeline: [
-                        { "$match": { "$expr": { "$eq": [ "$_id", "$$user" ] } } }
-                    ],
-                    as: "user"
-                }},
-                { $addFields: {
-                    "user": { "$arrayElemAt": [ "$user", 0 ] }
-                }}
-            ],
-            as: "transactions"
-        }}
-    ]);
+    const existedGame = await Game.getLastCreated();
 
-    if (existedGame[0]) {
-        console.log(existedGame[0])
-        ctx.body = existedGame[0];
+    if (existedGame) {
+        ctx.body = existedGame;
     } else {
-        const game = await new Game({ secret, hash }).save();
-        ctx.body = game
+        ctx.body = await Game.create({ secret, hash })
     }
 };
 

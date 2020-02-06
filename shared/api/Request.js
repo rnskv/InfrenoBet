@@ -34,7 +34,7 @@ export default class Request {
             fetcher(url, resultOptions)
                 .then((response) => {
                     if (!checkResponseStatus(response.status)) {
-                        reject({ 'ok': false });
+                        reject(response);
                         return;
                     }
 
@@ -49,7 +49,7 @@ export default class Request {
                     alert(err);
                     reject(err);
                 })
-                .catch(err => console.log(err));
+                .catch(err => reject(err));
         });
     }
 }

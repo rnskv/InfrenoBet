@@ -17,7 +17,7 @@ const getAllHandler = async (ctx) => {
 };
 
 const createHandler = async (ctx) => {
-    console.log('try create transaction', ctx.request.body);
+    console.log('create')
     const {
         user,
         value,
@@ -26,32 +26,32 @@ const createHandler = async (ctx) => {
     } = ctx.request.body;
 
 
-    const transaction = await new Transaction({
+    const transaction = await Transaction.create({
         user: mongoose.Types.ObjectId(user),
+        game: mongoose.Types.ObjectId(destinationId),
         value,
-        destinationId: mongoose.Types.ObjectId(destinationId),
         type
-    }).save();
+    });
 
-    console.log(transaction._id);
+    console.log('create', destinationId, transaction)
 
-    if (transaction.type === 'GAME_CLASSIC') {
-        const game = await Game.findOne({
-            _id: mongoose.Types.ObjectId(transaction.destinationId)
-        });
+    switch (transaction.type) {
+        case 'GAME_CLASSIC': {
+            const game = await Game.findById(transaction.game);
+            console.log('find', game);
 
-        game.transactions.push(transaction._id);
+            game.transactions.push(transaction._id);
+            await game.save();
+            console.log(game);
+            break;
+        }
 
-        await game.save();
+        default: {
+            break;
+        }
     }
-    //тут пушим траназкцию в игру destinationId если type === 'CLASSIC_GAME';
-    const response = await Transaction
-        .findOne({ _id: mongoose.Types.ObjectId(transaction._id)})
-        .populate('user')
-
-    console.log(response);
-    ctx.body = response;
-
+    console.log('send result')
+    ctx.body = await Transaction.getById(transaction._id);
 };
 
 export const create = new Action({

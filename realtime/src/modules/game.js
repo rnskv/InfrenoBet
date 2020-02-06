@@ -99,29 +99,34 @@ class Game {
     }
 
     async transaction(transactionData) {
-        const transaction = await transactionsApi.execute('create', {
-            body: {
-                type: 'GAME_CLASSIC',
-                destinationId: this._id,
-                user: transactionData.user.id,
-                value: transactionData.value,
+        try {
+            console.log('id', this._id)
+            const transaction = await transactionsApi.execute('create', {
+                body: {
+                    type: 'GAME_CLASSIC',
+                    destinationId: this._id,
+                    user: transactionData.user.id,
+                    value: transactionData.value,
+                }
+            });
+
+            const tickets = {
+                from: 0,
+                to: 10,
+            };
+
+
+            this.transactions.push(transaction);
+
+            if (this.users.length >= 2 && !this.isStarted) {
+                this.start();
             }
-        });
 
-        const tickets = {
-            from: 0,
-            to: 10,
-        };
-
-
-        this.transactions.push(transaction);
-
-        if (this.users.length >= 2 && !this.isStarted) {
-            this.start();
+            console.log(transaction);
+            this.sockets.emit('game.transaction', transactionData);
+        } catch (err) {
+            console.log(err)
         }
-
-        console.log(transaction);
-        this.sockets.emit('game.transaction', transactionData);
     }
 
     sync(socket) {
