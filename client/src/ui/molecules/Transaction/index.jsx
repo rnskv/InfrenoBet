@@ -30,25 +30,11 @@ function Transaction({
             }
             <Description>
                 <div>
-Игрок
-                    { user.name }
-                    {' '}
-сделал ставку на сумму
-                    {value}
-₽
+                    Игрок { user.name } сделал ставку на сумму {value}₽
                 </div>
                 <div>
                     <b>
-Билеты: от
-                        { ticketFrom }
-                        {' '}
-до
-                        { ticketTo }
-                        {' '}
-(+
-                        {ticketTo - ticketFrom}
-                        {' '}
-билетов)
+                        {`Билеты: от ${ticketFrom} до ${ticketTo} (+${ticketTo - ticketFrom} билетов)`}
                     </b>
                 </div>
             </Description>
