@@ -30,7 +30,6 @@ class Room {
         const secret = Math.random();
         const hash = crypto.createHash('md5').update(String(secret)).digest("hex");
 
-
         this.game = new Game({
             hash,
             secret,
@@ -66,8 +65,8 @@ io.on('connection', (socket) => {
             return;
         }
         setTimeout(() => {
-            room.game.transaction({ user: socket.user, value: 50});
-        }, getRandomInt(4000))
+            room.game.registerTransaction({ user: socket.user, value: 50});
+        }, 0)
     });
 
     socket.on('game.sync', () => {

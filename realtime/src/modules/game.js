@@ -12,6 +12,7 @@ class Game {
         this.time = 10;
         this.isStarted = false;
         this.isFinished = false;
+        this.transactionsPool = [];
 
         gameApi.execute('create', {
             body: {
@@ -47,7 +48,6 @@ class Game {
     }
 
     init({ _id, hash, secret, users, transactions }) {
-        console.log('init', { _id, hash, secret, transactions });
         this._id = _id;
         this.hash = hash;
         this.secret = secret;
@@ -99,33 +99,54 @@ class Game {
     }
 
     async transaction(transactionData) {
-        try {
-            console.log('id', this._id)
-            const transaction = await transactionsApi.execute('create', {
-                body: {
-                    type: 'GAME_CLASSIC',
-                    destinationId: this._id,
-                    user: transactionData.user.id,
-                    value: transactionData.value,
+        return new Promise((async resolve => {
+            try {
+                console.log('id', this._id)
+                const transaction = await transactionsApi.execute('create', {
+                    body: {
+                        type: 'GAME_CLASSIC',
+                        game: this._id,
+                        user: transactionData.user.id,
+                        value: transactionData.value,
+                    }
+                });
+
+                const tickets = {
+                    from: 0,
+                    to: 10,
+                };
+
+
+                this.transactions.push(transaction);
+
+                if (this.users.length >= 2 && !this.isStarted) {
+                    this.start();
                 }
-            });
 
-            const tickets = {
-                from: 0,
-                to: 10,
-            };
-
-
-            this.transactions.push(transaction);
-
-            if (this.users.length >= 2 && !this.isStarted) {
-                this.start();
+                this.sockets.emit('game.transaction', transaction);
+                resolve();
+            } catch (err) {
+                console.log(err)
             }
+        }))
+    }
 
-            console.log(transaction);
-            this.sockets.emit('game.transaction', transactionData);
-        } catch (err) {
-            console.log(err)
+    async registerTransaction(data) {
+        if (this.transactionsPool.length) {
+            this.transactionsPool.push(data);
+        } else {
+            this.transactionsPool.push(data);
+            this.loopTransaction()
+        }
+    }
+
+    async loopTransaction() {
+        if (this.transactionsPool.length) {
+            if (this.transactionsPool.length > 1) {
+                this.transactionsPool.shift();
+            }
+            await this.transaction(this.transactionsPool[0]);
+            this.loopTransaction();
         }
     }
 

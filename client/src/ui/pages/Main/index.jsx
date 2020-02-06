@@ -63,7 +63,9 @@ function Main({
                 Транзакции
                 {
                     transactions.map((transaction, index) => (
-                        <div key={index}>{ index }.) { transaction.user.name } - { transaction.value }</div>
+                        <div key={index}>
+                            { index }.) { transaction.user.name } - { transaction.value }. Билеты от {transaction.ticketFrom } до { transaction.ticketTo }
+                        </div>
                     ))
                 }
             </div>

@@ -21,19 +21,40 @@ const createHandler = async (ctx) => {
     const {
         user,
         value,
-        destinationId,
+        game,
         type
     } = ctx.request.body;
+    console.log('create', game)
 
+    //Получаем последнюю транзакцию в этой игре
+    const lastTransaction = await Transaction.getLastInGameByGameId(game);
 
+    let ticketFrom = 1;
+    let ticketTo = value;
+
+    if (lastTransaction) {
+        console.log('Есть последнняя транзакция', lastTransaction.ticketTo, ticketTo, ticketTo + lastTransaction.ticketTo)
+        const lastGameTicket = lastTransaction.ticketTo;
+        ticketFrom += lastGameTicket;
+        ticketTo += lastGameTicket;
+    }
+    //Получаем последнюю из нее последний билет
+
+    //прибавляем к этому всему нашу ставку
+
+    //сохраняемс.
+
+    console.log('lat create', game)
     const transaction = await Transaction.create({
         user: mongoose.Types.ObjectId(user),
-        game: mongoose.Types.ObjectId(destinationId),
+        game: mongoose.Types.ObjectId(game),
         value,
-        type
+        type,
+        ticketFrom,
+        ticketTo
     });
 
-    console.log('create', destinationId, transaction)
+    console.log('create', game, transaction)
 
     switch (transaction.type) {
         case 'GAME_CLASSIC': {

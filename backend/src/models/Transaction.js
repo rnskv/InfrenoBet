@@ -23,6 +23,14 @@ const transactionSchema = new Schema({
         type: Number,
         isRequired: true
     },
+    ticketFrom: {
+        type: Number,
+        isRequired: true
+    },
+    ticketTo: {
+        type: Number,
+        isRequired: true
+    },
     createDate: {
         type: Date,
         default: Date.now(),
@@ -31,6 +39,7 @@ const transactionSchema = new Schema({
 const Transaction = mongoose.model('transaction', transactionSchema);
 
 Transaction.create = async (data) => {
+    console.log('create with data', data)
     return new Transaction(data).save()
 };
 
@@ -38,6 +47,15 @@ Transaction.getById = async (id) => {
     return await Transaction
         .findOne({ _id: mongoose.Types.ObjectId(id)})
         .populate('user');
+};
+
+Transaction.getLastInGameByGameId = async (gameId) => {
+    console.log('getLastInGameByGameId', gameId)
+
+    const lastTransaction = await Transaction
+        .findOne({ game: mongoose.Types.ObjectId(gameId) }, {}, { sort: { _id: -1 }});
+
+    return lastTransaction
 };
 
 export default Transaction
