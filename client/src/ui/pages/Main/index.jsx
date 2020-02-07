@@ -7,15 +7,15 @@ import Button from 'ui/atoms/Button';
 import DefaultTemplate from 'ui/templates/Default';
 
 
-
 import Transaction from 'ui/molecules/Transaction';
 
 import { rootApi } from 'src/redux/root/api';
-import { mapStateToProps, mapDispatchToProps } from './connect';
 import UsersBanks from 'ui/organisms/UsersBanks';
 import GameInfo from 'ui/organisms/GameInfo';
-import GameFooter from 'ui/organisms/GameFooter';
+import GameBeginFooter from 'ui/organisms/GameBeginFooter';
 import GameControls from 'ui/organisms/GameControls';
+import GameEndFooter from 'ui/organisms/GameEndFooter';
+import { mapStateToProps, mapDispatchToProps } from './connect';
 
 rootApi.setBearerFromLocalStorage();
 
@@ -41,7 +41,7 @@ function Main({
     transactionsPoolLength,
     isWaitingTransactions,
     isRouletteStart,
-    isShowWinner
+    isShowWinner,
 }) {
     useEffect(() => {
         if (isSubscribed) return;
@@ -58,47 +58,48 @@ function Main({
                 bank={bank}
                 winner={winner}
             />
-            {/*<div>*/}
-            {/*    { !token ? <Link to="/login">Go to login</Link> : token}*/}
-            {/*</div>*/}
-            {/*<Button onClick={handler}>Test action with token</Button>*/}
-            {/*<br />*/}
-            {/*<br />*/}
-            {/*<p>*/}
+            {/* <div> */}
+            {/*    { !token ? <Link to="/login">Go to login</Link> : token} */}
+            {/* </div> */}
+            {/* <Button onClick={handler}>Test action with token</Button> */}
+            {/* <br /> */}
+            {/* <br /> */}
+            {/* <p> */}
             {/*    Время до конца -*/}
-            {/*    { time }*/}
-            {/*</p>*/}
+            {/*    { time } */}
+            {/* </p> */}
 
-            {/*{*/}
-            {/*    isWaitingTransactions ? `Не все транзакции этой игры обработаны, в очереди на обработку еще ${ transactionsPoolLength } траназкции` : '123123'*/}
-            {/*}*/}
+            {/* { */}
+            {/*    isWaitingTransactions ? `Не все транзакции этой игры обработаны, в очереди на обработку еще ${ transactionsPoolLength } траназкции` : '123123' */}
+            {/* } */}
 
-            {/*<p>*/}
+            {/* <p> */}
             {/*    Хэш раунда -*/}
-            {/*    { hash }*/}
-            {/*</p>*/}
+            {/*    { hash } */}
+            {/* </p> */}
 
-            {/*<p>*/}
+            {/* <p> */}
             {/*    Победитель раунда -*/}
-            {/*    { winner.transaction && winner.transaction.user.name }*/}
-            {/*</p>*/}
+            {/*    { winner.transaction && winner.transaction.user.name } */}
+            {/* </p> */}
 
-            {/*<p>*/}
+            {/* <p> */}
             {/*    Победный билет -*/}
-            {/*    { winner && winner.ticket }*/}
-            {/*</p>*/}
+            {/*    { winner && winner.ticket } */}
+            {/* </p> */}
 
-            {/*<p>*/}
+            {/* <p> */}
             {/*    Секретно число раунда -*/}
-            {/*    { secret || 'secret'}*/}
-            {/*</p>*/}
-            {/*<div>*/}
-            {/*    { `Банк игры ${ bank.total } рублей` }*/}
-            {/*</div>*/}
+            {/*    { secret || 'secret'} */}
+            {/* </p> */}
+            {/* <div> */}
+            {/*    { `Банк игры ${ bank.total } рублей` } */}
+            {/* </div> */}
             <GameControls
                 transaction={transaction}
             />
             <UsersBanks users={users} bank={bank} />
+            { isShowWinner ? <GameEndFooter secret={secret} /> : null }
             <div>
                 {
                     transactions.map((transaction, index) => (
@@ -113,7 +114,7 @@ function Main({
                     ))
                 }
             </div>
-            <GameFooter hash={hash}/>
+            <GameBeginFooter hash={hash} />
         </DefaultTemplate>
     );
 }

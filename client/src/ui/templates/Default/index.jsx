@@ -25,6 +25,9 @@ const Content = styled.div`
     color: var(--color-grey);
     border-radius: 5px;
     box-shadow: 0px 0px 3px 0px var(--color-shadow);
+    align-self: flex-start;
+    overflow: hidden;
+   
 }
 
 `;

@@ -9,26 +9,25 @@ import UserBank from 'ui/molecules/UserBank';
 import WinInfo from 'ui/organisms/WinInfo';
 
 import {
-    Container,
-    Title,
+    Footer,
     FairGame
 } from './styled';
 
-function GameFooter({ hash }) {
+
+function GameBeginFooter({ children, text, hash, position }) {
     return (
-        <Container>
-            <Title>ИГРА НАЧАЛАСЬ, ПОКУПАЙТЕ БИЛЕТЫ!</Title>
+        <Footer text="ИГРА НАЧАЛАСЬ, ПОКУПАЙТЕ БИЛЕТЫ!">
             <FairGame>
                 <div>Честная игра</div>
                 <span>
                     Хэш игры md5: { hash }
                 </span>
             </FairGame>
-        </Container>
+        </Footer>
     );
 }
 
-GameFooter.propTypes = {
+GameBeginFooter.propTypes = {
 };
 
-export default GameFooter;
+export default GameBeginFooter;
