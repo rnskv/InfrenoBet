@@ -8,27 +8,27 @@ import {
 
 export const checkResponseStatus = (status) => {
     if (status >= 500) {
-        console.log(SERVER_ERROR);
+        // console.log(SERVER_ERROR);
         return false;
     }
 
     if (status >= 400) {
-        console.log(CLIENT_ERROR);
+        // console.log(CLIENT_ERROR);
         return false;
     }
 
     if (status >= 300) {
-        console.log(REDIRECT_MESSAGE);
+        // console.log(REDIRECT_MESSAGE);
         return true;
     }
 
     if (status >= 200) {
-        console.log(SUCCESS_MESSAGE);
+        // console.log(SUCCESS_MESSAGE);
         return true;
     }
 
     if (status >= 100) {
-        console.log(INFORMATION_MESSAGE);
+        // console.log(INFORMATION_MESSAGE);
         return true;
     }
 };

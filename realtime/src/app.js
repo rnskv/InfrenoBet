@@ -25,7 +25,6 @@ class Room {
     }
 
     initialize() {
-        console.log('reset game');
         this.gamesCount++;
         const secret = Math.random();
         const hash = crypto.createHash('md5').update(String(secret)).digest("hex");
@@ -52,7 +51,6 @@ io.use((socket, next) => {
 });
 
 io.on('connection', (socket) => {
-    console.log('connected');
     socket.on('project.auth', (token) => {
         socket.jwtToken = token;
         socket.user = jwtDecode(token);
@@ -65,10 +63,11 @@ io.on('connection', (socket) => {
             return;
         }
         setTimeout(async () => {
-            await room.game.registerTransaction({ user: socket.user, value: 50, onAccept: () => {
-                socket.emit('game.me.transaction')
+            console.log('register transaction')
+            room.game.registerTransaction({ user: socket.user, value: 50, onAccept: () => {
+                socket.emit('game.transactionAccepted')
             }});
-        }, 0)
+        }, 2321)
     });
 
     socket.on('game.sync', () => {

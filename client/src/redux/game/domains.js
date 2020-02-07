@@ -46,9 +46,9 @@ export const subscribe = () => async (dispatch) => {
         dispatch(actions.startRoulette());
     });
 
-    ws.io.on('game.me.transaction', () => {
+    ws.io.on('game.transactionAccepted', () => {
         console.log('Мой депозит принят')
-        // dispatch(actions.startRoulette());
+        dispatch(actions.transactionAccepted());
     });
 
     ws.io.on('project.error', (error) => {
@@ -64,6 +64,7 @@ export const join = () => async (dispatch) => {
 
 export const transaction = () => async (dispatch) => {
     ws.io.emit('game.transaction', { user: { name: 'Roma' }, value: 100 });
+    dispatch(actions.transactionSended());
 };
 // ws.io.emit('game.sync');
 // ws.io.emit('game.join');

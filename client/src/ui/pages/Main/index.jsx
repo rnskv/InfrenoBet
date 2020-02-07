@@ -42,6 +42,7 @@ function Main({
     isWaitingTransactions,
     isRouletteStart,
     isShowWinner,
+    userDepositsCount
 }) {
     useEffect(() => {
         if (isSubscribed) return;
@@ -50,6 +51,7 @@ function Main({
     }, []);
     return (
         <DefaultTemplate>
+            { userDepositsCount }
             <GameInfo
                 time={time}
                 isRouletteStart={isRouletteStart}

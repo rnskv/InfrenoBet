@@ -33,6 +33,7 @@ export function mapStateToProps(state) {
         users: state.game.users,
         bank: state.game.bank,
         isRouletteStart: state.game.isRouletteStart,
-        isShowWinner: state.game.isShowWinner
+        isShowWinner: state.game.isShowWinner,
+        userDepositsCount: state.game.userDepositsCount,
     };
 }

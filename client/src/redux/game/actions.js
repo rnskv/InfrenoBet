@@ -44,3 +44,13 @@ export const startRoulette = (payload) => ({
     type: actionTypes.GAME_START_ROULETTE,
     payload,
 });
+
+export const transactionAccepted = (payload) => ({
+    type: actionTypes.GAME_TRANSACTION_ACCEPTED,
+    payload,
+});
+
+export const transactionSended = (payload) => ({
+    type: actionTypes.GAME_TRANSACTION_SENDED,
+    payload,
+});

@@ -27,8 +27,6 @@ class Game {
         }).catch((err) => {
             console.log(err)
         });
-
-        console.log('Game was created on server serverCopy');
     }
 
     get users() {
@@ -91,7 +89,6 @@ class Game {
     }
 
     start() {
-        console.log('start');
         this.isStarted = true;
 
         this.sockets.emit('game.start', this.time);
@@ -99,8 +96,6 @@ class Game {
     }
 
     async tick() {
-        console.log('tick', this.time);
-
         if (this.time > 0) {
             this.time -= 1;
         } else {
@@ -161,10 +156,7 @@ class Game {
     }
 
     join(userData) {
-        console.log('join', userData);
-
         this.sockets.emit('game.join', userData);
-
     }
 
     isFirstUserTransaction(user) {
@@ -174,7 +166,6 @@ class Game {
     async transaction(transactionData) {
         return new Promise((async resolve => {
             try {
-                console.log('id', this._id)
                 const transaction = await transactionsApi.execute('create', {
                     body: {
                         type: 'GAME_CLASSIC',
@@ -207,7 +198,6 @@ class Game {
 
     async registerTransaction(data) {
         if (this.isClosedForTransactions) {
-            console.log('Closed for transactions');
             return;
         }
 
@@ -221,11 +211,11 @@ class Game {
 
     async loopTransaction() {
         if (this.transactionsPool.length) {
-            if (this.transactionsPool.length > 1) {
-                this.transactionsPool.shift();
-            }
-            await this.transaction(this.transactionsPool[0]);
-            this.transactionsPool[0].onAccept();
+            const transaction = this.transactionsPool[0];
+
+            await this.transaction(transaction);
+            transaction.onAccept();
+
             this.transactionsPool.shift();
             this.loopTransaction();
         }

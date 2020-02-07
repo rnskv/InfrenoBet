@@ -15,6 +15,7 @@ const getClearGameState = () => ({
     isRouletteStart: false,
     isShowWinner: false,
     transactionsPoolLength: 0,
+    userDepositsCount: 0,
 });
 
 const initialState = {
@@ -101,6 +102,20 @@ function gameReducer(state = initialState, action) {
         return {
             ...state,
             isRouletteStart: true,
+        };
+    }
+
+    case actionTypes.GAME_TRANSACTION_ACCEPTED: {
+        return {
+            ...state,
+            userDepositsCount: state.userDepositsCount - 1,
+        };
+    }
+
+    case actionTypes.GAME_TRANSACTION_SENDED: {
+        return {
+            ...state,
+            userDepositsCount: state.userDepositsCount + 1,
         };
     }
 
