@@ -34,7 +34,7 @@ function Transaction({
                 </div>
                 <div>
                     <b>
-                        {`Билеты: от ${ticketFrom} до ${ticketTo} (+${ticketTo - ticketFrom} билетов)`}
+                        {`Билеты: от ${ticketFrom} до ${ticketTo} (+${ticketTo - ticketFrom + 1} билетов)`}
                     </b>
                 </div>
             </Description>

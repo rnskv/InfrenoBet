@@ -31,7 +31,7 @@ const createHandler = async (ctx) => {
     const lastTransaction = await Transaction.getLastInGameByGameId(game);
 
     let ticketFrom = 1;
-    let ticketTo = value + 1;
+    let ticketTo = value;
 
     if (lastTransaction) {
         console.log('Есть последнняя транзакция', lastTransaction.ticketTo, ticketTo, ticketTo + lastTransaction.ticketTo)

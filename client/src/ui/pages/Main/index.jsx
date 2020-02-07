@@ -14,6 +14,8 @@ import { rootApi } from 'src/redux/root/api';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import UsersBanks from 'ui/organisms/UsersBanks';
 import GameInfo from 'ui/organisms/GameInfo';
+import GameFooter from 'ui/organisms/GameFooter';
+import GameControls from 'ui/organisms/GameControls';
 
 rootApi.setBearerFromLocalStorage();
 
@@ -48,8 +50,6 @@ function Main({
     }, []);
     return (
         <DefaultTemplate>
-            <Button onClick={transaction}>Make transaction</Button>
-
             <GameInfo
                 time={time}
                 isRouletteStart={isRouletteStart}
@@ -95,9 +95,10 @@ function Main({
             {/*<div>*/}
             {/*    { `Банк игры ${ bank.total } рублей` }*/}
             {/*</div>*/}
-
+            <GameControls
+                transaction={transaction}
+            />
             <UsersBanks users={users} bank={bank} />
-
             <div>
                 {
                     transactions.map((transaction, index) => (
@@ -112,7 +113,7 @@ function Main({
                     ))
                 }
             </div>
-
+            <GameFooter hash={hash}/>
         </DefaultTemplate>
     );
 }

@@ -34,7 +34,7 @@ function GameInfo({
 
             {
                 isRouletteStart
-                    ? 'РУЛКТКА КРУТИТСЯ ЛАВЕХА МУТИТСЯ'
+                    ? <div style={{color: '#000', padding: '20px', border: '1px solid black', margin: '20px'}}>Тут будет красивая рулетка</div>
                     : (
                         <StartGame>
                             <ItemsCount> {transactions.length} / 50 </ItemsCount>

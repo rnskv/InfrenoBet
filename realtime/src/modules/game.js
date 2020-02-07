@@ -9,7 +9,7 @@ class Game {
         this.transactions = [];
         this.onFinish = onFinish;
         this.sockets = sockets;
-        this.time = 10;
+        this.time = 20;
         this.isStarted = false;
         this.isFinished = false;
         this.isClosedForTransactions = false;
@@ -180,7 +180,7 @@ class Game {
                         type: 'GAME_CLASSIC',
                         game: this._id,
                         user: transactionData.user.id,
-                        value: transactionData.value,
+                        value: getRandomInt(200) || transactionData.value,
                     }
                 });
 
