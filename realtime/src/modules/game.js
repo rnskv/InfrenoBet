@@ -13,6 +13,8 @@ class Game {
         this.isStarted = false;
         this.isFinished = false;
         this.isClosedForTransactions = false;
+        this.isRouletteStart = false;
+        this.isShowWinner = false;
         this.transactionsPool = [];
         this.isWaitingTransactions = false;
         gameApi.execute('create', {
@@ -73,7 +75,9 @@ class Game {
             isWaitingTransactions: this.isWaitingTransactions,
             transactionsPoolLength: this.transactionsPool.length,
             bank: this.bank,
-            users: this.users
+            users: this.users,
+            isShowRoulette: this.isShowRoulette,
+            isShowWinner: this.isShowWinner
         }
     }
 
@@ -118,9 +122,6 @@ class Game {
                 console.log('Ожидаем все транзакции', this.transactionsPool.length)
             } else {
                 this.getWinner();
-
-                this.isFinished = true;
-                setTimeout(this.onGameEnd.bind(this), 7000)
             }
         }
     }
@@ -143,11 +144,20 @@ class Game {
             }
         });
 
-        this.sockets.emit('game.getWinner', {
-            winner: winner,
-            secret: this.secret
-        });
-        console.log('getWinner', winner);
+        this.isShowRoulette = true;
+        this.sockets.emit('game.startRoulette');
+
+        setTimeout(() => {
+            this.isShowWinner = true;
+            this.isFinished = true;
+
+            this.sockets.emit('game.getWinner', {
+                winner: winner,
+                secret: this.secret
+            });
+
+            setTimeout(this.onGameEnd.bind(this), 7000)
+        }, 5000);
     }
 
     join(userData) {

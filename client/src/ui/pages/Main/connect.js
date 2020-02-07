@@ -32,5 +32,7 @@ export function mapStateToProps(state) {
         isWaitingTransactions: state.game.isWaitingTransactions,
         users: state.game.users,
         bank: state.game.bank,
+        isRouletteStart: state.game.isRouletteStart,
+        isShowWinner: state.game.isShowWinner
     };
 }

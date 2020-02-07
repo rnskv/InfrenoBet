@@ -10,11 +10,10 @@ import DefaultTemplate from 'ui/templates/Default';
 
 import Transaction from 'ui/molecules/Transaction';
 
-
-
 import { rootApi } from 'src/redux/root/api';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import UsersBanks from 'ui/organisms/UsersBanks';
+import GameInfo from 'ui/organisms/GameInfo';
 
 rootApi.setBearerFromLocalStorage();
 
@@ -39,6 +38,8 @@ function Main({
     token,
     transactionsPoolLength,
     isWaitingTransactions,
+    isRouletteStart,
+    isShowWinner
 }) {
     useEffect(() => {
         if (isSubscribed) return;
@@ -47,44 +48,53 @@ function Main({
     }, []);
     return (
         <DefaultTemplate>
-            <div>
-                { !token ? <Link to="/login">Go to login</Link> : token}
-            </div>
-            <Button onClick={handler}>Test action with token</Button>
-            <br />
-            <br />
             <Button onClick={transaction}>Make transaction</Button>
-            <p>
-                Время до конца -
-                { time }
-            </p>
 
-            {
-                isWaitingTransactions ? `Не все транзакции этой игры обработаны, в очереди на обработку еще ${ transactionsPoolLength } траназкции` : '123123'
-            }
+            <GameInfo
+                time={time}
+                isRouletteStart={isRouletteStart}
+                isShowWinner={isShowWinner}
+                transactions={transactions}
+                bank={bank}
+                winner={winner}
+            />
+            {/*<div>*/}
+            {/*    { !token ? <Link to="/login">Go to login</Link> : token}*/}
+            {/*</div>*/}
+            {/*<Button onClick={handler}>Test action with token</Button>*/}
+            {/*<br />*/}
+            {/*<br />*/}
+            {/*<p>*/}
+            {/*    Время до конца -*/}
+            {/*    { time }*/}
+            {/*</p>*/}
 
-            <p>
-                Хэш раунда -
-                { hash }
-            </p>
+            {/*{*/}
+            {/*    isWaitingTransactions ? `Не все транзакции этой игры обработаны, в очереди на обработку еще ${ transactionsPoolLength } траназкции` : '123123'*/}
+            {/*}*/}
 
-            <p>
-                Победитель раунда -
-                { winner.transaction && winner.transaction.user.name }
-            </p>
+            {/*<p>*/}
+            {/*    Хэш раунда -*/}
+            {/*    { hash }*/}
+            {/*</p>*/}
 
-            <p>
-                Победный билет -
-                { winner && winner.ticket }
-            </p>
+            {/*<p>*/}
+            {/*    Победитель раунда -*/}
+            {/*    { winner.transaction && winner.transaction.user.name }*/}
+            {/*</p>*/}
 
-            <p>
-                Секретно число раунда -
-                { secret || 'secret'}
-            </p>
-            <div>
-                { `Банк игры ${ bank.total } рублей` }
-            </div>
+            {/*<p>*/}
+            {/*    Победный билет -*/}
+            {/*    { winner && winner.ticket }*/}
+            {/*</p>*/}
+
+            {/*<p>*/}
+            {/*    Секретно число раунда -*/}
+            {/*    { secret || 'secret'}*/}
+            {/*</p>*/}
+            {/*<div>*/}
+            {/*    { `Банк игры ${ bank.total } рублей` }*/}
+            {/*</div>*/}
 
             <UsersBanks users={users} bank={bank} />
 

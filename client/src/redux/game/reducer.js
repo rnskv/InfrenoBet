@@ -12,6 +12,8 @@ const getClearGameState = () => ({
     winner: {},
     secret: '',
     isWaitingTransactions: false,
+    isRouletteStart: false,
+    isShowWinner: false,
     transactionsPoolLength: 0,
 });
 
@@ -37,7 +39,7 @@ function gameReducer(state = initialState, action) {
             ...state,
             bank,
             users,
-            transactions: [transaction, ...state.transactions]
+            transactions: [transaction, ...state.transactions],
         };
     }
 
@@ -64,6 +66,7 @@ function gameReducer(state = initialState, action) {
             ...state,
             winner: action.payload.winner,
             secret: action.payload.secret,
+            isShowWinner: true,
         };
     }
 
@@ -86,12 +89,19 @@ function gameReducer(state = initialState, action) {
     }
 
     case actionTypes.GAME_WAITING_TRANSACTIONS: {
-        console.log(action.payload)
+        console.log(action.payload);
         return {
             ...state,
             isWaitingTransactions: true,
             transactionsPoolLength: action.payload.transactionsPoolLength,
-        }
+        };
+    }
+
+    case actionTypes.GAME_START_ROULETTE: {
+        return {
+            ...state,
+            isRouletteStart: true,
+        };
     }
 
     default: {

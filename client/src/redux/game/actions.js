@@ -39,3 +39,8 @@ export const waitingTransactions = (payload) => ({
     type: actionTypes.GAME_WAITING_TRANSACTIONS,
     payload,
 });
+
+export const startRoulette = (payload) => ({
+    type: actionTypes.GAME_START_ROULETTE,
+    payload,
+});

@@ -42,6 +42,10 @@ export const subscribe = () => async (dispatch) => {
         dispatch(actions.waitingTransactions({ transactionsPoolLength }));
     });
 
+    ws.io.on('game.startRoulette', () => {
+        dispatch(actions.startRoulette());
+    });
+
     ws.io.on('project.error', (error) => {
         alert(error.message);
     });
