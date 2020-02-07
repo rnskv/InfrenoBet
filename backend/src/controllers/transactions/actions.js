@@ -5,6 +5,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import Transaction from 'src/models/Transaction';
 import Game from 'src/models/Game';
+import User from 'src/models/User';
 
 import config from 'src/config';
 
@@ -71,9 +72,27 @@ const createHandler = async (ctx) => {
             break;
         }
     }
-    console.log('send result')
+    console.log('user', user, value)
+    await User.changeBalance(user, -value);
+    console.log('then');
     ctx.body = await Transaction.getById(transaction._id);
 };
+
+const getGameBankSumById = async (ctx) => {
+    const {
+        id
+    } = ctx.request.body;
+
+    console.log('id', id);
+
+    ctx.body = await Transaction.getGameBankSumById(id);
+};
+
+export const getBankSunById = new Action({
+    method: 'post',
+    url: '/bank',
+    handler: getGameBankSumById
+});
 
 export const create = new Action({
     method: 'post',

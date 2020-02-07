@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import privatePaths from 'mongoose-private-paths';
+import Transaction from './Transaction';
 
 const { Schema } = mongoose;
 
@@ -37,4 +38,20 @@ const userSchema = new Schema({
 
 userSchema.plugin(privatePaths);
 
-export default mongoose.model('user', userSchema);
+const User = mongoose.model('user', userSchema);
+
+User.getById = async (id) => {
+    return await User.findOne({ _id: mongoose.Types.ObjectId(id)})
+};
+
+User.changeBalance = async (id, amount) => {
+    console.log('Меняю баланс у ', id, amount);
+    const user = await User.getById(id);
+    console.log(user);
+    user.balance = user.balance + amount;
+    user.save();
+    return user
+};
+
+
+export default User;

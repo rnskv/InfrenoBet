@@ -5,10 +5,16 @@ import { Link } from 'react-router-dom';
 
 import Button from 'ui/atoms/Button';
 import DefaultTemplate from 'ui/templates/Default';
+
+
+
 import Transaction from 'ui/molecules/Transaction';
+
+
 
 import { rootApi } from 'src/redux/root/api';
 import { mapStateToProps, mapDispatchToProps } from './connect';
+import UsersBanks from 'ui/organisms/UsersBanks';
 
 rootApi.setBearerFromLocalStorage();
 
@@ -27,6 +33,7 @@ function Main({
     winner,
     users,
     join,
+    bank,
     transaction,
     subscribe,
     token,
@@ -76,14 +83,12 @@ function Main({
                 { secret || 'secret'}
             </p>
             <div>
-                Игроки в банке:
-                {
-                    users.map((user, index) => <div key={index}>{ user ? user.name : 'test' }</div>)
-                }
+                { `Банк игры ${ bank.total } рублей` }
             </div>
 
+            <UsersBanks users={users} bank={bank} />
+
             <div>
-                Транзакции
                 {
                     transactions.map((transaction, index) => (
                         <Transaction

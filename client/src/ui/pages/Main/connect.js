@@ -30,6 +30,7 @@ export function mapStateToProps(state) {
         secret: state.game.secret,
         transactionsPoolLength: state.game.transactionsPoolLength,
         isWaitingTransactions: state.game.isWaitingTransactions,
-        users: getUsers(state.game.transactions),
+        users: state.game.users,
+        bank: state.game.bank,
     };
 }

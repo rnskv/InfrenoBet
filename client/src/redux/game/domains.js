@@ -14,8 +14,8 @@ export const subscribe = () => async (dispatch) => {
         dispatch(actions.join({ userData }));
     });
 
-    ws.io.on('game.transaction', (transactionData) => {
-        dispatch(actions.transaction({ transactionData }));
+    ws.io.on('game.transaction', ({ transaction, bank, users }) => {
+        dispatch(actions.transaction({ transaction, bank, users }));
     });
 
     ws.io.on('game.start', (game) => {

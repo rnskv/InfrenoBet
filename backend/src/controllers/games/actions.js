@@ -4,6 +4,9 @@ import Action from 'src/core/Action';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import Game from 'src/models/Game';
+import User from 'src/models/User';
+import Transaction from 'src/models/Transaction';
+
 import config from 'src/config';
 
 const getHandler = async (ctx) => {
@@ -34,7 +37,13 @@ const getWinner = async (ctx) => {
         id
     } = ctx.request.body;
 
-    ctx.body = await Game.getWinnerById(id);
+    const winner = await Game.getWinnerById(id);
+    const bank = await Transaction.getGameBankSumById(id);
+
+    console.log('BANK', bank)
+    await User.changeBalance(winner.transaction.user.id, bank.sum);
+
+    ctx.body = winner;
 };
 
 const finishGame = async (ctx) => {
@@ -50,6 +59,7 @@ const finishGame = async (ctx) => {
         ok: true
     }
 };
+
 
 export const create = new Action({
     method: 'post',

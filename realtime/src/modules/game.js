@@ -36,7 +36,33 @@ class Game {
             uniqueUsers[transaction.user._id] = transaction.user;
         });
 
-        return Object.values(uniqueUsers);
+        return Object.values(uniqueUsers).sort((a, b) => {
+            if (this.bank.users[a._id] < this.bank.users[b._id]) {
+                return 1;
+            } else if (this.bank[a._id] > this.bank[b._id]) {
+                return -1;
+            } else {
+                return 0;
+            }
+        });
+    }
+
+    get bank() {
+        const total = this.transactions.reduce((acc,transaction) => {
+            return acc + transaction.value;
+        }, 0);
+
+        const users = {};
+
+        this.transactions.forEach(transaction => {
+            const userId = transaction.user._id;
+            users[userId] = users[userId] ? users[userId] + transaction.value : transaction.value;
+        });
+
+        return {
+            total,
+            users
+        };
     }
 
     get state() {
@@ -45,7 +71,9 @@ class Game {
             hash: this.hash,
             time: this.time,
             isWaitingTransactions: this.isWaitingTransactions,
-            transactionsPoolLength: this.transactionsPool.length
+            transactionsPoolLength: this.transactionsPool.length,
+            bank: this.bank,
+            users: this.users
         }
     }
 
@@ -159,7 +187,7 @@ class Game {
                     this.start();
                 }
 
-                this.sockets.emit('game.transaction', transaction);
+                this.sockets.emit('game.transaction', { transaction, bank: this.bank, users: this.users });
                 resolve();
             } catch (err) {
                 console.log(err)

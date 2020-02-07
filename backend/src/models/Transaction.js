@@ -58,4 +58,18 @@ Transaction.getLastInGameByGameId = async (gameId) => {
     return lastTransaction
 };
 
+Transaction.getGameBankSumById = async (gameId) => {
+      return (await Transaction.aggregate([
+        {
+            $match: { game: mongoose.Types.ObjectId(gameId) }
+        },
+        {
+            $group: {
+                _id: '$game',
+                sum: { $sum: '$value' }
+            }
+        }
+    ]))[0]
+};
+
 export default Transaction

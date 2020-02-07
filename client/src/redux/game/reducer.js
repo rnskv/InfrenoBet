@@ -3,6 +3,10 @@ import * as actionTypes from './actionsTypes';
 const getClearGameState = () => ({
     transactions: [],
     users: [],
+    bank: {
+        users: {},
+        total: 0,
+    },
     time: 0,
     hash: '',
     winner: {},
@@ -28,9 +32,12 @@ function gameReducer(state = initialState, action) {
 
     case actionTypes.GAME_TRANSACTION: {
         console.log('GAME_TRANSACTION');
+        const { transaction, bank, users } = action.payload;
         return {
             ...state,
-            transactions: [action.payload.transactionData, ...state.transactions],
+            bank,
+            users,
+            transactions: [transaction, ...state.transactions]
         };
     }
 
