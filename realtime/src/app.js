@@ -64,8 +64,10 @@ io.on('connection', (socket) => {
             socket.emit('project.error', { message: 'Unauthorization' });
             return;
         }
-        setTimeout(() => {
-            room.game.registerTransaction({ user: socket.user, value: 50});
+        setTimeout(async () => {
+            await room.game.registerTransaction({ user: socket.user, value: 50, onAccept: () => {
+                socket.emit('game.me.transaction')
+            }});
         }, 0)
     });
 

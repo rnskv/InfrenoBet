@@ -225,6 +225,7 @@ class Game {
                 this.transactionsPool.shift();
             }
             await this.transaction(this.transactionsPool[0]);
+            this.transactionsPool[0].onAccept();
             this.transactionsPool.shift();
             this.loopTransaction();
         }
