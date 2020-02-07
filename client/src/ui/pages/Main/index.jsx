@@ -51,7 +51,7 @@ function Main({
     }, []);
     return (
         <DefaultTemplate>
-            { userDepositsCount }
+            Моих транзакций в обработке - { userDepositsCount }
             <GameInfo
                 time={time}
                 isRouletteStart={isRouletteStart}
