@@ -35,5 +35,6 @@ export function mapStateToProps(state) {
         isRouletteStart: state.game.isRouletteStart,
         isShowWinner: state.game.isShowWinner,
         userDepositsCount: state.game.userDepositsCount,
+        avatars: state.game.avatars,
     };
 }

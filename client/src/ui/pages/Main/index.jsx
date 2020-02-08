@@ -42,7 +42,8 @@ function Main({
     isWaitingTransactions,
     isRouletteStart,
     isShowWinner,
-    userDepositsCount
+    userDepositsCount,
+    avatars
 }) {
     useEffect(() => {
         if (isSubscribed) return;
@@ -59,6 +60,8 @@ function Main({
                 transactions={transactions}
                 bank={bank}
                 winner={winner}
+                users={users}
+                avatars={avatars}
             />
             {/* <div> */}
             {/*    { !token ? <Link to="/login">Go to login</Link> : token} */}

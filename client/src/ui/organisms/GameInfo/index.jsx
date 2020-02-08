@@ -7,6 +7,7 @@ import Input from 'ui/atoms/Input';
 
 import UserBank from 'ui/molecules/UserBank';
 import WinInfo from 'ui/organisms/WinInfo';
+import Roulette from 'ui/organisms/Roulette';
 
 import {
     Container,
@@ -26,15 +27,27 @@ function getFormattedTime(time) {
 }
 
 function GameInfo({
-    id, time, transactions, bank, winner, isRouletteStart, isShowWinner,
+    id, time, transactions, bank, winner, isRouletteStart, isShowWinner, users, avatars
 }) {
     return (
         <Container>
             <Title>{`Игра ${id}`}</Title>
-
+            {/*<Roulette*/}
+            {/*    transactions={transactions}*/}
+            {/*    bank={bank}*/}
+            {/*    winner={winner}*/}
+            {/*    users={users}*/}
+            {/*    avatars={avatars}*/}
+            {/*/>*/}
             {
                 isRouletteStart
-                    ? <div style={{color: '#000', padding: '20px', border: '1px solid black', margin: '20px'}}>Тут будет красивая рулетка</div>
+                    ? <Roulette
+                        transactions={transactions}
+                        bank={bank}
+                        winner={winner}
+                        users={users}
+                        avatars={avatars}
+                    />
                     : (
                         <StartGame>
                             <ItemsCount> {transactions.length} / 50 </ItemsCount>

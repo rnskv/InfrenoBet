@@ -9,7 +9,7 @@ class Game {
         this.transactions = [];
         this.onFinish = onFinish;
         this.sockets = sockets;
-        this.time = 20;
+        this.time = 10;
         this.isStarted = false;
         this.isFinished = false;
         this.isClosedForTransactions = false;
@@ -152,7 +152,7 @@ class Game {
             });
 
             setTimeout(this.onGameEnd.bind(this), 7000)
-        }, 5000);
+        }, 16000);
     }
 
     join(userData) {

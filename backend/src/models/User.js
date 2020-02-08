@@ -17,6 +17,10 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
+    avatar: {
+        type: String,
+        default: 'https://sun9-37.userapi.com/c830400/v830400985/c0fdb/9CIryApwPMY.jpg?ava=1'
+    },
     password: {
         type: String,
         required: true,
