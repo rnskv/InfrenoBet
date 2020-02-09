@@ -17,8 +17,8 @@ export const Avatars = styled.div`
     width: 24080px;
     height: 80px;
     overflow: hidden;
-    //transition: 1s;
-    //transition-timing-function: linear;
+    transition: 16000ms;
+    transition-timing-function: cubic-bezier(0.32, 0.64, 0.45, 1);
     img {
       width: 80px;
       height: 80px;

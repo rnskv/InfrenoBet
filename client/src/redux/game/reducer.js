@@ -13,10 +13,12 @@ const getClearGameState = () => ({
     isWaitingTransactions: false,
     transactionsPoolLength: 0,
     userDepositsCount: 0,
+    isShowWinner: false,
     roulette: {
         offset: 0,
         avatars: [],
         isVisible: false,
+        winner: {}
     },
 });
 
@@ -67,6 +69,7 @@ function gameReducer(state = initialState, action) {
         return {
             ...state,
             secret: action.payload.secret,
+            isShowWinner: true
         };
     }
 

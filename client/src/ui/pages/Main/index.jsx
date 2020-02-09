@@ -59,6 +59,7 @@ function Main({
                 bank={bank}
                 users={users}
                 roulette={roulette}
+                isShowWinner={isShowWinner}
             />
             {/* <div> */}
             {/*    { !token ? <Link to="/login">Go to login</Link> : token} */}
@@ -101,7 +102,7 @@ function Main({
                 transaction={transaction}
             />
             <UsersBanks users={users} bank={bank} />
-            { roulette.isShowWinner ? <GameEndFooter secret={secret} /> : null }
+            { isShowWinner ? <GameEndFooter secret={secret} /> : null }
             <div>
                 {
                     transactions.map((transaction, index) => (

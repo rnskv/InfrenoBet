@@ -19,6 +19,7 @@ class Game {
         this.isShowWinner = false;
         this.transactionsPool = [];
         this.isWaitingTransactions = false;
+        this.publicSecret = null;
         gameApi.execute('create', {
             body: {
                 hash,
@@ -77,7 +78,8 @@ class Game {
             bank: this.bank,
             users: this.users,
             isShowWinner: this.isShowWinner,
-            roulette: this.roulette.state
+            roulette: this.roulette.state,
+            secret: this.publicSecret,
         }
     }
 
@@ -152,6 +154,7 @@ class Game {
     onRouletteRotateEnd(winner) {
         this.isShowWinner = true;
         this.isFinished = true;
+        this.publicSecret = this.secret;
 
         this.sockets.emit('game.getWinner', {
             winner,
