@@ -45,6 +45,11 @@ export const startRoulette = (payload) => ({
     payload,
 });
 
+export const updateRoulette = (payload) => ({
+    type: actionTypes.GAME_UPDATE_ROULETTE,
+    payload,
+});
+
 export const transactionAccepted = (payload) => ({
     type: actionTypes.GAME_TRANSACTION_ACCEPTED,
     payload,

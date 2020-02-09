@@ -1,10 +1,5 @@
 import * as actionTypes from './actionsTypes';
 
-function shuffle(array) {
-    return array.sort(() => Math.random() - 0.5);
-}
-
-
 const getClearGameState = () => ({
     transactions: [],
     users: [],
@@ -14,14 +9,15 @@ const getClearGameState = () => ({
     },
     time: 0,
     hash: '',
-    winner: {},
     secret: '',
     isWaitingTransactions: false,
-    isRouletteStart: false,
-    isShowWinner: false,
     transactionsPoolLength: 0,
     userDepositsCount: 0,
-    avatars: [],
+    roulette: {
+        offset: 0,
+        avatars: [],
+        isVisible: false,
+    },
 });
 
 const initialState = {
@@ -70,9 +66,7 @@ function gameReducer(state = initialState, action) {
         console.log('GAME_GET_WINNER', state.users, state.bank);
         return {
             ...state,
-            winner: action.payload.winner,
             secret: action.payload.secret,
-            isShowWinner: true,
         };
     }
 
@@ -95,7 +89,6 @@ function gameReducer(state = initialState, action) {
     }
 
     case actionTypes.GAME_WAITING_TRANSACTIONS: {
-        console.log(action.payload);
         return {
             ...state,
             isWaitingTransactions: true,
@@ -104,22 +97,17 @@ function gameReducer(state = initialState, action) {
     }
 
     case actionTypes.GAME_START_ROULETTE: {
-        let avatars = [];
-        for (const user of state.users) {
-            const chance = state.bank.users[user._id] / state.bank.total * 100;
-
-            for (let i = 0; i < chance * 3; i++) {
-                avatars.push(user.avatar);
-            }
-        }
-        avatars = shuffle(avatars);
-
-        avatars[283] = 'https://sun1-14.userapi.com/vDkj8XeqCNIRZEgeBgQqx2j76ksxZurzz6f-wg/hD5zXQcN1R4.jpg?ava=1';
 
         return {
             ...state,
-            isRouletteStart: true,
-            avatars,
+            isShowRoulette: true,
+        };
+    }
+
+    case actionTypes.GAME_UPDATE_ROULETTE: {
+        return {
+            ...state,
+            roulette: action.payload.state,
         };
     }
 

@@ -46,8 +46,12 @@ export const subscribe = () => async (dispatch) => {
         dispatch(actions.startRoulette());
     });
 
+    ws.io.on('game.roulette.update', (state) => {
+        dispatch(actions.updateRoulette({ state }));
+    });
+
     ws.io.on('game.transactionAccepted', () => {
-        console.log('Мой депозит принят')
+        console.log('Мой депозит принят');
         dispatch(actions.transactionAccepted());
     });
 

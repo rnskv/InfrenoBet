@@ -31,7 +31,6 @@ function Main({
     hash,
     secret,
     transactions,
-    winner,
     users,
     join,
     bank,
@@ -40,10 +39,9 @@ function Main({
     token,
     transactionsPoolLength,
     isWaitingTransactions,
-    isRouletteStart,
     isShowWinner,
     userDepositsCount,
-    avatars
+    roulette,
 }) {
     useEffect(() => {
         if (isSubscribed) return;
@@ -52,16 +50,15 @@ function Main({
     }, []);
     return (
         <DefaultTemplate>
-            Моих транзакций в обработке - { userDepositsCount }
+            Моих транзакций в обработке -
+            {' '}
+            { userDepositsCount }
             <GameInfo
                 time={time}
-                isRouletteStart={isRouletteStart}
-                isShowWinner={isShowWinner}
                 transactions={transactions}
                 bank={bank}
-                winner={winner}
                 users={users}
-                avatars={avatars}
+                roulette={roulette}
             />
             {/* <div> */}
             {/*    { !token ? <Link to="/login">Go to login</Link> : token} */}
@@ -104,7 +101,7 @@ function Main({
                 transaction={transaction}
             />
             <UsersBanks users={users} bank={bank} />
-            { isShowWinner ? <GameEndFooter secret={secret} /> : null }
+            { roulette.isShowWinner ? <GameEndFooter secret={secret} /> : null }
             <div>
                 {
                     transactions.map((transaction, index) => (

@@ -26,15 +26,12 @@ export function mapStateToProps(state) {
         time: state.game.time,
         transactions: state.game.transactions,
         hash: state.game.hash,
-        winner: state.game.winner,
         secret: state.game.secret,
         transactionsPoolLength: state.game.transactionsPoolLength,
         isWaitingTransactions: state.game.isWaitingTransactions,
         users: state.game.users,
         bank: state.game.bank,
-        isRouletteStart: state.game.isRouletteStart,
-        isShowWinner: state.game.isShowWinner,
         userDepositsCount: state.game.userDepositsCount,
-        avatars: state.game.avatars,
+        roulette: state.game.roulette,
     };
 }

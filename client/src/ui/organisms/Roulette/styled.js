@@ -7,7 +7,7 @@ import CommonTitle from 'ui/atoms/Title';
 import AuthenticationForm from 'ui/molecules/AuthenticationForm';
 
 export const Container = styled.div`
-  width: 100%;
+  width: 800px;
   position: relative;
   box-sizing: border-box;
   overflow: hidden;
@@ -17,15 +17,13 @@ export const Avatars = styled.div`
     width: 24080px;
     height: 80px;
     overflow: hidden;
+    //transition: 1s;
+    //transition-timing-function: linear;
     img {
       width: 80px;
       height: 80px;
       display: inline-block;
     }
-    
-    margin-left: ${ ({isRotate }) => isRotate ? '-22400px' : 0 };
-    transition: 15s;
-    transition-timing-function: cubic-bezier(0.42, 0, 0.3, 0.98);
 `;
 
 export const Arrow = styled.div`
@@ -45,5 +43,6 @@ export const Arrow = styled.div`
         border-right: none;
         border-top: none;
         position: absolute;
+        transition: .16s;
     }
 `;

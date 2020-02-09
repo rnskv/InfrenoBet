@@ -27,30 +27,33 @@ function getFormattedTime(time) {
 }
 
 function GameInfo({
-    id, time, transactions, bank, winner, isRouletteStart, isShowWinner, users, avatars
+    id, time, transactions, bank, isShowWinner, users, roulette,
 }) {
     return (
         <Container>
             <Title>{`Игра ${id}`}</Title>
-            {/*<Roulette*/}
-            {/*    transactions={transactions}*/}
-            {/*    bank={bank}*/}
-            {/*    winner={winner}*/}
-            {/*    users={users}*/}
-            {/*    avatars={avatars}*/}
-            {/*/>*/}
+            {/* <Roulette */}
+            {/*    transactions={transactions} */}
+            {/*    bank={bank} */}
+            {/*    winner={winner} */}
+            {/*    users={users} */}
+            {/*    avatars={avatars} */}
+            {/* /> */}
             {
-                isRouletteStart
-                    ? <Roulette
-                        transactions={transactions}
-                        bank={bank}
-                        winner={winner}
-                        users={users}
-                        avatars={avatars}
-                    />
+                roulette.isVisible
+                    ? (
+                        <Roulette
+                            transactions={transactions}
+                            bank={bank}
+                            users={users}
+                            state={roulette}
+                        />
+                    )
                     : (
                         <StartGame>
-                            <ItemsCount> {transactions.length} / 50 </ItemsCount>
+                            <ItemsCount>
+                                { `${transactions.length} / 50` }
+                            </ItemsCount>
                             <Or>или</Or>
                             <Timer>
                                 { getFormattedTime(time) }
@@ -59,12 +62,15 @@ function GameInfo({
                     )
             }
             <Bank>
-                { `В банке: ` }
-                <span>{bank.total}₽</span>
+                { 'В банке: ' }
+                <span>
+                    {bank.total}
+₽
+                </span>
             </Bank>
 
             {
-                isShowWinner ? <WinInfo winner={winner}/> : null
+                roulette.isShowWinner ? <WinInfo winner={roulette.winner} /> : null
             }
         </Container>
     );

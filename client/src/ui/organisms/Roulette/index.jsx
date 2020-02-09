@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 
 import Button from 'ui/atoms/Button';
 import Input from 'ui/atoms/Input';
@@ -13,30 +13,29 @@ import {
     WinnerName,
     Winner,
     Avatars,
-    Arrow
+    Arrow,
 } from './styled';
 
-function Roulette({ winner, users, bank, avatars }) {
+const Roulette = React.memo(({
+    state,
+}) => {
+    const avatarsRef = useRef(null);
 
-    const [isRotate, setIsRotate] = useState(false)
-    // avatars[3] = winner.transaction.user.avatar;
-    console.log('avatars', avatars, winner);
-    setTimeout(() => {
-        setIsRotate(true);
-    }, 100)
+    useEffect(() => {
+        avatarsRef.current.style.marginLeft = -state.offset + 400 + 'px';
+    }, [state.offset]);
 
-    // const mock = new Array(300).fill(`https://sun1-17.userapi.com/c854028/v854028822/1a57f2/28Zbg1V2v7U.jpg?ava=1`)
     return (
         <Container>
-            <Avatars isRotate={isRotate}>
+            <Avatars ref={avatarsRef}>
                 {
-                    avatars.map((avatar) => <img src={avatar} />)
+                    state.avatars.map((avatar, index) => <img key={index} src={avatar} />)
                 }
             </Avatars>
             <Arrow />
         </Container>
     );
-}
+}, (prevProps) => !!prevProps.offset);
 
 Roulette.propTypes = {
 };

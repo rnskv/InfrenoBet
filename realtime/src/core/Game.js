@@ -1,11 +1,14 @@
-import { gameApi, transactionsApi } from './api';
+import Roulette from 'src/core/Roulette';
 
-function getRandomInt(max) {
-    return Math.floor(Math.random() * Math.floor(max));
-}
+import { gameApi, transactionsApi } from 'src/modules/api';
+import { getRandomInt } from 'src/helpers/math';
 
 class Game {
     constructor({ hash, secret, sockets, onFinish }) {
+        this.roulette = new Roulette({
+            sockets,
+            onEnd: this.onRouletteRotateEnd.bind(this)
+        });
         this.transactions = [];
         this.onFinish = onFinish;
         this.sockets = sockets;
@@ -13,7 +16,6 @@ class Game {
         this.isStarted = false;
         this.isFinished = false;
         this.isClosedForTransactions = false;
-        this.isRouletteStart = false;
         this.isShowWinner = false;
         this.transactionsPool = [];
         this.isWaitingTransactions = false;
@@ -74,8 +76,8 @@ class Game {
             transactionsPoolLength: this.transactionsPool.length,
             bank: this.bank,
             users: this.users,
-            isShowRoulette: this.isShowRoulette,
-            isShowWinner: this.isShowWinner
+            isShowWinner: this.isShowWinner,
+            roulette: this.roulette.state
         }
     }
 
@@ -99,8 +101,8 @@ class Game {
         if (this.time > 0) {
             this.time -= 1;
         } else {
-            this.sockets.emit('game.waitingTransactions', { transactionsPoolLength: this.state.transactionsPoolLength });
             this.isWaitingTransactions = true;
+            this.sockets.emit('game.waitingTransactions', { transactionsPoolLength: this.state.transactionsPoolLength });
         }
 
         this.sockets.emit('game.tick', this.time);
@@ -128,7 +130,9 @@ class Game {
                 id: this._id
             }
         });
+        this.roulette.setVisible(false);
         this.isFinished = true;
+        this.isShowRoulette = false;
         this.onFinish();
     }
 
@@ -140,19 +144,21 @@ class Game {
         });
 
         this.isShowRoulette = true;
+        this.roulette.start({ winner, bank: this.state.bank, users: this.state.users });
+
         this.sockets.emit('game.startRoulette');
+    }
 
-        setTimeout(() => {
-            this.isShowWinner = true;
-            this.isFinished = true;
+    onRouletteRotateEnd(winner) {
+        this.isShowWinner = true;
+        this.isFinished = true;
 
-            this.sockets.emit('game.getWinner', {
-                winner: winner,
-                secret: this.secret
-            });
+        this.sockets.emit('game.getWinner', {
+            winner,
+            secret: this.secret
+        });
 
-            setTimeout(this.onGameEnd.bind(this), 7000)
-        }, 16000);
+        setTimeout(this.onGameEnd.bind(this), 7000)
     }
 
     join(userData) {

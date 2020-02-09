@@ -4,47 +4,17 @@ import crypto from 'crypto';
 import jwtDecode from 'jwt-decode';
 
 // import SocketIO from 'socket.io';
-import Game from './modules/Game';
+import Room from './core/Room';
 import { userApi} from './modules/api';
 
 let app = express();
 let server = http.Server(app);
 const io = require('socket.io')(server, { serveClient: false });
 
-function getRandomInt(max) {
-    return Math.floor(Math.random() * Math.floor(max));
-}
-
-
-class Room {
-    constructor(io) {
-        this.gamesCount = 0;
-
-        this.io = io;
-        this.game = null;
-    }
-
-    initialize() {
-        this.gamesCount++;
-        const secret = Math.random();
-        const hash = crypto.createHash('md5').update(String(secret)).digest("hex");
-
-        this.game = new Game({
-            hash,
-            secret,
-            sockets: this.io.sockets,
-            onFinish: this.onFinish.bind(this)
-        });
-    }
-
-    onFinish() {
-        this.initialize();
-    }
-}
 
 const room = new Room({ sockets: io.sockets });
 
-room.initialize();
+room.reset();
 
 io.use((socket, next) => {
    next();
@@ -62,12 +32,11 @@ io.on('connection', (socket) => {
             socket.emit('project.error', { message: 'Unauthorization' });
             return;
         }
-        setTimeout(async () => {
-            console.log('register transaction')
-            room.game.registerTransaction({ user: socket.user, value: 50, onAccept: () => {
-                socket.emit('game.transactionAccepted')
-            }});
-        }, 2321)
+
+        console.log('register transaction')
+        room.game.registerTransaction({ user: socket.user, value: 50, onAccept: () => {
+            socket.emit('game.transactionAccepted')
+        }});
     });
 
     socket.on('game.sync', () => {
