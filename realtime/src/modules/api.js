@@ -19,6 +19,9 @@ export const transactionsApi = new Api({
     headers: {
         'Content-Type': 'application/json',
     },
+    onError: (err) => {
+        console.log('onError', err)
+    }
 });
 
 userApi.addRequests({

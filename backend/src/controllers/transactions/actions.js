@@ -9,6 +9,8 @@ import User from 'src/models/User';
 
 import config from 'src/config';
 
+import { USER_NOT_ENOUGH_MONEY } from 'src/types/errors';
+
 const getHandler = async (ctx) => {
 
 };
@@ -25,27 +27,18 @@ const createHandler = async (ctx) => {
         game,
         type
     } = ctx.request.body;
-    console.log('create', game)
 
-    //Получаем последнюю транзакцию в этой игре
     const lastTransaction = await Transaction.getLastInGameByGameId(game);
 
     let ticketFrom = 1;
     let ticketTo = value;
 
     if (lastTransaction) {
-        console.log('Есть последнняя транзакция', lastTransaction.ticketTo, ticketTo, ticketTo + lastTransaction.ticketTo)
         const lastGameTicket = lastTransaction.ticketTo;
         ticketFrom += lastGameTicket;
         ticketTo += lastGameTicket;
     }
-    //Получаем последнюю из нее последний билет
 
-    //прибавляем к этому всему нашу ставку
-
-    //сохраняемс.
-
-    console.log('lat create', game)
     const transaction = await Transaction.create({
         user: mongoose.Types.ObjectId(user),
         game: mongoose.Types.ObjectId(game),
@@ -55,16 +48,13 @@ const createHandler = async (ctx) => {
         ticketTo
     });
 
-    console.log('create', game, transaction)
-
     switch (transaction.type) {
         case 'GAME_CLASSIC': {
+            //@todo шо нахуй за гейм классик если кроме него в транзакциях ничего не будет? и вынеси это в метод модели
             const game = await Game.findById(transaction.game);
-            console.log('find', game);
-
             game.transactions.push(transaction._id);
             await game.save();
-            console.log(game);
+
             break;
         }
 
@@ -72,9 +62,13 @@ const createHandler = async (ctx) => {
             break;
         }
     }
-    console.log('user', user, value)
-    await User.changeBalance(user, -value);
-    console.log('then');
+
+    try {
+        await User.changeBalance(user, -value);
+    } catch (err) {
+        ctx.throw(err)
+    }
+
     ctx.body = await Transaction.getById(transaction._id);
 };
 

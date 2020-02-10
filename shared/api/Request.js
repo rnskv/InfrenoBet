@@ -44,7 +44,10 @@ export default class Request {
                 })
                 .catch(err => {
                     err.json().then(notification => {
-                        onError(notification);
+                        if (onError) {
+                            console.log(`I'am really want call onError callback, but you not pass it to me :( You error is`, notification)
+                            onError(notification);
+                        }
                         reject(notification)
                     });
                 });

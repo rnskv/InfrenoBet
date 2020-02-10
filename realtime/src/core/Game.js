@@ -174,16 +174,15 @@ class Game {
 
     async transaction(transactionData) {
         return new Promise((async resolve => {
-            try {
-                const transaction = await transactionsApi.execute('create', {
-                    body: {
-                        type: 'GAME_CLASSIC',
-                        game: this._id,
-                        user: transactionData.user.id,
-                        value: getRandomInt(200) || transactionData.value,
-                    }
-                });
-
+            transactionsApi.execute('create', {
+                body: {
+                    type: 'GAME_CLASSIC',
+                    game: this._id,
+                    user: transactionData.user.id,
+                    value: getRandomInt(200) || transactionData.value,
+                }
+            })
+            .then((transaction) => {
                 const tickets = {
                     from: 0,
                     to: 10,
@@ -193,15 +192,16 @@ class Game {
                 this.transactions.push(transaction);
 
                 if (this.users.length >= 2 && !this.isStarted) {
-                // if (!this.isStarted) {
+                    // if (!this.isStarted) {
                     this.start();
                 }
 
                 this.sockets.emit('game.transaction', { transaction, bank: this.bank, users: this.users });
                 resolve();
-            } catch (err) {
-                console.log(err)
-            }
+            })
+            .catch((err) => {
+                resolve();
+            });
         }))
     }
 

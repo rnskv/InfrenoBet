@@ -3,6 +3,7 @@ import privatePaths from 'mongoose-private-paths';
 import Transaction from './Transaction';
 
 const { Schema } = mongoose;
+import { USER_NOT_ENOUGH_MONEY } from 'src/types/errors';
 
 const userSchema = new Schema({
     login: {
@@ -49,11 +50,15 @@ User.getById = async (id) => {
 };
 
 User.changeBalance = async (id, amount) => {
-    console.log('Меняю баланс у ', id, amount);
     const user = await User.getById(id);
-    console.log(user);
+
+    if (user.balance + amount < 0) {
+        throw USER_NOT_ENOUGH_MONEY;
+    }
+
     user.balance = user.balance + amount;
     user.save();
+
     return user
 };
 

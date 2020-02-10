@@ -15,5 +15,5 @@ export const USER_WRONG_PASSWORD = {
 
 export const USER_NOT_ENOUGH_MONEY = {
     code: 400,
-    type: 'USER_WRONG_PASSWORD'
+    type: 'USER_NOT_ENOUGH_MONEY'
 };
