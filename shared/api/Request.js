@@ -18,6 +18,7 @@ export default class Request {
         apiUrl,
         body = {},
         headers = {},
+        onError = null
     }) {
         return new Promise((resolve, reject) => {
             const url = `${apiUrl}${this.url}`;
@@ -33,23 +34,20 @@ export default class Request {
 
             fetcher(url, resultOptions)
                 .then((response) => {
-                    if (!checkResponseStatus(response.status)) {
-                        reject(response);
-                        return;
+                    if (!response.ok) {
+                        throw response;
                     }
-
-                    response.json()
-                        .then((result) => {
-                            resolve(result);
-                        })
-                        .catch(err => {
-                            reject(response.statusText)
-                        });
-                }, (err) => {
-                    alert(err);
-                    reject(err);
+                    return response.json();
                 })
-                .catch(err => reject(err));
+                .then(json => {
+                    resolve(json)
+                })
+                .catch(err => {
+                    err.json().then(notification => {
+                        console.log(notification)
+                        reject(notification)
+                    });
+                });
         });
     }
 }

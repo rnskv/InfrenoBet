@@ -27,3 +27,8 @@ export const loading = () => ({
 export const reset = () => ({
     type: actionTypes.RESET_USER,
 });
+
+export const addNotification = (payload) => ({
+    type: actionTypes.ADD_NOTIFICATION,
+    payload,
+});

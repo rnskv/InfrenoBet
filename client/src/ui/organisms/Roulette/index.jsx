@@ -22,6 +22,7 @@ const Roulette = React.memo(({
     const avatarsRef = useRef(null);
 
     useEffect(() => {
+        // 400 - ширина блока с аватарками (перепиши)
         avatarsRef.current.style.marginLeft = -state.offset + 400 + 'px';
     }, [state.offset]);
 

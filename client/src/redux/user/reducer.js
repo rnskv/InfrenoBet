@@ -25,6 +25,7 @@ function userReducer(state = initialState, action) {
             ...state,
             isLoading: true,
             error: '',
+            notifications: [],
         };
     }
 
@@ -64,6 +65,14 @@ function userReducer(state = initialState, action) {
         return {
             ...state,
             ...getClearState(),
+        };
+    }
+
+    case actionTypes.ADD_NOTIFICATION: {
+        console.log('_actionTypes.ADD_NOTIFICATION', action);
+        return {
+            ...state,
+            notifications: [...state.notifications, action.payload.notification],
         };
     }
 

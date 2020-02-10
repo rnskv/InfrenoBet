@@ -10,13 +10,13 @@ import * as gameActions from './game/actions';
 
 export const reducers = {
     user: userReducer,
-    game: gameReducer
+    game: gameReducer,
 };
 
-export const actions = [
-    userActions,
-    gameActions,
-];
+export const actions = {
+    user: userActions,
+    game: gameActions,
+};
 
 export const store = createStore(
     combineReducers(reducers),
