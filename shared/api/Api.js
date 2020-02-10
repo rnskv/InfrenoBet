@@ -2,12 +2,14 @@ export default class Api {
     constructor({
         url = '/',
         headers = {},
-        body = {}
+        body = {},
+        onError = null
     }) {
         this.url = url;
         this.headers = headers;
         this.body = body;
         this.requests = {};
+        this.onError = onError;
     }
 
     setHeader(headerName, value) {
@@ -21,10 +23,6 @@ export default class Api {
     setBearerFromLocalStorage() {
         this.setHeader('Authorization', localStorage.getItem('token'));
     }
-    //
-    // removeHeader() {
-    //
-    // }
 
     addRequests(requests) {
         this.requests = requests;
@@ -33,12 +31,14 @@ export default class Api {
     execute(requestName, {
         headers,
         body,
+        onError
     } = {}) {
         return this.requests[requestName]
             .execute({
                 apiUrl: this.url,
                 headers: { ...this.headers, ...headers },
                 body: { ...this.body, ...body },
+                onError: onError || this.onError
             });
     }
 }
