@@ -21,7 +21,7 @@ function Transaction({
         <Container>
             {
                 user.avatar
-                    ? <Avatar src="https://de4khei8i4ut2.cloudfront.net/avatar/csgofast_04j7knMRKp.png?t=1567633704712&width=80&height=80" />
+                    ? <Avatar src={user.avatar} />
                     : (
                         <TextAvatar>
                             { user.name[0] }

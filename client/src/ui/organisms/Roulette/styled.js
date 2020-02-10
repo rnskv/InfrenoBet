@@ -11,6 +11,7 @@ export const Container = styled.div`
   position: relative;
   box-sizing: border-box;
   overflow: hidden;
+  margin: 10px 0;
 `;
 
 export const Avatars = styled.div`

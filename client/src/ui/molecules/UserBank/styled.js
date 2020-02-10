@@ -15,11 +15,11 @@ export const Container = styled.div`
    margin: 0 1px;
 `;
 
-export const Avatar = styled.img`
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-`;
+// export const Avatar = styled.img`
+//     width: 60px;
+//     height: 60px;
+//     border-radius: 50%;
+// `;
 
 export const Bet = styled.div`
     margin: 5px 0 ;
@@ -48,3 +48,19 @@ export const TextAvatar = styled.div`
    border: 4px solid var(--color-white);
    box-shadow: inset 0 0 0 6px var(--color-black);
 };`
+
+export const Avatar = styled.img`
+   width: 60px;
+   height: 60px;
+   border-radius: 50%;
+   color: var(--color-white);
+   background: var(--color-darkblue);
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   font-size: 28px;
+   font-weight: bold;
+   border: 4px solid var(--color-white);
+   box-shadow: inset 0 0 0 6px var(--color-black);
+`;
+
