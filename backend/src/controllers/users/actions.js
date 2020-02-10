@@ -6,14 +6,15 @@ import jwt from 'jsonwebtoken';
 import User from '../../models/User';
 import config from '../../config';
 
+import { USER_ALREAY_EXIST, USER_NOT_FOUND } from 'src/types/errors';
+
 const getHandler = async (ctx) => {
     const user = await User.findById(mongoose.Types.ObjectId(String(ctx.params.id)));
 
     console.log('Execute getHandler', ctx.request.body);
 
     if (!user) {
-        ctx.status = 400;
-        ctx.throw(400, 'User is not found');
+        ctx.throw(USER_NOT_FOUND);
     }
 
     ctx.body = user

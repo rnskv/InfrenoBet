@@ -4,13 +4,15 @@ import jwt from 'jsonwebtoken';
 import User from '../../models/User';
 import config from '../../config';
 
+import { USER_ALREAY_EXIST, USER_NOT_FOUND } from 'src/types/errors';
+
 const registerHandler = async (ctx) => {
     const { name, email, password } = ctx.request.body;
     const user = await User.findOne({ email });
     console.log('register')
     if (user) {
         console.log('already')
-        ctx.throw(400, 'User already exist');
+        ctx.throw(USER_ALREAY_EXIST);
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -33,7 +35,7 @@ const loginHandler = async (ctx) => {
 
     if (!user) {
         ctx.status = 400;
-        ctx.throw(400, 'User is not found');
+        ctx.throw(USER_NOT_FOUND);
     }
 
     const isEqualPasswords = await bcrypt.compare(password, user.password);

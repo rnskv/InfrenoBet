@@ -44,7 +44,7 @@ export default class Request {
                 })
                 .catch(err => {
                     err.json().then(notification => {
-                        console.log(notification)
+                        onError(notification);
                         reject(notification)
                     });
                 });
