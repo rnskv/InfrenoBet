@@ -7,6 +7,7 @@ import gameReducer from './game/reducer';
 import * as userActions from './user/actions';
 import * as gameActions from './game/actions';
 
+import './realtime';
 
 export const reducers = {
     user: userReducer,
