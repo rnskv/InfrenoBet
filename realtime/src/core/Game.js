@@ -200,6 +200,7 @@ class Game {
                 resolve();
             })
             .catch((err) => {
+                transactionData.onError(err);
                 resolve();
             });
         }))

@@ -107,7 +107,7 @@ function Main({
                 {
                     transactions.map((transaction, index) => (
                         <Transaction
-                            key={transaction.id}
+                            key={index}
                             index={index}
                             user={transaction.user}
                             value={transaction.value}

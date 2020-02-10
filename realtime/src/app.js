@@ -2,29 +2,31 @@ import express from 'express';
 import http from 'http';
 import crypto from 'crypto';
 import jwtDecode from 'jwt-decode';
+import Connection from 'src/core/Connection';
 
 // import SocketIO from 'socket.io';
 import Room from './core/Room';
 import { userApi} from './modules/api';
 
-let app = express();
-let server = http.Server(app);
-const io = require('socket.io')(server, { serveClient: false });
-
-
-const room = new Room({ sockets: io.sockets });
+const app = express();
+export const server = http.Server(app);
+export const connection = new Connection(server);
+const room = new Room({ sockets: connection.io.sockets });
 
 room.reset();
 
-io.use((socket, next) => {
+connection.io.use((socket, next) => {
    next();
 });
 
-io.on('connection', (socket) => {
+connection.io.on('connection', (socket) => {
+    socket.on('error', (error) => {
+        console.log('FRINEDSHIP IS MAGIC')
+    });
+
     socket.on('project.auth', (token) => {
         socket.jwtToken = token;
         socket.user = jwtDecode(token);
-        // console.log(socket.user)
     });
 
     socket.on('game.transaction', (transactionData) => {
@@ -34,9 +36,16 @@ io.on('connection', (socket) => {
         }
 
         console.log('register transaction')
-        room.game.registerTransaction({ user: socket.user, value: 50, onAccept: () => {
-            socket.emit('game.transactionAccepted')
-        }});
+        room.game.registerTransaction({
+            user: socket.user,
+            value: 50,
+            onAccept: () => {
+                socket.emit('game.transactionAccepted')
+            },
+            onError: (error) => {
+                socket.emit('user.error', error)
+            }
+        });
     });
 
     socket.on('game.sync', () => {

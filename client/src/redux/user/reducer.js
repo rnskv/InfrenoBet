@@ -6,6 +6,7 @@ const getClearState = () => ({
     isRegister: false,
     loginError: '',
     logupError: '',
+    notifications: [],
 });
 
 const initialState = {
@@ -25,7 +26,6 @@ function userReducer(state = initialState, action) {
             ...state,
             isLoading: true,
             error: '',
-            notifications: [],
         };
     }
 

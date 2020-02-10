@@ -1,6 +1,8 @@
 import history from 'src/modules/router/history';
 import { ws } from 'src/modules/realtime';
 import * as actions from './actions';
+import * as userActions from 'src/redux/user/actions';
+
 import { authApi } from '../user/api';
 
 let isSubscribed = false;
@@ -55,8 +57,13 @@ export const subscribe = () => async (dispatch) => {
         dispatch(actions.transactionAccepted());
     });
 
+    ws.io.on('user.error', (notification) => {
+        console.log(notification)
+        dispatch(userActions.addNotification({ notification }));
+    });
+
     ws.io.on('project.error', (error) => {
-        alert(error.message);
+        alert(error);
     });
 
     isSubscribed = true;

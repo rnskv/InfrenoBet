@@ -1,4 +1,5 @@
 import { Api, Request } from 'shared/api';
+import { connection } from 'src/app';
 
 export const userApi = new Api({
     url: `http://localhost:2020/api/users`,
@@ -18,9 +19,6 @@ export const transactionsApi = new Api({
     url: `http://localhost:2020/api/transactions`,
     headers: {
         'Content-Type': 'application/json',
-    },
-    onError: (err) => {
-        console.log('onError', err)
     }
 });
 
