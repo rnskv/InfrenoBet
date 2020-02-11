@@ -13,7 +13,7 @@ import {
 export const StateContext = React.createContext({ isOpened: true });
 
 function Sidebar({ children, token, params }) {
-    const [isOpened, setIsOpened] = useState(false);
+    const [isOpened, setIsOpened] = useState(true);
 
     return (
         <StateContext.Provider value={{ isOpened }}>

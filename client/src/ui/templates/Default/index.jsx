@@ -5,6 +5,11 @@ import styled from 'styled-components';
 
 import Navigation from 'ui/organisms/Navigation';
 import Sidebar from 'ui/organisms/Sidebar';
+
+import SidebarNotifications from 'ui/molecules/SidebarNotifications';
+import SidebarNavigation from 'ui/molecules/SidebarNavigation';
+import SidebarProfile from 'ui/molecules/SidebarProfile';
+
 import { Container } from '../../organisms/Sidebar/styled';
 
 const Header = styled.header`
@@ -55,7 +60,9 @@ function Default({ children, ...props }) {
                     side: 'right',
                 }}
                 >
-                   Container
+                    {/*<SidebarProfile />*/}
+                    {/*<SidebarNavigation />*/}
+                    <SidebarNotifications />
                 </Sidebar>
             </Page>
             <div hidden>

@@ -31,6 +31,7 @@ export const Collapse = styled.div`
     
     svg {
         width: 15px;
+        height: 15px;
         fill: var(--color-grey);
         transition: fill .3s, transform 0.3s;
             }
