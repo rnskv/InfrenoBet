@@ -2,16 +2,12 @@ import PropTypes from 'prop-types';
 
 import React from 'react';
 
-import Title from 'ui/atoms/Title';
-import Link from 'ui/atoms/Link';
-import Button from 'ui/atoms/Button';
+import Avatar from 'ui/atoms/Avatar';
 
 import {
     Container,
-    Avatar,
     Description,
     Item,
-    TextAvatar,
 } from './styled';
 
 function Transaction({
@@ -19,15 +15,7 @@ function Transaction({
 }) {
     return (
         <Container>
-            {
-                user.avatar
-                    ? <Avatar src={user.avatar} />
-                    : (
-                        <TextAvatar>
-                            { user.name[0] }
-                        </TextAvatar>
-                    )
-            }
+            <Avatar src={user.avatar} />
             <Description>
                 <div>
                     Игрок { user.name } сделал ставку на сумму {value}₽

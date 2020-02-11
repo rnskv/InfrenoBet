@@ -4,14 +4,12 @@ import React from 'react';
 
 import Title from 'ui/atoms/Title';
 import Link from 'ui/atoms/Link';
-import Button from 'ui/atoms/Button';
+import Avatar from 'ui/atoms/Avatar';
 
 import {
     Container,
-    Avatar,
     Chance,
     Bet,
-    TextAvatar,
 } from './styled';
 
 function getUserChances(bank, user) {
