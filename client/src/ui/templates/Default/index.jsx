@@ -16,10 +16,11 @@ const Header = styled.header`
     display: flex;
     justify-content: center;
     align-items: center;
+    position: fixed;
 `;
 
 const Content = styled.div`
-    margin: 25px auto;
+    margin: 75px auto;
     background: var(--color-grey-500);
     box-sizing: border-box;
     width: 900px;
@@ -29,9 +30,7 @@ const Content = styled.div`
     box-shadow: 0px 0px 3px 0px var(--color-shadow);
     align-self: flex-start;
     overflow: hidden;
-   
-}
-
+    min-width: 900px;
 `;
 
 const Page = styled.div`

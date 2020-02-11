@@ -4,7 +4,8 @@ import { useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import {
-    Container,
+    StaticContainer,
+    FixedContainer,
     Wrapper,
     Collapse,
 } from './styled';
@@ -16,16 +17,18 @@ function Sidebar({ children, token, params }) {
 
     return (
         <StateContext.Provider value={{ isOpened }}>
-            <Container isOpened={isOpened} {...params}>
-                <Collapse isOpened={isOpened} onClick={() => setIsOpened(!isOpened)}>
-                    <svg>
-                        <use xlinkHref="#collapse" />
-                    </svg>
-                </Collapse>
-                <Wrapper>
-                    { children }
-                </Wrapper>
-            </Container>
+            <StaticContainer isOpened={isOpened} {...params}>
+                <FixedContainer>
+                    <Collapse isOpened={isOpened} onClick={() => setIsOpened(!isOpened)}>
+                        <svg>
+                            <use xlinkHref="#collapse" />
+                        </svg>
+                    </Collapse>
+                    <Wrapper>
+                        { children }
+                    </Wrapper>
+                </FixedContainer>
+            </StaticContainer>
         </StateContext.Provider>
     );
 }
