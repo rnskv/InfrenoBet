@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import { StateContext } from 'ui/organisms/Sidebar';
 import NavigationLink from './Link';
 
 import { mapDispatchToProps, mapStateToProps } from './connect';
@@ -93,35 +94,32 @@ function Navigation({ token }) {
 
     const location = useLocation();
 
+    const sidebarState = useContext(StateContext);
+
     return (
-        <NavigationContainer isOpened={isOpened}>
-            <NavigationList>
-                <NavigationTitle onClick={() => setIsOpened(!isOpened)}>
-                    WTF
-                </NavigationTitle>
-                {
-                    GROUPS.map((group) => (
-                        <group.WRAPPER key={group.id}>
-                            {
-                                group.items.map((item) => (
-                                    <NavigationLink
-                                        key={item.id}
-                                        {...item}
-                                        isOpened={isOpened}
-                                        isActive={item.to === location.pathname}
-                                        isVisible={
-                                            token
-                                                ? item.accessLevel > -1 && item.accessLevel < 666  //replace from token
-                                                : item.accessLevel >= -1 && item.accessLevel <= 0
-                                        }
-                                    />
-                                ))
-                            }
-                        </group.WRAPPER>
-                    ))
-                }
-            </NavigationList>
-        </NavigationContainer>
+        <NavigationList>
+            {
+                GROUPS.map((group) => (
+                    <group.WRAPPER key={group.id} isOpened={sidebarState.isOpened}>
+                        {
+                            group.items.map((item) => (
+                                <NavigationLink
+                                    key={item.id}
+                                    {...item}
+                                    isOpened={sidebarState.isOpened}
+                                    isActive={item.to === location.pathname}
+                                    isVisible={
+                                        token
+                                            ? item.accessLevel > -1 && item.accessLevel < 666 // replace from token
+                                            : item.accessLevel >= -1 && item.accessLevel <= 0
+                                    }
+                                />
+                            ))
+                        }
+                    </group.WRAPPER>
+                ))
+            }
+        </NavigationList>
     );
 }
 

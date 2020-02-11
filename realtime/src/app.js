@@ -35,7 +35,8 @@ connection.io.on('connection', (socket) => {
             return;
         }
 
-        console.log('register transaction')
+        console.log('register transaction');
+        //@todo Переделать эт
         room.game.registerTransaction({
             user: socket.user,
             value: 50,

@@ -56,7 +56,6 @@ export const NavigationContainer = styled.div`
 export const NavigationList = styled.ul`
     margin: 0;
     padding: 0;
-    
     a {
         text-decoration: none;
     }
@@ -66,7 +65,8 @@ export const ItemsGroupPVP = styled.div`
     border-left: 30px solid var(--color-violet);
     position: relative;
     min-height: 40px;
-
+    margin-left: ${(props) => (props.isOpened ? '0' : '-25px')};
+    transition: .3s;
     &::after {
         content: 'PVP';
         position: absolute;
@@ -82,6 +82,8 @@ export const ItemsGroupSystem = styled.div`
     border-left: 30px solid var(--color-greyblue);
     position: relative;
     min-height: 80px;
+    margin-left: ${(props) => (props.isOpened ? '0' : '-25px')};
+    transition: .3s;
     &::after {
         content: 'SYSTEM';
         position: absolute;
@@ -96,7 +98,7 @@ export const ItemsGroupSystem = styled.div`
 export const NavigationItem = styled.li`
     display: flex;
     align-items: center;
-    padding: 10px 25px;
+    padding: 10px 20px;
     border-bottom: 1px solid var(--color-grey-400);
     cursor: pointer;
     
