@@ -37,10 +37,14 @@ export const Container = styled.div`
   background-color: var(--color-grey-500);
   transition: width .4s;
   overflow: hidden;
+  position: absolute;
+  
+  ${({ side }) => `${side}: 0;`
+}
   
   ${Collapse} {
     svg {
-      transform: ${({ isOpened }) => (isOpened ? 'rotateZ(0)' : 'rotateZ(180deg)')};
+      transform: ${({ isOpened, side }) => (isOpened ? `rotateZ(${ side === 'left' ? 0 : 180}deg)` : `rotateZ(${ side === 'left' ? 180 : 0}deg)`)};
     }
   }
 `;

@@ -11,12 +11,12 @@ import {
 
 export const StateContext = React.createContext({ isOpened: true });
 
-function Sidebar({ children, token }) {
-    const [isOpened, setIsOpened] = useState(true);
+function Sidebar({ children, token, params }) {
+    const [isOpened, setIsOpened] = useState(false);
 
     return (
         <StateContext.Provider value={{ isOpened }}>
-            <Container isOpened={isOpened}>
+            <Container isOpened={isOpened} {...params}>
                 <Collapse isOpened={isOpened} onClick={() => setIsOpened(!isOpened)}>
                     <svg>
                         <use xlinkHref="#collapse" />
