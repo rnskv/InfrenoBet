@@ -16,7 +16,7 @@ import { mapStateToProps, mapDispatchToProps } from './connect';
 function Logup({
     isLoading, isRegister, error, token, logUp, reset,
 }) {
-    if (token) return <Redirect to="/" />;
+    // if (token) return <Redirect to="/" />;
 
     return (
         <PopupTemplate>

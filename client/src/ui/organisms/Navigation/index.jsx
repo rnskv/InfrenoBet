@@ -59,7 +59,7 @@ const GROUPS = [
                 iconSrc: 'https://sun9-70.userapi.com/c851232/v851232275/1a81ed/u3H5ShX-82Q.jpg?ava=1',
                 text: 'Log Up',
                 description: 'Last chance go back',
-                accessLevel: -1,
+                accessLevel: 0,
             },
             {
                 id: 2,
