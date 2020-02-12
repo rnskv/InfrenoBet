@@ -8,5 +8,6 @@ import AuthenticationForm from 'ui/molecules/AuthenticationForm';
 export const Container = styled.div`
     display: flex;
     justify-content: center;
-    background: var(--color-grey-800)
+    background: var(--color-grey-800);
+    position: relative;
 `;

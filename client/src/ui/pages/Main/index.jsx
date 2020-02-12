@@ -2,6 +2,8 @@ import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import styled, { keyframes } from 'styled-components';
+import { slideInDown } from 'react-animations';
 
 import Button from 'ui/atoms/Button';
 import DefaultTemplate from 'ui/templates/Default';
@@ -19,6 +21,13 @@ import { mapStateToProps, mapDispatchToProps } from './connect';
 
 rootApi.setBearerFromLocalStorage();
 
+const StyledExperiment = styled.div`
+  @keyframes slide { from { margin-top:-${({ transactionsLength}) => 108 * transactionsLength}px; } to { margin-top: 0; }  }
+  transition: 3s margin-top;
+  transition-delay: .1s;
+  
+  animation: .4s ease-out  slide;
+`;
 const handler = async () => {
     const result = await rootApi.execute('test');
     alert(result.body);
@@ -105,18 +114,22 @@ function Main({
             <UsersBanks users={users} bank={bank} />
             { isShowWinner ? <GameEndFooter secret={secret} /> : null }
             <div>
-                {
-                    transactions.map((transaction, index) => (
-                        <Transaction
-                            key={index}
-                            index={index}
-                            user={transaction.user}
-                            value={transaction.value}
-                            ticketFrom={transaction.ticketFrom}
-                            ticketTo={transaction.ticketTo}
-                        />
-                    ))
-                }
+
+                    <StyledExperiment transactionsLength={1} key={transactions.length}>
+                        {
+                            transactions.map((transaction, index) => (
+                                <Transaction
+                                    key={transactions.length - index}
+                                    index={index}
+                                    user={transaction.user}
+                                    value={transaction.value}
+                                    ticketFrom={transaction.ticketFrom}
+                                    ticketTo={transaction.ticketTo}
+                                />
+                            ))
+                        }
+                    </StyledExperiment>
+
             </div>
             <GameBeginFooter hash={hash} />
         </DefaultTemplate>
