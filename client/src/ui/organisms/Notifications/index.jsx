@@ -12,6 +12,9 @@ import {
     Name,
 } from './styled';
 
+import { mapDispatchToProps, mapStateToProps } from './connect';
+
+
 function Notifications({ notifications }) {
     return (
         <ul>
@@ -27,4 +30,4 @@ Notifications.propTypes = {
     error: PropTypes.string.isRequired,
 };
 
-export default LogupForm;
+export default connect(mapStateToProps, mapDispatchToProps)(Notifications);

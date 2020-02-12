@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
+import { connect } from 'react-redux';
 
 import {
     Container,
@@ -7,7 +8,7 @@ import {
     Button,
     NotificationsList,
     StyledNotification,
-    Icon
+    Icon,
 } from './styled';
 
 import { StateContext } from 'ui/organisms/Sidebar';
@@ -27,7 +28,10 @@ const mock = [
     },
 ];
 
-function SidebarNotifications({ className, style }) {
+import { mapDispatchToProps, mapStateToProps } from './connect';
+
+
+function SidebarNotifications({ notifications, className, style }) {
     const { isOpened } = useContext(StateContext);
     return (
         <Container className={className} style={style} isOpened={isOpened}>
@@ -38,7 +42,7 @@ function SidebarNotifications({ className, style }) {
             <Icon src="https://sun9-12.userapi.com/c206516/v206516687/49d7a/c7wnfazUB98.jpg?ava=1"/>
             <NotificationsList>
                 {
-                    mock.map(({ text, date }) => <StyledNotification text={text} date={date}/>)
+                    notifications.map(({ text, date, title }) => <StyledNotification title={title} text={text} date={date} />)
                 }
             </NotificationsList>
         </Container>
@@ -49,4 +53,4 @@ SidebarNotifications.propTypes = {
     children: PropTypes.node.isRequired,
 };
 
-export default SidebarNotifications;
+export default connect(mapStateToProps, mapDispatchToProps)(SidebarNotifications);

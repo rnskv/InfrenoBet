@@ -49,7 +49,7 @@ ws.io.on('game.transactionAccepted', () => {
 });
 
 ws.io.on('user.error', (notification) => {
-    console.log(notification)
+    console.log(notification);
     store.dispatch(actions.user.addNotification({ notification }));
 });
 

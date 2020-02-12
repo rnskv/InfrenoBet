@@ -9,6 +9,7 @@ export const Controls = styled.div`
   display: flex;
   border-bottom: 1px solid var(--color-grey-400);
   transition: .3s;
+  height: 40px;
 `;
 
 export const Button = styled.div`
@@ -25,6 +26,12 @@ export const Button = styled.div`
 `;
 
 export const NotificationsList = styled.div`
+     overflow-x: hidden;
+     overflow-y: scroll;
+     
+     position: absolute;
+     height: 100%;
+     transition: .3s;
 `;
 
 export const Icon = styled.img`
@@ -39,10 +46,9 @@ export const Container = styled.div`
   background-color: var(--color-grey-500);
   transition: .3s;
   overflow: hidden;
- 
+  flex: 1 1 100%;
+
   ${NotificationsList} {
-      overflow: hidden;
-      transition: .3s;
       margin-top: ${({ isOpened }) => isOpened ? '0' : '100vh'};
   }
   

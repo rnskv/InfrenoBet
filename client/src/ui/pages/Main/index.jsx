@@ -42,6 +42,7 @@ function Main({
     isShowWinner,
     userDepositsCount,
     roulette,
+    notifications
 }) {
     useEffect(() => {
         if (isSubscribed) return;

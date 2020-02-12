@@ -69,10 +69,9 @@ function userReducer(state = initialState, action) {
     }
 
     case actionTypes.ADD_NOTIFICATION: {
-        console.log('_actionTypes.ADD_NOTIFICATION', action);
         return {
             ...state,
-            notifications: [...state.notifications, action.payload.notification],
+            notifications: [action.payload.notification, ...state.notifications],
         };
     }
 

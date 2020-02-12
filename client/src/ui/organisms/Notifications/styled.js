@@ -7,7 +7,8 @@ import AuthenticationForm from 'ui/molecules/AuthenticationForm';
 
 export const Container = styled.div`
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    flex: 1 1 100%;
 `;
 
 export const StyledForm = styled(AuthenticationForm)`
