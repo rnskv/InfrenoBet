@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import dateFormat from 'dateformat';
 
 import {
     Container,
@@ -17,7 +18,7 @@ function Notification({ title, text, date, className, style }) {
             <Content>
                 <Title>{ title }</Title>
                 <Text>{ text }</Text>
-                <Date>{ date }</Date>
+                <Date>{ dateFormat(date, 'HH:MM:ss') }</Date>
             </Content>
         </Container>
     );

@@ -52,7 +52,10 @@ export const reset = () => ({
 });
 
 export const addNotification = (payload) => {
-    const notification = NOTIFICATIONS[payload.notification.type];
+    const notification = {
+        ...NOTIFICATIONS[payload.notification.type],
+        date: Date.now(),
+    };
 
     return ({
         type: actionTypes.ADD_NOTIFICATION,
