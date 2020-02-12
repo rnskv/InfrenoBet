@@ -42,7 +42,7 @@ function SidebarNotifications({ notifications, className, style }) {
             <Icon src="https://sun9-12.userapi.com/c206516/v206516687/49d7a/c7wnfazUB98.jpg?ava=1"/>
             <NotificationsList>
                 {
-                    notifications.map(({ text, date, title }) => <StyledNotification title={title} text={text} date={date} />)
+                    notifications.map(({ text, date, title }, index) => <StyledNotification key={notifications.length - index} title={title} text={text} date={date} />)
                 }
             </NotificationsList>
         </Container>

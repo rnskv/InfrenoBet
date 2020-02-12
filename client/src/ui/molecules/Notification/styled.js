@@ -1,4 +1,5 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+import { bounceInRight } from 'react-animations';
 
 export const Icon = styled.img`
   width: 50px;
@@ -7,6 +8,7 @@ export const Icon = styled.img`
 `;
 
 export const Container = styled.div`
+  animation: .6s ${keyframes`${bounceInRight}`};
   width: 100%;
   box-sizing: border-box;
   padding: 15px;
