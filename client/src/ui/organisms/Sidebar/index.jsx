@@ -10,10 +10,9 @@ import {
     Collapse,
 } from './styled';
 
-export const StateContext = React.createContext({ isOpened: true });
-
-function Sidebar({ children, token, params }) {
-    const [isOpened, setIsOpened] = useState(true);
+export const StateContext = React.createContext({ isOpened: false });
+const Sidebar = React.memo(({ children, params }) => {
+    const [isOpened, setIsOpened] = useState(false);
 
     return (
         <StateContext.Provider value={{ isOpened }}>
@@ -31,7 +30,7 @@ function Sidebar({ children, token, params }) {
             </StaticContainer>
         </StateContext.Provider>
     );
-}
+});
 
 Sidebar.propTypes = {
     token: PropTypes.string.isRequired,

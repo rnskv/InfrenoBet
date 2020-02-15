@@ -35,24 +35,24 @@ function LogupForm({ logUp, error }) {
         <Container>
             <StyledForm
                 onSubmit={onSubmit}
-                title="Sign Up"
+                title="Регистрация"
                 error={error}
             >
                 <Label>
-                    <Name>First Name:</Name>
+                    <Name>Имя:</Name>
                     <Input ref={nameInput} type="name" name="name" />
                 </Label>
 
                 <Label>
-                    <Name>Email:</Name>
+                    <Name>Эл. Почта:</Name>
                     <Input ref={emailInput} type="email" name="email" />
                 </Label>
 
                 <Label>
-                    <Name>Password:</Name>
+                    <Name>Пароль:</Name>
                     <Input ref={passwordInput} type="password" name="password" />
                 </Label>
-                <Button>SIGN UP</Button>
+                <Button>Зарегистрироваться</Button>
             </StyledForm>
         </Container>
     );

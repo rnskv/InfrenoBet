@@ -14,16 +14,16 @@ import {
 function AfterLogup({ reset }) {
     return (
         <Container>
-            <Title>THANK YOU FOR REGISTRATION!</Title>
+            <Title>СПАСИБО ЗА РЕГИСТРАЦИЮ!</Title>
             <Description>
-                You was register successfully!. Now, you can go to log in page and join to the game!
+                ВЫ УСПЕШНО ЗАРЕГИСТРИРОВАНЫ! ТЕПЕРЬ ВЫ МОЖЕТЕ АВТОРИЗИРОВАТЬСЯ И ВСТУПИТЬВ ИГРУ!
             </Description>
             <div>
                 <Link to="/login">
-                    <Button>GO TO LOG IN</Button>
+                    <Button>ПЕРЕЙТИ К АВТОРИЗАЦИИ</Button>
                 </Link>
 
-                <Button onClick={reset}>BACK TO LOG UP</Button>
+                <Button onClick={reset}>ВЕРНУТЬСЯ К РЕГИСТРАЦИИ</Button>
             </div>
         </Container>
     );

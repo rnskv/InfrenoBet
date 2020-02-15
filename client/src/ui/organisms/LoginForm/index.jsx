@@ -32,19 +32,19 @@ function LoginForm({ logIn, error }) {
         <Container>
             <StyledForm
                 onSubmit={onSubmit}
-                title="Sign In"
+                title="Авторизация"
                 error={error}
             >
                 <Label>
-                    <Name>Email:</Name>
+                    <Name>Эл. Почта:</Name>
                     <Input ref={emailInput} type="email" name="email" />
                 </Label>
 
                 <Label>
-                    <Name>Password:</Name>
+                    <Name>Пароль:</Name>
                     <Input ref={passwordInput} type="password" name="password" />
                 </Label>
-                <Button>SIGN IN</Button>
+                <Button>Войти</Button>
             </StyledForm>
         </Container>
     );
