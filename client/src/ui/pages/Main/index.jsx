@@ -17,6 +17,8 @@ import GameInfo from 'ui/organisms/GameInfo';
 import GameBeginFooter from 'ui/organisms/GameBeginFooter';
 import GameControls from 'ui/organisms/GameControls';
 import GameEndFooter from 'ui/organisms/GameEndFooter';
+import BetMaker from 'ui/organisms/BetMaker';
+
 import { mapStateToProps, mapDispatchToProps } from './connect';
 
 rootApi.setBearerFromLocalStorage();
@@ -108,6 +110,7 @@ function Main({
             {/* <div> */}
             {/*    { `Банк игры ${ bank.total } рублей` } */}
             {/* </div> */}
+            <BetMaker />
             <GameControls
                 transaction={transaction}
             />
