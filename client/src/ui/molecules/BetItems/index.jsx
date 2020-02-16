@@ -3,14 +3,16 @@ import React from 'react';
 
 import {
     Container,
-    StyledBetItem
+    StyledBetItem,
 } from './styled';
 
-function BetItems({ values, style, className }) {
+function BetItems({
+    onItemClick = () => {}, values, style, className,
+}) {
     return (
         <Container style={style} className={className}>
             {
-                values.map(value => <StyledBetItem value={value} />)
+                values.map((value, index) => <StyledBetItem onClick={() => onItemClick({ value, index })} value={value} />)
             }
         </Container>
     );

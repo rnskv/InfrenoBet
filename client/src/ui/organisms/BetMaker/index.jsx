@@ -14,20 +14,23 @@ import {
     StyledClose,
 } from './styled';
 
-function BetMaker({ isOpened, open, close, sendTransaction, allValues, userValues}) {
+function BetMaker({ removeBetFromBetMaker, addBetInBetMaker, isOpened, open, close, sendTransaction, allValues, userValues}) {
     return (
         <Container isOpened={isOpened}>
             <StyledClose onClick={close}/>
             <LeftBlock>
                 <BetInfo
-                    userValues={userValues}
+                    userValues={[...userValues, 0, 0, 0, 0, 0, 0, 0, 0].slice(0, 8)}
                     sendTransaction={sendTransaction}
                 />
-                <StyledBetItems values={userValues} />
+                <StyledBetItems
+                    values={[...userValues, 0, 0, 0, 0, 0, 0, 0, 0].slice(0, 8)}
+                    onItemClick={removeBetFromBetMaker}
+                />
             </LeftBlock>
             <RightBlock>
                 <h1>Выберите монеты</h1>
-                <StyledBetItems values={allValues} />
+                <StyledBetItems values={allValues} onItemClick={addBetInBetMaker} />
             </RightBlock>
         </Container>
     );

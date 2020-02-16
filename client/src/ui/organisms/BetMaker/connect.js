@@ -6,6 +6,8 @@ export function mapDispatchToProps(dispatch) {
         open: () => dispatch(betMakerActions.open()),
         close: () => dispatch(betMakerActions.close()),
         sendTransaction: () => dispatch(betMakerDomain.sendTransaction()),
+        addBetInBetMaker: ({ value }) => dispatch(betMakerActions.addBetInBetMaker({ value })),
+        removeBetFromBetMaker: ({ index }) => dispatch(betMakerActions.removeBetFromBetMaker({ index })),
     };
 }
 
