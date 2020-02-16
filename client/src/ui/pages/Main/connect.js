@@ -1,4 +1,5 @@
 import * as gameDomains from 'src/redux/game/domains';
+import * as betMakerActions from 'src/redux/betMaker/actions';
 
 // @todo to helper
 function getUsers(transactions) {
@@ -17,6 +18,7 @@ export function mapDispatchToProps(dispatch) {
         subscribe: () => dispatch(gameDomains.subscribe()),
         join: () => dispatch(gameDomains.join()),
         transaction: () => dispatch(gameDomains.transaction()),
+        openBetMaker: () => dispatch(betMakerActions.open()),
     };
 }
 

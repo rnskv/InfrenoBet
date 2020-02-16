@@ -53,7 +53,8 @@ function Main({
     isShowWinner,
     userDepositsCount,
     roulette,
-    notifications
+    notifications,
+    openBetMaker
 }) {
     useEffect(() => {
         if (isSubscribed) return;
@@ -113,6 +114,7 @@ function Main({
             <BetMaker />
             <GameControls
                 transaction={transaction}
+                openBetMaker={openBetMaker}
             />
             <UsersBanks users={users} bank={bank} />
             { isShowWinner ? <GameEndFooter secret={secret} /> : null }

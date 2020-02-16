@@ -12,10 +12,10 @@ import {
     Container,
 } from './styled';
 
-function GameFooter({ transaction }) {
+function GameFooter({ transaction, openBetMaker }) {
     return (
         <Container>
-            <Button onClick={transaction}>Make transaction</Button>
+            <Button onClick={openBetMaker}>Make transaction</Button>
         </Container>
     );
 }

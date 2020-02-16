@@ -16,16 +16,16 @@ export const Container = styled.div`
    display: flex;
    background: red;
    position: fixed;
-   right: ${({ isOpened }) => isOpened ? '0' : '-100%'};
+   right: ${({ isOpened }) => isOpened ? '0' : '-650px'};
    top: 50px;
    z-index: 10;
    height: calc(100vh - 50px);
-   transition: .9s right;
+   transition: .6s right;
 `;
 
 export const RightBlock = styled.div`
   background-color: var(--color-grey-500);
-  padding: 20px;
+  padding: 15px;
   h1 {
     color: var(--color-white);
     background-color: var(--color-blue);
@@ -42,6 +42,6 @@ export const RightBlock = styled.div`
 
 export const LeftBlock = styled.div`
   background-color: var(--color-grey-600);
-  padding: 20px;
+  padding: 15px;
 `;
 

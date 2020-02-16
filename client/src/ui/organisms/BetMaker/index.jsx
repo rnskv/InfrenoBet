@@ -1,12 +1,10 @@
 import PropTypes from 'prop-types';
-
 import React, { useState } from 'react';
-
-import Title from 'ui/atoms/Title';
-import Link from 'ui/atoms/Link';
-import Close from 'ui/atoms/Close';
+import { connect } from 'react-redux';
 
 import BetInfo from 'ui/molecules/BetInfo';
+
+import { mapDispatchToProps, mapStateToProps } from './connect';
 
 import {
     Container,
@@ -16,19 +14,20 @@ import {
     StyledClose,
 } from './styled';
 
-function BetMaker() {
-    const [isOpened, setIsOpened] = useState(true);
-
+function BetMaker({ isOpened, open, close, sendTransaction, allValues, userValues}) {
     return (
         <Container isOpened={isOpened}>
-            <StyledClose onClick={() => setIsOpened(false)}/>
+            <StyledClose onClick={close}/>
             <LeftBlock>
-                <BetInfo />
-                <StyledBetItems values={[10, 50, 500, 0, 0, 0, 0, 0, 0, 0]} />
+                <BetInfo
+                    userValues={userValues}
+                    sendTransaction={sendTransaction}
+                />
+                <StyledBetItems values={userValues} />
             </LeftBlock>
             <RightBlock>
                 <h1>Выберите монеты</h1>
-                <StyledBetItems values={[1, 5, 10, 50, 100, 500, 1000, 5000]} />
+                <StyledBetItems values={allValues} />
             </RightBlock>
         </Container>
     );
@@ -38,4 +37,4 @@ BetMaker.propTypes = {
 
 };
 
-export default BetMaker;
+export default connect(mapStateToProps, mapDispatchToProps)(BetMaker);

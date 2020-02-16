@@ -7,13 +7,13 @@ import {
     BetSum
 } from './styled';
 
-function BetInfo({ className, style }) {
+function BetInfo({ userValues, sendTransaction, className, style }) {
     return (
         <Container className={className} style={style}>
             <BetSum>
                 Сумма: <span>560₽</span>
             </BetSum>
-            <Button>Сделать ставку</Button>
+            <Button onClick={sendTransaction}>Сделать ставку</Button>
         </Container>
     );
 }
