@@ -25,6 +25,7 @@ const GROUPS = [
                 id: 0,
                 to: '/',
                 iconSrc: 'https://sun9-12.userapi.com/c206516/v206516687/49d7a/c7wnfazUB98.jpg?ava=1',
+                svgId: 'classic-logo',
                 text: 'Classic',
                 description: 'You lose all money',
                 onlyGuest: false,

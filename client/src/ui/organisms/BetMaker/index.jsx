@@ -20,7 +20,7 @@ function BetMaker({ removeBetFromBetMaker, addBetInBetMaker, isOpened, open, clo
             <StyledClose onClick={close}/>
             <LeftBlock>
                 <BetInfo
-                    userValues={[...userValues, 0, 0, 0, 0, 0, 0, 0, 0].slice(0, 8)}
+                    userValues={userValues}
                     sendTransaction={sendTransaction}
                 />
                 <StyledBetItems

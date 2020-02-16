@@ -24,7 +24,7 @@ import { mapStateToProps, mapDispatchToProps } from './connect';
 rootApi.setBearerFromLocalStorage();
 
 const StyledExperiment = styled.div`
-  @keyframes slide { from { margin-top:-${({ transactionsLength}) => 108 * transactionsLength}px; } to { margin-top: 0; }  }
+  @keyframes slide { from { margin-top:-${({ transactionsLength }) => 108 * transactionsLength}px; } to { margin-top: 0; }  }
   transition: 3s margin-top;
   transition-delay: .1s;
   
@@ -54,7 +54,7 @@ function Main({
     userDepositsCount,
     roulette,
     notifications,
-    openBetMaker
+    openBetMaker,
 }) {
     useEffect(() => {
         if (isSubscribed) return;
@@ -120,20 +120,21 @@ function Main({
             { isShowWinner ? <GameEndFooter secret={secret} /> : null }
             <div>
 
-                    <StyledExperiment transactionsLength={1} key={transactions.length}>
-                        {
-                            transactions.map((transaction, index) => (
-                                <Transaction
-                                    key={transactions.length - index}
-                                    index={index}
-                                    user={transaction.user}
-                                    value={transaction.value}
-                                    ticketFrom={transaction.ticketFrom}
-                                    ticketTo={transaction.ticketTo}
-                                />
-                            ))
-                        }
-                    </StyledExperiment>
+                <StyledExperiment transactionsLength={1} key={transactions.length}>
+                    { console.log(transactions)}
+                    {
+                        transactions.map((transaction, index) => (
+                            <Transaction
+                                key={`${transaction.ticketTo}`}
+                                index={index}
+                                user={transaction.user}
+                                value={transaction.value}
+                                ticketFrom={transaction.ticketFrom}
+                                ticketTo={transaction.ticketTo}
+                            />
+                        ))
+                    }
+                </StyledExperiment>
 
             </div>
             <GameBeginFooter hash={hash} />

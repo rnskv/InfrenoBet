@@ -3,7 +3,7 @@ import http from 'http';
 import crypto from 'crypto';
 import jwtDecode from 'jwt-decode';
 import Connection from 'src/core/Connection';
-
+import config from './config';
 // import SocketIO from 'socket.io';
 import Room from './core/Room';
 import { userApi} from './modules/api';
@@ -29,7 +29,7 @@ connection.io.on('connection', (socket) => {
         socket.user = jwtDecode(token);
     });
 
-    socket.on('game.transaction', (transactionData) => {
+    socket.on('game.transaction', async (transactionData) => {
         if (!socket.jwtToken) {
             socket.emit('project.error', { message: 'Unauthorization' });
             return;
@@ -37,16 +37,18 @@ connection.io.on('connection', (socket) => {
 
         console.log('register transaction');
         //@todo Переделать эт
-        room.game.registerTransaction({
-            user: socket.user,
-            value: 50,
-            onAccept: () => {
-                socket.emit('game.transactionAccepted')
-            },
-            onError: (error) => {
-                socket.emit('user.error', error)
-            }
-        });
+        for (const value of transactionData.values) {
+            await room.game.registerTransaction({
+                user: socket.user,
+                value,
+                onAccept: () => {
+                    socket.emit('game.transactionAccepted')
+                },
+                onError: (error) => {
+                    socket.emit('user.error', error)
+                }
+            });
+        }
     });
 
     socket.on('game.sync', () => {

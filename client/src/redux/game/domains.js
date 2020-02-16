@@ -16,8 +16,8 @@ export const join = () => async (dispatch) => {
     ws.io.emit('game.join', { name: 'Roma' });
 };
 
-export const transaction = () => async (dispatch) => {
-    ws.io.emit('game.transaction', { user: { name: 'Roma' }, value: 100 });
+export const transaction = ({ values }) => async (dispatch) => {
+    ws.io.emit('game.transaction', { values });
     dispatch(actions.transactionSended());
 };
 // ws.io.emit('game.sync');

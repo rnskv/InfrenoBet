@@ -70,7 +70,7 @@ class Game {
 
     get state() {
         return {
-            transactions: this.transactions.reverse(),
+            transactions: [...this.transactions].reverse(),
             hash: this.hash,
             time: this.time,
             isWaitingTransactions: this.isWaitingTransactions,
@@ -179,7 +179,7 @@ class Game {
                     type: 'GAME_CLASSIC',
                     game: this._id,
                     user: transactionData.user.id,
-                    value: getRandomInt(200) || transactionData.value,
+                    value: transactionData.value,
                 }
             })
             .then((transaction) => {

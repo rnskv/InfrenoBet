@@ -27,16 +27,17 @@ export const RightBlock = styled.div`
   background-color: var(--color-grey-500);
   padding: 15px;
   h1 {
-    color: var(--color-white);
-    background-color: var(--color-blue);
-    font-size: 15px;
+    color: var(--color-blue);
+    //background-color: var(--color-blue);
+    border: 2px solid var(--color-blue);
+    font-size: 16px;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 5px;
     text-transform: uppercase;
     margin: 0;
-    padding: 10px 0;
+    padding: 15px 0;
   }
 `;
 

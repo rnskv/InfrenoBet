@@ -27,7 +27,7 @@ function Transaction({
                 </div>
             </Description>
             <Item>
-                <img src="https://d2lomvz2jrw9ac.cloudfront.net/common/currency/2500.png" />
+                <img src={`https://d2lomvz2jrw9ac.cloudfront.net/common/currency/${value}.png`} />
             </Item>
         </Container>
     );

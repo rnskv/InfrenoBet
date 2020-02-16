@@ -1,22 +1,24 @@
 import { Api, Request } from 'shared/api';
 import { connection } from 'src/app';
+import config from 'src/config';
 
+console.log(config)
 export const userApi = new Api({
-    url: `http://localhost:2020/api/users`,
+    url: `http://${config.server_host}:${config.server_port}/api/users`,
     headers: {
         'Content-Type': 'application/json',
     },
 });
 
 export const gameApi = new Api({
-    url: `http://localhost:2020/api/games`,
+    url: `http://${config.server_host}:${config.server_port}/api/games`,
     headers: {
         'Content-Type': 'application/json',
     },
 });
 
 export const transactionsApi = new Api({
-    url: `http://localhost:2020/api/transactions`,
+    url: `http://${config.server_host}:${config.server_port}/api/transactions`,
     headers: {
         'Content-Type': 'application/json',
     }

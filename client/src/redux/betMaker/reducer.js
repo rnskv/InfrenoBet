@@ -11,7 +11,11 @@ const initialState = {
 function betMakerReducer(state = initialState, action) {
     switch (action.type) {
     case actionTypes.ADD_BET_IN_BET_MAKER: {
-        console.log('onItemClick');
+        if (state.userValues.length >= 8) {
+            return {
+                ...state,
+            };
+        }
         return {
             ...state,
             userValues: [...state.userValues, action.payload.value],
@@ -19,7 +23,6 @@ function betMakerReducer(state = initialState, action) {
     }
 
     case actionTypes.REMOVE_BET_FROM_BET_MAKER: {
-        console.log('onItemClick', action.payload, state.userValues);
         const copy = [...state.userValues];
         copy.splice(action.payload.index, 1);
         return {
@@ -31,6 +34,7 @@ function betMakerReducer(state = initialState, action) {
     case actionTypes.OPEN_BET_MAKER: {
         return {
             ...state,
+            userValues: [],
             isOpened: true,
         };
     }

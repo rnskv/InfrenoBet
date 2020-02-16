@@ -7,12 +7,26 @@ import {
 } from './styled';
 
 function BetItems({
-    onItemClick = () => {}, values, style, className,
+    onItemClick, values, style, className,
 }) {
     return (
         <Container style={style} className={className}>
             {
-                values.map((value, index) => <StyledBetItem onClick={() => onItemClick({ value, index })} value={value} />)
+                values.map((value, index) => {
+                    function onClick() {
+                        if (onItemClick) {
+                            onItemClick({ value, index });
+                        }
+                    }
+
+                    return (
+                        <StyledBetItem
+                            key={`${value}-${index}`}
+                            onClick={onClick}
+                            value={value}
+                        />
+                    );
+                })
             }
         </Container>
     );

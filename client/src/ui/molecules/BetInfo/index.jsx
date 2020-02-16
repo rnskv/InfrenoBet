@@ -7,13 +7,18 @@ import {
     BetSum
 } from './styled';
 
+function _getTransactionSum(userValues) {
+    return userValues.reduce((acc, value) => acc + value, 0);
+}
+
 function BetInfo({ userValues, sendTransaction, className, style }) {
+    console.log(userValues)
     return (
         <Container className={className} style={style}>
             <BetSum>
-                Сумма: <span>560₽</span>
+                Сумма: <span>{ _getTransactionSum(userValues) }₽</span>
             </BetSum>
-            <Button onClick={sendTransaction}>Сделать ставку</Button>
+            <Button onClick={() => sendTransaction({ values: userValues })}>Сделать ставку</Button>
         </Container>
     );
 }
