@@ -11,7 +11,7 @@ import {
     Container,
     WinnerTicket,
     WinnerName,
-    Winner
+    Winner,
 } from './styled';
 
 function WinInfo({ winner }) {
@@ -19,10 +19,14 @@ function WinInfo({ winner }) {
         <Container>
             <Winner>
                 <WinnerTicket>
-                    Победный билет: <span>{ winner.ticket }</span>
+                    Победный билет:
+                    {' '}
+                    <span>{ winner.ticket }</span>
                 </WinnerTicket>
                 <WinnerName>
-                    Победитель: <span>{ winner.transaction.user.name }</span>
+                    Победитель:
+                    {' '}
+                    <span>{ winner.transaction.user.name }</span>
                 </WinnerName>
             </Winner>
         </Container>

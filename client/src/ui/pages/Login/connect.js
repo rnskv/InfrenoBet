@@ -13,4 +13,3 @@ export function mapStateToProps(state) {
         error: state.user.loginError,
     };
 }
-

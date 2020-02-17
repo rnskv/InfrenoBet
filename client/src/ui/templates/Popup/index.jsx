@@ -60,8 +60,8 @@ function Popup({ children, ...props }) {
                     side: 'right',
                 }}
                 >
-                    {/*<SidebarProfile />*/}
-                    {/*<SidebarNavigation />*/}
+                    {/* <SidebarProfile /> */}
+                    {/* <SidebarNavigation /> */}
                     <SidebarNotifications />
                 </Sidebar>
             </Page>

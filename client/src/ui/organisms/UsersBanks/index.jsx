@@ -24,7 +24,7 @@ function UsersBanks({ users, bank }) {
                 ))
             }
         </Container>
-    )
+    );
 }
 
 UsersBanks.propTypes = {

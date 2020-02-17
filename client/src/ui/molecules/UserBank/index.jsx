@@ -21,10 +21,10 @@ function UserBank({
 }) {
     return (
         <Container>
-            {/*<TextAvatar>*/}
-            {/*    {user.name[0]}*/}
-            {/*</TextAvatar>*/}
-            <Avatar src={user.avatar}/>
+            {/* <TextAvatar> */}
+            {/*    {user.name[0]} */}
+            {/* </TextAvatar> */}
+            <Avatar src={user.avatar} />
             <Chance>
                 { `${getUserChances(bank, user)}%` }
             </Chance>

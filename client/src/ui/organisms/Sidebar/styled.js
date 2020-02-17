@@ -16,7 +16,6 @@ export const FixedContainer = styled.div`
 `;
 
 
-
 export const Collapse = styled.div`
     width: 100%;
     height: 30px;
@@ -51,7 +50,7 @@ export const StaticContainer = styled.div`
         ${({ side }) => `${side}: 0;`}
         ${Collapse} {
             svg {
-              transform: ${({ isOpened, side }) => (isOpened ? `rotateZ(${ side === 'left' ? 0 : 180}deg)` : `rotateZ(${ side === 'left' ? 180 : 0}deg)`)};
+              transform: ${({ isOpened, side }) => (isOpened ? `rotateZ(${side === 'left' ? 0 : 180}deg)` : `rotateZ(${side === 'left' ? 180 : 0}deg)`)};
             }
         }
     }

@@ -42,7 +42,7 @@ NavigationLink.propTypes = {
     description: PropTypes.string.isRequired,
     iconSrc: PropTypes.string.isRequired,
     isActive: PropTypes.bool.isRequired,
-    isVisible: PropTypes.bool.isRequired
+    isVisible: PropTypes.bool.isRequired,
 };
 
 export default NavigationLink;

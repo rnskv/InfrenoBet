@@ -27,7 +27,7 @@ function getFormattedTime(time) {
 }
 
 function GameInfo({
-    id, time, transactions, bank, users, roulette, isShowWinner
+    id, time, transactions, bank, users, roulette, isShowWinner,
 }) {
     return (
         <Container>

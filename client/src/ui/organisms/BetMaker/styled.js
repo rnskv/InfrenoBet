@@ -16,7 +16,7 @@ export const Container = styled.div`
    display: flex;
    background: red;
    position: fixed;
-   right: ${({ isOpened }) => isOpened ? '0' : '-650px'};
+   right: ${({ isOpened }) => (isOpened ? '0' : '-650px')};
    top: 50px;
    z-index: 10;
    height: calc(100vh - 50px);
@@ -45,4 +45,3 @@ export const LeftBlock = styled.div`
   background-color: var(--color-grey-600);
   padding: 15px;
 `;
-

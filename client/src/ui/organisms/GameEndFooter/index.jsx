@@ -10,14 +10,17 @@ import WinInfo from 'ui/organisms/WinInfo';
 
 import {
     Footer,
-    Secret
+    Secret,
 } from './styled';
 
 
 function GameEndFooter({ secret }) {
     return (
         <Footer text="ИГРА ЗАКОНЧИЛАСЬ!">
-            <Secret>Число этого раунда - {secret}</Secret>
+            <Secret>
+Число этого раунда -
+                {secret}
+            </Secret>
         </Footer>
     );
 }

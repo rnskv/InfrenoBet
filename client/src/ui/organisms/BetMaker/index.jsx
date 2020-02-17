@@ -14,10 +14,12 @@ import {
     StyledClose,
 } from './styled';
 
-function BetMaker({ removeBetFromBetMaker, addBetInBetMaker, isOpened, open, close, sendTransaction, allValues, userValues}) {
+function BetMaker({
+    removeBetFromBetMaker, addBetInBetMaker, isOpened, open, close, sendTransaction, allValues, userValues,
+}) {
     return (
         <Container isOpened={isOpened}>
-            <StyledClose onClick={close}/>
+            <StyledClose onClick={close} />
             <LeftBlock>
                 <BetInfo
                     userValues={userValues}

@@ -22,7 +22,7 @@ function Notifications({ notifications }) {
                 notifications.map((notification) => <li>{notification.text}</li>)
             }
         </ul>
-    )
+    );
 }
 
 Notifications.propTypes = {

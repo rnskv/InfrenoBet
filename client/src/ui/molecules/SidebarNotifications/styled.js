@@ -49,18 +49,18 @@ export const Container = styled.div`
   flex: 1 1 100%;
 
   ${NotificationsList} {
-      margin-top: ${({ isOpened }) => isOpened ? '0' : '100vh'};
+      margin-top: ${({ isOpened }) => (isOpened ? '0' : '100vh')};
   }
   
   ${Controls} {
-    height: ${({ isOpened }) => isOpened ? '40px' : '0'};
+    height: ${({ isOpened }) => (isOpened ? '40px' : '0')};
     overflow: hidden;
   }
   
   ${Icon} {
-      margin: ${({ isOpened }) => isOpened ? '0' : '15px'};
-      height: ${({ isOpened }) => isOpened ? '0' : '50px'};
-      opacity: ${({ isOpened }) => isOpened ? '0' : '1'};
-      transition-delay: ${({ isOpened }) => isOpened ? '0s' : '.3s'};
+      margin: ${({ isOpened }) => (isOpened ? '0' : '15px')};
+      height: ${({ isOpened }) => (isOpened ? '0' : '50px')};
+      opacity: ${({ isOpened }) => (isOpened ? '0' : '1')};
+      transition-delay: ${({ isOpened }) => (isOpened ? '0s' : '.3s')};
   }
 `;

@@ -18,7 +18,14 @@ function Transaction({
             <Avatar src={user.avatar} />
             <Description>
                 <div>
-                    Игрок { user.name } сделал ставку на сумму {value}₽
+                    Игрок
+                    {' '}
+                    { user.name }
+                    {' '}
+сделал ставку на сумму
+                    {' '}
+                    {value}
+₽
                 </div>
                 <div>
                     <b>

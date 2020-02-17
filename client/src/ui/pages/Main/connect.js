@@ -35,6 +35,6 @@ export function mapStateToProps(state) {
         bank: state.game.bank,
         userDepositsCount: state.game.userDepositsCount,
         roulette: state.game.roulette,
-        isShowWinner: state.game.isShowWinner
+        isShowWinner: state.game.isShowWinner,
     };
 }
