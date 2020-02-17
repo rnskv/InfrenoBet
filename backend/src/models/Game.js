@@ -84,7 +84,7 @@ Game.getWinnerById = async (id) => {
     const ticketsCount = lastGameTransaction.ticketTo;
 
     const secret = game.secret;
-    const winnerTicket = Math.floor(secret * ticketsCount);
+    const winnerTicket = Math.floor(secret * ticketsCount) + 1;
 
     const winnerTransaction = await Transaction.findOne({
         game: mongoose.Types.ObjectId(id),
@@ -92,7 +92,7 @@ Game.getWinnerById = async (id) => {
         ticketTo: { $gte: winnerTicket }
     }).populate('user');
 
-    console.log('Получил победную транзакцию', winnerTransaction);
+    console.log('Получил победную транзакцию', winnerTransaction, winnerTicket);
     winnerTransaction.winnerTicket = winnerTicket;
     return {
         transaction: winnerTransaction,

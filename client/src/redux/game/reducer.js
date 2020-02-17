@@ -18,7 +18,7 @@ const getClearGameState = () => ({
         offset: 0,
         avatars: [],
         isVisible: false,
-        winner: {}
+        winner: {},
     },
 });
 
@@ -37,14 +37,14 @@ function gameReducer(state = initialState, action) {
         };
     }
 
-    case actionTypes.GAME_TRANSACTION: {
+    case actionTypes.GAME_TRANSACTIONS: {
         console.log('GAME_TRANSACTION');
-        const { transaction, bank, users } = action.payload;
+        const { transactions, bank, users } = action.payload;
         return {
             ...state,
             bank,
             users,
-            transactions: [transaction, ...state.transactions],
+            transactions: [ ...transactions, ...state.transactions],
         };
     }
 
@@ -69,7 +69,7 @@ function gameReducer(state = initialState, action) {
         return {
             ...state,
             secret: action.payload.secret,
-            isShowWinner: true
+            isShowWinner: true,
         };
     }
 
@@ -100,7 +100,6 @@ function gameReducer(state = initialState, action) {
     }
 
     case actionTypes.GAME_START_ROULETTE: {
-
         return {
             ...state,
             isShowRoulette: true,

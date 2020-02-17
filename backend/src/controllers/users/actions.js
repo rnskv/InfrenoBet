@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import passport from 'koa-passport';
 
 import Action from 'src/core/Action';
 import bcrypt from 'bcryptjs';
@@ -24,6 +25,19 @@ const getAllHandler = async (ctx) => {
     ctx.body = 'getAllHandler'
 };
 
+const getMeHandler = async (ctx) => {
+    ctx.body = {
+        profile: ctx.state.user
+    };
+};
+
+export const getMe = new Action({
+    method: 'get',
+    url: '/me',
+    middleware: passport.authenticate('jwt'),
+    handler: getMeHandler,
+});
+
 export const get = new Action({
     method: 'get',
     url: '/:id',
@@ -35,3 +49,4 @@ export const getAll = new Action({
     url: '/',
     handler: getAllHandler,
 });
+

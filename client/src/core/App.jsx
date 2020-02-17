@@ -20,6 +20,7 @@ import Login from 'ui/pages/Login';
 import Logup from 'ui/pages/Logup';
 
 import Main from 'ui/pages/Main';
+import 'src/redux/realtime';
 
 function App() {
     return (

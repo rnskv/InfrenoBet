@@ -11,6 +11,14 @@ export const authApi = new Api({
     onError: (error) => store.dispatch(actions.user.addNotification({ notification: error })),
 });
 
+export const usersApi = new Api({
+    url: `${SERVER_PROTOCOL}://${SERVER_HOST}:${SERVER_PORT}/api/users`,
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    onError: (error) => store.dispatch(actions.user.addNotification({ notification: error })),
+});
+
 authApi.addRequests({
     logIn: new Request({
         url: '/login',
@@ -19,5 +27,15 @@ authApi.addRequests({
     logUp: new Request({
         url: '/register',
         method: 'post',
+    }),
+});
+
+usersApi.addRequests({
+    getProfile: new Request({
+        url: '/me',
+        method: 'get',
+        headers: {
+            Authorization: store.getState().user.token,
+        },
     }),
 });

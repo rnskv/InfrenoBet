@@ -34,19 +34,23 @@ connection.io.on('connection', (socket) => {
 
         console.log('register transaction');
         //@todo Переделать эт
-        for (const value of transactionData.values) {
-            await room.game.registerTransaction({
-                user: socket.user,
-                value,
-                onAccept: () => {
-                    //@todo Сомнительно, и придумай как привязать socket к транзакции...
-                    socket.emit('game.transactionAccepted')
-                },
-                onError: (error) => {
-                    socket.emit('user.error', error)
-                }
-            });
-        }
+
+        //тут мне нужно узнать баланс чувака
+
+        //Если хватает - убрать в холд, иначе - вернуть бедолаге;
+
+        await room.game.registerTransactionsBlock({
+            user: socket.user,
+            values: transactionData.values,
+            onAccept: () => {
+                //@todo Сомнительно, и придумай как привязать socket к транзакции...
+                socket.emit('game.transactionAccepted')
+            },
+            onError: (error) => {
+                socket.emit('user.error', error)
+            }
+        });
+
     });
 
     socket.on('game.sync', () => {

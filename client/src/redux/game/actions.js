@@ -5,8 +5,8 @@ export const join = (payload) => ({
     payload,
 });
 
-export const transaction = (payload) => ({
-    type: actionTypes.GAME_TRANSACTION,
+export const transactions = (payload) => ({
+    type: actionTypes.GAME_TRANSACTIONS,
     payload,
 });
 

@@ -1,14 +1,18 @@
 import { ws } from 'src/modules/realtime';
 import { store, actions } from './index';
 
+import * as userDomains from './user/domains';
+
 ws.io.emit('game.sync');
 
 ws.io.on('game.join', (userData) => {
     store.dispatch(actions.game.join({ userData }));
 });
 
-ws.io.on('game.transaction', ({ transaction, bank, users }) => {
-    store.dispatch(actions.game.transaction({ transaction, bank, users }));
+ws.io.on('game.transactions', ({ transactions, bank, users }) => {
+    store.dispatch(actions.game.transactions({ transactions, bank, users }));
+    //for synchronization
+    // store.dispatch(userDomains.getProfile());
 });
 
 ws.io.on('game.start', (game) => {
@@ -25,10 +29,12 @@ ws.io.on('game.getWinner', ({ winner, secret }) => {
 
 ws.io.on('game.reset', (state) => {
     store.dispatch(actions.game.reset({ state }));
+    store.dispatch(userDomains.getProfile());
 });
 
 ws.io.on('game.sync', (state) => {
     store.dispatch(actions.game.sync({ state }));
+    store.dispatch(userDomains.getProfile());
 });
 
 ws.io.on('game.waitingTransactions', ({ transactionsPoolLength }) => {

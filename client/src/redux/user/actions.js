@@ -23,6 +23,10 @@ const NOTIFICATIONS = {
     },
 };
 
+export const getInfo = () => ({
+    type: actionTypes.GET_INFO_USER,
+});
+
 export const logIn = (payload) => ({
     type: actionTypes.LOGIN_USER,
     payload,
@@ -61,4 +65,14 @@ export const addNotification = (payload) => {
         type: actionTypes.ADD_NOTIFICATION,
         payload: { notification },
     });
-}
+};
+
+export const setProfile = (payload) => ({
+    type: actionTypes.SET_PROFILE,
+    payload,
+});
+
+export const changeBalance = (payload) => ({
+    type: actionTypes.CHANGE_BALANCE_USER,
+    payload,
+});

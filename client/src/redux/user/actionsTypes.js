@@ -5,3 +5,6 @@ export const LOADING_USER = 'LOADING_USER';
 export const ERROR_USER = 'ERROR_USER';
 export const RESET_USER = 'RESET_USER';
 export const ADD_NOTIFICATION = 'GET_NOTIFICATION';
+
+export const SET_PROFILE = 'SET_PROFILE';
+export const CHANGE_BALANCE_USER = 'CHANGE_BALANCE_USER';

@@ -9,8 +9,6 @@ import * as userActions from './user/actions';
 import * as gameActions from './game/actions';
 import * as betMakerActions from './betMaker/actions';
 
-import './realtime';
-
 export const reducers = {
     user: userReducer,
     game: gameReducer,

@@ -12,12 +12,12 @@ class Game {
         this.transactions = [];
         this.onFinish = onFinish;
         this.sockets = sockets;
-        this.time = 30;
+        this.time = 5;
         this.isStarted = false;
         this.isFinished = false;
         this.isClosedForTransactions = false;
         this.isShowWinner = false;
-        this.transactionsPool = [];
+        this.transactionsBlocksPool = [];
         this.isWaitingTransactions = false;
         this.publicSecret = null;
         gameApi.execute('create', {
@@ -80,7 +80,7 @@ class Game {
             hash: this.hash,
             time: this.time,
             isWaitingTransactions: this.isWaitingTransactions,
-            transactionsPoolLength: this.transactionsPool.length,
+            transactionsPoolLength: this.transactionsBlocksPool.length,
             bank: this.bank,
             users: this.users,
             isShowWinner: this.isShowWinner,
@@ -122,9 +122,9 @@ class Game {
         if (this.time > 0) {
             setTimeout(this.tick.bind(this), 1000)
         } else {
-            if (this.transactionsPool.length) {
+            if (this.transactionsBlocksPool.length) {
                 setTimeout(this.tick.bind(this), 1000);
-                console.log('Ожидаем все транзакции', this.transactionsPool.length)
+                console.log('Ожидаем все транзакции', this.transactionsBlocksPool.length)
             } else {
                 this.getWinner();
             }
@@ -149,7 +149,7 @@ class Game {
             body: {
                 id: this._id
             }
-        });
+        }).catch(err => console.log('GET_WINNER', err));
 
         this.isShowRoulette = true;
         this.roulette.start({ winner, bank: this.state.bank, users: this.state.users });
@@ -180,53 +180,64 @@ class Game {
 
     async transaction(transactionData) {
         return new Promise((async resolve => {
-            transactionsApi.execute('create', {
-                body: {
-                    type: 'GAME_CLASSIC',
-                    game: this._id,
-                    user: transactionData.user.id,
-                    value: transactionData.value,
-                }
-            })
-            .then((transaction) => {
-                this.transactions.push(transaction);
 
-                if (this.users.length >= 2 && !this.isStarted) {
-                    // if (!this.isStarted) {
-                    this.start();
-                }
+            const acceptedTransactions = [];
 
-                this.sockets.emit('game.transaction', { transaction, bank: this.bank, users: this.users });
-                resolve();
-            })
-            .catch((err) => {
-                transactionData.onError(err);
-                resolve();
+            for (const value of transactionData.values) {
+                const transaction = await transactionsApi.execute('create', {
+                    body: {
+                        type: 'GAME_CLASSIC',
+                        game: this._id,
+                        user: transactionData.user.id,
+                        value,
+                    }
+                });
+
+                acceptedTransactions.push(transaction)
+            }
+
+            for (const acceptedTransaction of acceptedTransactions) {
+                console.log('push transaction');
+
+                this.transactions.push(acceptedTransaction);
+            }
+
+            this.sockets.emit('game.transactions', {
+                transactions: acceptedTransactions,
+                bank: this.bank,
+                users: this.users
             });
+
+            if (this.users.length >= 2 && !this.isStarted) {
+                // if (!this.isStarted) {
+                this.start();
+            }
+
+            resolve()
         }))
     }
 
-    async registerTransaction(data) {
+    async registerTransactionsBlock(data) {
         if (this.isClosedForTransactions) {
             return;
         }
 
-        if (this.transactionsPool.length) {
-            this.transactionsPool.push(data);
+        if (this.transactionsBlocksPool.length) {
+            this.transactionsBlocksPool.push(data);
         } else {
-            this.transactionsPool.push(data);
+            this.transactionsBlocksPool.push(data);
             this.loopTransaction()
         }
     }
 
     async loopTransaction() {
-        if (this.transactionsPool.length) {
-            const transaction = this.transactionsPool[0];
+        if (this.transactionsBlocksPool.length) {
+            const transaction = this.transactionsBlocksPool[0];
 
             await this.transaction(transaction);
             transaction.onAccept();
 
-            this.transactionsPool.shift();
+            this.transactionsBlocksPool.shift();
             this.loopTransaction();
         }
     }

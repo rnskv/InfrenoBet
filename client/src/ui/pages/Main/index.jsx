@@ -18,6 +18,7 @@ import GameBeginFooter from 'ui/organisms/GameBeginFooter';
 import GameControls from 'ui/organisms/GameControls';
 import GameEndFooter from 'ui/organisms/GameEndFooter';
 import BetMaker from 'ui/organisms/BetMaker';
+import TransactionsContainer from 'ui/organisms/TransactionsContainer';
 
 import { mapStateToProps, mapDispatchToProps } from './connect';
 
@@ -27,8 +28,8 @@ const StyledExperiment = styled.div`
   @keyframes slide { from { margin-top:-${({ transactionsLength }) => 108 * transactionsLength}px; } to { margin-top: 0; }  }
   transition: 3s margin-top;
   transition-delay: .1s;
-  
-  animation: .4s ease-out  slide;
+ 
+  animation: ${({ transactionsLength }) => 0.4 * transactionsLength}s ease-out slide;
 `;
 const handler = async () => {
     const result = await rootApi.execute('test');
@@ -55,17 +56,18 @@ function Main({
     roulette,
     notifications,
     openBetMaker,
+    getProfile,
+    profile,
 }) {
     useEffect(() => {
         if (isSubscribed) return;
         console.log('subscribed');
         subscribe();
+        getProfile();
     }, []);
     return (
         <DefaultTemplate>
-            Моих транзакций в обработке -
-            {' '}
-            { userDepositsCount }
+            { profile.isLoading ? `Профиль подгружается` : `${profile.name} - ${profile.balance} рублей`}
             <GameInfo
                 time={time}
                 transactions={transactions}
@@ -74,43 +76,6 @@ function Main({
                 roulette={roulette}
                 isShowWinner={isShowWinner}
             />
-            {/* <div> */}
-            {/*    { !token ? <Link to="/login">Go to login</Link> : token} */}
-            {/* </div> */}
-            {/* <Button onClick={handler}>Test action with token</Button> */}
-            {/* <br /> */}
-            {/* <br /> */}
-            {/* <p> */}
-            {/*    Время до конца -*/}
-            {/*    { time } */}
-            {/* </p> */}
-
-            {/* { */}
-            {/*    isWaitingTransactions ? `Не все транзакции этой игры обработаны, в очереди на обработку еще ${ transactionsPoolLength } траназкции` : '123123' */}
-            {/* } */}
-
-            {/* <p> */}
-            {/*    Хэш раунда -*/}
-            {/*    { hash } */}
-            {/* </p> */}
-
-            {/* <p> */}
-            {/*    Победитель раунда -*/}
-            {/*    { winner.transaction && winner.transaction.user.name } */}
-            {/* </p> */}
-
-            {/* <p> */}
-            {/*    Победный билет -*/}
-            {/*    { winner && winner.ticket } */}
-            {/* </p> */}
-
-            {/* <p> */}
-            {/*    Секретно число раунда -*/}
-            {/*    { secret || 'secret'} */}
-            {/* </p> */}
-            {/* <div> */}
-            {/*    { `Банк игры ${ bank.total } рублей` } */}
-            {/* </div> */}
             <BetMaker />
             <GameControls
                 transaction={transaction}
@@ -119,23 +84,10 @@ function Main({
             <UsersBanks users={users} bank={bank} />
             { isShowWinner ? <GameEndFooter secret={secret} /> : null }
             <div>
-
-                <StyledExperiment transactionsLength={1} key={transactions.length}>
-                    { console.log(transactions)}
-                    {
-                        transactions.map((transaction, index) => (
-                            <Transaction
-                                key={`${transaction.ticketTo}`}
-                                index={index}
-                                user={transaction.user}
-                                value={transaction.value}
-                                ticketFrom={transaction.ticketFrom}
-                                ticketTo={transaction.ticketTo}
-                            />
-                        ))
-                    }
-                </StyledExperiment>
-
+                <TransactionsContainer
+                    transactions={transactions}
+                    isGameEnd={isShowWinner}
+                />
             </div>
             <GameBeginFooter hash={hash} />
         </DefaultTemplate>

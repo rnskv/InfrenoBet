@@ -5,5 +5,5 @@ import * as actions from './actions';
 
 export const sendTransaction = ({ values }) => async (dispatch) => {
     dispatch(gameDomains.transaction({ values }));
-    dispatch(actions.close())
+    dispatch(actions.close());
 };

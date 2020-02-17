@@ -1,4 +1,5 @@
 import * as gameDomains from 'src/redux/game/domains';
+import * as userDomains from 'src/redux/user/domains';
 import * as betMakerActions from 'src/redux/betMaker/actions';
 
 // @todo to helper
@@ -19,6 +20,7 @@ export function mapDispatchToProps(dispatch) {
         join: () => dispatch(gameDomains.join()),
         transaction: () => dispatch(gameDomains.transaction()),
         openBetMaker: () => dispatch(betMakerActions.open()),
+        getProfile: () => dispatch(userDomains.getProfile()),
     };
 }
 
@@ -36,5 +38,6 @@ export function mapStateToProps(state) {
         userDepositsCount: state.game.userDepositsCount,
         roulette: state.game.roulette,
         isShowWinner: state.game.isShowWinner,
+        profile: state.user.profile,
     };
 }

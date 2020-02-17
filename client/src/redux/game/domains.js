@@ -1,7 +1,7 @@
 import history from 'src/modules/router/history';
 import { ws } from 'src/modules/realtime';
-import * as actions from './actions';
 import * as userActions from 'src/redux/user/actions';
+import * as actions from './actions';
 
 import { authApi } from '../user/api';
 
@@ -17,8 +17,12 @@ export const join = () => async (dispatch) => {
 };
 
 export const transaction = ({ values }) => async (dispatch) => {
+    const totalBet = values.reduce((acc, value) => acc + value, 0);
+
     ws.io.emit('game.transaction', { values });
+
     dispatch(actions.transactionSended());
+    dispatch(userActions.changeBalance({ amount: -totalBet }));
 };
 // ws.io.emit('game.sync');
 // ws.io.emit('game.join');

@@ -1,7 +1,6 @@
 import styled, { keyframes } from 'styled-components';
 
 import Button from 'ui/atoms/Button';
-import { slideInDown } from 'react-animations';
 
 export const Container = styled.div`
    width: 100%;

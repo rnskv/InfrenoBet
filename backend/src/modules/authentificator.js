@@ -11,7 +11,6 @@ const options = {
 export const useAuthentificator = (passport) => {
     const JwtStrategy = new Strategy(options, async (payload, done) => {
         const user = await User.findById(payload.id);
-
         if (user) {
             done(null, user);
         } else {

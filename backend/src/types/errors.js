@@ -5,7 +5,7 @@ export const USER_ALREAY_EXIST = {
 
 export const USER_NOT_FOUND = {
     code: 400,
-    type: 'USER_ALREAY_EXIST',
+    type: 'USER_NOT_FOUND',
 };
 
 export const USER_WRONG_PASSWORD = {

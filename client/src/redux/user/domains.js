@@ -2,7 +2,7 @@ import history from 'src/modules/router/history';
 import { ws } from 'src/modules/realtime';
 
 import * as actions from './actions';
-import { authApi } from './api';
+import { authApi, usersApi } from './api';
 
 export const logUp = ({ email, name, password }) => async (dispatch) => {
     dispatch(actions.loading());
@@ -39,4 +39,10 @@ export const logIn = ({ email, password }) => async (dispatch) => {
     } else {
         dispatch(actions.error({ loginError: response.error }));
     }
+};
+
+export const getProfile = () => async (dispatch) => {
+    const { profile } = await usersApi.execute('getProfile');
+
+    dispatch(actions.setProfile({ profile }));
 };

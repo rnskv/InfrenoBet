@@ -1,5 +1,5 @@
-import * as actionTypes from './actionsTypes';
 import { ws } from 'src/modules/realtime';
+import * as actionTypes from './actionsTypes';
 
 const getClearState = () => ({
     isLoading: false,
@@ -11,10 +11,13 @@ const getClearState = () => ({
 
 const initialState = {
     token: window.localStorage.getItem('token') || '',
+    profile: {
+        isLoading: true,
+    },
     ...getClearState(),
 };
 
-//@todo remove later
+// @todo remove later
 if (initialState.token) {
     ws.io.emit('project.auth', initialState.token);
 }
@@ -65,6 +68,27 @@ function userReducer(state = initialState, action) {
         return {
             ...state,
             ...getClearState(),
+        };
+    }
+
+    case actionTypes.SET_PROFILE: {
+        return {
+            ...state,
+            profile: {
+                ...state.profile,
+                ...action.payload.profile,
+                isLoading: false,
+            },
+        };
+    }
+
+    case actionTypes.CHANGE_BALANCE_USER: {
+        return {
+            ...state,
+            profile: {
+                ...state.profile,
+                balance: state.profile.balance + action.payload.amount,
+            },
         };
     }
 

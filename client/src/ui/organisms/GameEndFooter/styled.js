@@ -1,9 +1,11 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+import { flipInX } from 'react-animations';
 
 import CommonFooter from 'ui/molecules/Footer';
 
 export const Footer = styled(CommonFooter)`
-    background: var(--color-green);
+  animation: .6s ${keyframes`${flipInX}`};
+  background: var(--color-green);
 `;
 
 export const Secret = styled.div`
