@@ -193,7 +193,7 @@ class Game {
                     }
                 });
 
-                acceptedTransactions.push(transaction)
+                acceptedTransactions.unshift(transaction)
             }
 
             for (const acceptedTransaction of acceptedTransactions) {
