@@ -67,7 +67,7 @@ function Main({
     }, []);
     return (
         <DefaultTemplate>
-            { profile.isLoading ? `Профиль подгружается` : `${profile.name} - ${profile.balance} рублей`}
+            { profile.isLoading ? 'Профиль подгружается' : `${profile.name} - ${profile.balance} рублей`}
             <GameInfo
                 time={time}
                 transactions={transactions}
@@ -77,10 +77,13 @@ function Main({
                 isShowWinner={isShowWinner}
             />
             <BetMaker />
-            <GameControls
-                transaction={transaction}
-                openBetMaker={openBetMaker}
-            />
+            { !isShowWinner ? (
+                <GameControls
+                    transaction={transaction}
+                    openBetMaker={openBetMaker}
+                />
+            ) : null }
+
             <UsersBanks users={users} bank={bank} />
             { isShowWinner ? <GameEndFooter secret={secret} /> : null }
             <div>

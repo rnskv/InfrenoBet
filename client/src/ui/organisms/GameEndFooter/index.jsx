@@ -18,8 +18,7 @@ function GameEndFooter({ secret }) {
     return (
         <Footer text="ИГРА ЗАКОНЧИЛАСЬ!">
             <Secret>
-Число этого раунда -
-                {secret}
+                {`Число этого раунда: ${secret}`}
             </Secret>
         </Footer>
     );
