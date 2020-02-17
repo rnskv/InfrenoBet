@@ -33,7 +33,6 @@ function BetItems({
 }
 
 BetItems.propTypes = {
-    children: PropTypes.node.isRequired,
 };
 
 export default BetItems;

@@ -1,12 +1,9 @@
 import express from 'express';
 import http from 'http';
-import crypto from 'crypto';
 import jwtDecode from 'jwt-decode';
 import Connection from 'src/core/Connection';
 import config from './config';
-// import SocketIO from 'socket.io';
 import Room from './core/Room';
-import { userApi} from './modules/api';
 
 const app = express();
 export const server = http.Server(app);
@@ -42,6 +39,7 @@ connection.io.on('connection', (socket) => {
                 user: socket.user,
                 value,
                 onAccept: () => {
+                    //@todo Сомнительно, и придумай как привязать socket к транзакции...
                     socket.emit('game.transactionAccepted')
                 },
                 onError: (error) => {
@@ -56,4 +54,4 @@ connection.io.on('connection', (socket) => {
     });
 });
 
-server.listen(3000);
+server.listen(config.realtime_port);

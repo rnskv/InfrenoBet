@@ -15,7 +15,6 @@ function Avatar({ src, className, style }) {
 }
 
 Avatar.propTypes = {
-    children: PropTypes.node.isRequired,
 };
 
 export default Avatar;

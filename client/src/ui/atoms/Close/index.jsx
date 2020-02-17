@@ -3,7 +3,6 @@ import React from 'react';
 
 import {
     Container,
-    Image,
 } from './styled';
 
 function Close({ className, style, ...props }) {
@@ -15,7 +14,6 @@ function Close({ className, style, ...props }) {
 }
 
 Close.propTypes = {
-    children: PropTypes.node.isRequired,
 };
 
 export default Close;

@@ -12,22 +12,6 @@ import {
 } from './styled';
 
 import { StateContext } from 'ui/organisms/Sidebar';
-
-const mock = [
-    {
-        text: 'Ошибка такая то',
-        date: '29.06.1999',
-    },
-    {
-        text: 'Ошибка другая то',
-        date: '29.06.1999',
-    },
-    {
-        text: 'Ошибка третья то',
-        date: '29.06.1999',
-    },
-];
-
 import { mapDispatchToProps, mapStateToProps } from './connect';
 
 
@@ -50,7 +34,6 @@ function SidebarNotifications({ notifications, className, style }) {
 }
 
 SidebarNotifications.propTypes = {
-    children: PropTypes.node.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SidebarNotifications);

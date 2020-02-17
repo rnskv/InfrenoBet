@@ -12,7 +12,6 @@ function _getTransactionSum(userValues) {
 }
 
 function BetInfo({ userValues, sendTransaction, className, style }) {
-    console.log(userValues)
     return (
         <Container className={className} style={style}>
             <BetSum>
@@ -24,7 +23,6 @@ function BetInfo({ userValues, sendTransaction, className, style }) {
 }
 
 BetInfo.propTypes = {
-    children: PropTypes.node.isRequired,
 };
 
 export default BetInfo;

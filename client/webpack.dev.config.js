@@ -61,8 +61,8 @@ module.exports = () => {
             contentBase: path.join(__dirname, 'dist'),
             compress: true,
             historyApiFallback: true,
-            host: '192.168.0.101',
-            port: 9000,
+            host: env.CLIENT_HOST,
+            port: env.CLIENT_PORT,
         },
     });
 };

@@ -33,7 +33,6 @@ const Sidebar = React.memo(({ children, params }) => {
 });
 
 Sidebar.propTypes = {
-    token: PropTypes.string.isRequired,
 };
 
 export default Sidebar;

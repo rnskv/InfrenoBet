@@ -17,7 +17,6 @@ function BetItem({ value, className, style, onClick }) {
 }
 
 BetItem.propTypes = {
-    children: PropTypes.node.isRequired,
 };
 
 export default BetItem;

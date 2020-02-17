@@ -58,8 +58,14 @@ class Game {
         const users = {};
 
         this.transactions.forEach(transaction => {
+            //@todo Опасный участок, если удалить пользователя а транзакцию оставить - все ебанется
             const userId = transaction.user._id;
-            users[userId] = users[userId] ? users[userId] + transaction.value : transaction.value;
+
+            if (!!users[userId]) {
+                users[userId] += transaction.value
+            } else {
+                users[userId] = transaction.value;
+            }
         });
 
         return {
@@ -183,12 +189,6 @@ class Game {
                 }
             })
             .then((transaction) => {
-                const tickets = {
-                    from: 0,
-                    to: 10,
-                };
-
-
                 this.transactions.push(transaction);
 
                 if (this.users.length >= 2 && !this.isStarted) {

@@ -3,3 +3,9 @@ export function mapStateToProps(state) {
         notifications: state.user.notifications,
     };
 }
+
+export function mapDispatchToProps() {
+    return {
+
+    };
+}
