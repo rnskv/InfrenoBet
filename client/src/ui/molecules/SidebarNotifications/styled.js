@@ -30,6 +30,7 @@ export const NotificationsList = styled.div`
      overflow-y: scroll;
      
      position: absolute;
+     width: 100%;
      height: 100%;
      transition: .3s;
 `;

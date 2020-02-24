@@ -1,3 +1,3 @@
-import Connection from 'src/core/Connection';
+import Connection from 'src/core/Application';
 
 export default new Connection();

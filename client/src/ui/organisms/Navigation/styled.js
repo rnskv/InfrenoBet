@@ -85,7 +85,7 @@ export const ItemsGroupSystem = styled.div`
     margin-left: ${(props) => (props.isOpened ? '0' : '-25px')};
     transition: .3s;
     &::after {
-        content: 'SYSTEM';
+        content: 'SYS';
         position: absolute;
         left: -26px;
         top: 50%;

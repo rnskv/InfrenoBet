@@ -23,7 +23,13 @@ export const transaction = ({ values }) => async (dispatch) => {
     ws.io.emit('game.transaction', { values });
 
     dispatch(actions.transactionSended());
-    dispatch(userActions.addNotification({ type: TRANSACTION_SENDING }));
+    dispatch(userActions.addNotification({
+        type: TRANSACTION_SENDING,
+        params: {
+            text: `Ваша ставка на сумму ${totalBet}₽ находится в очереди.
+                   Она будет добавлена в игру через ~${values.length * 1} сек.`,
+        },
+    }));
     dispatch(userActions.changeBalance({ amount: -totalBet }));
 };
 // ws.io.emit('game.sync');

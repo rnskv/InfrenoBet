@@ -30,16 +30,7 @@ const GROUPS = [
                 description: 'You lose all money',
                 onlyGuest: false,
                 accessLevel: 0,
-            },
-            {
-                id: 1,
-                to: '/double',
-                iconSrc: 'https://sun1-20.userapi.com/c841433/v841433631/50d57/5uZuwLPBHvk.jpg?ava=1',
-                text: 'Double',
-                description: 'Good luck!',
-                onlyGuest: false,
-                accessLevel: 0,
-            },
+            }
         ],
     },
     {
@@ -52,7 +43,7 @@ const GROUPS = [
                 iconSrc: 'https://sun9-37.userapi.com/c830400/v830400985/c0fdb/9CIryApwPMY.jpg?ava=1',
                 text: 'Log In',
                 description: 'You really ready?',
-                accessLevel: -1,
+                accessLevel: 0,
             },
             {
                 id: 1,
@@ -61,23 +52,7 @@ const GROUPS = [
                 text: 'Log Up',
                 description: 'Last chance go back',
                 accessLevel: 0,
-            },
-            {
-                id: 2,
-                to: '/support',
-                iconSrc: 'https://sun9-37.userapi.com/c830400/v830400985/c0fdb/9CIryApwPMY.jpg?ava=1',
-                text: 'Support',
-                description: 'Oooooo oborona',
-                accessLevel: 1,
-            },
-            {
-                id: 3,
-                to: '/faq',
-                iconSrc: 'https://sun1-16.userapi.com/c840525/v840525178/3be2/gAaI4F_usnE.jpg?ava=1',
-                text: 'FAQ',
-                description: 'Help me i help you',
-                accessLevel: 0,
-            },
+            }
         ],
     },
 ];
