@@ -54,3 +54,14 @@ export const changeBalance = (payload) => ({
     type: actionTypes.CHANGE_BALANCE_USER,
     payload,
 });
+
+export const openSidebar = (payload) => ({
+    type: actionTypes.OPEN_SIDEBAR,
+    payload,
+});
+
+
+export const closeSidebar = (payload) => ({
+    type: actionTypes.CLOSE_SIDEBAR,
+    payload,
+});

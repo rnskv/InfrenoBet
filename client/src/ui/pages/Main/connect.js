@@ -39,5 +39,6 @@ export function mapStateToProps(state) {
         roulette: state.game.roulette,
         isShowWinner: state.game.isShowWinner,
         profile: state.user.profile,
+        sidebars: state.user.sidebars,
     };
 }

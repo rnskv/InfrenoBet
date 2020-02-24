@@ -24,18 +24,6 @@ import { mapStateToProps, mapDispatchToProps } from './connect';
 
 rootApi.setBearerFromLocalStorage();
 
-const StyledExperiment = styled.div`
-  @keyframes slide { from { margin-top:-${({ transactionsLength }) => 108 * transactionsLength}px; } to { margin-top: 0; }  }
-  transition: 3s margin-top;
-  transition-delay: .1s;
- 
-  animation: ${({ transactionsLength }) => 0.4 * transactionsLength}s ease-out slide;
-`;
-const handler = async () => {
-    const result = await rootApi.execute('test');
-    alert(result.body);
-};
-
 const isSubscribed = false;
 
 function Main({
@@ -58,6 +46,7 @@ function Main({
     openBetMaker,
     getProfile,
     profile,
+    sidebars,
 }) {
     useEffect(() => {
         if (isSubscribed) return;

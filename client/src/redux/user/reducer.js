@@ -6,13 +6,21 @@ const getClearState = () => ({
     isRegister: false,
     loginError: '',
     logupError: '',
-    notifications: [],
+    notifications: []
 });
 
 const initialState = {
     token: window.localStorage.getItem('token') || '',
     profile: {
         isLoading: true,
+    },
+    sidebars: {
+        left: {
+            isOpened: false,
+        },
+        right: {
+            isOpened: true,
+        },
     },
     ...getClearState(),
 };
@@ -95,14 +103,38 @@ function userReducer(state = initialState, action) {
     case actionTypes.ADD_NOTIFICATION: {
         const notification = {
             id: state.notifications.length,
-            ...action.payload.notification
+            ...action.payload.notification,
         };
-
-        console.log(notification);
 
         return {
             ...state,
             notifications: [notification, ...state.notifications],
+        };
+    }
+
+    case actionTypes.OPEN_SIDEBAR: {
+        return {
+            ...state,
+            sidebars: {
+                ...state.sidebars,
+                [action.payload.side]: {
+                    ...state.sidebars[action.payload.side],
+                    isOpened: true,
+                },
+            },
+        };
+    }
+
+    case actionTypes.CLOSE_SIDEBAR: {
+        return {
+            ...state,
+            sidebars: {
+                ...state.sidebars,
+                [action.payload.side]: {
+                    ...state.sidebars[action.payload.side],
+                    isOpened: false,
+                },
+            },
         };
     }
 
