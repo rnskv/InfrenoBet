@@ -42,6 +42,11 @@ class Application {
                 return;
             }
 
+            if (this.rooms['classic'].game.isClosedForTransactions) {
+                socket.emit('project.error', { type: notificationsTypes.GAME_CLOSED_FOR_TRANSACTIONS });
+            }
+            //Тут проверить надо хватает ли чуваку денег и если да то сразу вычесть их;
+
             await this.rooms['classic'].game.registerTransactionsBlock({
                 user: socket.user,
                 values: transactionData.values,

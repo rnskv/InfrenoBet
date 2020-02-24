@@ -6,6 +6,7 @@ import {
     INTERNAL_SERVER_ERROR,
     TRANSACTION_SENDING,
     USER_NOT_AUTH,
+    GAME_CLOSED_FOR_TRANSACTIONS,
 } from './notificationsTypes';
 
 export default {
@@ -38,6 +39,11 @@ export default {
         type: 'ERROR',
         title: 'Система',
         text: 'Произошел сбой на сервере. Пожалуйста, повторите попытку позже.',
+    },
+    [GAME_CLOSED_FOR_TRANSACTIONS]: {
+        type: 'ERROR',
+        title: 'Игра',
+        text: 'Ставки больше не принимаются. Игра скоро начнется"',
     },
     [TRANSACTION_SENDING]: {
         type: 'SUCCESS',
