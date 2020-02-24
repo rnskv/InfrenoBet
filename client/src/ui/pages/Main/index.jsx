@@ -57,6 +57,7 @@ function Main({
     return (
         <DefaultTemplate>
             { profile.isLoading ? 'Профиль подгружается' : `${profile.name} - ${profile.balance} рублей`}
+            { `Ожидаем транзакции: ${isWaitingTransactions} - ${transactionsPoolLength} - штук`}
             <GameInfo
                 time={time}
                 transactions={transactions}

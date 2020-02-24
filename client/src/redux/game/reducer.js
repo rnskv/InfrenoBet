@@ -70,6 +70,7 @@ function gameReducer(state = initialState, action) {
             ...state,
             secret: action.payload.secret,
             isShowWinner: true,
+            isWaitingTransactions: false,
         };
     }
 

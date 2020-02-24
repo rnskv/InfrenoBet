@@ -98,37 +98,40 @@ class Game {
         this.app.io.sockets.emit('game.reset', this.state);
     }
 
-    start() {
+    async start() {
         this.isStarted = true;
 
         this.app.io.sockets.emit('game.start', this.time);
-        this.tick();
+
+        while (this.time > 0) {
+            await this.tick();
+        }
+
+        while (this.isWaitingTransactions) {
+            await this.tick();
+        }
+
+        this.getWinner();
     }
 
     async tick() {
-        if (this.time > 0) {
-            this.time -= 1;
-        } else {
-            this.isWaitingTransactions = true;
-            this.app.io.sockets.emit('game.waitingTransactions', { transactionsPoolLength: this.state.transactionsPoolLength });
-        }
-
-        this.app.io.sockets.emit('game.tick', this.time);
-
-        if (this.time < 5) {
-            this.isClosedForTransactions = true;
-        }
-
-        if (this.time > 0) {
-            setTimeout(this.tick.bind(this), 1000)
-        } else {
-            if (this.transactionsBlocksPool.length) {
-                setTimeout(this.tick.bind(this), 1000);
-                console.log('Ожидаем все транзакции', this.transactionsBlocksPool.length)
+        return new Promise((resolve) => {
+            if (this.time > 0) {
+                this.time -= 1;
             } else {
-                this.getWinner();
+                this.app.io.sockets.emit('game.waitingTransactions', {
+                    transactionsPoolLength: this.state.transactionsPoolLength
+                });
             }
-        }
+
+            if (this.time < 5) {
+                this.isClosedForTransactions = true;
+            }
+
+            this.app.io.sockets.emit('game.tick', this.time);
+
+            setTimeout(resolve, 1000)
+        });
     }
 
     async onGameEnd() {
@@ -180,7 +183,6 @@ class Game {
 
     async transaction(transactionData) {
         return new Promise((async resolve => {
-
             const acceptedTransactions = [];
 
             for (const value of transactionData.values) {
@@ -197,8 +199,6 @@ class Game {
             }
 
             for (const acceptedTransaction of acceptedTransactions) {
-                console.log('push transaction');
-
                 this.transactions.push(acceptedTransaction);
             }
 
@@ -209,7 +209,6 @@ class Game {
             });
 
             if (this.users.length >= 2 && !this.isStarted) {
-                // if (!this.isStarted) {
                 this.start();
             }
 
@@ -222,23 +221,28 @@ class Game {
             return;
         }
 
-        if (this.transactionsBlocksPool.length) {
-            this.transactionsBlocksPool.push(data);
-        } else {
-            this.transactionsBlocksPool.push(data);
-            this.loopTransaction()
+        this.isWaitingTransactions = true;
+
+        this.transactionsBlocksPool.push(data);
+
+        const isNeedToStartProcessingTransactions = this.transactionsBlocksPool.length === 1;
+
+        if (isNeedToStartProcessingTransactions) {
+            this.processFirstTransaction()
         }
     }
 
-    async loopTransaction() {
+    async processFirstTransaction() {
         if (this.transactionsBlocksPool.length) {
             const transaction = this.transactionsBlocksPool[0];
 
             await this.transaction(transaction);
             transaction.onAccept();
-
             this.transactionsBlocksPool.shift();
-            this.loopTransaction();
+
+            this.isWaitingTransactions = !!this.transactionsBlocksPool.length;
+
+            this.processFirstTransaction();
         }
     }
 
