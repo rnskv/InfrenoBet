@@ -61,10 +61,11 @@ ws.io.on('game.win', () => {
 });
 
 ws.io.on('user.error', (notification) => {
-    console.log(notification);
-    store.dispatch(actions.user.addNotification({ notification }));
+    alert(notification);
+    // store.dispatch(actions.user.addNotification({ notification }));
 });
 
-ws.io.on('project.error', (error) => {
-    alert(error);
+ws.io.on('project.error', ({ type }) => {
+    store.dispatch(actions.user.addNotification({ type }));
+    // alert(error);
 });

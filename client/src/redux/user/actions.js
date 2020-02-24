@@ -33,7 +33,7 @@ export const reset = () => ({
     type: actionTypes.RESET_USER,
 });
 
-export const addNotification = ({ type, params }) => {
+export const addNotification = ({ type, params = {}}) => {
     const notification = {
         ...NOTIFICATIONS[type],
         ...params,

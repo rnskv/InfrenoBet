@@ -4,7 +4,11 @@ import { ws } from '../realtime';
 class Socket {
     constructor({ url }) {
         this.url = url;
-        this.io = new IO(url);
+        this.connect();
+    }
+
+    connect() {
+        this.io = new IO(this.url);
     }
 }
 

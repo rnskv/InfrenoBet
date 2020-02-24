@@ -1,5 +1,6 @@
 import jwtDecode from 'jwt-decode';
 import Room from './Room';
+import * as notificationsTypes from 'shared/configs/notificationsTypes';
 
 const socket = require('socket.io');
 
@@ -37,7 +38,7 @@ class Application {
 
         socket.on('game.transaction', async (transactionData) => {
             if (!socket.jwtToken) {
-                socket.emit('project.error', { message: 'Unauthorization' });
+                socket.emit('project.error', { type: notificationsTypes.USER_NOT_AUTH });
                 return;
             }
 

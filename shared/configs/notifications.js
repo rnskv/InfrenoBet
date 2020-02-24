@@ -5,7 +5,7 @@ import {
     USER_NOT_ENOUGH_MONEY,
     INTERNAL_SERVER_ERROR,
     TRANSACTION_SENDING,
-
+    USER_NOT_AUTH,
 } from './notificationsTypes';
 
 export default {
@@ -23,6 +23,11 @@ export default {
         type: 'ERROR',
         title: 'Система',
         text: 'Пользователь с таким именем уже существует.',
+    },
+    [USER_NOT_AUTH]: {
+        type: 'ERROR',
+        title: 'Ошибка доступа',
+        text: 'Вы не авторизированы.',
     },
     [USER_NOT_ENOUGH_MONEY]: {
         type: 'ERROR',
