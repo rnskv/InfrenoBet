@@ -21,7 +21,8 @@ INotification = {
 
 Типы транзакций находятся в `shared/configs/notificationTypes.js`.
 Описываются следующим образом: 
-```export const TRANSACTION_SENDING = 'TRANSACTION_SENDING';
+```
+export const TRANSACTION_SENDING = 'TRANSACTION_SENDING';
 ```
 ***Важно сохранять семантику!***
 
