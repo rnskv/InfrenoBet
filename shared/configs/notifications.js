@@ -6,7 +6,7 @@ import {
     INTERNAL_SERVER_ERROR,
     TRANSACTION_SENDING,
     USER_NOT_AUTH,
-    GAME_CLOSED_FOR_TRANSACTIONS,
+    GAME_CLOSED_FOR_TRANSACTIONS, TRANSACTION_ACCEPTED,
 } from './notificationsTypes';
 
 export default {
@@ -47,7 +47,12 @@ export default {
     },
     [TRANSACTION_SENDING]: {
         type: 'SUCCESS',
-        title: 'Система',
+        title: 'Игра',
         text: 'Ваша транзакция успешно поставлена в очередь! Она будет добавлена в игру в течении ~5 сек.',
+    },
+    [TRANSACTION_ACCEPTED]: {
+        type: 'SUCCESS',
+        title: 'Игра',
+        text: 'Ваша ставка принята!',
     }
 }

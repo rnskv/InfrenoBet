@@ -2,6 +2,7 @@ import { ws } from 'src/modules/realtime';
 import { store, actions } from './index';
 
 import * as userDomains from './user/domains';
+import * as notificationsTypes from 'shared/configs/notificationsTypes';
 
 ws.io.emit('game.sync');
 
@@ -51,6 +52,7 @@ ws.io.on('game.roulette.update', (state) => {
 
 ws.io.on('game.transactionAccepted', () => {
     console.log('Мой депозит принят');
+    store.dispatch(actions.user.addNotification({ type: notificationsTypes.TRANSACTION_ACCEPTED }));
     store.dispatch(actions.game.transactionAccepted());
 });
 
