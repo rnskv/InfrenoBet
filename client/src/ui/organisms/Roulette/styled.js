@@ -7,7 +7,7 @@ import CommonTitle from 'ui/atoms/Title';
 import AuthenticationForm from 'ui/molecules/AuthenticationForm';
 
 export const Container = styled.div`
-  width: 800px;
+  width: 100%;
   position: relative;
   box-sizing: border-box;
   overflow: hidden;

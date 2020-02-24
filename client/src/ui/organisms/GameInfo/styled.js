@@ -8,7 +8,7 @@ import AuthenticationForm from 'ui/molecules/AuthenticationForm';
 
 export const Container = styled.div`
     background: var(--color-blue);
-    padding: 25px;
+    padding: 25px 0;
     display: flex;
     align-items: center;
     flex-direction: column;

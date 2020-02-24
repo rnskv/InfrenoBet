@@ -20,14 +20,16 @@ const Roulette = React.memo(({
     state,
 }) => {
     const avatarsRef = useRef(null);
+    const containerRef = useRef(null);
 
     useEffect(() => {
         // 400 - ширина блока с аватарками (перепиши)
-        avatarsRef.current.style.marginLeft = `${-state.offset + 400}px`;
+        const widthHalf = containerRef.current.getBoundingClientRect().width / 2;
+        avatarsRef.current.style.marginLeft = `${-state.offset + widthHalf}px`;
     }, [state.offset]);
 
     return (
-        <Container>
+        <Container ref={containerRef}>
             <Avatars ref={avatarsRef}>
                 {
                     state.avatars.map((avatar, index) => <img key={index} src={avatar} />)

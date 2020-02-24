@@ -1,11 +1,6 @@
 import PropTypes from 'prop-types';
 
 import React, { useRef } from 'react';
-
-import Button from 'ui/atoms/Button';
-import Input from 'ui/atoms/Input';
-
-import UserBank from 'ui/molecules/UserBank';
 import WinInfo from 'ui/organisms/WinInfo';
 import Roulette from 'ui/organisms/Roulette';
 
@@ -32,13 +27,6 @@ function GameInfo({
     return (
         <Container>
             <Title>{`Игра ${id}`}</Title>
-            {/* <Roulette */}
-            {/*    transactions={transactions} */}
-            {/*    bank={bank} */}
-            {/*    winner={winner} */}
-            {/*    users={users} */}
-            {/*    avatars={avatars} */}
-            {/* /> */}
             {
                 roulette.isVisible
                     ? (
