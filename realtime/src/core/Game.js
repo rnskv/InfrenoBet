@@ -12,7 +12,7 @@ class Game {
         this.transactions = [];
         this.onFinish = onFinish;
         this.sockets = sockets;
-        this.time = 5;
+        this.time = 15;
         this.isStarted = false;
         this.isFinished = false;
         this.isClosedForTransactions = false;

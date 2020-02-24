@@ -1,27 +1,5 @@
 import * as actionTypes from './actionsTypes';
-
-const NOTIFICATIONS = {
-    USER_ALREAY_EXIST: {
-        title: 'Система',
-        text: 'Пользователь с таким именем уже существует.',
-    },
-    USER_WRONG_PASSWORD: {
-        title: 'Система',
-        text: 'Вы ввели неверный пароль.',
-    },
-    USER_NOT_FOUND: {
-        title: 'Система',
-        text: 'Пользователь с таким именем не найден',
-    },
-    USER_NOT_ENOUGH_MONEY: {
-        title: 'Игра',
-        text: 'У вас недостаточно средств. Пожалуйста, пополните ваш баланс',
-    },
-    INTERNAL_SERVER_ERROR: {
-        title: 'Система',
-        text: 'Произошел сбой на сервере. Пожалуйста, повторите попытку позже.',
-    },
-};
+import NOTIFICATIONS from 'shared/configs/notifications';
 
 export const getInfo = () => ({
     type: actionTypes.GET_INFO_USER,
@@ -55,10 +33,10 @@ export const reset = () => ({
     type: actionTypes.RESET_USER,
 });
 
-export const addNotification = (payload) => {
+export const addNotification = ({ type, params }) => {
     const notification = {
-        ...NOTIFICATIONS[payload.notification.type],
-        date: Date.now(),
+        ...NOTIFICATIONS[type],
+        ...params,
     };
 
     return ({

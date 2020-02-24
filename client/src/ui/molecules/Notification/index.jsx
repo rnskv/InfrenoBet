@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import { string, object, number } from 'prop-types';
 import React from 'react';
 import dateFormat from 'dateformat';
 
@@ -6,28 +6,45 @@ import {
     Container,
     Title,
     Text,
-    Date,
+    Date as DateComponent,
     Icon,
     Content,
 } from './styled';
 
+const MOCK_ICONS = {
+    ERROR: 'https://banner2.cleanpng.com/20180320/btw/kisspng-area-trademark-symbol-brand-sign-error-5ab0d7e1e44023.2850921615215390419349.jpg',
+    SUCCESS: 'https://sun9-12.userapi.com/c206516/v206516687/49d7a/c7wnfazUB98.jpg?ava=1',
+};
+
 function Notification({
-    title, text, date, className, style,
+    type, title, text, date, className, style,
 }) {
     return (
-        <Container className={className} style={style}>
-            <Icon src="https://banner2.cleanpng.com/20180320/btw/kisspng-area-trademark-symbol-brand-sign-error-5ab0d7e1e44023.2850921615215390419349.jpg" />
+        <Container className={className} style={style} type={type}>
+            <Icon src={MOCK_ICONS[type]} />
             <Content>
                 <Title>{ title }</Title>
                 <Text>{ text }</Text>
-                <Date>{ dateFormat(date, 'HH:MM:ss') }</Date>
+                <DateComponent>{ dateFormat(date, 'HH:MM:ss') }</DateComponent>
             </Content>
         </Container>
     );
 }
 
 Notification.propTypes = {
-    children: PropTypes.node.isRequired,
+    title: string.isRequired,
+    text: string.isRequired,
+    type: string,
+    date: number,
+    className: string,
+    style: object,
+};
+
+Notification.defaultProps = {
+    type: 'ERROR',
+    date: Date.now(),
+    className: '',
+    style: {},
 };
 
 export default Notification;
