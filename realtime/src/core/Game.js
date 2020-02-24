@@ -110,7 +110,7 @@ class Game {
             this.time -= 1;
         } else {
             this.isWaitingTransactions = true;
-            this.app.iosockets.emit('game.waitingTransactions', { transactionsPoolLength: this.state.transactionsPoolLength });
+            this.app.io.sockets.emit('game.waitingTransactions', { transactionsPoolLength: this.state.transactionsPoolLength });
         }
 
         this.app.io.sockets.emit('game.tick', this.time);
@@ -162,7 +162,7 @@ class Game {
         this.isFinished = true;
         this.publicSecret = this.secret;
 
-        this.app.iosockets.emit('game.getWinner', {
+        this.app.io.sockets.emit('game.getWinner', {
             winner,
             secret: this.secret
         });
@@ -171,7 +171,7 @@ class Game {
     }
 
     join(userData) {
-        this.app.iosockets.emit('game.join', userData);
+        this.app.io.sockets.emit('game.join', userData);
     }
 
     isFirstUserTransaction(user) {
