@@ -4,14 +4,14 @@ import { gameApi, transactionsApi } from 'src/modules/api';
 import { getRandomInt } from 'src/helpers/math';
 
 class Game {
-    constructor({ hash, secret, sockets, onFinish }) {
+    constructor({ hash, secret, app, onFinish }) {
+        this.app = app;
         this.roulette = new Roulette({
-            sockets,
+            sockets: this.app.io.sockets,
             onEnd: this.onRouletteRotateEnd.bind(this)
         });
         this.transactions = [];
         this.onFinish = onFinish;
-        this.sockets = sockets;
         this.time = 15;
         this.isStarted = false;
         this.isFinished = false;
@@ -95,13 +95,13 @@ class Game {
         this.secret = secret;
         this.transactions = transactions;
 
-        this.sockets.emit('game.reset', this.state);
+        this.app.io.sockets.emit('game.reset', this.state);
     }
 
     start() {
         this.isStarted = true;
 
-        this.sockets.emit('game.start', this.time);
+        this.app.io.sockets.emit('game.start', this.time);
         this.tick();
     }
 
@@ -110,10 +110,10 @@ class Game {
             this.time -= 1;
         } else {
             this.isWaitingTransactions = true;
-            this.sockets.emit('game.waitingTransactions', { transactionsPoolLength: this.state.transactionsPoolLength });
+            this.app.iosockets.emit('game.waitingTransactions', { transactionsPoolLength: this.state.transactionsPoolLength });
         }
 
-        this.sockets.emit('game.tick', this.time);
+        this.app.io.sockets.emit('game.tick', this.time);
 
         if (this.time < 5) {
             this.isClosedForTransactions = true;
@@ -154,7 +154,7 @@ class Game {
         this.isShowRoulette = true;
         this.roulette.start({ winner, bank: this.state.bank, users: this.state.users });
 
-        this.sockets.emit('game.startRoulette');
+        this.app.io.sockets.emit('game.startRoulette');
     }
 
     onRouletteRotateEnd(winner) {
@@ -162,7 +162,7 @@ class Game {
         this.isFinished = true;
         this.publicSecret = this.secret;
 
-        this.sockets.emit('game.getWinner', {
+        this.app.iosockets.emit('game.getWinner', {
             winner,
             secret: this.secret
         });
@@ -171,7 +171,7 @@ class Game {
     }
 
     join(userData) {
-        this.sockets.emit('game.join', userData);
+        this.app.iosockets.emit('game.join', userData);
     }
 
     isFirstUserTransaction(user) {
@@ -202,7 +202,7 @@ class Game {
                 this.transactions.push(acceptedTransaction);
             }
 
-            this.sockets.emit('game.transactions', {
+            this.app.io.sockets.emit('game.transactions', {
                 transactions: acceptedTransactions,
                 bank: this.bank,
                 users: this.users

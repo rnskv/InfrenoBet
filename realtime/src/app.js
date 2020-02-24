@@ -7,7 +7,7 @@ import Room from './core/Room';
 
 const app = express();
 export const server = http.Server(app);
-export const application = new Application(server);
 
+export const application = new Application(server);
 
 server.listen(config.realtime_port);

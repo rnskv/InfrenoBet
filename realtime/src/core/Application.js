@@ -1,6 +1,5 @@
 import jwtDecode from 'jwt-decode';
 import Room from './Room';
-import { application } from '../app';
 
 const socket = require('socket.io');
 
@@ -16,11 +15,12 @@ class Application {
     }
 
     createRoom({ id }) {
-        this.rooms[id] = new Room({ sockets: this.io.sockets });
+        this.rooms[id] = new Room({ app: this });
         this.rooms[id].reset();
     }
 
     onConnection(socket) {
+        //@todo Переписать это
         socket.on('error', (error) => {
             console.log('FRIENDSHIP IS MAGIC')
         });
@@ -29,12 +29,10 @@ class Application {
             socket.jwtToken = token;
             socket.user = jwtDecode(token);
             this.addUserSocket(socket);
-            console.log(this.usersSockets);
         });
 
         socket.on('disconnect', () => {
             this.removeUserSocket(socket);
-            console.log(this.usersSockets);
         });
 
         socket.on('game.transaction', async (transactionData) => {

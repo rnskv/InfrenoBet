@@ -2,10 +2,9 @@ import Game from 'src/core/Game';
 import crypto from 'crypto';
 
 class Room {
-    constructor(io) {
+    constructor({ app }) {
         this.gamesCount = 0;
-
-        this.io = io;
+        this.app = app;
         this.game = null;
     }
 
@@ -17,7 +16,7 @@ class Room {
         this.game = new Game({
             hash,
             secret,
-            sockets: this.io.sockets,
+            app: this.app,
             onFinish: this.onFinish.bind(this)
         });
     }
