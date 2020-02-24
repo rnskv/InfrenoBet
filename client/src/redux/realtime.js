@@ -54,6 +54,12 @@ ws.io.on('game.transactionAccepted', () => {
     store.dispatch(actions.game.transactionAccepted());
 });
 
+ws.io.on('game.win', () => {
+    console.log('Вы победили');
+    // store.dispatch(actions.game.transactionAccepted());
+    alert('Вы победили!')
+});
+
 ws.io.on('user.error', (notification) => {
     console.log(notification);
     store.dispatch(actions.user.addNotification({ notification }));

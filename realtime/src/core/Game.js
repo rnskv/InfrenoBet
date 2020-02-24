@@ -13,6 +13,7 @@ class Game {
         this.transactions = [];
         this.onFinish = onFinish;
         this.time = 15;
+        this.endingTime = 7;
         this.isStarted = false;
         this.isFinished = false;
         this.isClosedForTransactions = false;
@@ -157,6 +158,13 @@ class Game {
         this.isShowRoulette = true;
         this.roulette.start({ winner, bank: this.state.bank, users: this.state.users });
 
+        //@todo вынести в отедльный метод
+        console.log(winner, this.app.usersSockets);
+
+        this.app.usersSockets[winner.transaction.user._id].forEach(socketId => {
+            this.app.io.sockets.connected[socketId].emit('game.win');
+        });
+
         this.app.io.sockets.emit('game.startRoulette');
     }
 
@@ -170,7 +178,7 @@ class Game {
             secret: this.secret
         });
 
-        setTimeout(this.onGameEnd.bind(this), 7000)
+        setTimeout(this.onGameEnd.bind(this), this.endingTime * 1000)
     }
 
     join(userData) {
