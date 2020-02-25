@@ -8,6 +8,7 @@ ws.io.emit('game.sync');
 
 ws.io.on('game.join', (userData) => {
     store.dispatch(actions.game.join({ userData }));
+    store.dispatch(userDomains.getProfile());
 });
 
 ws.io.on('game.transactions', ({ transactions, bank, users }) => {

@@ -2,7 +2,10 @@ import history from 'src/modules/router/history';
 import { ws } from 'src/modules/realtime';
 
 import * as actions from './actions';
+import * as domains from './domains';
+
 import { authApi, usersApi } from './api';
+import { store } from '../index';
 
 export const logUp = ({ email, name, password }) => async (dispatch) => {
     dispatch(actions.loading());
@@ -36,6 +39,7 @@ export const logIn = ({ email, password }) => async (dispatch) => {
         window.localStorage.setItem('token', response.token);
         dispatch(actions.logIn({ token: response.token }));
         ws.io.emit('project.auth', response.token);
+        usersApi.setHeader('Authorization', response.token);
     } else {
         dispatch(actions.error({ loginError: response.error }));
     }
