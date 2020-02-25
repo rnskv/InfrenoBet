@@ -31,7 +31,7 @@ export const NotificationsList = styled.div`
      
      position: absolute;
      width: 100%;
-     height: 100%;
+     height: calc(100% - 90px);
      transition: .3s;
 `;
 
