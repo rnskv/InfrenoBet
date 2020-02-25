@@ -5,24 +5,13 @@ import styled from 'styled-components';
 
 import Navigation from 'ui/organisms/Navigation';
 import Sidebar from 'ui/organisms/Sidebar';
+import Header from 'ui/organisms/Header';
 
 import SidebarNotifications from 'ui/molecules/SidebarNotifications';
 import SidebarNavigation from 'ui/molecules/SidebarNavigation';
 import SidebarProfile from 'ui/molecules/SidebarProfile';
 
 import { Container } from '../../organisms/Sidebar/styled';
-
-const Header = styled.header`
-    width: 100%;
-    height: 50px;
-    color: #fff;
-    background-color: #000;
-    
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-`;
 
 const Content = styled.div`
     margin: 75px auto;
@@ -45,7 +34,7 @@ const Page = styled.div`
 function Default({ children, ...props }) {
     return (
         <div {...props}>
-            <Header>Header</Header>
+            <Header />
             <Page>
                 <Sidebar params={{
                     side: 'left',

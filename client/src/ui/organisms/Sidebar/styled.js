@@ -13,6 +13,7 @@ export const FixedContainer = styled.div`
     overflow: hidden;
     position: fixed;
     box-shadow: 0 0 5px 1px var(--color-shadow);
+    z-index: 9;
 `;
 
 
