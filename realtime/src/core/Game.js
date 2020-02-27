@@ -161,10 +161,6 @@ class Game {
         //@todo вынести в отедльный метод
         console.log(winner, this.app.usersSockets);
 
-        this.app.usersSockets[winner.transaction.user._id].forEach(socketId => {
-            this.app.io.sockets.connected[socketId].emit('game.win');
-        });
-
         this.app.io.sockets.emit('game.startRoulette');
     }
 
@@ -176,6 +172,10 @@ class Game {
         this.app.io.sockets.emit('game.getWinner', {
             winner,
             secret: this.secret
+        });
+
+        this.app.usersSockets[winner.transaction.user._id].forEach(socketId => {
+            this.app.io.sockets.connected[socketId].emit('game.win');
         });
 
         setTimeout(this.onGameEnd.bind(this), this.endingTime * 1000)
@@ -233,25 +233,20 @@ class Game {
 
         this.transactionsBlocksPool.push(data);
 
-        const isNeedToStartProcessingTransactions = this.transactionsBlocksPool.length === 1;
+        const isNeedToStartProcessing = this.transactionsBlocksPool.length === 1;
 
-        if (isNeedToStartProcessingTransactions) {
-            this.processFirstTransaction()
+        if (isNeedToStartProcessing) {
+            while (this.transactionsBlocksPool.length) {
+                await this.processFirstTransaction();
+                this.isWaitingTransactions = !!this.transactionsBlocksPool.length;
+            }
         }
     }
 
     async processFirstTransaction() {
-        if (this.transactionsBlocksPool.length) {
-            const transaction = this.transactionsBlocksPool[0];
-
-            await this.transaction(transaction);
-            transaction.onAccept();
-            this.transactionsBlocksPool.shift();
-
-            this.isWaitingTransactions = !!this.transactionsBlocksPool.length;
-
-            this.processFirstTransaction();
-        }
+        const transactionData = this.transactionsBlocksPool.shift();
+        await this.transaction(transactionData);
+        transaction.onAccept();
     }
 
     sync(socket) {
