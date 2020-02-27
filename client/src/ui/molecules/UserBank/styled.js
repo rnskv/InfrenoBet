@@ -5,13 +5,13 @@ import Button from 'ui/atoms/Button';
 export const Container = styled.div`
    width: 100px;
    box-sizing: border-box;
-   background: rgba(8, 175, 228, 0.3);
+   background: ${({ containerColor }) => containerColor};
    display: inline-flex;
    align-items: center;
    justify-content: space-around;
    padding: 15px 15px 5px;
    flex-direction: column;
-   border-bottom: 5px solid rgb(7, 141, 220);
+   border-bottom: 5px solid ${({ borderColor }) => borderColor};
    margin: 0 1px;
 `;
 

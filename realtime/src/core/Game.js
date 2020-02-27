@@ -174,9 +174,11 @@ class Game {
             secret: this.secret
         });
 
-        this.app.usersSockets[winner.transaction.user._id].forEach(socketId => {
-            this.app.io.sockets.connected[socketId].emit('game.win');
-        });
+        if (this.app.usersSockets[winner.transaction.user._id]) {
+            this.app.usersSockets[winner.transaction.user._id].forEach(socketId => {
+                this.app.io.sockets.connected[socketId].emit('game.win');
+            });
+        }
 
         setTimeout(this.onGameEnd.bind(this), this.endingTime * 1000)
     }
@@ -246,7 +248,7 @@ class Game {
     async processFirstTransaction() {
         const transactionData = this.transactionsBlocksPool.shift();
         await this.transaction(transactionData);
-        transaction.onAccept();
+        transactionData.onAccept();
     }
 
     sync(socket) {

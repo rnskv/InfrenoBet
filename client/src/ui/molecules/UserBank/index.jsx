@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import crypto from 'crypto';
 
 import React from 'react';
 
@@ -19,11 +20,12 @@ function getUserChances(bank, user) {
 function UserBank({
     user, bank,
 }) {
+    const nicknameHash = crypto.createHash('md5').update(String(user.email)).digest('hex');
+    const containerColor = `#${nicknameHash.slice(0, 6)}59`;
+    const borderColor = `#${nicknameHash.slice(0, 6)}db`;
+
     return (
-        <Container>
-            {/* <TextAvatar> */}
-            {/*    {user.name[0]} */}
-            {/* </TextAvatar> */}
+        <Container containerColor={containerColor} borderColor={borderColor}>
             <Avatar src={user.avatar} />
             <Chance>
                 { `${getUserChances(bank, user)}%` }
