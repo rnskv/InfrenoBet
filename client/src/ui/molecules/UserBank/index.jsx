@@ -14,9 +14,8 @@ import {
 } from './styled';
 
 function UserBank({
-    avatar, bet, chance, containerColor, borderColor
+    avatar, bet, chance, containerColor, borderColor,
 }) {
-
     return (
         <Container containerColor={containerColor} borderColor={borderColor}>
             <Avatar src={avatar} />
@@ -31,6 +30,11 @@ function UserBank({
 }
 
 UserBank.propTypes = {
+    avatar: PropTypes.string.isRequired,
+    bet: PropTypes.number.isRequired,
+    chance: PropTypes.number.isRequired,
+    containerColor: PropTypes.string.isRequired,
+    borderColor: PropTypes.string.isRequired,
 };
 
 export default UserBank;

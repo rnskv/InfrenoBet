@@ -31,6 +31,7 @@ function UsersBanks({ users, bank }) {
 
                         return (
                             <Chance
+                                key={color}
                                 color={color}
                                 percent={getUserChances(bank, user)}
                             />
