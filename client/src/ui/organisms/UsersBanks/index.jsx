@@ -25,7 +25,7 @@ function UsersBanks({ users, bank }) {
             <Container>
                 <ChancesBar>
                     {users.map((user, index) => {
-                        console.log(user)
+                        console.log(user);
                         const nicknameHash = crypto.createHash('md5').update(String(user.email)).digest('hex');
                         const color = `#${nicknameHash.slice(0, 6)}`;
 
@@ -39,13 +39,22 @@ function UsersBanks({ users, bank }) {
                 </ChancesBar>
                 <Banks>
                     {
-                        users.map((user, index) => (
-                            <UserBank
-                                key={user._id}
-                                user={user}
-                                bank={bank}
-                            />
-                        ))
+                        users.map((user, index) => {
+                            const nicknameHash = crypto.createHash('md5').update(String(user.email)).digest('hex');
+                            const containerColor = `#${nicknameHash.slice(0, 6)}59`;
+                            const borderColor = `#${nicknameHash.slice(0, 6)}db`;
+
+                            return (
+                                <UserBank
+                                    key={user._id}
+                                    avatar={user.avatar}
+                                    chance={getUserChances(bank, user)}
+                                    bet={bank.users[user._id]}
+                                    containerColor={containerColor}
+                                    borderColor={borderColor}
+                                />
+                            );
+                        })
                     }
                 </Banks>
             </Container>

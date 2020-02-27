@@ -13,25 +13,18 @@ import {
     Bet,
 } from './styled';
 
-function getUserChances(bank, user) {
-    return (bank.users[user._id] / bank.total * 100).toFixed(2);
-}
-
 function UserBank({
-    user, bank,
+    avatar, bet, chance, containerColor, borderColor
 }) {
-    const nicknameHash = crypto.createHash('md5').update(String(user.email)).digest('hex');
-    const containerColor = `#${nicknameHash.slice(0, 6)}59`;
-    const borderColor = `#${nicknameHash.slice(0, 6)}db`;
 
     return (
         <Container containerColor={containerColor} borderColor={borderColor}>
-            <Avatar src={user.avatar} />
+            <Avatar src={avatar} />
             <Chance>
-                { `${getUserChances(bank, user)}%` }
+                { `${chance}%` }
             </Chance>
             <Bet>
-                { `${bank.users[user._id]}₽` }
+                { `${bet}₽` }
             </Bet>
         </Container>
     );
