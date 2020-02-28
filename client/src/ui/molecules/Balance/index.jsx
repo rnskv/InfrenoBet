@@ -19,7 +19,7 @@ function Balance({
         <Container className={className} style={style}>
             <Text>Ваш баланс:</Text>
             <Value>
-                <span>{ `${value}₽` }</span>
+                <span>{ `${value.toFixed(1)}₽` }</span>
                 <Currency>{ currency }</Currency>
             </Value>
         </Container>
@@ -27,8 +27,8 @@ function Balance({
 }
 
 Balance.propTypes = {
-    currency: 'String',
-    value: Number,
+    currency: PropTypes.string,
+    value: PropTypes.number,
 };
 
 Balance.defaultProps = {

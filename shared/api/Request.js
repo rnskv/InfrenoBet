@@ -33,23 +33,36 @@ export default class Request {
             }
 
             fetcher(url, resultOptions)
-                .then((response) => {
-                    if (!response.ok) {
-                        throw response;
-                    }
+                .then(async (response) => {
                     return response.json();
                 })
                 .then(json => {
+
+                    if (json.isError && onError) {
+                        onError({ type: json.type });
+                    }
+
                     resolve(json)
                 })
                 .catch(err => {
-                    err.json().then(notification => {
+                    if (!err.json) {
                         if (onError) {
-                            console.log(`I'am really want call onError callback, but you not pass it to me :( You error is`, notification)
-                            onError(notification);
+                            onError({ type: 'INTERNAL_SERVER_ERROR' });
                         }
-                        reject(notification)
-                    });
+                        return;
+                    }
+
+                    err.json()
+                        .then(notification => {
+                            if (onError) {
+                                console.log(`I'am really want call onError callback, but you not pass it to me :( You error is`, notification)
+                                onError(notification);
+                            }
+                            reject(notification)
+                        })
+                        .catch(err => {
+                            console.error(`Api can't parse json object in answer from server`, err)
+                        });
                 });
         });
     }

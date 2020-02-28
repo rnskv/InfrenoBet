@@ -4,14 +4,14 @@ import jwt from 'jsonwebtoken';
 import User from '../../models/User';
 import config from '../../config';
 
-import { USER_ALREAY_EXIST, USER_NOT_FOUND, USER_WRONG_PASSWORD } from 'src/types/errors';
+import { USER_ALREAY_EXIST, USER_NOT_FOUND, USER_WRONG_PASSWORD } from 'shared/configs/notificationsTypes';
 
 const registerHandler = async (ctx) => {
     const { name, email, password } = ctx.request.body;
     const user = await User.findOne({ email });
 
     if (user) {
-        ctx.throw(USER_ALREAY_EXIST);
+        ctx.throw({ type: USER_ALREAY_EXIST });
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -29,7 +29,7 @@ const loginHandler = async (ctx) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-        ctx.throw(USER_NOT_FOUND);
+        ctx.throw({ type: USER_NOT_FOUND });
     }
 
     const isEqualPasswords = await bcrypt.compare(password, user.password);
@@ -45,7 +45,7 @@ const loginHandler = async (ctx) => {
 
         ctx.body = { token: `Bearer ${token}` };
     } else {
-        ctx.throw(USER_WRONG_PASSWORD);
+        ctx.throw({ type: USER_WRONG_PASSWORD });
     }
 };
 

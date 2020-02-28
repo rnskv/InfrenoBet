@@ -10,7 +10,8 @@ module.exports = {
     },
     resolve: {
         alias: {
-            src: path.resolve(__dirname, 'src')
+            src: path.resolve(__dirname, 'src'),
+            shared: path.resolve(__dirname, '../shared'),
         }
     },
     mode: 'development',

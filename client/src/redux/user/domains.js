@@ -46,7 +46,11 @@ export const logIn = ({ email, password }) => async (dispatch) => {
 };
 
 export const getProfile = () => async (dispatch) => {
-    const { profile } = await usersApi.execute('getProfile');
+    //@todo вынести в геттер апи isAut или что то такое
+    if (!usersApi.headers.Authorization) {
+        return;
+    }
 
+    const { profile } = await usersApi.execute('getProfile');
     dispatch(actions.setProfile({ profile }));
 };

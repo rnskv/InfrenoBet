@@ -18,12 +18,12 @@ export default {
     [USER_WRONG_PASSWORD]: {
         type: 'ERROR',
         title: 'Система',
-        text: 'Пользователь с таким именем не найден',
+        text: 'Вы ввели неверный пароль',
     },
     [USER_NOT_FOUND]: {
         type: 'ERROR',
         title: 'Система',
-        text: 'Пользователь с таким именем уже существует.',
+        text: 'Пользователь с таким именем не найден.',
     },
     [USER_NOT_AUTH]: {
         type: 'ERROR',

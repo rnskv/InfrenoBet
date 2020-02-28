@@ -17,5 +17,5 @@ export function getUserColorsByEmail(email) {
 }
 
 export function getUserChances(user, bank) {
-    return (bank.users[user._id] / bank.total * 100).toFixed(2);
+    return Number((bank.users[user._id] / bank.total * 100).toFixed(2));
 }

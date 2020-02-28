@@ -8,7 +8,9 @@ export const authApi = new Api({
     headers: {
         'Content-Type': 'application/json'
     },
-    onError: (error) => store.dispatch(actions.user.addNotification({ notification: error })),
+    onError: ({ type }) => {
+        store.dispatch(actions.user.addNotification({ type }))
+    },
 });
 
 export const usersApi = new Api({
@@ -17,7 +19,7 @@ export const usersApi = new Api({
         'Content-Type': 'application/json',
         Authorization: store.getState().user.token,
     },
-    onError: (error) => store.dispatch(actions.user.addNotification({ notification: error })),
+    onError: ({ type }) => store.dispatch(actions.user.addNotification({ type })),
 });
 
 authApi.addRequests({

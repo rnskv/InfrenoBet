@@ -7,7 +7,7 @@ import jwt from 'jsonwebtoken';
 import User from 'src/models/User';
 import config from '../../config';
 
-import { USER_ALREAY_EXIST, USER_NOT_FOUND } from 'src/types/errors';
+import { USER_NOT_FOUND } from 'shared/configs/notificationsTypes';
 
 const changeBalanceHandler = async (ctx) => {
     const { id, amount } = ctx.request.body;
@@ -23,7 +23,7 @@ const getHandler = async (ctx) => {
     console.log('Execute getHandler', ctx.request.body);
 
     if (!user) {
-        ctx.throw(USER_NOT_FOUND);
+        ctx.throw({ type: USER_NOT_FOUND });
     }
 
     ctx.body = user
