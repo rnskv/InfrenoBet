@@ -2,7 +2,6 @@ import { Api, Request } from 'shared/api';
 import { connection } from 'src/app';
 import config from 'src/config';
 
-console.log(config)
 export const userApi = new Api({
     url: `http://${config.server_host}:${config.server_port}/api/users`,
     headers: {
@@ -32,6 +31,10 @@ userApi.addRequests({
     users: new Request({
         url: '/',
         method: 'get',
+    }),
+    changeBalance: new Request({
+        url: '/changeBalance',
+        method: 'put',
     })
 });
 

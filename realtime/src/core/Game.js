@@ -2,6 +2,7 @@ import Roulette from 'src/core/Roulette';
 
 import { gameApi, transactionsApi } from 'src/modules/api';
 import { getRandomInt } from 'src/helpers/math';
+import { getTransactionsValue } from  'src/helpers/game';
 
 class Game {
     constructor({ hash, secret, app, onFinish }) {
@@ -52,9 +53,7 @@ class Game {
     }
 
     get bank() {
-        const total = this.transactions.reduce((acc,transaction) => {
-            return acc + transaction.value;
-        }, 0);
+        const total = getTransactionsValue(this.transactions);
 
         const users = {};
 
@@ -159,8 +158,6 @@ class Game {
         this.roulette.start({ winner, bank: this.state.bank, users: this.state.users });
 
         //@todo вынести в отедльный метод
-        console.log(winner, this.app.usersSockets);
-
         this.app.io.sockets.emit('game.startRoulette');
     }
 

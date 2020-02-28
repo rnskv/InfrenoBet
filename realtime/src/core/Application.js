@@ -1,6 +1,8 @@
 import jwtDecode from 'jwt-decode';
 import Room from './Room';
 import * as notificationsTypes from 'shared/configs/notificationsTypes';
+import { userApi } from 'src/modules/api';
+import { getTransactionsValue, getTransactionValue } from  'src/helpers/game';
 
 const socket = require('socket.io');
 
@@ -45,7 +47,21 @@ class Application {
             if (this.rooms['classic'].game.isClosedForTransactions) {
                 socket.emit('project.error', { type: notificationsTypes.GAME_CLOSED_FOR_TRANSACTIONS });
             }
+
+            console.log(socket.user);
             //Тут проверить надо хватает ли чуваку денег и если да то сразу вычесть их;
+
+            try {
+                await userApi.execute('changeBalance', {
+                    body: {
+                        id: socket.user.id,
+                        amount: getTransactionValue(transactionData)
+                    }
+                });
+            } catch (err) {
+                socket.emit('project.error', { type: notificationsTypes.USER_NOT_ENOUGH_MONEY });
+                return;
+            }
 
             await this.rooms['classic'].game.registerTransactionsBlock({
                 user: socket.user,

@@ -6,7 +6,7 @@ const getClearState = () => ({
     isRegister: false,
     loginError: '',
     logupError: '',
-    notifications: []
+    notifications: [],
 });
 
 const initialState = {
@@ -91,6 +91,12 @@ function userReducer(state = initialState, action) {
     }
 
     case actionTypes.CHANGE_BALANCE_USER: {
+        if (state.profile.balance + action.payload.amount < 0) {
+            return {
+                ...state,
+            };
+        }
+
         return {
             ...state,
             profile: {

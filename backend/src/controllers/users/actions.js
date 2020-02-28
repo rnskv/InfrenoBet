@@ -4,10 +4,18 @@ import passport from 'koa-passport';
 import Action from 'src/core/Action';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import User from '../../models/User';
+import User from 'src/models/User';
 import config from '../../config';
 
 import { USER_ALREAY_EXIST, USER_NOT_FOUND } from 'src/types/errors';
+
+const changeBalanceHandler = async (ctx) => {
+    const { id, amount } = ctx.request.body;
+
+    console.log(ctx.request.body, ctx.params);
+
+    ctx.body = await User.changeBalance(id, -amount);
+};
 
 const getHandler = async (ctx) => {
     const user = await User.findById(mongoose.Types.ObjectId(String(ctx.params.id)));
@@ -50,3 +58,8 @@ export const getAll = new Action({
     handler: getAllHandler,
 });
 
+export const changeBalance = new Action({
+    method: 'put',
+    url: '/changeBalance',
+    handler: changeBalanceHandler,
+});

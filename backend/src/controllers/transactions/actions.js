@@ -20,7 +20,6 @@ const getAllHandler = async (ctx) => {
 };
 
 const createHandler = async (ctx) => {
-    console.log('create')
     const {
         user,
         value,
@@ -50,7 +49,6 @@ const createHandler = async (ctx) => {
 
     switch (transaction.type) {
         case 'GAME_CLASSIC': {
-            //@todo шо нахуй за гейм классик если кроме него в транзакциях ничего не будет? и вынеси это в метод модели
             const game = await Game.findById(transaction.game);
             game.transactions.push(transaction._id);
             await game.save();
@@ -61,12 +59,6 @@ const createHandler = async (ctx) => {
         default: {
             break;
         }
-    }
-
-    try {
-        await User.changeBalance(user, -value);
-    } catch (err) {
-        ctx.throw(err)
     }
 
     ctx.body = await Transaction.getById(transaction._id);
