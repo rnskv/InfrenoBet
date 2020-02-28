@@ -41,7 +41,8 @@ const getWinner = async (ctx) => {
     const bank = await Transaction.getGameBankSumById(id);
 
     console.log('BANK', bank)
-    await User.changeBalance(winner.transaction.user.id, bank.sum);
+    //@todo 0.9 - процент отдаци пользователю (вынести в настройки)
+    await User.changeBalance(winner.transaction.user.id, bank.sum * 0.90);
 
     ctx.body = winner;
 };

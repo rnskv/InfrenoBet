@@ -243,9 +243,10 @@ class Game {
     }
 
     async processFirstTransaction() {
-        const transactionData = this.transactionsBlocksPool.shift();
+        const transactionData = this.transactionsBlocksPool[0];
         await this.transaction(transactionData);
         transactionData.onAccept();
+        this.transactionsBlocksPool.shift();
     }
 
     sync(socket) {
