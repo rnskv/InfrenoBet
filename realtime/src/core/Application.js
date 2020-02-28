@@ -59,6 +59,7 @@ class Application {
                     }
                 });
             } catch (err) {
+                console.log(err);
                 socket.emit('project.error', { type: notificationsTypes.USER_NOT_ENOUGH_MONEY });
                 return;
             }

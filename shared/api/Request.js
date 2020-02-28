@@ -38,8 +38,12 @@ export default class Request {
                 })
                 .then(json => {
 
-                    if (json.isError && onError) {
-                        onError({ type: json.type });
+                    if (json.isError) {
+                        if (onError) {
+                            onError({ type: json.type });
+                        }
+                        reject(json);
+                        return;
                     }
 
                     resolve(json)
