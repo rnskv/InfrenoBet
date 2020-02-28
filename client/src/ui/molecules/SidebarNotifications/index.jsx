@@ -15,12 +15,12 @@ import {
 import { mapDispatchToProps, mapStateToProps } from './connect';
 
 
-function SidebarNotifications({ notifications, className, style }) {
+function SidebarNotifications({ notifications, className, style, removeAllNotifications }) {
     const { isOpened } = useContext(StateContext);
     return (
         <Container className={className} style={style} isOpened={isOpened}>
             <Controls>
-                <Button>Очистить</Button>
+                <Button onClick={removeAllNotifications}>Очистить</Button>
                 <Button>Закрыть</Button>
             </Controls>
             <Icon src="https://sun9-12.userapi.com/c206516/v206516687/49d7a/c7wnfazUB98.jpg?ava=1" />

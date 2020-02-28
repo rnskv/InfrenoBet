@@ -118,6 +118,13 @@ function userReducer(state = initialState, action) {
         };
     }
 
+    case actionTypes.REMOVE_ALL_NOTIFICATIONS: {
+        return {
+            ...state,
+            notifications: [],
+        };
+    }
+
     case actionTypes.OPEN_SIDEBAR: {
         return {
             ...state,

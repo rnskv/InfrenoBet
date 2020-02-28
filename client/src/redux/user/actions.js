@@ -1,5 +1,5 @@
-import * as actionTypes from './actionsTypes';
 import NOTIFICATIONS from 'shared/configs/notifications';
+import * as actionTypes from './actionsTypes';
 
 export const getInfo = () => ({
     type: actionTypes.GET_INFO_USER,
@@ -33,7 +33,7 @@ export const reset = () => ({
     type: actionTypes.RESET_USER,
 });
 
-export const addNotification = ({ type, params = {}}) => {
+export const addNotification = ({ type, params = {} }) => {
     const notification = {
         ...NOTIFICATIONS[type],
         ...params,
@@ -44,6 +44,10 @@ export const addNotification = ({ type, params = {}}) => {
         payload: { notification },
     });
 };
+
+export const removeAllNotifications = () => ({
+    type: actionTypes.REMOVE_ALL_NOTIFICATIONS,
+});
 
 export const setProfile = (payload) => ({
     type: actionTypes.SET_PROFILE,
