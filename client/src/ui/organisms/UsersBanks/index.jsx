@@ -1,12 +1,10 @@
 import PropTypes from 'prop-types';
-import crypto from 'crypto';
 
 import React, { useRef } from 'react';
 
-import Button from 'ui/atoms/Button';
-import Input from 'ui/atoms/Input';
-
 import UserBank from 'ui/molecules/UserBank';
+
+import { getUserChances, getUserColorsByEmail } from 'src/helpers/system';
 
 import {
     Container,
@@ -15,25 +13,19 @@ import {
     Banks,
 } from './styled';
 
-function getUserChances(bank, user) {
-    return (bank.users[user._id] / bank.total * 100).toFixed(2);
-}
-
 function UsersBanks({ users, bank }) {
     return (
         users.length ? (
             <Container>
                 <ChancesBar>
                     {users.map((user, index) => {
-                        console.log(user);
-                        const nicknameHash = crypto.createHash('md5').update(String(user.email)).digest('hex');
-                        const color = `#${nicknameHash.slice(0, 6)}`;
+                        const { defaultColor } = getUserColorsByEmail(user.email);
 
                         return (
                             <Chance
-                                key={color}
-                                color={color}
-                                percent={getUserChances(bank, user)}
+                                key={defaultColor}
+                                color={defaultColor}
+                                percent={getUserChances(user, bank)}
                             />
                         );
                     })}
@@ -41,18 +33,16 @@ function UsersBanks({ users, bank }) {
                 <Banks>
                     {
                         users.map((user, index) => {
-                            const nicknameHash = crypto.createHash('md5').update(String(user.email)).digest('hex');
-                            const containerColor = `#${nicknameHash.slice(0, 6)}59`;
-                            const borderColor = `#${nicknameHash.slice(0, 6)}db`;
+                            const { lightColor, darkColor } = getUserColorsByEmail(user.email);
 
                             return (
                                 <UserBank
                                     key={user._id}
                                     avatar={user.avatar}
-                                    chance={getUserChances(bank, user)}
+                                    percent={getUserChances(user, bank)}
                                     bet={bank.users[user._id]}
-                                    containerColor={containerColor}
-                                    borderColor={borderColor}
+                                    containerColor={lightColor}
+                                    borderColor={darkColor}
                                 />
                             );
                         })
@@ -64,6 +54,8 @@ function UsersBanks({ users, bank }) {
 }
 
 UsersBanks.propTypes = {
+    users: PropTypes.array.isRequired,
+    bank: PropTypes.object.isRequired,
 };
 
 export default UsersBanks;
