@@ -52,7 +52,7 @@ function Main({
         if (isSubscribed) return;
         console.log('subscribed');
         subscribe();
-        getProfile();
+        // getProfile();
     }, []);
     return (
         <DefaultTemplate>

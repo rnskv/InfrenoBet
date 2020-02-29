@@ -1,10 +1,12 @@
 import styled, { keyframes } from 'styled-components';
 import { bounceInRight } from 'react-animations';
 
-export const Icon = styled.img`
-  width: 50px;
-  height: 50px;
+export const Icon = styled.div`
   border-radius: 50%;
+  svg {
+      width: 30px;
+      height: 30px;
+  }
 `;
 
 export const Container = styled.div`

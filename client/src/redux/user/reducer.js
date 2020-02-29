@@ -13,6 +13,7 @@ const initialState = {
     token: window.localStorage.getItem('token') || '',
     profile: {
         isLoading: true,
+        balance: 0,
     },
     sidebars: {
         left: {

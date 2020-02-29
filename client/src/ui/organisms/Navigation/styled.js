@@ -1,6 +1,17 @@
 import Title from 'ui/atoms/Title';
 import styled from 'styled-components';
 
+export const NavigationIcon = styled.div`
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+`;
+
 export const NavigationTitle = styled(Title)`
     color: var(--color-grey);
     font-size: 18px;
@@ -15,11 +26,6 @@ export const NavigationTitle = styled(Title)`
     }
 `;
 
-export const NavigationIcon = styled.img`
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-`;
 
 export const NavigationText = styled.div`
     transition: .3s;
@@ -104,15 +110,22 @@ export const NavigationItem = styled.li`
     
     background-color: ${({ isActive }) => (isActive ? 'var(--color-grey-800)' : 'none')};
     
+    ${NavigationIcon} {
+        svg {
+          fill: ${({ isActive }) => (isActive ? 'var(--color-yellow)' : 'var(--color-white)')};
+        }
+    } 
+    
     &:hover {
         ${NavigationText} {
-            color: var(--color-yellow); 
+            color: var(--color-yellow);
         }
         
+       
         ${NavigationIcon} {
-            transition: .3s;
-            border-radius: ${(props) => (props.isOpened ? '50%' : '10px')};
-            box-sizing: border-box;
+            svg {
+              fill: var(--color-yellow);
+            }
         } 
     }
 `;

@@ -12,16 +12,21 @@ import {
     NavigationName,
     NavigationText,
 } from './styled';
+import { Collapse } from '../Sidebar/styled';
 
 function NavigationLink({
-    to, isOpened, text, description, iconSrc, isActive, isVisible,
+    to, isOpened, text, description, iconSrc, isActive, isVisible, svgId
 }) {
     if (!isVisible) return null;
 
     return (
         <Link to={to}>
             <NavigationItem isOpened={isOpened} isActive={isActive}>
-                <NavigationIcon src={iconSrc} />
+                <NavigationIcon>
+                    <svg>
+                        <use xlinkHref={`#${svgId}`} />
+                    </svg>
+                </NavigationIcon>
                 <NavigationName isOpened={isOpened}>
                     <NavigationText>
                         { text }

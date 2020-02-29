@@ -6,7 +6,9 @@ import {
     INTERNAL_SERVER_ERROR,
     TRANSACTION_SENDING,
     USER_NOT_AUTH,
-    GAME_CLOSED_FOR_TRANSACTIONS, TRANSACTION_ACCEPTED,
+    GAME_CLOSED_FOR_TRANSACTIONS,
+    TRANSACTION_ACCEPTED,
+    REALTIME_DISCONNECTED
 } from './notificationsTypes';
 
 export default {
@@ -54,5 +56,10 @@ export default {
         type: 'SUCCESS',
         title: 'Игра',
         text: 'Ваша ставка принята!',
+    },
+    [REALTIME_DISCONNECTED]: {
+        type: 'ERROR',
+        title: 'Сервер',
+        text: 'На сервере возникли технические неполадки!',
     }
 }

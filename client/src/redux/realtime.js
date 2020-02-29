@@ -1,10 +1,14 @@
 import { ws } from 'src/modules/realtime';
+import * as notificationsTypes from 'shared/configs/notificationsTypes';
 import { store, actions } from './index';
 
 import * as userDomains from './user/domains';
-import * as notificationsTypes from 'shared/configs/notificationsTypes';
 
 ws.io.emit('game.sync');
+
+ws.io.on('disconnect', () => {
+    store.dispatch(actions.user.addNotification({ type: notificationsTypes.REALTIME_DISCONNECTED }));
+});
 
 ws.io.on('game.join', (userData) => {
     store.dispatch(actions.game.join({ userData }));
@@ -13,8 +17,8 @@ ws.io.on('game.join', (userData) => {
 
 ws.io.on('game.transactions', ({ transactions, bank, users }) => {
     store.dispatch(actions.game.transactions({ transactions, bank, users }));
-    //for synchronization
-    // store.dispatch(userDomains.getProfile());
+    // for synchronization
+    store.dispatch(userDomains.getProfile());
 });
 
 ws.io.on('game.start', (game) => {
@@ -60,7 +64,7 @@ ws.io.on('game.transactionAccepted', () => {
 ws.io.on('game.win', () => {
     console.log('Вы победили');
     // store.dispatch(actions.game.transactionAccepted());
-    alert('Вы победили!')
+    alert('Вы победили!');
 });
 
 ws.io.on('user.error', (notification) => {

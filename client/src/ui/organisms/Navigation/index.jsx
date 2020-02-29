@@ -24,13 +24,12 @@ const GROUPS = [
             {
                 id: 0,
                 to: '/',
-                iconSrc: 'https://sun9-12.userapi.com/c206516/v206516687/49d7a/c7wnfazUB98.jpg?ava=1',
                 svgId: 'classic-logo',
                 text: 'Classic',
                 description: 'You lose all money',
                 onlyGuest: false,
                 accessLevel: 0,
-            }
+            },
         ],
     },
     {
@@ -40,19 +39,19 @@ const GROUPS = [
             {
                 id: 0,
                 to: '/login',
-                iconSrc: 'https://sun9-37.userapi.com/c830400/v830400985/c0fdb/9CIryApwPMY.jpg?ava=1',
+                svgId: 'settings-icon',
                 text: 'Log In',
                 description: 'You really ready?',
-                accessLevel: 0,
+                accessLevel: -1,
             },
             {
                 id: 1,
                 to: '/logup',
-                iconSrc: 'https://sun9-70.userapi.com/c851232/v851232275/1a81ed/u3H5ShX-82Q.jpg?ava=1',
+                svgId: 'settings-icon',
                 text: 'Log Up',
                 description: 'Last chance go back',
                 accessLevel: 0,
-            }
+            },
         ],
     },
 ];
