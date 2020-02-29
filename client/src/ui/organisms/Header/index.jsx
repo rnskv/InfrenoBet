@@ -8,6 +8,7 @@ import { mapDispatchToProps, mapStateToProps } from './connect';
 
 import {
     Container,
+    StyledButton as Button
 } from './styled';
 
 function BetMaker({
@@ -17,6 +18,8 @@ function BetMaker({
         <Container>
            Header
             <Balance value={profile.balance} />
+            <Button type="transparent">Пополнить</Button>
+            <Button type="transparent">Вывести</Button>
         </Container>
     );
 }
