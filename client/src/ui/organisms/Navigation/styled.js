@@ -38,9 +38,10 @@ export const NavigationText = styled.div`
 
 export const NavigationDescription = styled.div`
     color: var(--color-grey);
-    font-size: 14px;
+    font-size: 12px;
     text-decoration: none !important;
     min-width: 150px;
+    margin-top: 3px;
 `;
 
 export const NavigationName = styled.div`
