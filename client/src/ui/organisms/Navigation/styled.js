@@ -53,7 +53,7 @@ export const NavigationName = styled.div`
 `;
 
 export const NavigationContainer = styled.div`
-    height: calc(100vh - 50px);
+    height: calc(100vh - var(--header-height));
     background: var(--color-grey-500);
     box-sizing: border-box;
     transition: .3s;

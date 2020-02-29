@@ -6,8 +6,8 @@ export const Wrapper = styled.div`
 `;
 
 export const FixedContainer = styled.div`
-    height: calc(100vh - 50px);
-    margin-top: 50px;
+    height: calc(100vh - var(--header-height));
+    margin-top: var(--header-height);
     background-color: var(--color-grey-500);
     transition: width .4s;
     overflow: hidden;

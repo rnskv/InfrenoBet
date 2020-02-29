@@ -2,21 +2,26 @@ import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
-import Balance from 'ui/molecules/Balance';
-
 import { mapDispatchToProps, mapStateToProps } from './connect';
 
 import {
     Container,
-    StyledButton as Button
+    StyledButton as Button,
+    StyledBalance as Balance,
+    Logo,
 } from './styled';
+import { NavigationIcon } from '../Navigation/styled';
 
 function BetMaker({
     profile,
 }) {
     return (
         <Container>
-           Header
+            <Logo>
+                <svg>
+                    <use xlinkHref={`#currency-logo`} />
+                </svg>
+            </Logo>
             <Balance value={profile.balance} />
             <Button type="transparent">Пополнить</Button>
             <Button type="transparent">Вывести</Button>

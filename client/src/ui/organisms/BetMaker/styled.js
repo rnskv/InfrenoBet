@@ -17,9 +17,9 @@ export const Container = styled.div`
    background: red;
    position: fixed;
    right: ${({ isOpened }) => (isOpened ? '0' : '-650px')};
-   top: 50px;
+   top: var(--header-height);
    z-index: 10;
-   height: calc(100vh - 50px);
+   height: calc(100vh - var(--header-height));
    transition: .6s right;
 `;
 

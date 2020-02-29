@@ -1,5 +1,6 @@
 :root {
-    --color-black: #000;
+    --color-black: #000000;
+    --color-black-transparent: #000000d9;
 
     --color-white: #fff;
 
@@ -23,4 +24,6 @@
 
     --color-green: #1aaf50;
     --color-shadow: #0c0c0c;
+
+    --header-height: 60px;
 }
