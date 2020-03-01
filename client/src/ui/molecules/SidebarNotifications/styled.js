@@ -5,6 +5,15 @@ export const StyledNotification = styled(Notification)`
 
 `;
 
+export const Message = styled.div`
+  width: 100%;
+  color: var(--color-white);
+  font-size: 18px;
+  text-align: center;
+  padding: 10px 25px;
+  box-sizing: border-box;
+`;
+
 export const Controls = styled.div`
   display: flex;
   border-bottom: 1px solid var(--color-grey-400);

@@ -10,6 +10,7 @@ import {
     NotificationsList,
     StyledNotification,
     Icon,
+    Message,
 } from './styled';
 
 import { mapDispatchToProps, mapStateToProps } from './connect';
@@ -26,12 +27,14 @@ function SidebarNotifications({ notifications, className, style, removeAllNotifi
             <Icon src="https://sun9-12.userapi.com/c206516/v206516687/49d7a/c7wnfazUB98.jpg?ava=1" />
             <NotificationsList>
                 {
-                    notifications.map((params) => (
-                        <StyledNotification
-                            key={params.id}
-                            {...params}
-                        />
-                    ))
+                    notifications.length
+                        ? notifications.map((params) => (
+                            <StyledNotification
+                                key={params.id}
+                                {...params}
+                            />
+                        ))
+                        : <Message>У вас нет непрочитанных уведомлений</Message>
                 }
             </NotificationsList>
         </Container>
