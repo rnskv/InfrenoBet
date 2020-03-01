@@ -17,4 +17,8 @@ export const Container = styled.div`
     height: 70%;
     object-fit: scale-down;
   }
+  
+  &:hover {
+    background-color: ${({ value }) => (value ? 'var(--color-darkblue-active)' : 'var(--color-grey-800)')};
+  }
 `;
