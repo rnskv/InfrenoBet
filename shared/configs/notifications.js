@@ -8,7 +8,8 @@ import {
     USER_NOT_AUTH,
     GAME_CLOSED_FOR_TRANSACTIONS,
     TRANSACTION_ACCEPTED,
-    REALTIME_DISCONNECTED
+    REALTIME_DISCONNECTED,
+    USER_WIN
 } from './notificationsTypes';
 
 export default {
@@ -36,6 +37,11 @@ export default {
         type: 'ERROR',
         title: 'Игра',
         text: 'У вас недостаточно средств. Пожалуйста, пополните ваш баланс',
+    },
+    [USER_WIN]: {
+        type: 'SUCCESS',
+        title: 'Игра',
+        text: 'Поздравляем! Вы одержали победу в игре. Выигрыш будет зачислен на ваш баланс в ближайшее время.',
     },
     [INTERNAL_SERVER_ERROR]: {
         type: 'ERROR',

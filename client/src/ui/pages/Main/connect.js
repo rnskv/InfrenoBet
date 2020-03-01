@@ -25,6 +25,7 @@ export function mapDispatchToProps(dispatch) {
     };
 }
 
+//@todo почистить, создать хелперы, вводить потихоньку reselect
 export function mapStateToProps(state) {
     return {
         token: state.user.token,
