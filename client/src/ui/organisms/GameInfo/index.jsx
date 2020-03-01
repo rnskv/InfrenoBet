@@ -52,8 +52,7 @@ function GameInfo({
             <Bank>
                 { 'В банке: ' }
                 <span>
-                    {bank.total}
-₽
+                    {bank.total}₽
                 </span>
             </Bank>
 

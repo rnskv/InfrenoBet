@@ -18,7 +18,6 @@ const Content = styled.div`
     background: var(--color-grey-500);
     box-sizing: border-box;
     width: 900px;
-    word-break: break-all;
     color: var(--color-grey);
     border-radius: 5px;
     box-shadow: 0px 0px 3px 0px var(--color-shadow);

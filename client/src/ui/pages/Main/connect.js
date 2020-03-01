@@ -1,6 +1,7 @@
 import * as gameDomains from 'src/redux/game/domains';
 import * as userDomains from 'src/redux/user/domains';
 import * as betMakerActions from 'src/redux/betMaker/actions';
+import { transaction } from '../../../redux/game/domains';
 
 // @todo to helper
 function getUsers(transactions) {
@@ -40,5 +41,7 @@ export function mapStateToProps(state) {
         isShowWinner: state.game.isShowWinner,
         profile: state.user.profile,
         sidebars: state.user.sidebars,
+        userChance: state.game.bank.users[state.user.profile._id] / state.game.bank.total * 100 || 0,
+        userItemsCount: state.game.transactions.filter((transaction) => transaction.user._id === state.user.profile._id).length,
     };
 }

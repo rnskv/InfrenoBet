@@ -47,6 +47,8 @@ function Main({
     getProfile,
     profile,
     sidebars,
+    userChance,
+    userItemsCount
 }) {
     useEffect(() => {
         if (isSubscribed) return;
@@ -54,6 +56,8 @@ function Main({
         subscribe();
         // getProfile();
     }, []);
+
+    console.log('Bank', bank.total / bank.users[profile._id], profile)
     return (
         <DefaultTemplate>
             {/*{ profile.isLoading ? 'Профиль подгружается' : `${profile.name} - ${profile.balance} рублей`}*/}
@@ -69,6 +73,8 @@ function Main({
             <BetMaker />
             { !isShowWinner ? (
                 <GameControls
+                    percent={userChance}
+                    itemsCount={userItemsCount}
                     transaction={transaction}
                     openBetMaker={openBetMaker}
                 />
