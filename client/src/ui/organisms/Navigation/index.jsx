@@ -53,7 +53,7 @@ const GROUPS = [
                 accessLevel: 0,
             },
             {
-                id: 1,
+                id: 2,
                 to: '/login',
                 svgId: 'tech-support-icon',
                 text: 'Поддержка',

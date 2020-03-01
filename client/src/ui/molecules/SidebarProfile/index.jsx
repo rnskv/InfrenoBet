@@ -1,21 +1,42 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { connect } from 'react-redux';
+import { mapDispatchToProps, mapStateToProps } from './connect';
+
+import Avatar from 'ui/atoms/Avatar';
 
 import {
     Container,
-    Image,
+    TotalExperienceBar,
+    ExperienceBar,
+    Name,
+    Level,
+    Experience,
+    Wrapper,
+    Information
 } from './styled';
 
-function SidebarProfile({ className, style }) {
+function SidebarProfile({ profile, className, style }) {
+    console.log(profile);
     return (
         <Container className={className} style={style}>
-            Профайл
+            <Avatar src={profile.avatar} />
+            <Wrapper>
+                <Name>{ profile.name }</Name>
+                <TotalExperienceBar>
+                    <ExperienceBar />
+                </TotalExperienceBar>
+                <Information>
+                    <Level>LVL 25</Level>
+                    <Experience>100500/30000XP</Experience>
+                </Information>
+            </Wrapper>
         </Container>
     );
 }
 
 SidebarProfile.propTypes = {
-    children: PropTypes.node.isRequired,
+    profile: PropTypes.object.isRequired,
 };
 
-export default SidebarProfile;
+export default connect(mapStateToProps, mapDispatchToProps)(SidebarProfile);

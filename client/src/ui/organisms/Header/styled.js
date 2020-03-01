@@ -27,4 +27,4 @@ export const Logo = styled.div`
 
 export const StyledBalance = styled(Balance)`
   margin: 0 30px 0 10%;
-`
+`;

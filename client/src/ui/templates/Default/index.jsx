@@ -49,7 +49,7 @@ function Default({ children, ...props }) {
                     side: 'right',
                 }}
                 >
-                    {/* <SidebarProfile /> */}
+                     <SidebarProfile />
                     {/* <SidebarNavigation /> */}
                     <SidebarNotifications />
                 </Sidebar>

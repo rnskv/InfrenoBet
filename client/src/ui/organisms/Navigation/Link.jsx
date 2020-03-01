@@ -12,10 +12,9 @@ import {
     NavigationName,
     NavigationText,
 } from './styled';
-import { Collapse } from '../Sidebar/styled';
 
 function NavigationLink({
-    to, isOpened, text, description, iconSrc, isActive, isVisible, svgId
+    to, isOpened, text, description, isActive, isVisible, svgId
 }) {
     if (!isVisible) return null;
 
@@ -45,7 +44,7 @@ NavigationLink.propTypes = {
     isOpened: PropTypes.bool.isRequired,
     text: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    iconSrc: PropTypes.string.isRequired,
+    svgId: PropTypes.string.isRequired,
     isActive: PropTypes.bool.isRequired,
     isVisible: PropTypes.bool.isRequired,
 };
