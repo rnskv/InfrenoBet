@@ -40,7 +40,7 @@ export const NotificationsList = styled.div`
      
      position: absolute;
      width: 100%;
-     height: calc(100% - 90px);
+     height: calc(100% - 145px - var(--header-height));
      transition: .3s;
 `;
 
