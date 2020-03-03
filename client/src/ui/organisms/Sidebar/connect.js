@@ -10,6 +10,6 @@ export function mapDispatchToProps(dispatch) {
 
 export function mapStateToProps(state) {
     return {
-        sidebars: state.user.sidebars,
+        sidebars: state.user.sidebars
     };
 }

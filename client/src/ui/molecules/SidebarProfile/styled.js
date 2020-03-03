@@ -38,3 +38,14 @@ export const Information = styled.div`
   display: flex;
   justify-content: space-between;
 `;
+
+export const Loader = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  
+  svg {
+    width: 55px;
+    height: 55px;
+  }
+`;

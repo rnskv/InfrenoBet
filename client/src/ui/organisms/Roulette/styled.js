@@ -20,10 +20,16 @@ export const Avatars = styled.div`
     overflow: hidden;
     transition: 16000ms;
     transition-timing-function: cubic-bezier(0.32, 0.64, 0.45, 1);
+`;
+
+export const Avatar = styled.div`
+    width: 80px;
+    height: 80px;
+    display: inline-block;
     img {
-      width: 80px;
-      height: 80px;
-      display: inline-block;
+       height: 100%;
+       min-width: 100%;
+       object-fit: cover;
     }
 `;
 

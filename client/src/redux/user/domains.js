@@ -12,6 +12,7 @@ export const getProfile = () => async (dispatch) => {
     }
 
     const { profile } = await usersApi.execute('getProfile');
+
     dispatch(actions.setProfile({ profile }));
 };
 

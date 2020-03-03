@@ -14,6 +14,7 @@ import {
     Winner,
     Avatars,
     Arrow,
+    Avatar,
 } from './styled';
 
 const Roulette = React.memo(({
@@ -32,7 +33,7 @@ const Roulette = React.memo(({
         <Container ref={containerRef}>
             <Avatars ref={avatarsRef}>
                 {
-                    state.avatars.map((avatar, index) => <img key={index} src={avatar} />)
+                    state.avatars.map((avatar, index) => (<Avatar key={index}><img src={avatar} /></Avatar>))
                 }
             </Avatars>
             <Arrow />
