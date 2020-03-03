@@ -1,9 +1,8 @@
-import * as betMakerDomain from 'src/redux/betMaker/domains';
-import * as betMakerActions from 'src/redux/betMaker/actions';
+import * as userDomains from 'src/redux/user/domains';
 
 export function mapDispatchToProps(dispatch) {
     return {
-
+        logOut: () => dispatch(userDomains.logOut()),
     };
 }
 

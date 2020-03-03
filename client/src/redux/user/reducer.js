@@ -28,7 +28,7 @@ const initialState = {
 
 // @todo remove later
 if (initialState.token) {
-    ws.io.emit('project.auth', initialState.token);
+    ws.io.emit('project.logIn', initialState.token);
 }
 
 function userReducer(state = initialState, action) {
@@ -62,6 +62,9 @@ function userReducer(state = initialState, action) {
             ...state,
             token: '',
             isLoading: false,
+            profile: {
+                ...initialState.profile
+            },
         };
     }
 

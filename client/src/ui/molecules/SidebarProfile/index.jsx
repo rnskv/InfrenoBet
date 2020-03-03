@@ -20,9 +20,9 @@ function SidebarProfile({ profile, className, style }) {
     console.log(profile);
     return (
         <Container className={className} style={style}>
-            <Avatar src={profile.avatar} />
+            <Avatar src={profile.avatar || 'https://vk.com/images/deactivated_100.png?ava=1'} />
             <Wrapper>
-                <Name>{ profile.name }</Name>
+                <Name>{ profile.name || '%name%'}</Name>
                 <TotalExperienceBar>
                     <ExperienceBar />
                 </TotalExperienceBar>

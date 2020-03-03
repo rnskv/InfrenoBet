@@ -31,7 +31,7 @@ const Sidebar = React.memo(({
         <StateContext.Provider value={{ isOpened }}>
             <StaticContainer isOpened={isOpened} {...params}>
                 <FixedContainer>
-                    <Collapse isOpened={isOpened} onClick={clickHandler}>
+                    <Collapse isOpened={isOpened} onClick={clickHandler} side={params.side}>
                         <svg>
                             <use xlinkHref="#collapse" />
                         </svg>

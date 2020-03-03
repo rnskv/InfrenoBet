@@ -7,6 +7,15 @@ export const StyledButton = styled(Button)`
   margin: 0 0 0 5px;
 `;
 
+export const ExitButton = styled(Button)`
+  padding: 8px 15px;
+  justify-self: end;
+`;
+
+export const Group = styled.div`
+  display: flex;
+`;
+
 export const Container = styled.div`
   width: 100%;
   height: 60px;
@@ -15,16 +24,22 @@ export const Container = styled.div`
   display: flex;
   z-index: 9;
   align-items: center;
+  justify-content: space-between;
+  padding: 0 25px;
+  box-sizing: border-box;
 `;
 
 export const Logo = styled.div`
-    margin-left: -100px;
     cursor: pointer;
+    width: 100px;
+    align-items: center;
+    display: flex;
+    
     svg {
-      height: 30px;
+      height: 40px;
     }
 `;
 
 export const StyledBalance = styled(Balance)`
-  margin: 0 30px 0 10%;
+  margin-right: 25px;
 `;

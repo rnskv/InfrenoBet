@@ -28,10 +28,15 @@ class Application {
             console.log('FRIENDSHIP IS MAGIC')
         });
 
-        socket.on('project.auth', (token) => {
+        socket.on('project.logIn', (token) => {
             socket.jwtToken = token;
             socket.user = jwtDecode(token);
             this.addUserSocket(socket);
+        });
+
+        socket.on('project.logOut', (token) => {
+            delete socket.jwtToken;
+            delete socket.user;
         });
 
         socket.on('disconnect', () => {

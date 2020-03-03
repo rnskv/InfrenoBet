@@ -2,7 +2,7 @@ import Title from 'ui/atoms/Title';
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  width: 300px;
+  width: 280px;
 `;
 
 export const FixedContainer = styled.div`
@@ -21,7 +21,7 @@ export const Collapse = styled.div`
     width: 100%;
     height: 30px;
     text-align: center;
-    background-color: var(--color-grey-400);
+    background-color: ${({ side }) => (side === 'left' ? 'var(--color-grey-400)' : 'var(--color-grey-600)')};
     
     display: flex;
     justify-content: center;
@@ -44,10 +44,10 @@ export const Collapse = styled.div`
 `;
 
 export const StaticContainer = styled.div`
-    width: ${({ isOpened }) => (isOpened ? '300px' : '80px')};
+    width: ${({ isOpened }) => (isOpened ? '280px' : '80px')};
     transition: .3s;
     ${FixedContainer} {
-        width: ${({ isOpened }) => (isOpened ? '300px' : '80px')};
+        width: ${({ isOpened }) => (isOpened ? '280px' : '80px')};
         ${({ side }) => `${side}: 0;`}
         ${Collapse} {
             svg {

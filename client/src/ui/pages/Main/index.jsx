@@ -48,7 +48,8 @@ function Main({
     profile,
     sidebars,
     userChance,
-    userItemsCount
+    userItemsCount,
+    logOut
 }) {
     useEffect(() => {
         if (isSubscribed) return;
@@ -62,6 +63,7 @@ function Main({
         <DefaultTemplate>
             {/*{ profile.isLoading ? 'Профиль подгружается' : `${profile.name} - ${profile.balance} рублей`}*/}
             {/*{ `Ожидаем транзакции: ${isWaitingTransactions} - ${transactionsPoolLength} - штук`}*/}
+            {/*<button onClick={logOut}>exit</button>*/}
             <GameInfo
                 time={time}
                 transactions={transactions}

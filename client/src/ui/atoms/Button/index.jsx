@@ -29,6 +29,18 @@ const getButtonStyle = (type, props) => {
             }
         `;
     }
+
+    case 'black': {
+        return `
+            background-color: var(--color-grey-600);
+            border: none;
+            color: var(--color-grey);
+            
+            &:hover {
+                background-color: var(--color-grey-400);
+            }
+        `;
+    }
     }
 };
 

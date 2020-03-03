@@ -21,7 +21,7 @@ export function mapDispatchToProps(dispatch) {
         join: () => dispatch(gameDomains.join()),
         transaction: () => dispatch(gameDomains.transaction()),
         openBetMaker: () => dispatch(betMakerActions.open()),
-        getProfile: () => dispatch(userDomains.getProfile()),
+        getProfile: () => dispatch(userDomains.getProfile())
     };
 }
 

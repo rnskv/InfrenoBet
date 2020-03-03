@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.div`
   display: flex;
   padding: 25px;
-  background-color: var(--color-grey-600);
+  background-color: var(--color-grey-400);
 `;
 export const TotalExperienceBar = styled.div`
   width: 100%;
