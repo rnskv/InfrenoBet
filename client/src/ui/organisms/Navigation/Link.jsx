@@ -14,7 +14,7 @@ import {
 } from './styled';
 
 function NavigationLink({
-    to, isOpened, text, description, isActive, isVisible, svgId
+    to, isOpened, text, description, isActive, isVisible, svgId,
 }) {
     if (!isVisible) return null;
 

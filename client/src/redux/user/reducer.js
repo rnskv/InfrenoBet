@@ -32,7 +32,7 @@ setTimeout(() => {
     if (initialState.token) {
         realtime.io.emit('project.logIn', initialState.token);
     }
-}, 2000)
+}, 2000);
 
 function userReducer(state = initialState, action) {
     switch (action.type) {
@@ -66,7 +66,7 @@ function userReducer(state = initialState, action) {
             token: '',
             isLoading: false,
             profile: {
-                ...initialState.profile
+                ...initialState.profile,
             },
         };
     }

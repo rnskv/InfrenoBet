@@ -43,7 +43,7 @@ function gameReducer(state = initialState, action) {
             ...state,
             bank,
             users,
-            transactions: [ ...transactions, ...state.transactions],
+            transactions: [...transactions, ...state.transactions],
         };
     }
 

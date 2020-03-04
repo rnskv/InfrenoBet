@@ -1,8 +1,7 @@
 class Application {
-    constructor({ config, RootComponent }) {
+    constructor({ config }) {
         this.modules = {};
         this.config = config;
-        this.RootComponent = RootComponent;
     }
 
     use(module) {
@@ -13,7 +12,7 @@ class Application {
     }
 
     run() {
-        console.log('Application was started');
+        console.log('Application was started', this);
     }
 }
 

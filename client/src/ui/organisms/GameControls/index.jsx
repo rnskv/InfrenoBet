@@ -23,7 +23,11 @@ function GameControls({ percent, itemsCount, openBetMaker }) {
         <Container>
             <ItemsCount>
                 <Information>
-                    Вы вложили в игру - {itemsCount} из 10 монет.
+                    Вы вложили в игру -
+                    {' '}
+                    {itemsCount}
+                    {' '}
+из 10 монет.
                 </Information>
                 <Description>
                     Мин.ставка 1₽, максимум предметов 10.
@@ -34,7 +38,10 @@ function GameControls({ percent, itemsCount, openBetMaker }) {
             <SplitArrow />
             <Chance>
                 Шанс:
-                <span>{percent.toFixed(2)}%</span>
+                <span>
+                    {percent.toFixed(2)}
+%
+                </span>
             </Chance>
             <Button onClick={openBetMaker}>Сделать ставку</Button>
         </Container>

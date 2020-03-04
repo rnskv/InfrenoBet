@@ -75,7 +75,6 @@ infernoClient
     .use(realtime)
     .use(view)
     .run();
-
 api.connect({
     services: apiServices,
 });
@@ -87,6 +86,7 @@ store.setDomains({
 });
 
 realtime.connect(`${REALTIME_PROTOCOL}://${REALTIME_HOST}:${REALTIME_PORT}`);
+
 realtime.listenEvents(events);
 
 view.render();

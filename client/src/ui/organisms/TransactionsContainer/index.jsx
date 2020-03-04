@@ -9,7 +9,7 @@ import Transaction from 'ui/molecules/Transaction';
 
 import {
     Wrapper,
-    Container
+    Container,
 } from './styled';
 
 function usePrevious(value) {

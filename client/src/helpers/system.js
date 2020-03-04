@@ -12,7 +12,7 @@ export function getUserColorsByEmail(email) {
         nicknameHash,
         lightColor,
         darkColor,
-        defaultColor
+        defaultColor,
     };
 }
 

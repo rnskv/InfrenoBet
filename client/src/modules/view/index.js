@@ -7,17 +7,20 @@ import IO from 'socket.io-client';
 class View extends Module {
     constructor({ ...params }) {
         super({ ...params });
-        this.io = null;
+        this.root = null;
     }
 
     render() {
         const RootComponent = lazy(() => import('src/core/App'));
+
+        this.root = <Suspense fallback={<div>Loading...</div>}>
+            <RootComponent
+                store={this.app.modules['store'].instanse}
+            />
+        </Suspense>;
+
         ReactDOM.render(
-            <Suspense fallback={<div>Loading...</div>}>
-                <RootComponent
-                    store={this.app.modules['store'].instanse}
-                />
-            </Suspense>, document.getElementById('root'));
+            this.root, document.getElementById('root'));
     }
 }
 
