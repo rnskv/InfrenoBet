@@ -25,7 +25,9 @@ export const Avatars = styled.div`
 export const Avatar = styled.div`
     width: 80px;
     height: 80px;
-    display: inline-block;
+    display: inline-flex;
+    justify-content: center;
+    
     img {
        height: 100%;
        min-width: 100%;
