@@ -2,13 +2,18 @@ import Module from 'src/core/Module';
 import IO from 'socket.io-client';
 
 class Realtime extends Module {
-    constructor({ ...params }) {
+    constructor({ events, ...params }) {
         super({ ...params });
         this.io = null;
+        this.events = null;
     }
 
-    listenEvents(events) {
-        events({ app: this.app });
+    provideApp() {
+        this.events = this.events({ app: this.app });
+    }
+
+    setEvents(events) {
+        this.events = events;
     }
 
     connect(url) {

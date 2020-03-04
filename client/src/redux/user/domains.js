@@ -4,6 +4,10 @@ export default ({ app }) => {
 
     api.services.user.setBearerFromLocalStorage();
 
+    if (store.getState().user.token) {
+        realtime.io.emit('project.logIn', store.getState().user.token);
+    }
+
     const getProfile = () => async (dispatch) => {
         // @todo вынести в геттер апи isAut или что то такое
         if (!api.services.user.headers.Authorization) {

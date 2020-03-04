@@ -6,7 +6,7 @@ class Api extends Module {
         this.services = null;
     }
 
-    connect({ services }) {
+    setServices(services) {
         this.services = services({ app: this.app });
     }
 }

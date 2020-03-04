@@ -11,8 +11,9 @@ class Application {
         return this;
     }
 
-    run() {
-        console.log('Application was started', this);
+    async run(afterApplicationSetupCallback) {
+        await afterApplicationSetupCallback(this);
+        return this;
     }
 }
 

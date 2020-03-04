@@ -4,7 +4,7 @@ import thunk from 'redux-thunk';
 
 class Store extends Module {
     constructor({
-        actionsTypes, actions, reducers, ...params
+        actionsTypes, actions, domains, reducers, ...params
     }) {
         super({ ...params });
         this.store = null;
@@ -12,7 +12,7 @@ class Store extends Module {
         this.actionsTypes = actionsTypes;
         this.actions = actions;
         this.reducers = reducers;
-        this.domains = null;
+        this.domains = domains;
 
         this.instanse = null;
     }
@@ -25,10 +25,9 @@ class Store extends Module {
         return this.instanse.getState;
     }
 
-    setDomains(domains) {
-        this.domains = {};
-        Object.keys(domains).forEach((name) => {
-            this.domains[name] = domains[name]({ app: this.app });
+    provideApp() {
+        Object.keys(this.domains).forEach((name) => {
+            this.domains[name] = this.domains[name]({ app: this.app });
         });
     }
 
