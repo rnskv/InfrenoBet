@@ -11,7 +11,10 @@ import DefaultTemplate from 'ui/templates/Default';
 
 import Transaction from 'ui/molecules/Transaction';
 
-import { rootApi } from 'src/redux/root/api';
+import { infernoClient } from 'src/index';
+const { api } = infernoClient.modules;
+console.log('dddddddd', infernoClient)
+
 import UsersBanks from 'ui/organisms/UsersBanks';
 import GameInfo from 'ui/organisms/GameInfo';
 import GameBeginFooter from 'ui/organisms/GameBeginFooter';

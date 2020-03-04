@@ -1,11 +1,15 @@
-import * as betMakerDomain from 'src/redux/betMaker/domains';
+import { infernoClient } from 'src/index';
 import * as betMakerActions from 'src/redux/betMaker/actions';
+
+console.log(infernoClient);
+
+const { domains } = infernoClient.modules.store;
 
 export function mapDispatchToProps(dispatch) {
     return {
         open: () => dispatch(betMakerActions.open()),
         close: () => dispatch(betMakerActions.close()),
-        sendTransaction: ({ values }) => dispatch(betMakerDomain.sendTransaction({ values })),
+        sendTransaction: ({ values }) => dispatch(domains.betMaker.sendTransaction({ values })),
         addBetInBetMaker: ({ value }) => dispatch(betMakerActions.addBetInBetMaker({ value })),
         removeBetFromBetMaker: ({ index }) => dispatch(betMakerActions.removeBetFromBetMaker({ index })),
     };

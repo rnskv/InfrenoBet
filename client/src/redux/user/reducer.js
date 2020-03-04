@@ -1,4 +1,5 @@
 import { ws } from 'src/modules/realtime';
+import { realtime } from '../../index';
 import * as actionTypes from './actionsTypes';
 
 const getClearState = () => ({
@@ -26,10 +27,12 @@ const initialState = {
     ...getClearState(),
 };
 
-// @todo remove later
-if (initialState.token) {
-    ws.io.emit('project.logIn', initialState.token);
-}
+setTimeout(() => {
+    // @todo remove later
+    if (initialState.token) {
+        realtime.io.emit('project.logIn', initialState.token);
+    }
+}, 2000)
 
 function userReducer(state = initialState, action) {
     switch (action.type) {

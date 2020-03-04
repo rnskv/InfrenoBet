@@ -1,9 +1,12 @@
-import history from 'src/modules/router/history';
-import { ws } from 'src/modules/realtime';
-import * as gameDomains from 'src/redux/game/domains';
-import * as actions from './actions';
+export default ({ app }) => {
+    const { store } = app.modules;
 
-export const sendTransaction = ({ values }) => async (dispatch) => {
-    dispatch(gameDomains.transaction({ values }));
-    dispatch(actions.close());
+    const sendTransaction = ({ values }) => async (dispatch) => {
+        dispatch(app.modules.store.domains.game.transaction({ values }));
+        dispatch(store.actions.betMaker.close());
+    };
+
+    return {
+        sendTransaction,
+    };
 };

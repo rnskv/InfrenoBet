@@ -1,7 +1,8 @@
-import * as gameDomains from 'src/redux/game/domains';
-import * as userDomains from 'src/redux/user/domains';
 import * as betMakerActions from 'src/redux/betMaker/actions';
-import { transaction } from '../../../redux/game/domains';
+import { infernoClient } from 'src/index';
+
+const userDomains = infernoClient.modules.store.domains.user;
+const gameDomains = infernoClient.modules.store.domains.game;
 
 // @todo to helper
 function getUsers(transactions) {
@@ -14,6 +15,7 @@ function getUsers(transactions) {
     return Object.values(uniqueUsers);
 }
 
+console.log('123123123123',gameDomains, 'ololo')
 
 export function mapDispatchToProps(dispatch) {
     return {

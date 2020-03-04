@@ -1,4 +1,5 @@
 import * as actionTypes from './actionsTypes';
+import { realtime } from '../../index';
 
 const getClearGameState = () => ({
     transactions: [],
