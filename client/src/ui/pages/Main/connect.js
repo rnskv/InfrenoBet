@@ -21,11 +21,11 @@ export function mapDispatchToProps(dispatch) {
         join: () => dispatch(gameDomains.join()),
         transaction: () => dispatch(gameDomains.transaction()),
         openBetMaker: () => dispatch(betMakerActions.open()),
-        getProfile: () => dispatch(userDomains.getProfile())
+        getProfile: () => dispatch(userDomains.getProfile()),
     };
 }
 
-//@todo почистить, создать хелперы, вводить потихоньку reselect
+// @todo почистить, создать хелперы, вводить потихоньку reselect
 export function mapStateToProps(state) {
     return {
         token: state.user.token,

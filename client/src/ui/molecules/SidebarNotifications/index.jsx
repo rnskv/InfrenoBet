@@ -16,7 +16,9 @@ import {
 import { mapDispatchToProps, mapStateToProps } from './connect';
 
 
-function SidebarNotifications({ notifications, className, style, removeAllNotifications }) {
+function SidebarNotifications({
+    notifications, className, style, removeAllNotifications,
+}) {
     const { isOpened } = useContext(StateContext);
     return (
         <Container className={className} style={style} isOpened={isOpened}>

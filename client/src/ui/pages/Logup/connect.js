@@ -1,7 +1,8 @@
 import { infernoClient } from 'src/index';
+import * as userActions from 'src/redux/user/actions';
 
 const userDomains = infernoClient.modules.store.domains.user;
-const gameDomains = infernoClient.modules.store.domains.game;import * as userActions from 'src/redux/user/actions';
+const gameDomains = infernoClient.modules.store.domains.game;
 
 export function mapDispatchToProps(dispatch) {
     return {
