@@ -24,14 +24,13 @@ const getClearGameState = () => ({
 });
 
 const initialState = {
-    token: window.localStorage.getItem('token') || '',
+    token: localStorage.getItem('token') || '',
     ...getClearGameState(),
 };
 
 function gameReducer(state = initialState, action) {
     switch (action.type) {
     case actionTypes.GAME_JOIN: {
-        console.log('GAME_JOIN', action.payload.userData);
         return {
             ...state,
             users: [...state.users, action.payload.userData],
@@ -39,7 +38,6 @@ function gameReducer(state = initialState, action) {
     }
 
     case actionTypes.GAME_TRANSACTIONS: {
-        console.log('GAME_TRANSACTION');
         const { transactions, bank, users } = action.payload;
         return {
             ...state,
@@ -50,7 +48,6 @@ function gameReducer(state = initialState, action) {
     }
 
     case actionTypes.GAME_START: {
-        console.log('GAME_START');
         return {
             ...state,
             time: action.payload.time,
@@ -58,7 +55,6 @@ function gameReducer(state = initialState, action) {
     }
 
     case actionTypes.GAME_TICK: {
-        console.log('GAME_TICK');
         return {
             ...state,
             time: action.payload.time,
@@ -66,7 +62,6 @@ function gameReducer(state = initialState, action) {
     }
 
     case actionTypes.GAME_GET_WINNER: {
-        console.log('GAME_GET_WINNER', state.users, state.bank);
         return {
             ...state,
             secret: action.payload.secret,
@@ -76,8 +71,6 @@ function gameReducer(state = initialState, action) {
     }
 
     case actionTypes.GAME_RESET: {
-        console.log('GAME_RESET');
-
         return {
             ...state,
             ...getClearGameState(),
@@ -86,7 +79,6 @@ function gameReducer(state = initialState, action) {
     }
 
     case actionTypes.GAME_SYNC: {
-        console.log('GAME_SYNC');
         return {
             ...state,
             ...action.payload.state,

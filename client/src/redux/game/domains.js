@@ -1,7 +1,4 @@
-import history from 'src/modules/router/history';
-import * as userActions from 'src/redux/user/actions';
 import { TRANSACTION_SENDING } from 'shared/configs/notificationsTypes';
-
 
 export default ({ app }) => {
     const { realtime, store } = app.modules;
@@ -10,7 +7,6 @@ export default ({ app }) => {
     let isSubscribed = false;
     const subscribe = () => async (dispatch) => {
         if (isSubscribed) return;
-        console.log('Subscribed to something');
         isSubscribed = true;
     };
 
@@ -30,7 +26,7 @@ export default ({ app }) => {
                    Она будет добавлена в игру через ~${values.length * 1} сек.`,
             },
         }));
-        dispatch(userActions.changeBalance({ amount: -totalBet }));
+        dispatch(actions.user.changeBalance({ amount: -totalBet }));
     };
 
     return {

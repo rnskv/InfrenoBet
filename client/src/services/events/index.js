@@ -1,4 +1,4 @@
-import * as notificationsTypes from '../../../../shared/configs/notificationsTypes';
+import * as notificationsTypes from 'shared/configs/notificationsTypes';
 
 export default function ({ app }) {
     const { realtime, store } = app.modules;
@@ -58,24 +58,19 @@ export default function ({ app }) {
     });
 
     realtime.io.on('game.transactionAccepted', () => {
-        console.log('Мой депозит принят');
         store.dispatch(actions.user.addNotification({ type: notificationsTypes.TRANSACTION_ACCEPTED }));
         store.dispatch(actions.game.transactionAccepted());
     });
 
     realtime.io.on('game.win', () => {
-        console.log('Вы победили');
-        // store.dispatch(actions.game.transactionAccepted());
         store.dispatch(actions.user.addNotification({ type: notificationsTypes.USER_WIN }));
     });
 
     realtime.io.on('user.error', (notification) => {
-        alert(notification);
-        // store.dispatch(actions.user.addNotification({ notification }));
+        store.dispatch(actions.user.addNotification({ notification }));
     });
 
     realtime.io.on('project.error', ({ type }) => {
         store.dispatch(actions.user.addNotification({ type }));
-        // alert(error);
     });
 }

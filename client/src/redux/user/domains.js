@@ -1,21 +1,8 @@
-import history from 'src/modules/router/history';
-import { ws } from 'src/modules/realtime';
-import { store as test } from '../../index';
-
-console.log('123', test);
-
-// const store = test.instanse;
-// const actions = test.actions;
-
 export default ({ app }) => {
     const { api, store, realtime } = app.modules;
     const { actions, domains } = store;
-    const token = localStorage.getItem('token');
 
-    if (token) {
-        api.services.user.setHeader('Authorization', token);
-    }
-
+    api.services.user.setBearerFromLocalStorage();
 
     const getProfile = () => async (dispatch) => {
         // @todo вынести в геттер апи isAut или что то такое

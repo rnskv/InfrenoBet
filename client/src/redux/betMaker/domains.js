@@ -1,9 +1,9 @@
 export default ({ app }) => {
     const { store } = app.modules;
-
+    const { domains, actions } = store;
     const sendTransaction = ({ values }) => async (dispatch) => {
-        dispatch(app.modules.store.domains.game.transaction({ values }));
-        dispatch(store.actions.betMaker.close());
+        dispatch(domains.game.transaction({ values }));
+        dispatch(actions.betMaker.close());
     };
 
     return {

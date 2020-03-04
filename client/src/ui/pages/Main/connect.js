@@ -15,8 +15,6 @@ function getUsers(transactions) {
     return Object.values(uniqueUsers);
 }
 
-console.log('123123123123',gameDomains, 'ololo')
-
 export function mapDispatchToProps(dispatch) {
     return {
         subscribe: () => dispatch(gameDomains.subscribe()),

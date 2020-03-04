@@ -29,8 +29,6 @@ function usePrevious(value) {
 function TransactionsContainer({ transactions, isGameEnd }) {
     const prevTransactions = usePrevious(transactions) || [];
 
-    console.log(transactions.length - prevTransactions.length);
-
     return (
         <Container>
             <Wrapper

@@ -6,7 +6,6 @@ class Application {
     }
 
     use(module) {
-        console.log(module)
         this.modules[module.name] = module;
         module.setApplication(this);
 
@@ -14,7 +13,7 @@ class Application {
     }
 
     run() {
-        console.log(this.modules)
+        console.log('Application was started');
     }
 }
 

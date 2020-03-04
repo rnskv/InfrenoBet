@@ -1,8 +1,6 @@
 import { infernoClient } from 'src/index';
 import * as betMakerActions from 'src/redux/betMaker/actions';
 
-console.log(infernoClient);
-
 const { domains } = infernoClient.modules.store;
 
 export function mapDispatchToProps(dispatch) {
