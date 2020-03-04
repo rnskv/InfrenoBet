@@ -3,13 +3,15 @@ import { Api, Request } from 'shared/api';
 const { SERVER_PROTOCOL, SERVER_PORT, SERVER_HOST } = process.env;
 
 export default ({ app }) => {
+    const { store, dispatch, getState, actions } = app;
+
     const authApi = new Api({
         url: `${SERVER_PROTOCOL}://${SERVER_HOST}:${SERVER_PORT}/api/auth`,
         headers: {
             'Content-Type': 'application/json'
         },
         onError: ({ type }) => {
-            app.modules.store.dispatch(actions.user.addNotification({ type }))
+            dispatch(actions.user.addNotification({ type }))
         },
     });
 
@@ -65,5 +67,6 @@ export default ({ app }) => {
         root: rootApi,
         user: usersApi,
         game: gameApi,
+        auth: authApi,
     };
 };

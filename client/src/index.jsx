@@ -3,6 +3,8 @@ import 'babel-polyfill';
 
 import ReactDOM from 'react-dom';
 
+import apiServices from 'src/services/api';
+
 import * as userActionsTypes from 'src/redux/user/actionsTypes';
 import * as gameActionsTypes from 'src/redux/game/actionsTypes';
 import * as betMakerActionTypes from 'src/redux/betMaker/actionsTypes';
@@ -19,8 +21,9 @@ import * as userActions from 'src/redux/user/actions';
 import * as gameActions from 'src/redux/game/actions';
 import * as betMakerActions from 'src/redux/betMaker/actions';
 
-import Realtime from 'src/modules/realtime';
 import Store from 'src/modules/store';
+import Api from 'src/modules/api';
+import Realtime from 'src/modules/realtime';
 import View from 'src/modules/view';
 
 import events from 'src/services/events';
@@ -29,7 +32,9 @@ import Application from './core/Application';
 
 const { REALTIME_PROTOCOL, REALTIME_PORT, REALTIME_HOST } = process.env;
 
-export const view = new View({ name: 'view'});
+export const api = new Api({ name: 'api' });
+
+export const view = new View({ name: 'view' });
 
 export const realtime = new Realtime({ name: 'realtime' });
 
@@ -59,16 +64,21 @@ export const store = new Store({
 
 
 export const infernoClient = new Application({
-    config: {}
+    config: {},
 });
 
 store.create();
 
 infernoClient
     .use(store)
+    .use(api)
     .use(realtime)
     .use(view)
     .run();
+
+api.connect({
+    services: apiServices,
+});
 
 store.setDomains({
     user: userDomains,

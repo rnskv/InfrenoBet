@@ -1,11 +1,10 @@
 import * as notificationsTypes from '../../../../shared/configs/notificationsTypes';
-import { realtime, store } from '../../index';
 
 export default function ({ app }) {
-    console.log(app)
-    const { actions, domains } = app.modules.store;
-    console.log(domains)
-    const userDomains = domains.user;
+    const { realtime, store } = app.modules;
+    const { actions, domains } = store;
+
+    store.dispatch(domains.user.getProfile());
 
     realtime.io.emit('game.sync');
 
@@ -15,13 +14,13 @@ export default function ({ app }) {
 
     realtime.io.on('game.join', (userData) => {
         store.dispatch(actions.game.join({ userData }));
-        store.dispatch(userDomains.getProfile());
+        store.dispatch(domains.user.getProfile());
     });
 
     realtime.io.on('game.transactions', ({ transactions, bank, users }) => {
         store.dispatch(actions.game.transactions({ transactions, bank, users }));
         // for synchronization
-        store.dispatch(userDomains.getProfile());
+        store.dispatch(domains.user.getProfile());
     });
 
     realtime.io.on('game.start', (game) => {
@@ -38,12 +37,12 @@ export default function ({ app }) {
 
     realtime.io.on('game.reset', (state) => {
         store.dispatch(actions.game.reset({ state }));
-        store.dispatch(userDomains.getProfile());
+        store.dispatch(domains.user.getProfile());
     });
 
     realtime.io.on('game.sync', (state) => {
         store.dispatch(actions.game.sync({ state }));
-        store.dispatch(userDomains.getProfile());
+        store.dispatch(domains.user.getProfile());
     });
 
     realtime.io.on('game.waitingTransactions', ({ transactionsPoolLength }) => {
@@ -79,5 +78,4 @@ export default function ({ app }) {
         store.dispatch(actions.user.addNotification({ type }));
         // alert(error);
     });
-
 }

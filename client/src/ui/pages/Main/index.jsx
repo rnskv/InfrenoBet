@@ -25,7 +25,7 @@ import TransactionsContainer from 'ui/organisms/TransactionsContainer';
 
 import { mapStateToProps, mapDispatchToProps } from './connect';
 
-rootApi.setBearerFromLocalStorage();
+api.services.root.setBearerFromLocalStorage();
 
 const isSubscribed = false;
 
