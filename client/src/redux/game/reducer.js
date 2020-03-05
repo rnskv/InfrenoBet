@@ -19,7 +19,7 @@ const getClearGameState = () => ({
         offset: 0,
         avatars: [],
         isVisible: false,
-        winner: {},
+        winner: null,
     },
 });
 

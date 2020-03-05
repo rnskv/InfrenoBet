@@ -6,7 +6,7 @@ class Roulette {
         this.sockets = sockets;
         this.onEnd = onEnd;
 
-        this.winner = {};
+        this.winner = null;
 
         this.offset = 0;
         this.avatars = [];

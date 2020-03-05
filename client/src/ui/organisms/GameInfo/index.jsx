@@ -49,16 +49,18 @@ function GameInfo({
                         </StartGame>
                     )
             }
-            <Bank>
-                { 'В банке: ' }
-                <span>
-                    {bank.total}
-₽
-                </span>
-            </Bank>
+            {!roulette.isVisible ? (
+                <Bank>
+                    {'На кону: '}
+                    <span>
+                        {`${bank.total}₽`}
+                    </span>
+                </Bank>
+            )
+                : null}
 
             {
-                isShowWinner ? <WinInfo winner={roulette.winner} /> : null
+                roulette.isVisible ? <WinInfo isShowWinner={isShowWinner} winner={roulette.winner} /> : null
             }
         </Container>
     );

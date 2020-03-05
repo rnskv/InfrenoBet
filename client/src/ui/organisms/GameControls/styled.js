@@ -1,4 +1,5 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+import { slideInUp } from 'react-animations';
 
 import Button from 'ui/atoms/Button';
 import Input from 'ui/atoms/Input';
@@ -15,6 +16,7 @@ export const StyledButton = styled(Button)`
 `;
 
 export const Container = styled.div`
+    animation: .6s ${keyframes`${slideInUp}`};
     background: var(--color-white);
     border-bottom: 1px solid var(--color-grey);
     padding: 25px;
@@ -22,6 +24,8 @@ export const Container = styled.div`
     width: 100%;
     box-sizing: border-box;
     justify-content: space-between;
+    z-index: 1;
+    position: relative;
 `;
 
 export const More = styled.span`
