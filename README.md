@@ -6,7 +6,7 @@
 
 ### CLIENT
  >Fronted часть приложения
-//@todo
+ <img src="https://sun9-23.userapi.com/c857320/v857320832/108f36/6ZD9p4LP0-E.jpg"/>
 
 ### BACKEND
  >Backend часть приложения
