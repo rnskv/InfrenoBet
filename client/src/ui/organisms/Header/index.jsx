@@ -23,7 +23,7 @@ function BetMaker({
             <Group>
                 <Logo>
                     <svg>
-                        <use xlinkHref={`#currency-logo`} />
+                        <use xlinkHref="#currency-logo" />
                     </svg>
                 </Logo>
             </Group>

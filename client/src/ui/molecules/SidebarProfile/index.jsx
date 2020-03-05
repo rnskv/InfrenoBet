@@ -14,7 +14,7 @@ import {
     Experience,
     Wrapper,
     Information,
-    Loader
+    Loader,
 } from './styled';
 import { NavigationIcon } from '../../organisms/Navigation/styled';
 

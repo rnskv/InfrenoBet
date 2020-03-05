@@ -1,7 +1,24 @@
-import Socket from 'src/modules/sockets';
+import Module from 'src/core/Module';
+import IO from 'socket.io-client';
 
-const { REALTIME_PROTOCOL, REALTIME_PORT, REALTIME_HOST } = process.env;
+class Realtime extends Module {
+    constructor({ events, ...params }) {
+        super({ ...params });
+        this.io = null;
+        this.events = null;
+    }
 
-export const ws = new Socket({
-    url: `${REALTIME_PROTOCOL}://${REALTIME_HOST}:${REALTIME_PORT}`,
-});
+    provideApp() {
+        this.events = this.events({ app: this.app });
+    }
+
+    setEvents(events) {
+        this.events = events;
+    }
+
+    connect(url) {
+        this.io = new IO(url);
+    }
+}
+
+export default Realtime;

@@ -171,9 +171,12 @@ class Game {
             secret: this.secret
         });
 
+        //@todo отедльный метод
         if (this.app.usersSockets[winner.transaction.user._id]) {
             this.app.usersSockets[winner.transaction.user._id].forEach(socketId => {
-                this.app.io.sockets.connected[socketId].emit('game.win');
+                if (this.app.io.sockets.connected[socketId]) {
+                    this.app.io.sockets.connected[socketId].emit('game.win');
+                }
             });
         }
 

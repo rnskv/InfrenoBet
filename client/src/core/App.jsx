@@ -4,9 +4,6 @@ import history from 'src/modules/router/history';
 
 import { Provider } from 'react-redux';
 
-import { store } from 'src/redux';
-import { ws } from 'src/modules/realtime';
-
 import {
     BrowserRouter as Router,
     Switch,
@@ -20,9 +17,8 @@ import Login from 'ui/pages/Login';
 import Logup from 'ui/pages/Logup';
 
 import Main from 'ui/pages/Main';
-import 'src/redux/realtime';
 
-function App() {
+function App({ store }) {
     return (
         <Provider store={store}>
             <Router history={history}>

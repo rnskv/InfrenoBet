@@ -9,7 +9,7 @@ import Transaction from 'ui/molecules/Transaction';
 
 import {
     Wrapper,
-    Container
+    Container,
 } from './styled';
 
 function usePrevious(value) {
@@ -28,8 +28,6 @@ function usePrevious(value) {
 
 function TransactionsContainer({ transactions, isGameEnd }) {
     const prevTransactions = usePrevious(transactions) || [];
-
-    console.log(transactions.length - prevTransactions.length);
 
     return (
         <Container>

@@ -1,64 +1,75 @@
-import history from 'src/modules/router/history';
-import { ws } from 'src/modules/realtime';
+export default ({ app }) => {
+    const { api, store, realtime } = app.modules;
+    const { actions, domains } = store;
 
-import * as actions from './actions';
+    api.services.user.setBearerFromLocalStorage();
 
-import { authApi, usersApi } from './api';
-
-export const getProfile = () => async (dispatch) => {
-    // @todo вынести в геттер апи isAut или что то такое
-    if (!usersApi.headers.Authorization) {
-        return;
+    if (store.getState().user.token) {
+        realtime.io.emit('project.logIn', store.getState().user.token);
     }
 
-    const { profile } = await usersApi.execute('getProfile');
+    const getProfile = () => async (dispatch) => {
+        // @todo вынести в геттер апи isAut или что то такое
+        if (!api.services.user.headers.Authorization) {
+            return;
+        }
 
-    dispatch(actions.setProfile({ profile }));
-};
+        const { profile } = await api.services.user.execute('getProfile');
+
+        dispatch(actions.user.setProfile({ profile }));
+    };
 
 
-export const logUp = ({ email, name, password }) => async (dispatch) => {
-    dispatch(actions.loading());
+    const logUp = ({ email, name, password }) => async (dispatch) => {
+        dispatch(actions.user.loading());
 
-    const response = await authApi.execute('logUp', {
-        body: {
-            email,
-            password,
-            name,
-        },
-    });
+        const response = await api.services.auth.execute('logUp', {
+            body: {
+                email,
+                password,
+                name,
+            },
+        });
 
-    if (response.ok) {
-        dispatch(actions.register());
-    } else {
-        dispatch(actions.error({ logupError: response.error }));
-    }
-};
+        if (response.ok) {
+            dispatch(actions.user.register());
+        } else {
+            dispatch(actions.user.error({ logupError: response.error }));
+        }
+    };
 
-export const logIn = ({ email, password }) => async (dispatch) => {
-    dispatch(actions.loading());
+    const logIn = ({ email, password }) => async (dispatch) => {
+        dispatch(actions.user.loading());
 
-    const response = await authApi.execute('logIn', {
-        body: {
-            email,
-            password,
-        },
-    });
+        const response = await api.services.auth.execute('logIn', {
+            body: {
+                email,
+                password,
+            },
+        });
 
-    if (response.token) {
-        window.localStorage.setItem('token', response.token);
-        dispatch(actions.logIn({ token: response.token }));
-        ws.io.emit('project.logIn', response.token);
-        usersApi.setHeader('Authorization', response.token);
-        dispatch(getProfile());
-    } else {
-        dispatch(actions.error({ loginError: response.error }));
-    }
-};
+        if (response.token) {
+            window.localStorage.setItem('token', response.token);
+            dispatch(actions.user.logIn({ token: response.token }));
+            realtime.io.emit('project.logIn', response.token);
+            api.services.user.setHeader('Authorization', response.token);
+            dispatch(getProfile());
+        } else {
+            dispatch(actions.error({ loginError: response.error }));
+        }
+    };
 
-export const logOut = () => (dispatch) => {
-    window.localStorage.removeItem('token');
-    usersApi.setHeader('Authorization', null);
-    dispatch(actions.logOut());
-    ws.io.emit('project.logOut');
+    const logOut = () => (dispatch) => {
+        window.localStorage.removeItem('token');
+        api.services.user.setHeader('Authorization', null);
+        dispatch(actions.user.logOut());
+        realtime.io.emit('project.logOut');
+    };
+
+    return {
+        getProfile,
+        logOut,
+        logUp,
+        logIn,
+    };
 };

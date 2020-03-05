@@ -26,11 +26,6 @@ const initialState = {
     ...getClearState(),
 };
 
-// @todo remove later
-if (initialState.token) {
-    ws.io.emit('project.logIn', initialState.token);
-}
-
 function userReducer(state = initialState, action) {
     switch (action.type) {
     case actionTypes.LOADING_USER: {
@@ -63,7 +58,7 @@ function userReducer(state = initialState, action) {
             token: '',
             isLoading: false,
             profile: {
-                ...initialState.profile
+                ...initialState.profile,
             },
         };
     }

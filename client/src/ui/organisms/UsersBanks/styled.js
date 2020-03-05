@@ -22,9 +22,9 @@ export const ChancesBar = styled.div`
 `;
 
 export const Chance = styled.div`
-  width: ${({percent}) => percent}%;
+  width: ${({ percent }) => percent}%;
   height: 5px;
-  background-color: ${({color}) => color};
+  background-color: ${({ color }) => color};
   transition: 1s;
 `;
 

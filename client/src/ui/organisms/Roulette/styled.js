@@ -25,7 +25,9 @@ export const Avatars = styled.div`
 export const Avatar = styled.div`
     width: 80px;
     height: 80px;
-    display: inline-block;
+    display: inline-flex;
+    justify-content: center;
+    
     img {
        height: 100%;
        min-width: 100%;
@@ -37,7 +39,7 @@ export const Arrow = styled.div`
     margin-top: 15px;
     width: 100%;
     height: 5px;
-    border-bottom: 2px solid var(--color-grey-500);
+    border-bottom: 1px solid var(--color-blue-500);
     position: relative;
     &:before {
         content: '';
@@ -46,7 +48,7 @@ export const Arrow = styled.div`
         background: #00bbd9;
         left: calc(50% - 20px);
         transform: rotateZ(135deg);
-        border: 2px solid var(--color-grey-500);
+        border: 1px solid var(--color-blue-500);
         border-right: none;
         border-top: none;
         position: absolute;

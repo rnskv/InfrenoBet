@@ -27,6 +27,7 @@ export const Timer = styled.div`
   text-align: center;
   box-sizing: border-box;
   padding: 0 10px;
+  border-radius: 4px;
 `;
 
 export const Or = styled.div`
@@ -44,7 +45,7 @@ export const Bank = styled.div`
   text-transform: uppercase;
   font-size: 25px;
   font-weight: bold;
-  border-radius: 5px;
+  border-radius: 4px;
   
   span {
     color: var(--color-white)
@@ -59,6 +60,7 @@ export const ItemsCount = styled.div`
   line-height: 70px;
   font-size: 40px;
   color: var(--color-white);
+  border-radius: 4px;
 `;
 
 export const StartGame = styled.div`

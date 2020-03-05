@@ -1,7 +1,8 @@
-import * as gameDomains from 'src/redux/game/domains';
-import * as userDomains from 'src/redux/user/domains';
 import * as betMakerActions from 'src/redux/betMaker/actions';
-import { transaction } from '../../../redux/game/domains';
+import { infernoClient } from 'src/index';
+
+const userDomains = infernoClient.modules.store.domains.user;
+const gameDomains = infernoClient.modules.store.domains.game;
 
 // @todo to helper
 function getUsers(transactions) {
@@ -14,18 +15,17 @@ function getUsers(transactions) {
     return Object.values(uniqueUsers);
 }
 
-
 export function mapDispatchToProps(dispatch) {
     return {
         subscribe: () => dispatch(gameDomains.subscribe()),
         join: () => dispatch(gameDomains.join()),
         transaction: () => dispatch(gameDomains.transaction()),
         openBetMaker: () => dispatch(betMakerActions.open()),
-        getProfile: () => dispatch(userDomains.getProfile())
+        getProfile: () => dispatch(userDomains.getProfile()),
     };
 }
 
-//@todo почистить, создать хелперы, вводить потихоньку reselect
+// @todo почистить, создать хелперы, вводить потихоньку reselect
 export function mapStateToProps(state) {
     return {
         token: state.user.token,

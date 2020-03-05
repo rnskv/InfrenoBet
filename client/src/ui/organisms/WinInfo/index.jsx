@@ -12,28 +12,55 @@ import {
     WinnerTicket,
     WinnerName,
     Winner,
+    WinnerItem,
+    NextGame,
+    Arrow,
 } from './styled';
 
-function WinInfo({ winner }) {
+function WinInfo({ isShowWinner, winner }) {
+    console.log(winner);
     return (
         <Container>
             <Winner>
                 <WinnerTicket>
                     Победный билет:
-                    {' '}
-                    <span>{ winner.ticket }</span>
+                    <span>{ isShowWinner ? `#${winner.ticket}` : '???' }</span>
                 </WinnerTicket>
                 <WinnerName>
                     Победитель:
-                    {' '}
-                    <span>{ winner.transaction.user.name }</span>
+                    <span>{ isShowWinner ? winner.transaction.user.name : '???'}</span>
                 </WinnerName>
             </Winner>
+            <Arrow />
+
+            {isShowWinner ? (
+                <WinnerItem>
+                    <img src={`https://d2lomvz2jrw9ac.cloudfront.net/common/currency/${winner.transaction.value}.png`} />
+                </WinnerItem>
+            ) : null}
+
+            <NextGame>
+                {/*//asdasd*/}
+            </NextGame>
         </Container>
     );
 }
 
 WinInfo.propTypes = {
+    winner: PropTypes.object,
+    isShowWinner: PropTypes.isRequired,
+};
+
+WinInfo.defaultProps = {
+    winner: {
+        ticket: 0,
+        transaction: {
+            value: 1,
+            user: {
+                name: 'Unknown',
+            },
+        },
+    },
 };
 
 export default WinInfo;

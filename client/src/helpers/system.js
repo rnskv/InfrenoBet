@@ -12,10 +12,15 @@ export function getUserColorsByEmail(email) {
         nicknameHash,
         lightColor,
         darkColor,
-        defaultColor
+        defaultColor,
     };
 }
 
 export function getUserChances(user, bank) {
     return Number((bank.users[user._id] / bank.total * 100).toFixed(2));
+}
+
+export function getTransactionChances(transaction, bank) {
+    console.log(transaction);
+    return Number((transaction.value / bank.total * 100).toFixed(2));
 }
