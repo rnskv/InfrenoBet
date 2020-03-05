@@ -62,7 +62,7 @@ function Main({
                 isShowWinner={isShowWinner}
             />
             <BetMaker />
-            { !isShowWinner ? (
+            { !roulette.isVisible ? (
                 <GameControls
                     percent={userChance}
                     itemsCount={userItemsCount}
@@ -71,7 +71,7 @@ function Main({
                 />
             ) : null }
 
-            <UsersBanks users={users} bank={bank} />
+            <UsersBanks users={users} bank={bank} transactions={transactions} />
             { isShowWinner ? <GameEndFooter secret={secret} /> : null }
             <div>
                 <TransactionsContainer

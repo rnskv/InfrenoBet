@@ -4,7 +4,7 @@ import React, { useRef } from 'react';
 
 import UserBank from 'ui/molecules/UserBank';
 
-import { getUserChances, getUserColorsByEmail } from 'src/helpers/system';
+import { getTransactionChances, getUserChances, getUserColorsByEmail } from 'src/helpers/system';
 
 import {
     Container,
@@ -13,19 +13,20 @@ import {
     Banks,
 } from './styled';
 
-function UsersBanks({ users, bank }) {
+function UsersBanks({ users, bank, transactions }) {
     return (
         users.length ? (
             <Container>
                 <ChancesBar>
-                    {users.map((user, index) => {
+                    {transactions.map((transaction, index) => {
+                        const { user } = transaction;
                         const { defaultColor } = getUserColorsByEmail(user.email);
 
                         return (
                             <Chance
                                 key={defaultColor}
                                 color={defaultColor}
-                                percent={getUserChances(user, bank)}
+                                percent={getTransactionChances(transaction, bank)}
                             />
                         );
                     })}
@@ -56,6 +57,7 @@ function UsersBanks({ users, bank }) {
 UsersBanks.propTypes = {
     users: PropTypes.array.isRequired,
     bank: PropTypes.object.isRequired,
+    transactions: PropTypes.array.isRequired,
 };
 
 export default UsersBanks;
