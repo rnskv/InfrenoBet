@@ -4,6 +4,8 @@ import React, { useRef } from 'react';
 import WinInfo from 'ui/organisms/WinInfo';
 import Roulette from 'ui/organisms/Roulette';
 
+import { getFormattedTime } from 'src/helpers/system';
+
 import {
     Container,
     Title,
@@ -12,17 +14,12 @@ import {
     Timer,
     StartGame,
     Or,
+    ItemsCountValue,
+    ItemsText,
 } from './styled';
 
-function getFormattedTime(time) {
-    const minutes = Math.floor(time / 60);
-    const seconds = Math.floor(time % 60);
-
-    return `${minutes >= 10 ? minutes : `0${minutes}`} : ${seconds >= 10 ? seconds : `0${seconds}`}`;
-}
-
 function GameInfo({
-    id, time, transactions, bank, users, roulette, isShowWinner,
+    id, time, transactions, bank, users, roulette, isShowWinner, isVisible, openBetMaker
 }) {
     return (
         <Container>
@@ -40,7 +37,11 @@ function GameInfo({
                     : (
                         <StartGame>
                             <ItemsCount>
-                                { `${transactions.length} / 50` }
+                                <ItemsCountValue percent={Math.round(transactions.length / 50 * 100)}/>
+                                <ItemsText>
+                                    { `${transactions.length} / 50` }
+                                    <span>предметов</span>
+                                </ItemsText>
                             </ItemsCount>
                             <Or>или</Or>
                             <Timer>
@@ -49,24 +50,28 @@ function GameInfo({
                         </StartGame>
                     )
             }
-            {!roulette.isVisible ? (
-                <Bank>
-                    {'На кону: '}
-                    <span>
-                        {`${bank.total}₽`}
-                    </span>
-                </Bank>
-            )
-                : null}
 
-            {
-                roulette.isVisible ? <WinInfo isShowWinner={isShowWinner} winner={roulette.winner} /> : null
-            }
+            <Bank hidden={roulette.isVisible}>
+                {'На кону: '}
+                <span>
+                    {`${bank.total}₽`}
+                </span>
+            </Bank>
+
+            <WinInfo
+                isVisible={roulette.isVisible}
+                isShowWinner={isShowWinner}
+                winner={roulette.winner}
+                totalBank={bank.total}
+                time={time}
+                openBetMaker={openBetMaker}
+            />
         </Container>
     );
 }
 
 GameInfo.propTypes = {
+    openBetMaker: PropTypes.func.isRequired,
 };
 
 export default GameInfo;

@@ -1,11 +1,6 @@
 import PropTypes from 'prop-types';
 
-import React, { useRef } from 'react';
-
-import Input from 'ui/atoms/Input';
-
-import UserBank from 'ui/molecules/UserBank';
-import WinInfo from 'ui/organisms/WinInfo';
+import React from 'react';
 
 import {
     Container,
@@ -18,16 +13,15 @@ import {
     StyledButton as Button,
 } from './styled';
 
-function GameControls({ percent, itemsCount, openBetMaker }) {
+function GameControls({
+    percent, itemsCount, openBetMaker, isVisible,
+}) {
+    if (!isVisible) return null;
     return (
         <Container>
             <ItemsCount>
                 <Information>
-                    Вы вложили в игру -
-                    {' '}
-                    {itemsCount}
-                    {' '}
-из 10 монет.
+                    {`Вы вложили в игру - ${itemsCount} из 10 монет.`}
                 </Information>
                 <Description>
                     Мин.ставка 1₽, максимум предметов 10.
@@ -39,8 +33,7 @@ function GameControls({ percent, itemsCount, openBetMaker }) {
             <Chance>
                 Шанс:
                 <span>
-                    {percent.toFixed(2)}
-%
+                    {`${percent.toFixed(2)}%`}
                 </span>
             </Chance>
             <Button onClick={openBetMaker}>Сделать ставку</Button>
@@ -49,13 +42,16 @@ function GameControls({ percent, itemsCount, openBetMaker }) {
 }
 
 GameControls.propTypes = {
+    openBetMaker: PropTypes.func.isRequired,
     percent: PropTypes.number,
     itemsCount: PropTypes.number,
+    isVisible: PropTypes.bool,
 };
 
 GameControls.defaultProps = {
     percent: 0,
     itemsCount: 0,
+    isVisible: false,
 };
 
 export default GameControls;

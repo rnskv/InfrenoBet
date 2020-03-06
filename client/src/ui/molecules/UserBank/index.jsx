@@ -1,10 +1,6 @@
 import PropTypes from 'prop-types';
-import crypto from 'crypto';
 
 import React from 'react';
-
-import Title from 'ui/atoms/Title';
-import Link from 'ui/atoms/Link';
 import Avatar from 'ui/atoms/Avatar';
 
 import {

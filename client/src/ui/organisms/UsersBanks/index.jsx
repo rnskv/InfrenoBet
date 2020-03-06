@@ -14,6 +14,7 @@ import {
 } from './styled';
 
 function UsersBanks({ users, bank, transactions }) {
+    console.log(transactions)
     return (
         users.length ? (
             <Container>
@@ -24,7 +25,7 @@ function UsersBanks({ users, bank, transactions }) {
 
                         return (
                             <Chance
-                                key={defaultColor}
+                                key={`${defaultColor}${transaction._id}`}
                                 color={defaultColor}
                                 percent={getTransactionChances(transaction, bank)}
                             />

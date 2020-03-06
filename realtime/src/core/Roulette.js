@@ -11,7 +11,7 @@ class Roulette {
         this.offset = 0;
         this.avatars = [];
         this.avatarsCount = 100;
-        this.duration = 10;
+        this.duration = 16;
         this.destination = 0;
         this.isRotate = false;
         this.isVisible = false;
@@ -24,7 +24,7 @@ class Roulette {
                 width: 80,
                 height: 80
             },
-            duration: 16000,
+            duration: this.duration * 1000,
             avatarsCount: 300
         }
     }

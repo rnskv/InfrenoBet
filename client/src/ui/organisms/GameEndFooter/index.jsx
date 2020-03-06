@@ -14,7 +14,8 @@ import {
 } from './styled';
 
 
-function GameEndFooter({ secret }) {
+function GameEndFooter({ secret, isVisible }) {
+    if (!isVisible) return null;
     return (
         <Footer text="ИГРА ЗАКОНЧИЛАСЬ!">
             <Secret>
@@ -25,6 +26,12 @@ function GameEndFooter({ secret }) {
 }
 
 GameEndFooter.propTypes = {
+    secret: PropTypes.number.isRequired,
+    isVisible: PropTypes.bool,
+};
+
+GameEndFooter.defaultProps = {
+    isVisible: false,
 };
 
 export default GameEndFooter;

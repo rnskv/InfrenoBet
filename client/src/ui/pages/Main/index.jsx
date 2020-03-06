@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { infernoClient } from 'src/index';
+import { useActions } from 'src/helpers/hooks';
 
 import DefaultTemplate from 'ui/templates/Default';
 import UsersBanks from 'ui/organisms/UsersBanks';
@@ -14,8 +14,10 @@ import TransactionsContainer from 'ui/organisms/TransactionsContainer';
 
 import { mapStateToProps, mapDispatchToProps } from './connect';
 
-
-const isSubscribed = false;
+//@todo Все экшены брать из контекста App (примерно так)
+import * as userActions from 'src/redux/user/actions';
+import * as gameActions from 'src/redux/game/actions';
+import * as betMakerActions from 'src/redux/betMaker/actions';
 
 function Main({
     time,
@@ -23,36 +25,23 @@ function Main({
     secret,
     transactions,
     users,
-    join,
     bank,
     transaction,
-    subscribe,
-    token,
-    transactionsPoolLength,
-    isWaitingTransactions,
     isShowWinner,
-    userDepositsCount,
     roulette,
-    notifications,
-    openBetMaker,
-    getProfile,
-    profile,
-    sidebars,
     userChance,
     userItemsCount,
-    logOut,
 }) {
-    useEffect(() => {
-        if (isSubscribed) return;
-        subscribe();
-        // getProfile();
-    }, []);
 
+    const actions = {
+        user: useActions(userActions),
+        game: useActions(gameActions),
+        betMaker: useActions(betMakerActions),
+    };
+
+    console.log('userActions', actions.betMaker.open)
     return (
         <DefaultTemplate>
-            {/* { profile.isLoading ? 'Профиль подгружается' : `${profile.name} - ${profile.balance} рублей`} */}
-            {/* { `Ожидаем транзакции: ${isWaitingTransactions} - ${transactionsPoolLength} - штук`} */}
-            {/* <button onClick={logOut}>exit</button> */}
             <GameInfo
                 time={time}
                 transactions={transactions}
@@ -60,26 +49,37 @@ function Main({
                 users={users}
                 roulette={roulette}
                 isShowWinner={isShowWinner}
+                openBetMaker={actions.betMaker.open}
             />
             <BetMaker />
-            { !roulette.isVisible ? (
-                <GameControls
-                    percent={userChance}
-                    itemsCount={userItemsCount}
-                    transaction={transaction}
-                    openBetMaker={openBetMaker}
-                />
-            ) : null }
 
-            <UsersBanks users={users} bank={bank} transactions={transactions} />
-            { isShowWinner ? <GameEndFooter secret={secret} /> : null }
-            <div>
-                <TransactionsContainer
-                    transactions={transactions}
-                    isGameEnd={isShowWinner}
-                />
-            </div>
-            <GameBeginFooter hash={hash} />
+            <GameControls
+                isVisible={!roulette.isVisible}
+                percent={userChance}
+                itemsCount={userItemsCount}
+                transaction={transaction}
+                openBetMaker={actions.betMaker.open}
+            />
+
+            <UsersBanks
+                users={users}
+                bank={bank}
+                transactions={transactions}
+            />
+
+            <GameEndFooter
+                isVisible={isShowWinner}
+                secret={secret}
+            />
+
+            <TransactionsContainer
+                transactions={transactions}
+                isGameEnd={isShowWinner}
+            />
+
+            <GameBeginFooter
+                hash={hash}
+            />
         </DefaultTemplate>
     );
 }

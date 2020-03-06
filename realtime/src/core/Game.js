@@ -21,7 +21,7 @@ class Game {
         this.isShowWinner = false;
         this.transactionsBlocksPool = [];
         this.isWaitingTransactions = false;
-        this.publicSecret = null;
+        this.publicSecret = 0;
         gameApi.execute('create', {
             body: {
                 hash,
@@ -143,7 +143,6 @@ class Game {
         });
         this.roulette.setVisible(false);
         this.isFinished = true;
-        this.isShowRoulette = false;
         this.onFinish();
     }
 
@@ -154,8 +153,13 @@ class Game {
             }
         }).catch(err => console.log('GET_WINNER', err));
 
-        this.isShowRoulette = true;
         this.roulette.start({ winner, bank: this.state.bank, users: this.state.users });
+
+        this.time = this.roulette.duration + this.endingTime;
+
+        while (this.roulette.isVisible) {
+            await this.tick();
+        }
 
         //@todo вынести в отедльный метод
         this.app.io.sockets.emit('game.startRoulette');

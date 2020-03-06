@@ -10,7 +10,7 @@ const getClearGameState = () => ({
     },
     time: 0,
     hash: '',
-    secret: '',
+    secret: 0,
     isWaitingTransactions: false,
     transactionsPoolLength: 0,
     userDepositsCount: 0,

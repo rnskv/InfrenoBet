@@ -24,3 +24,18 @@ export function getTransactionChances(transaction, bank) {
     console.log(transaction);
     return Number((transaction.value / bank.total * 100).toFixed(2));
 }
+
+export function getFormattedTime(time, { minutes = true, seconds = true } = {}) {
+    const MM = Math.floor(time / 60);
+    const SS = Math.floor(time % 60);
+
+    if (!minutes) {
+        return SS >= 10 ? SS : `0${SS}`;
+    }
+
+    if (!seconds) {
+        return MM >= 10 ? MM : `0${MM}`;
+    }
+
+    return `${MM >= 10 ? MM : `0${MM}`} : ${SS >= 10 ? SS : `0${SS}`}`;
+}

@@ -1,5 +1,7 @@
 import styled, { keyframes } from 'styled-components';
 import { fadeInUp } from 'react-animations';
+import NumbersPlace from 'ui/atoms/NumbersPlace';
+import Button from 'ui/atoms/Button';
 
 export const Container = styled.div`
     animation: .6s ${keyframes`${fadeInUp}`};
@@ -10,9 +12,11 @@ export const Container = styled.div`
     justify-content: space-between;
     padding: 25px;
     box-sizing: border-box;
+    flex-grow: 0;
 `;
 
 export const WinnerTicket = styled.div`
+  font-weight: bold;
   color: var(--color-grey-600);
   span {
   margin-left: 10px;
@@ -21,6 +25,7 @@ export const WinnerTicket = styled.div`
 `;
 
 export const WinnerName = styled.div`
+  font-weight: bold;
   color: var(--color-grey-600);
   span {
     margin-left: 10px;
@@ -29,7 +34,6 @@ export const WinnerName = styled.div`
 `;
 
 export const Winner = styled.div`
-  font-weight: bold;
   font-size: 16px;
 `;
 
@@ -50,7 +54,10 @@ export const WinnerItem = styled.div`
 `;
 
 export const NextGame = styled.div`
-  
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  flex-direction: column;
 `;
 
 export const Arrow = styled.div`
@@ -83,4 +90,28 @@ export const Arrow = styled.div`
     margin-top: 12px;
     opacity: 0.5;
   }
+`;
+
+export const Timer = styled.div`
+  display: flex;
+  align-items: center;
+  span {
+    color: var(--color-grey-800);
+    font-weight: bold;
+  }
+`;
+
+export const TimerNumbers = styled(NumbersPlace)`
+  margin-left: 10px;
+  font-size: 36px;
+`;
+
+export const BankNumbers = styled(NumbersPlace)`
+  margin-top: 15px;
+`;
+
+export const DepositButton = styled(Button)`
+  font-size: 20px;
+  margin-top: 15px;
+  align-self: flex-end;
 `;
