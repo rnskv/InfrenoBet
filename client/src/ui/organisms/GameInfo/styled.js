@@ -13,6 +13,8 @@ export const Container = styled.div`
 export const Title = styled(CommonTitle)`
   width: 100%;
   font-size: 15px;
+  padding: 15px;
+  box-sizing: border-box;
 `;
 
 export const Timer = styled(NumbersPlace)`

@@ -11,6 +11,7 @@ import GameControls from 'ui/organisms/GameControls';
 import GameEndFooter from 'ui/organisms/GameEndFooter';
 import BetMaker from 'ui/organisms/BetMaker';
 import TransactionsContainer from 'ui/organisms/TransactionsContainer';
+import RoomNavigation from 'ui/organisms/RoomNavigation';
 
 import { mapStateToProps, mapDispatchToProps } from './connect';
 
@@ -42,6 +43,7 @@ function Main({
     console.log('userActions', actions.betMaker.open)
     return (
         <DefaultTemplate>
+            <RoomNavigation />
             <GameInfo
                 time={time}
                 transactions={transactions}

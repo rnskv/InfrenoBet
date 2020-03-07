@@ -19,7 +19,7 @@ const Content = styled.div`
     box-sizing: border-box;
     width: 900px;
     color: var(--color-grey);
-    border-radius: 5px;
+    border-radius: 4px;
     box-shadow: 0px 0px 3px 0px var(--color-shadow);
     align-self: flex-start;
     overflow: hidden;

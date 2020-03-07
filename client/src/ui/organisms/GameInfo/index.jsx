@@ -19,11 +19,11 @@ import {
 } from './styled';
 
 function GameInfo({
-    id, time, transactions, bank, users, roulette, isShowWinner, isVisible, openBetMaker
+    id, time, transactions, bank, users, roulette, isShowWinner, isVisible, openBetMaker,
 }) {
     return (
         <Container>
-            <Title>{`Игра ${id}`}</Title>
+            <Title>{`Игра #${id}`}</Title>
             {
                 roulette.isVisible
                     ? (
@@ -37,7 +37,9 @@ function GameInfo({
                     : (
                         <StartGame>
                             <ItemsCount>
-                                <ItemsCountValue percent={Math.round(transactions.length / 50 * 100)}/>
+                                <ItemsCountValue
+                                    percent={Math.round(transactions.length / 50 * 100)}
+                                />
                                 <ItemsText>
                                     { `${transactions.length} / 50` }
                                     <span>предметов</span>
@@ -71,7 +73,13 @@ function GameInfo({
 }
 
 GameInfo.propTypes = {
+    id: PropTypes.number,
     openBetMaker: PropTypes.func.isRequired,
+};
+
+
+GameInfo.defaultProps = {
+  id: 100500,
 };
 
 export default GameInfo;
