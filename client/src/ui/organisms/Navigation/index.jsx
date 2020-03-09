@@ -23,7 +23,7 @@ const GROUPS = [
         items: [
             {
                 id: 0,
-                to: '/',
+                to: '/game/lottery',
                 svgId: 'classic-logo',
                 text: 'Рулетка',
                 description: 'Играй и побеждай!',

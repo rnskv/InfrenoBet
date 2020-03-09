@@ -13,14 +13,14 @@ import BetMaker from 'ui/organisms/BetMaker';
 import TransactionsContainer from 'ui/organisms/TransactionsContainer';
 import RoomNavigation from 'ui/organisms/RoomNavigation';
 
-import { mapStateToProps, mapDispatchToProps } from './connect';
 
-//@todo Все экшены брать из контекста App (примерно так)
+// @todo Все экшены брать из контекста App (примерно так)
 import * as userActions from 'src/redux/user/actions';
 import * as gameActions from 'src/redux/game/actions';
 import * as betMakerActions from 'src/redux/betMaker/actions';
+import { mapStateToProps, mapDispatchToProps } from './connect';
 
-function Main({
+function Lottery({
     time,
     hash,
     secret,
@@ -33,17 +33,20 @@ function Main({
     userChance,
     userItemsCount,
 }) {
-
     const actions = {
         user: useActions(userActions),
         game: useActions(gameActions),
         betMaker: useActions(betMakerActions),
     };
 
-    console.log('userActions', actions.betMaker.open)
+    console.log('userActions', actions.betMaker.open);
     return (
         <DefaultTemplate>
-            <RoomNavigation />
+            <RoomNavigation
+                svgId="classic-logo"
+                url="/game/lottery"
+                title="Лотерея"
+            />
             <GameInfo
                 time={time}
                 transactions={transactions}
@@ -86,15 +89,15 @@ function Main({
     );
 }
 
-Main.propTypes = {
+Lottery.propTypes = {
     token: PropTypes.string.isRequired,
     subscribe: PropTypes.func.isRequired,
     users: PropTypes.arrayOf(PropTypes.object).isRequired,
     join: PropTypes.func.isRequired,
 };
 
-Main.defaultProps = {
+Lottery.defaultProps = {
 
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Main);
+export default connect(mapStateToProps, mapDispatchToProps)(Lottery);

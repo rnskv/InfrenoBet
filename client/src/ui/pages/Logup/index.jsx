@@ -10,6 +10,7 @@ import {
 import LogupForm from 'ui/organisms/LogupForm';
 import AfterLogup from 'ui/organisms/AfterLogup';
 import PopupTemplate from 'ui/templates/Popup';
+import DefaultTemplate from 'ui/templates/Default';
 
 import { mapStateToProps, mapDispatchToProps } from './connect';
 

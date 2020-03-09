@@ -15,23 +15,35 @@ import './globalStyles.css';
 
 import Login from 'ui/pages/Login';
 import Logup from 'ui/pages/Logup';
+import Deposit from 'ui/pages/Deposit';
+import Withdraw from 'ui/pages/Withdraw';
 
-import Main from 'ui/pages/Main';
+import Lottery from 'ui/pages/Lottery';
 
 function App({ store }) {
     return (
         <Provider store={store}>
             <Router history={history}>
                 <Switch>
+                    <Route path="/" exact>
+                        <Deposit />
+                    </Route>
+                    <Route path="/deposit">
+                        <Deposit />
+                    </Route>
+                    <Route path="/withdraw">
+                        <Withdraw />
+                    </Route>
                     <Route path="/login">
                         <Login />
                     </Route>
                     <Route path="/logup">
                         <Logup />
                     </Route>
-                    <Route path="/" exact>
-                        <Main />
+                    <Route path="/game/lottery">
+                        <Lottery />
                     </Route>
+
                     <Route>
                         <div>404</div>
                     </Route>

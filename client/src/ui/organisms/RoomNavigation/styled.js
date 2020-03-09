@@ -22,5 +22,6 @@ export const Logo = styled.div`
       margin-left: 15px;
       font-size: 20px;
       font-weight: bold;
+      color: var(--color-grey);
     }
 `;

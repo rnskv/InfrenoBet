@@ -13,6 +13,7 @@ import {
     Group,
 } from './styled';
 import { NavigationIcon } from '../Navigation/styled';
+import Link from '../../atoms/Link';
 
 function BetMaker({
     profile,
@@ -29,8 +30,8 @@ function BetMaker({
             </Group>
             <Group>
                 <Balance value={profile.balance} />
-                <Button type="transparent">Пополнить</Button>
-                <Button type="transparent">Вывести</Button>
+                <Link to={'/deposit'}><Button type="transparent">Пополнить</Button></Link>
+                <Link to={'/withdraw'}><Button type="transparent">Вывести</Button></Link>
             </Group>
             <Group>
                 <ExitButton type="black" onClick={logOut}>Выйти</ExitButton>
