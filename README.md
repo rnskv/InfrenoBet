@@ -1,5 +1,20 @@
 # InfrenoBet
 Игровая платформа для проведения мгновенных лотерей. 
+### ЗАПУСК ДЛЯ РАЗРАБОТКИ
+*  Client
+```
+ npm run start:dev
+```
+
+* Backend
+```
+ npm run start watch && npm run start:dev
+```
+
+* Realtime
+```
+ npm run start watch && npm run start:dev
+```
 
 ### ОБЩАЯ АРХИТЕКТУРА
 //@todo
