@@ -20,7 +20,8 @@ class View extends Module {
         </Suspense>;
 
         ReactDOM.render(
-            this.root, document.getElementById('root'));
+            this.root, document.getElementById('root')
+        );
     }
 }
 
