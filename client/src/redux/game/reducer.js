@@ -1,5 +1,4 @@
 import * as actionTypes from './actionsTypes';
-import { realtime } from '../../index';
 
 const getClearGameState = () => ({
     transactions: [],
@@ -24,7 +23,6 @@ const getClearGameState = () => ({
 });
 
 const initialState = {
-    token: localStorage.getItem('token') || '',
     ...getClearGameState(),
 };
 

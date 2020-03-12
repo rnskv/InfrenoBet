@@ -49,7 +49,7 @@ export default ({ app }) => {
         });
 
         if (response.token) {
-            window.localStorage.setItem('token', response.token);
+            globalThis.localStorage.setItem('token', response.token);
             dispatch(actions.user.logIn({ token: response.token }));
             realtime.io.emit('project.logIn', response.token);
             api.services.user.setHeader('Authorization', response.token);
@@ -60,7 +60,7 @@ export default ({ app }) => {
     };
 
     const logOut = () => (dispatch) => {
-        window.localStorage.removeItem('token');
+        globalThis.localStorage.removeItem('token');
         api.services.user.setHeader('Authorization', null);
         dispatch(actions.user.logOut());
         realtime.io.emit('project.logOut');

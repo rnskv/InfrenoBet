@@ -4,6 +4,8 @@ import events from 'src/services/events';
 const { REALTIME_PROTOCOL, REALTIME_PORT, REALTIME_HOST } = process.env;
 
 export const afterApplicationSetupCallback = (app) => {
+    if (typeof window === 'undefined') return;
+
     const {
         api, store, realtime, view,
     } = app.modules;

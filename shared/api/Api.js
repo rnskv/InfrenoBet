@@ -17,11 +17,11 @@ export default class Api {
     }
 
     setBearer(token) {
-        this.setHeader('Authorization', window.localStorage.getItem('token'));
+        this.setHeader('Authorization', globalThis.localStorage.getItem('token'));
     }
 
     setBearerFromLocalStorage() {
-        this.setHeader('Authorization', localStorage.getItem('token'));
+        this.setHeader('Authorization', globalThis.localStorage.getItem('token'));
     }
 
     addRequests(requests) {

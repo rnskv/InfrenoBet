@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 
 import Module from 'src/core/Module';
 import IO from 'socket.io-client';
+import { BrowserRouter } from 'react-router-dom';
+// import { createBrowserHistory } from 'history';
 
 class View extends Module {
     constructor({ ...params }) {
@@ -13,14 +15,17 @@ class View extends Module {
     render() {
         const RootComponent = lazy(() => import('src/core/App'));
 
-        this.root = <Suspense fallback={<div>Loading...</div>}>
-            <RootComponent
-                store={this.app.modules['store'].instanse}
-            />
-        </Suspense>;
+        this.root = (
+            <Suspense fallback={<div>Loading...</div>}>
+                <BrowserRouter>
+                    <RootComponent store={this.app.modules['store'].instanse}
+                />
+                </BrowserRouter>
+            </Suspense>
+        );
 
-        ReactDOM.render(
-            this.root, document.getElementById('root')
+        ReactDOM.hydrate(
+            this.root, globalThis.document.getElementById('root')
         );
     }
 }

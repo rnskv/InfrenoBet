@@ -1,4 +1,3 @@
-import { ws } from 'src/modules/realtime';
 import * as actionTypes from './actionsTypes';
 
 const getClearState = () => ({
@@ -10,7 +9,7 @@ const getClearState = () => ({
 });
 
 const initialState = {
-    token: window.localStorage.getItem('token') || '',
+    token: typeof globalThis !== 'undefined' && globalThis.localStorage.getItem('token') || '',
     profile: {
         isLoading: true,
         balance: 0,

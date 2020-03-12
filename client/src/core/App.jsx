@@ -1,11 +1,9 @@
 import 'babel-polyfill';
 import React from 'react';
-import history from 'src/modules/router/history';
 
 import { Provider } from 'react-redux';
 
 import {
-    BrowserRouter as Router,
     Switch,
     Route,
 } from 'react-router-dom';
@@ -21,34 +19,34 @@ import Withdraw from 'ui/pages/Withdraw';
 import Lottery from 'ui/pages/Lottery';
 
 function App({ store }) {
+    if (typeof window === 'undefined') return 'Hello from server';
+
     return (
         <Provider store={store}>
-            <Router history={history}>
-                <Switch>
-                    <Route path="/" exact>
-                        <Deposit />
-                    </Route>
-                    <Route path="/deposit">
-                        <Deposit />
-                    </Route>
-                    <Route path="/withdraw">
-                        <Withdraw />
-                    </Route>
-                    <Route path="/login">
-                        <Login />
-                    </Route>
-                    <Route path="/logup">
-                        <Logup />
-                    </Route>
-                    <Route path="/game/lottery">
-                        <Lottery />
-                    </Route>
+            <Switch>
+                <Route path="/" exact>
+                    <Deposit />
+                </Route>
+                <Route path="/deposit">
+                    <Deposit />
+                </Route>
+                <Route path="/withdraw">
+                    <Withdraw />
+                </Route>
+                <Route path="/login">
+                    <Login />
+                </Route>
+                <Route path="/logup">
+                    <Logup />
+                </Route>
+                <Route path="/game/lottery">
+                    <Lottery />
+                </Route>
 
-                    <Route>
-                        <div>404</div>
-                    </Route>
-                </Switch>
-            </Router>
+                <Route>
+                    <div>404</div>
+                </Route>
+            </Switch>
             <div hidden>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 14" id="collapse">
                     <path d="M0 7.022L4.912.045 8.257 0 3.344 6.904l4.913 7.051L4.912 14 0 7.022zm6.743 0L11.656.045 15 0l-4.912 6.904L15 13.955 11.656 14 6.743 7.022z" />

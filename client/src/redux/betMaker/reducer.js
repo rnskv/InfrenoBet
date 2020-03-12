@@ -1,6 +1,4 @@
-import { ws } from 'src/modules/realtime';
 import * as actionTypes from './actionsTypes';
-import { OPEN_BET_MAKER } from './actionsTypes';
 
 const initialState = {
     isOpened: false,
