@@ -17,7 +17,7 @@ module.exports = () => {
         entry: './src/index.jsx',
         output: {
             path: path.join(__dirname, '/dist'),
-            filename: 'index_bundle.js',
+            filename: 'inferno_[name]-[hash].js',
             publicPath: path.join('/dist/'),
         },
         resolve: {

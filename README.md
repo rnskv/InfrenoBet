@@ -1,6 +1,28 @@
 # InfrenoBet
-Игровая платформа для проведения мгновенных лотерей. 
-### ЗАПУСК ДЛЯ РАЗРАБОТКИ
+Игровая платформа для проведения мгновенных лотерей.
+### Докер
+* Публикация образа
+
+1.) Получаем ID образа
+```
+ docker images
+```
+
+2.) Привязываем тэг
+```
+docker tag {IMAGE_ID} rnskv/${project_name}
+```
+
+3.) Пушим
+```
+docker push rnskv/${project_name}
+```
+
+*Запуск образа
+```
+docker run -p {SERVER_PORT}:${IMAGE_PORT} {IMAGE_NAME}
+```
+### Запуск development
 *  Client
 ```
  npm run start:dev
