@@ -1,14 +1,30 @@
 version: '3.7'
+
 services:
     backend:
         build: ./backend
+        image: rnskv/inferno_backend
         ports:
             - '6001:6001'
         depends_on:
             - db
-        volumes:
-            - ${WORKSPACE}:/shared:/shared
         container_name: inferno_backend
+    realtime:
+        build: ./realtime
+        image: rnskv/inferno_realtime
+        ports:
+            - '6002:6002'
+        depends_on:
+            - backend
+        container_name: inferno_realtime
+    client:
+        build: ./client
+        image: rnskv/inferno_client
+        ports:
+            - '6003:6003'
+        depends_on:
+            - realtime
+        container_name: inferno_client
     db:
         image: mongo
         ports:

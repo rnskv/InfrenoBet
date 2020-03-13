@@ -14,7 +14,7 @@ useMiddlewares(app);
 app.use(controllers.routes());
 app.use(controllers.allowedMethods());
 
-app.listen(config.port, () => {
+app.listen(config.port, config.host, () => {
     console.log(`Server has been started on port ${config.port}`);
 });
 

@@ -1,11 +1,9 @@
 FROM node:10
 
 WORKDIR /usr/src/backend
-COPY ./package*.json ./
-RUN npm install --no-optional
+COPY ./dist ./dist
+COPY ./node_modules ./node_modules
+COPY ./.env ./.env
 
-WORKDIR /usr/src/backend
-COPY . .
-RUN npm run build:dev
 EXPOSE 6001
 CMD [ "node", "./dist/app.js" ]

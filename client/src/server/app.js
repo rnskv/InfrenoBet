@@ -10,9 +10,10 @@ import { StaticRouter } from 'react-router-dom';
 import { ServerStyleSheet, StyleSheetManager } from 'styled-components';
 
 // import { createMemoryHistory } from 'history';
+const { CLIENT_PORT } = process.env;
 
 const app = Express();
-const port = 9000;
+const port = CLIENT_PORT;
 
 // Serve static files
 app.use('/dist', Express.static('dist'));
@@ -79,4 +80,6 @@ function renderFullPage(html, preloadedState, styleTags) {
     `;
 }
 
-app.listen(port);
+app.listen(port, process.env.CLIENT_HOST, () => {
+    console.log('server started at port', port, app);
+});
