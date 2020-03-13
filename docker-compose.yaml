@@ -1,0 +1,16 @@
+version: '3.7'
+services:
+    backend:
+        build: ./backend
+        ports:
+            - '6001:6001'
+        depends_on:
+            - db
+        volumes:
+            - ${WORKSPACE}:/shared:/shared
+        container_name: inferno_backend
+    db:
+        image: mongo
+        ports:
+            - "27017:27017"
+        container_name: inferno_db
