@@ -10,4 +10,4 @@ export const server = http.Server(app);
 
 export const application = new Application(server);
 
-server.listen(config.realtime_port);
+server.listen(config.realtime_port, config.realtime_host);
