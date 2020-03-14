@@ -9,6 +9,7 @@
     "compile:dev": "npm run install:dev && npm run build:dev",
     "start:dev": "npm run start:dev --prefix client/ & npm run start:dev --prefix backend/ & npm run start:dev --prefix realtime",
     "install:prod": "npm ci --prefix client/ && npm ci --prefix backend/ && npm ci --prefix realtime/ && npm ci --prefix shared/",
+    "build:prod": "npm run build:prod --prefix client/ && npm run build:prod --prefix backend/ && npm run build:prod --prefix realtime",
     "compile:prod": "npm run install:prod && npm run build:prod"
   },
   "repository": {
