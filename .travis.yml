@@ -12,19 +12,19 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
 stages:
-  - compile
-  - test
+  - name: sandbox
+    if: branch = sandbox
   - name: deploy
     if: branch = master
 
 jobs:
   include:
-    - stage: compile
-      name: "Compile Project"
-      script: bash ./compile.sh
-    - stage: test
-      name: "Test Project"
-      script: echo "Test's not ready"
+    - stage: sandbox
+      name: "Sandbox Stage"
+      - script: bash ./scripts/compile.sh
+      - script: bash ./scripts/test.sh
     - stage: deploy
-      name: "Deploy Project"
-      script: bash ./docker-compose_push.sh
+      name: "Deploy Stage"
+        - script: bash ./scripts/compile.sh
+        - script: bash ./scripts/test.sh
+        - script: bash ./scripts/docker-compose_push.sh
