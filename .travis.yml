@@ -21,10 +21,13 @@ jobs:
   include:
     - stage: sandbox
       name: "Sandbox Stage"
-      - script: bash ./scripts/compile.sh
-      - script: bash ./scripts/test.sh
+      script:
+        - bash ./scripts/compile.sh
+        - bash ./sctipts/test.sh
     - stage: deploy
       name: "Deploy Stage"
-        - script: bash ./scripts/compile.sh
-        - script: bash ./scripts/test.sh
-        - script: bash ./scripts/docker-compose_push.sh
+      script:
+        - bash ./scripts/compile.sh
+        - bash ./scripts/test.sh
+        - bash ./scripts/docker-compose_build.sh
+        - bash ./scripts/docker-compose_push.sh
