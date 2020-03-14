@@ -3,7 +3,7 @@ node_js:
   - "10"
 sudo: required
 env:
-  - DOCKER_COMPOSE_VERSION=1.4.2
+  - DOCKER_COMPOSE_VERSION=1.25.4
 services:
   - docker
 before_install:
@@ -12,8 +12,8 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
 script:
-  - npm test
-  - docker build -t
+  - npm run pack:dev
+  - docker-compose build
 deploy:
   provider: script
     script: bash docker_push
