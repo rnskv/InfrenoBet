@@ -1,3 +1,5 @@
+<img src="https://travis-ci.org/rnskv/InfrenoBet.svg?branch=master"/>
+
 # InfrenoBet
 Игровая платформа для проведения мгновенных лотерей.
 ### Докер
