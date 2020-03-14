@@ -28,7 +28,6 @@ const Page = styled.div`
 function Default({ children, ...props }) {
     return (
         <div {...props}>
-            <h1>Welcome to CI</h1>
             <Header />
             <Page>
                 <Sidebar params={{
