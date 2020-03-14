@@ -11,12 +11,20 @@ before_install:
   - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
-script:
-  - npm run pack:dev
-  - docker-compose build
-deploy:
-  # deploy develop to the staging environment
-  - provider: script
-    script: bash docker-compose_push.sh
-    on:
-      branch: master
+stages:
+  - compile
+  - test
+  - name: deploy
+    if: branch = master
+
+jobs:
+  include:
+    - stage: compile
+      name: "Compile Project"
+      script: ./compile.sh
+    - stage: test
+      name: "Test Project"
+      script: echo "Test's not ready"
+    - stage: deploy
+      name: "Deploy Project"
+      script: ./docker-compose_push.sh
