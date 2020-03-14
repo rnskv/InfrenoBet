@@ -15,7 +15,8 @@ script:
   - npm run pack:dev
   - docker-compose build
 deploy:
-  provider: script
-    script: bash docker_push
+  # deploy develop to the staging environment
+  - provider: script
+    script: bash docker-compose_push.sh
     on:
-      branch: sandbox
+      branch: master
