@@ -8,10 +8,7 @@ import Sidebar from 'ui/organisms/Sidebar';
 import Header from 'ui/organisms/Header';
 
 import SidebarNotifications from 'ui/molecules/SidebarNotifications';
-import SidebarNavigation from 'ui/molecules/SidebarNavigation';
 import SidebarProfile from 'ui/molecules/SidebarProfile';
-
-import { Container } from '../../organisms/Sidebar/styled';
 
 const Content = styled.div`
     margin: 75px auto;

@@ -12,15 +12,11 @@ import { USER_NOT_FOUND } from 'shared/configs/notificationsTypes';
 const changeBalanceHandler = async (ctx) => {
     const { id, amount } = ctx.request.body;
 
-    console.log(ctx.request.body, ctx.params);
-
     ctx.body = await User.changeBalance(id, -amount);
 };
 
 const getHandler = async (ctx) => {
     const user = await User.findById(mongoose.Types.ObjectId(String(ctx.params.id)));
-
-    console.log('Execute getHandler', ctx.request.body);
 
     if (!user) {
         ctx.throw({ type: USER_NOT_FOUND });

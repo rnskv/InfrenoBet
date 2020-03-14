@@ -24,7 +24,6 @@ const createHandler = async (ctx) => {
     } = ctx.request.body;
 
     const existedGame = await Game.getLastCreated();
-    console.log('Game is exist', existedGame)
     if (existedGame) {
         ctx.body = existedGame;
     } else {
@@ -39,8 +38,6 @@ const getWinner = async (ctx) => {
 
     const winner = await Game.getWinnerById(id);
     const bank = await Transaction.getGameBankSumById(id);
-
-    console.log('BANK', bank)
     //@todo 0.9 - процент отдаци пользователю (вынести в настройки)
     await User.changeBalance(winner.transaction.user.id, bank.sum * 0.90);
 

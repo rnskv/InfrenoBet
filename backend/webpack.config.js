@@ -1,25 +1,17 @@
 const webpack = require('webpack');
-
 const path = require('path');
-const dotenv = require('dotenv');
+const helpers = require('../shared/helpers/webpack');
 
-module.exports = () => {
-    const env = dotenv.config().parsed;
-    const envKeys = Object.keys(env).reduce((prev, next) => {
-        prev[`${next}`] = JSON.stringify(env[next]);
-        return prev;
-    }, {});
-
-    return ({
+module.exports = (cli = { mode: 'development' }) => {
+    helpers.showStatus({ mode: cli.mode, appName: 'server.api'});
+    return {
         entry: {
             app: './src/app.js'
         },
+        mode: cli.mode,
         output: {
             path: path.resolve(__dirname, 'dist'),
             filename: '[name].js'
-        },
-        externals: {
-            uws: 'uws'
         },
         resolve: {
             alias: {
@@ -29,11 +21,10 @@ module.exports = () => {
         },
         plugins: [
             new webpack.DefinePlugin({
-                'process.env': envKeys,
+                'process.env': helpers.getDotEnvVariables({ mode: cli.mode }),
             }),
         ],
-        mode: 'development',
         target: 'node',
         devtool: 'eval-source-map'
-    });
-}
+    }
+};

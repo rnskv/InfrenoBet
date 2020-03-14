@@ -14,8 +14,8 @@ jobs:
     - stage: sandbox
       name: "Sandbox Stage"
       script:
-        - bash ./scripts/compile.sh
-        - bash ./sctipts/test.sh
+        - bash ./scripts/compile.dev.sh
+        - bash ./scripts/test.sh
     - stage: deploy
       name: "Deploy Stage"
       env:
@@ -28,7 +28,7 @@ jobs:
         - chmod +x docker-compose
         - sudo mv docker-compose /usr/local/bin
       script:
-        - bash ./scripts/compile.sh
+        - bash ./scripts/compile.prod.sh
         - bash ./scripts/test.sh
         - bash ./scripts/docker-compose_build.sh
         - bash ./scripts/docker-compose_push.sh

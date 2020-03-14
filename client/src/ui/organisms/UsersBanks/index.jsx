@@ -14,7 +14,6 @@ import {
 } from './styled';
 
 function UsersBanks({ users, bank, transactions }) {
-    console.log(transactions)
     return (
         users.length ? (
             <Container>

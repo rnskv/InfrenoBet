@@ -39,7 +39,6 @@ const transactionSchema = new Schema({
 const Transaction = mongoose.model('transaction', transactionSchema);
 
 Transaction.create = async (data) => {
-    console.log('create with data', data)
     return new Transaction(data).save()
 };
 
@@ -50,8 +49,6 @@ Transaction.getById = async (id) => {
 };
 
 Transaction.getLastInGameByGameId = async (gameId) => {
-    console.log('getLastInGameByGameId', gameId)
-
     const lastTransaction = await Transaction
         .findOne({ game: mongoose.Types.ObjectId(gameId) }, {}, { sort: { _id: -1 }});
 

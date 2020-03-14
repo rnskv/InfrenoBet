@@ -17,5 +17,3 @@ app.use(controllers.allowedMethods());
 app.listen(config.port, config.host, () => {
     console.log(`Server has been started on port ${config.port}`);
 });
-
-console.log('123', config.port);

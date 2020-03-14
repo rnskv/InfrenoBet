@@ -67,7 +67,6 @@ Game.create = async (data) => {
 };
 
 Game.findById = async (id) => {
-    console.log('find by id, id', id)
     return await Game.findOne({
         _id: mongoose.Types.ObjectId(id)
     });
@@ -92,7 +91,6 @@ Game.getWinnerById = async (id) => {
         ticketTo: { $gte: winnerTicket }
     }).populate('user');
 
-    console.log('Получил победную транзакцию', winnerTransaction, winnerTicket);
     winnerTransaction.winnerTicket = winnerTicket;
     return {
         transaction: winnerTransaction,

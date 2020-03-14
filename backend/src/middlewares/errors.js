@@ -6,8 +6,6 @@ export default async (ctx, next) => {
     } catch (error) {
         const notification = notifications[error.type];
 
-        console.log(notification);
-
         ctx.status = notification.status || 500;
         ctx.body = {
             isError: true,
