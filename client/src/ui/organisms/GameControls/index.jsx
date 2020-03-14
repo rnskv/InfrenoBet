@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 import {
     Container,
@@ -13,12 +14,16 @@ import {
     StyledButton as Button,
 } from './styled';
 
+import NotAuthPlaceHolder from 'ui/organisms/NotAuthPlaceholder';
+
 function GameControls({
-    percent, itemsCount, openBetMaker, isVisible,
+    percent, itemsCount, openBetMaker, isVisible, isAuth
 }) {
     if (!isVisible) return null;
+
     return (
         <Container>
+            <NotAuthPlaceHolder isVisible={!isAuth} />
             <ItemsCount>
                 <Information>
                     {`Вы вложили в игру - ${itemsCount} из 10 монет.`}
@@ -46,12 +51,14 @@ GameControls.propTypes = {
     percent: PropTypes.number,
     itemsCount: PropTypes.number,
     isVisible: PropTypes.bool,
+    isAuth: PropTypes.bool,
 };
 
 GameControls.defaultProps = {
     percent: 0,
     itemsCount: 0,
     isVisible: false,
+    isAuth: false,
 };
 
 export default GameControls;

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { useActions } from 'src/helpers/hooks';
 
 import DefaultTemplate from 'ui/templates/Default';
@@ -21,6 +21,7 @@ import * as betMakerActions from 'src/redux/betMaker/actions';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 
 function Lottery({
+
     time,
     hash,
     secret,
@@ -33,6 +34,8 @@ function Lottery({
     userChance,
     userItemsCount,
 }) {
+    const isAuth = useSelector((state) => Boolean(state.user.token));
+    console.log('isAuth', isAuth)
     const actions = {
         user: useActions(userActions),
         game: useActions(gameActions),
@@ -63,6 +66,7 @@ function Lottery({
                 itemsCount={userItemsCount}
                 transaction={transaction}
                 openBetMaker={actions.betMaker.open}
+                isAuth={isAuth}
             />
 
             <UsersBanks
