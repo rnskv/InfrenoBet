@@ -14,8 +14,3 @@ before_install:
 script:
   - npm run pack:dev
   - docker-compose build
-deploy:
-  provider: script
-    script: bash docker_push
-    on:
-      branch: sandbox
