@@ -1,4 +1,4 @@
-<img src="https://travis-ci.org/rnskv/InfrenoBet.svg?branch=master"/>
+[![Build Status](https://travis-ci.com/rnskv/InfrenoBet.svg?branch=master)](https://travis-ci.com/rnskv/InfrenoBet)
 
 # InfrenoBet
 Игровая платформа для проведения мгновенных лотерей.
