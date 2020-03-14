@@ -2,29 +2,33 @@ language: node_js
 node_js:
   - "10"
 sudo: required
-env:
-  - DOCKER_COMPOSE_VERSION=1.25.4
-services:
-  - docker
-before_install:
-  - sudo rm /usr/local/bin/docker-compose
-  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
-  - chmod +x docker-compose
-  - sudo mv docker-compose /usr/local/bin
+
 stages:
-  - compile
-  - test
+  - name: sandbox
+    if: branch = sandbox
   - name: deploy
     if: branch = master
 
 jobs:
   include:
-    - stage: compile
-      name: "Compile Project"
-      script: bash ./compile.sh
-    - stage: test
-      name: "Test Project"
-      script: echo "Test's not ready"
+    - stage: sandbox
+      name: "Sandbox Stage"
+      script:
+        - bash ./scripts/compile.sh
+        - bash ./sctipts/test.sh
     - stage: deploy
-      name: "Deploy Project"
-      script: bash ./docker-compose_push.sh
+      name: "Deploy Stage"
+      env:
+        - DOCKER_COMPOSE_VERSION=1.25.4
+      services:
+        - docker
+      before_install:
+        - sudo rm /usr/local/bin/docker-compose
+        - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+        - chmod +x docker-compose
+        - sudo mv docker-compose /usr/local/bin
+      script:
+        - bash ./scripts/compile.sh
+        - bash ./scripts/test.sh
+        - bash ./scripts/docker-compose_build.sh
+        - bash ./scripts/docker-compose_push.sh
