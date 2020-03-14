@@ -45,7 +45,6 @@ function handleRender(req, res) {
     const preloadedState = store.getState();
 
     const styleTags = sheet.getStyleTags(); // or sheet.getStyleElement();
-    console.log(styleTags);
     sheet.seal();
     // Send the rendered page back to the client
     res.send(renderFullPage(html, preloadedState, styleTags));
@@ -81,5 +80,5 @@ function renderFullPage(html, preloadedState, styleTags) {
 }
 
 app.listen(port, process.env.CLIENT_HOST, () => {
-    console.log('server started at port', port, app);
+    console.log('Server started at port', port, app);
 });

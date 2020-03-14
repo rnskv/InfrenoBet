@@ -4,10 +4,12 @@
   "description": "Игровая платформа для проведения мгновенных лотерей. ### Докер * Публикация образа",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "install:dev": "npm i --prefix client/ && npm i --prefix backend/ && npm i --prefix realtime/ && npm i --prefix shared/",
     "build:dev": "npm run build:dev --prefix client/ && npm run build:dev --prefix backend/ && npm run build:dev --prefix realtime",
-    "pack:dev": "npm run install:dev && npm run build:dev"
+    "compile:dev": "npm run install:dev && npm run build:dev",
+    "start:dev": "npm run start:dev --prefix client/ & npm run start:dev --prefix backend/ & npm run start:dev --prefix realtime",
+    "install:prod": "npm ci --prefix client/ && npm ci --prefix backend/ && npm ci --prefix realtime/ && npm ci --prefix shared/",
+    "compile:prod": "npm run install:prod && npm run build:prod"
   },
   "repository": {
     "type": "git",

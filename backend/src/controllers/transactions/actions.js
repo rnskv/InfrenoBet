@@ -69,8 +69,6 @@ const getGameBankSumById = async (ctx) => {
         id
     } = ctx.request.body;
 
-    console.log('id', id);
-
     ctx.body = await Transaction.getGameBankSumById(id);
 };
 

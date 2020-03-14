@@ -39,7 +39,6 @@ function Lottery({
         betMaker: useActions(betMakerActions),
     };
 
-    console.log('userActions', actions.betMaker.open);
     return (
         <DefaultTemplate>
             <RoomNavigation

@@ -21,7 +21,6 @@ export function getUserChances(user, bank) {
 }
 
 export function getTransactionChances(transaction, bank) {
-    console.log(transaction);
     return Number((transaction.value / bank.total * 100).toFixed(2));
 }
 
