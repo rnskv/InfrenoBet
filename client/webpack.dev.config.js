@@ -7,7 +7,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
 
 const dotenv = require('dotenv');
-
+console.log('Test stage sandbox')
 module.exports = () => {
     const env = dotenv.config().parsed;
     const envKeys = Object.keys(env).reduce((prev, next) => {
