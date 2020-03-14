@@ -12,6 +12,7 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
 script:
+  - npm run back:dev
   - docker-compose build
 deploy:
   provider: script

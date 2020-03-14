@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:dev": "npm run build:dev --prefix client/ && npm run build:dev --prefix backend/ && npm run build:dev --prefix realtime/ && npm run build:dev --prefix shared/"
+    "install:dev": "npm i --prefix client/ && npm i --prefix backend/ && npm i --prefix realtime/ && npm i --prefix shared/",
+    "build:dev": "npm run build:dev --prefix client/ && npm run build:dev --prefix backend/ && npm run build:dev --prefix realtime",
+    "pack:dev": "npm run install:dev && npm run build:dev"
   },
   "repository": {
     "type": "git",
