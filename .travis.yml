@@ -15,7 +15,7 @@ jobs:
       name: "Sandbox Stage"
       script:
         - bash ./scripts/compile.sh
-        - bash ./sctipts/test.sh
+        - bash ./scripts/test.sh
     - stage: deploy
       name: "Deploy Stage"
       env:
