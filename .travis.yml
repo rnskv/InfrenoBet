@@ -21,10 +21,10 @@ jobs:
   include:
     - stage: compile
       name: "Compile Project"
-      script: ./compile.sh
+      script: bash ./compile.sh
     - stage: test
       name: "Test Project"
       script: echo "Test's not ready"
     - stage: deploy
       name: "Deploy Project"
-      script: ./docker-compose_push.sh
+      script: bash ./docker-compose_push.sh
