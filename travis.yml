@@ -3,7 +3,7 @@ node_js:
   - "10"
 sudo: required
 env:
-  - DOCKER_COMPOSE_VERSION=1.4.2
+  - DOCKER_COMPOSE_VERSION=1.25.4
 services:
   - docker
 before_install:
