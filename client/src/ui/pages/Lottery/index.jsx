@@ -57,6 +57,7 @@ function Lottery({
                 roulette={roulette}
                 isShowWinner={isShowWinner}
                 openBetMaker={actions.betMaker.open}
+                isAuth={isAuth}
             />
             <BetMaker />
 

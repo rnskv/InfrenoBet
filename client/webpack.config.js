@@ -50,6 +50,10 @@ function getClientConfig({ mode }) {
         module: {
             rules: [
                 {
+                    test: /\.svg$/,
+                    loader: 'svg-inline-loader',
+                },
+                {
                     test: /\.js|jsx$/,
                     exclude: /node_modules/,
                     use: {
@@ -80,6 +84,10 @@ function getServerConfig({ mode }) {
         externals: [nodeExternals()],
         module: {
             rules: [
+                {
+                    test: /\.svg$/,
+                    loader: 'svg-inline-loader'
+                },
                 {
                     test: /\.js|jsx$/,
                     exclude: /node_modules/,

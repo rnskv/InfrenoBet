@@ -25,19 +25,25 @@ export const usePassportStrategies = (passport) => {
     const vkStrategy = new VkTokenStrategy({
             clientID: VK_CLIENT_ID,
             clientSecret: VK_CLIENT_SECRET,
-            callbackURL:  VK_REDIRECT_URL
+            callbackURL:  VK_REDIRECT_URL,
+            profileFields: ['uid', 'first_name', 'last_name', 'screen_name', 'sex', 'photo', 'photo_200', 'bdate']
         },
         async function(accessToken, refreshToken, profile, next) {
             const user = await User.findOne({ vkId: profile.id });
+            console.log(profile);
             if (!user) {
                 const user = await new User({
                     vkId: profile.id,
                     name: profile.displayName,
                     login: profile.username,
-                    avatar: profile._json.photo
+                    avatar: profile._json.photo_200
                 }).save();
                 return next(null, user);
             } else {
+                user.avatar = profile._json.photo_200;
+                user.name = profile.displayName;
+                await user.save();
+
                 return next(null, user);
             }
         }

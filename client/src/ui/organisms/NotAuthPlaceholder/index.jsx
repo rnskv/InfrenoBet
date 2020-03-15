@@ -14,7 +14,7 @@ function NotAuthPlaceHolder({ isVisible }) {
     if (!isVisible) return <></>;
 
     const actions = useActions({ openLoginPopup });
-    window.kek = actions.openLoginPopup;
+
     return (
         <Container>
             <Title>Авторизируйся, чтобы испытать удачу</Title>
