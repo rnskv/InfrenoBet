@@ -27,23 +27,38 @@ const Page = styled.div`
     display: flex;
 `;
 
+
+const { VK_CLIENT_ID, VK_REDIRECT_URL } = process.env;
+
+function openAuthWindow() {
+    const authWindow = window.open(
+        `https://oauth.vk.com/authorize?client_id=${VK_CLIENT_ID}&display=page&redirect_uri=${VK_REDIRECT_URL}&scope=friends&response_type=code&v=5.103`,
+        '_blank',
+        'width=250',
+        'height=250',
+    );
+
+    authWindow.onunload = () => window.location.replace('/');
+}
+
 function Default({ children, ...props }) {
     return (
         <div {...props}>
+            <button onClick={openAuthWindow}>Через вк</button>
             <Header />
             <Page>
-                <Sidebar params={{
-                    side: 'left',
-                }}
+                <Sidebar
+                    params={{
+                        side: 'left',
+                    }}
                 >
                     <Navigation />
                 </Sidebar>
-                <Content>
-                    { children }
-                </Content>
-                <Sidebar params={{
-                    side: 'right',
-                }}
+                <Content>{children}</Content>
+                <Sidebar
+                    params={{
+                        side: 'right',
+                    }}
                 >
                     <SidebarProfile />
                     {/* <SidebarNavigation /> */}
@@ -53,7 +68,6 @@ function Default({ children, ...props }) {
         </div>
     );
 }
-
 
 Default.propTypes = {
     children: PropTypes.node.isRequired,
