@@ -7,12 +7,13 @@ const getClearState = () => ({
     loginError: '',
     logupError: '',
     notifications: [],
+    isOpenedLoginPopup: false,
 });
 
 console.log(Cookies.get('test'));
 
 setTimeout(() => {
-    console.log(Cookies.get('token'))
+    console.log(Cookies.get('token'));
 }, 1000);
 
 const initialState = {
@@ -153,6 +154,20 @@ function userReducer(state = initialState, action) {
                     isOpened: false,
                 },
             },
+        };
+    }
+
+    case actionTypes.OPEN_LOGIN_POPUP: {
+        return {
+            ...state,
+            isOpenedLoginPopup: true,
+        };
+    }
+
+    case actionTypes.CLOSE_LOGIN_POPUP: {
+        return {
+            ...state,
+            isOpenedLoginPopup: false,
         };
     }
 

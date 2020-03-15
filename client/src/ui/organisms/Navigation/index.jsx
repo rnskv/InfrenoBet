@@ -38,14 +38,6 @@ const GROUPS = [
         items: [
             {
                 id: 0,
-                to: '/login',
-                svgId: 'settings-icon',
-                text: 'Авторизация',
-                description: 'Войди в игру!',
-                accessLevel: -1,
-            },
-            {
-                id: 1,
                 to: '/logup',
                 svgId: 'settings-icon',
                 text: 'Регистрация',
@@ -53,8 +45,8 @@ const GROUPS = [
                 accessLevel: 0,
             },
             {
-                id: 2,
-                to: '/login',
+                id: 1,
+                to: '/support',
                 svgId: 'tech-support-icon',
                 text: 'Поддержка',
                 description: 'Возникли проблемы?',

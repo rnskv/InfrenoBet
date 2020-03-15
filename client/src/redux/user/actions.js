@@ -64,8 +64,16 @@ export const openSidebar = (payload) => ({
     payload,
 });
 
-
 export const closeSidebar = (payload) => ({
     type: actionTypes.CLOSE_SIDEBAR,
     payload,
+});
+
+export const openLoginPopup = () => ({
+    type: actionTypes.OPEN_LOGIN_POPUP,
+});
+
+
+export const closeLoginPopup = () => ({
+    type: actionTypes.CLOSE_LOGIN_POPUP,
 });

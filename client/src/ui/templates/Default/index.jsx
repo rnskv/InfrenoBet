@@ -9,6 +9,8 @@ import Header from 'ui/organisms/Header';
 
 import SidebarNotifications from 'ui/molecules/SidebarNotifications';
 import SidebarProfile from 'ui/molecules/SidebarProfile';
+import LoginPopup from 'ui/organisms/LoginPopup';
+import Popup from 'ui/molecules/Popup';
 
 const Content = styled.div`
     margin: 75px auto;
@@ -27,25 +29,11 @@ const Page = styled.div`
     display: flex;
 `;
 
-
-const { VK_CLIENT_ID, VK_REDIRECT_URL } = process.env;
-
-function openAuthWindow() {
-    const authWindow = window.open(
-        `https://oauth.vk.com/authorize?client_id=${VK_CLIENT_ID}&display=page&redirect_uri=${VK_REDIRECT_URL}&scope=friends&response_type=code&v=5.103`,
-        '_blank',
-        'width=250',
-        'height=250',
-    );
-
-    authWindow.onunload = () => window.location.replace('/');
-}
-
 function Default({ children, ...props }) {
     return (
         <div {...props}>
-            <button onClick={openAuthWindow}>Через вк</button>
             <Header />
+            <LoginPopup />
             <Page>
                 <Sidebar
                     params={{

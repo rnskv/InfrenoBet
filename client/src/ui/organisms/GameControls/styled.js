@@ -10,13 +10,12 @@ import AuthenticationForm from 'ui/molecules/AuthenticationForm';
 export const StyledButton = styled(Button)`
   align-self: center;
   float: right;
-  //margin-left: 150px;
   font-size: 16px;
   padding: 15px 20px;
 `;
 
 export const Container = styled.div`
-    animation: .6s ${keyframes`${slideInUp}`};
+    animation: .3s ${keyframes`${slideInUp}`};
     background: var(--color-white);
     border-bottom: 1px solid var(--color-grey);
     padding: 25px;
