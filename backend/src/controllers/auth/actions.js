@@ -1,11 +1,18 @@
 import Action from 'src/core/Action';
 import bcrypt from 'bcryptjs';
+import passport from 'koa-passport';
 import jwt from 'jsonwebtoken';
 import User from '../../models/User';
 import config from '../../config';
+const request = require('request-promise');
 
 import { USER_ALREAY_EXIST, USER_NOT_FOUND, USER_WRONG_PASSWORD } from 'shared/configs/notificationsTypes';
 
+function createToken({ payload, expiresIn = 1000 * 60 * 60 * 24 }) {
+    const token = jwt.sign(payload, config.jwtSecret, { expiresIn });
+    return `Bearer ${token}`;
+
+}
 const registerHandler = async (ctx) => {
     const { name, email, password } = ctx.request.body;
     const user = await User.findOne({ email });
@@ -35,20 +42,80 @@ const loginHandler = async (ctx) => {
     const isEqualPasswords = await bcrypt.compare(password, user.password);
 
     if (isEqualPasswords) {
-        const payload = {
-            id: user.id,
-            name: user.name,
-            email: user.email,
-        };
+        const token = createToken({
+            payload: {
+                id: user.id,
+                name: user.name,
+                email: user.email,
+            }
+        });
 
-        const token = jwt.sign(payload, config.jwtSecret, { expiresIn: 1000 * 60 * 60 * 24 });
-
-        ctx.body = { token: `Bearer ${token}` };
+        ctx.body = { token };
     } else {
         ctx.throw({ type: USER_WRONG_PASSWORD });
     }
 };
 
+const CLIENT_ID = '7163980';
+const CLIENT_SECRET = 'bjGIRHQtGTOyoSA349VX';
+const REDIRECT_URL = 'http://127.0.0.1:6001/api/auth/vk/code';
+
+const SUCCESS_REDIRECT_URL = '';
+
+const loginVkHandler = (ctx) => {
+    //Будет что
+    console.log('Ooooh myy', ctx.state.user);
+    const { user } = ctx.state;
+
+    const token = createToken({
+        payload: {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+        }
+    });
+
+    ctx.cookies.set('token', token, { httpOnly: false });
+
+    ctx.redirect('http://127.0.0.1:6003/close');
+};
+
+const loginVkGetCodeHandler = async (ctx) => {
+    if (ctx.query.code) {
+        const res = await request(`
+            https://oauth.vk.com/access_token?client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&redirect_uri=${REDIRECT_URL}&code=${ctx.query.code}
+        `).catch((err) => {
+            console.log('error from vk', err.response.body)
+        });
+
+        ctx.redirect('/api/auth/vk?access_token='+JSON.parse(res)["access_token"])
+    }
+};
+
+const loginVkSuccessHandler = (ctx) => {
+    console.log('loginVkSuccessHandler');
+    ctx.body = { status: 'SUCCESS' }
+};
+
+export const loginVkSuccess = new Action({
+    method: 'get',
+    url: '/vk/callback',
+    handler: loginVkSuccessHandler
+});
+
+
+export const loginVk = new Action({
+    method: 'get',
+    url: '/vk',
+    handler: loginVkHandler,
+    middleware: passport.authenticate('vkontakte-token'),
+});
+
+export const loginVkGetCode = new Action({
+    method: 'get',
+    url: '/vk/code',
+    handler: loginVkGetCodeHandler,
+});
 
 export const login = new Action({
     method: 'post',
@@ -56,7 +123,7 @@ export const login = new Action({
     handler: loginHandler,
 });
 
-export const post = new Action({
+export const register = new Action({
     method: 'post',
     url: '/register',
     handler: registerHandler,

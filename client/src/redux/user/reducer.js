@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie';
 import * as actionTypes from './actionsTypes';
 
 const getClearState = () => ({
@@ -8,8 +9,14 @@ const getClearState = () => ({
     notifications: [],
 });
 
+console.log(Cookies.get('test'));
+
+setTimeout(() => {
+    console.log(Cookies.get('token'))
+}, 1000);
+
 const initialState = {
-    token: typeof globalThis !== 'undefined' && globalThis.localStorage.getItem('token') || '',
+    token: Cookies.get('token') || '',
     profile: {
         isLoading: true,
         balance: 0,

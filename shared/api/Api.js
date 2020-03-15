@@ -1,3 +1,7 @@
+import Cookies from 'js-cookie';
+
+Cookies.set('Author', 'rnskv');
+
 export default class Api {
     constructor({
         url = '/',
@@ -17,11 +21,11 @@ export default class Api {
     }
 
     setBearer(token) {
-        this.setHeader('Authorization', globalThis.localStorage.getItem('token'));
+        this.setHeader('Authorization', Cookies.get('token'));
     }
 
-    setBearerFromLocalStorage() {
-        this.setHeader('Authorization', globalThis.localStorage.getItem('token'));
+    setBearerFromCookies() {
+        this.setHeader('Authorization', Cookies.get('token'));
     }
 
     addRequests(requests) {

@@ -1,8 +1,8 @@
 import passport from 'koa-passport';
-import { useAuthentificator } from 'src/modules/authentificator';
+import { usePassportStrategies } from 'src/modules/passportStrategies';
 import User from 'src/models/User';
 
-useAuthentificator(passport);
+usePassportStrategies(passport);
 
 passport.serializeUser((user, done) => {
     done(null, user.id);

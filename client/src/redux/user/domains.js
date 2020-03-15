@@ -1,8 +1,10 @@
+import Cookies from 'js-cookie';
+
 export default ({ app }) => {
     const { api, store, realtime } = app.modules;
     const { actions, domains } = store;
 
-    api.services.user.setBearerFromLocalStorage();
+    api.services.user.setBearerFromCookies();
 
     if (store.getState().user.token) {
         realtime.io.emit('project.logIn', store.getState().user.token);
@@ -49,7 +51,7 @@ export default ({ app }) => {
         });
 
         if (response.token) {
-            globalThis.localStorage.setItem('token', response.token);
+            Cookies.set('token', response.token);
             dispatch(actions.user.logIn({ token: response.token }));
             realtime.io.emit('project.logIn', response.token);
             api.services.user.setHeader('Authorization', response.token);
@@ -60,7 +62,7 @@ export default ({ app }) => {
     };
 
     const logOut = () => (dispatch) => {
-        globalThis.localStorage.removeItem('token');
+        Cookies.remove('token');
         api.services.user.setHeader('Authorization', null);
         dispatch(actions.user.logOut());
         realtime.io.emit('project.logOut');

@@ -6,6 +6,10 @@ const { Schema } = mongoose;
 import { USER_NOT_ENOUGH_MONEY, USER_NOT_FOUND } from 'src/types/errors';
 
 const userSchema = new Schema({
+    vkId: {
+      type: Number,
+      default: null,
+    },
     login: {
         type: String,
         default: 'Player Unknown',

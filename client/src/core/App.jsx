@@ -42,7 +42,11 @@ function App({ store }) {
                 <Route path="/game/lottery">
                     <Lottery />
                 </Route>
-
+                <Route path="/close">
+                    {
+                        window.close()
+                    }
+                </Route>
                 <Route>
                     <div>404</div>
                 </Route>
