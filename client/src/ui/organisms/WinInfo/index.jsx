@@ -2,11 +2,7 @@ import PropTypes from 'prop-types';
 
 import React, { useRef } from 'react';
 import { getFormattedTime } from 'src/helpers/system';
-
-import Button from 'ui/atoms/Button';
-import Input from 'ui/atoms/Input';
-
-import UserBank from 'ui/molecules/UserBank';
+import NotAuthPlaceHolder from 'ui/organisms/NotAuthPlaceholder';
 
 import {
     Container,
@@ -22,10 +18,11 @@ import {
     DepositButton,
 } from './styled';
 
-function WinInfo({ isShowWinner, winner, totalBank, isVisible, time, openBetMaker }) {
+function WinInfo({ isShowWinner, winner, totalBank, isVisible, time, openBetMaker, isAuth }) {
     if (!isVisible) return null;
     return (
         <Container>
+            <NotAuthPlaceHolder isVisible={!isAuth}/>
             <Winner>
                 <WinnerTicket>
                     Победный билет:

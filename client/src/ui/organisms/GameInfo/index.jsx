@@ -19,7 +19,7 @@ import {
 } from './styled';
 
 function GameInfo({
-    id, time, transactions, bank, users, roulette, isShowWinner, isVisible, openBetMaker,
+    id, time, transactions, bank, users, roulette, isShowWinner, isVisible, openBetMaker, isAuth,
 }) {
     return (
         <Container>
@@ -67,6 +67,7 @@ function GameInfo({
                 totalBank={bank.total}
                 time={time}
                 openBetMaker={openBetMaker}
+                isAuth={isAuth}
             />
         </Container>
     );

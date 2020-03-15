@@ -1,7 +1,9 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 
+import { useActions } from 'src/helpers/hooks';
+import { openLoginPopup } from 'src/redux/user/actions';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 
 import {
@@ -9,6 +11,7 @@ import {
     StyledButton as Button,
     StyledBalance as Balance,
     ExitButton,
+    LoginButton,
     Logo,
     Group,
 } from './styled';
@@ -19,6 +22,9 @@ function BetMaker({
     profile,
     logOut,
 }) {
+    const actions = useActions({ openLoginPopup });
+    const isAuth = useSelector((state) => Boolean(state.user.token));
+
     return (
         <Container>
             <Group>
@@ -30,11 +36,15 @@ function BetMaker({
             </Group>
             <Group>
                 <Balance value={profile.balance} />
-                <Link to={'/deposit'}><Button type="transparent">Пополнить</Button></Link>
-                <Link to={'/withdraw'}><Button type="transparent">Вывести</Button></Link>
+                <Link to="/deposit"><Button type="transparent">Пополнить</Button></Link>
+                <Link to="/withdraw"><Button type="transparent">Вывести</Button></Link>
             </Group>
             <Group>
-                <ExitButton type="black" onClick={logOut}>Выйти</ExitButton>
+                {
+                    isAuth
+                        ? <ExitButton type="black" onClick={logOut}>Выйти</ExitButton>
+                        : <LoginButton onClick={actions.openLoginPopup}>Войти</LoginButton>
+                }
             </Group>
         </Container>
     );

@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 
 import React from 'react';
+import NotAuthPlaceHolder from 'ui/organisms/NotAuthPlaceholder';
+
 import { useSelector } from 'react-redux';
 
 import {
@@ -14,7 +16,6 @@ import {
     StyledButton as Button,
 } from './styled';
 
-import NotAuthPlaceHolder from 'ui/organisms/NotAuthPlaceholder';
 
 function GameControls({
     percent, itemsCount, openBetMaker, isVisible, isAuth

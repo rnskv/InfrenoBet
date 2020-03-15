@@ -12,6 +12,11 @@ export const ExitButton = styled(Button)`
   justify-self: end;
 `;
 
+export const LoginButton = styled(Button)`
+  padding: 8px 15px;
+  justify-self: end;
+`;
+
 export const Group = styled.div`
   display: flex;
 `;
