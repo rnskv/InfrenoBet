@@ -6,7 +6,7 @@ import User from '../../models/User';
 import config from '../../config';
 const request = require('request-promise');
 
-import { USER_ALREAY_EXIST, USER_NOT_FOUND, USER_WRONG_PASSWORD } from 'shared/configs/notificationsTypes';
+import { USER_ALREAY_EXIST, USER_NOT_FOUND, USER_WRONG_PASSWORD, USER_WRONG_REGISTER_DATA } from 'shared/configs/notificationsTypes';
 const { VK_CLIENT_ID, VK_CLIENT_SECRET, VK_REDIRECT_URL, VK_CLOSE_PAGE_URL } = process.env;
 
 function createToken({ payload, expiresIn = 1000 * 60 * 60 * 24 }) {
@@ -17,6 +17,10 @@ function createToken({ payload, expiresIn = 1000 * 60 * 60 * 24 }) {
 const registerHandler = async (ctx) => {
     const { name, email, password } = ctx.request.body;
     const user = await User.findOne({ email });
+
+    if (!password || !email) {
+        ctx.throw({ type: USER_WRONG_REGISTER_DATA });
+    }
 
     if (user) {
         ctx.throw({ type: USER_ALREAY_EXIST });
@@ -87,18 +91,6 @@ const loginVkGetCodeHandler = async (ctx) => {
         ctx.redirect('/api/auth/vk?access_token='+JSON.parse(res)["access_token"])
     }
 };
-
-const loginVkSuccessHandler = (ctx) => {
-    console.log('loginVkSuccessHandler');
-    ctx.body = { status: 'SUCCESS' }
-};
-
-export const loginVkSuccess = new Action({
-    method: 'get',
-    url: '/vk/callback',
-    handler: loginVkSuccessHandler
-});
-
 
 export const loginVk = new Action({
     method: 'get',

@@ -3,6 +3,7 @@ import {
     USER_WRONG_PASSWORD,
     USER_NOT_FOUND,
     USER_NOT_ENOUGH_MONEY,
+    USER_WRONG_REGISTER_DATA,
     INTERNAL_SERVER_ERROR,
     TRANSACTION_SENDING,
     USER_NOT_AUTH,
@@ -27,6 +28,11 @@ export default {
         type: 'ERROR',
         title: 'Система',
         text: 'Пользователь с таким именем не найден.',
+    },
+    [USER_WRONG_REGISTER_DATA]: {
+        type: 'ERROR',
+        title: 'Система',
+        text: 'Вы ввели некорретные данные при регистрации.',
     },
     [USER_NOT_AUTH]: {
         type: 'ERROR',

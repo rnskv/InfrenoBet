@@ -27,10 +27,19 @@ export const usePassportStrategies = (passport) => {
             clientSecret: VK_CLIENT_SECRET,
             callbackURL:  VK_REDIRECT_URL
         },
-        function(accessToken, refreshToken, profile, next) {
-            User.findOne({ vkId: profile.id }, (error, user) => {
-                return next(error, user);
-            });
+        async function(accessToken, refreshToken, profile, next) {
+            const user = await User.findOne({ vkId: profile.id });
+            if (!user) {
+                const user = await new User({
+                    vkId: profile.id,
+                    name: profile.displayName,
+                    login: profile.username,
+                    avatar: profile._json.photo
+                }).save();
+                return next(null, user);
+            } else {
+                return next(null, user);
+            }
         }
     );
 
