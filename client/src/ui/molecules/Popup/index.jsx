@@ -69,4 +69,4 @@ Popup.defaultProps = {
     children: 'Please forward content.',
 };
 
-export default React.memo(Popup, (prevProps, nextProps) => prevProps.isVisible === nextProps.isVisible);
+export default Popup;

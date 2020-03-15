@@ -7,6 +7,7 @@ export const Container = styled.div`
   border-radius: 4px;
   position: relative;
   top: 6rem;
+  border: 1px solid rgba(0, 0, 0, 0.2);
 `;
 
 export const Background = styled.div`
@@ -18,6 +19,6 @@ export const Background = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.7);
   z-index: 10;
 `;
