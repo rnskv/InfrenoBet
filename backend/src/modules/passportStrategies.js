@@ -4,6 +4,8 @@ import VkTokenStrategy from 'passport-vkontakte-token';
 import config from 'src/config';
 import User from 'src/models/User';
 
+const { VK_CLIENT_ID, VK_CLIENT_SECRET, VK_REDIRECT_URL } = process.env;
+
 const options = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey: config.jwtSecret,
@@ -21,9 +23,9 @@ export const usePassportStrategies = (passport) => {
     });
 
     const vkStrategy = new VkTokenStrategy({
-            clientID:     '7163980', // VK.com docs call it 'API ID', 'app_id', 'api_id', 'client_id' or 'apiId'
-            clientSecret: 'bjGIRHQtGTOyoSA349VX',
-            callbackURL:  "http://127.0.0.1:6001/api/auth/vk/callback"
+            clientID: VK_CLIENT_ID,
+            clientSecret: VK_CLIENT_SECRET,
+            callbackURL:  VK_REDIRECT_URL
         },
         function(accessToken, refreshToken, profile, next) {
             User.findOne({ vkId: profile.id }, (error, user) => {

@@ -7,6 +7,7 @@ import config from '../../config';
 const request = require('request-promise');
 
 import { USER_ALREAY_EXIST, USER_NOT_FOUND, USER_WRONG_PASSWORD } from 'shared/configs/notificationsTypes';
+const { VK_CLIENT_ID, VK_CLIENT_SECRET, VK_REDIRECT_URL, VK_CLOSE_PAGE_URL } = process.env;
 
 function createToken({ payload, expiresIn = 1000 * 60 * 60 * 24 }) {
     const token = jwt.sign(payload, config.jwtSecret, { expiresIn });
@@ -56,11 +57,6 @@ const loginHandler = async (ctx) => {
     }
 };
 
-const CLIENT_ID = '7163980';
-const CLIENT_SECRET = 'bjGIRHQtGTOyoSA349VX';
-const REDIRECT_URL = 'http://127.0.0.1:6001/api/auth/vk/code';
-
-const SUCCESS_REDIRECT_URL = '';
 
 const loginVkHandler = (ctx) => {
     //Будет что
@@ -77,13 +73,13 @@ const loginVkHandler = (ctx) => {
 
     ctx.cookies.set('token', token, { httpOnly: false });
 
-    ctx.redirect('http://127.0.0.1:6003/close');
+    ctx.redirect(VK_CLOSE_PAGE_URL);
 };
 
 const loginVkGetCodeHandler = async (ctx) => {
     if (ctx.query.code) {
         const res = await request(`
-            https://oauth.vk.com/access_token?client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&redirect_uri=${REDIRECT_URL}&code=${ctx.query.code}
+            https://oauth.vk.com/access_token?client_id=${VK_CLIENT_ID}&client_secret=${VK_CLIENT_SECRET}&redirect_uri=${VK_REDIRECT_URL}&code=${ctx.query.code}
         `).catch((err) => {
             console.log('error from vk', err.response.body)
         });

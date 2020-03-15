@@ -27,15 +27,12 @@ const Page = styled.div`
     display: flex;
 `;
 
-const CLIENT_ID = '7163980';
-const CLIENT_SECRET = 'bjGIRHQtGTOyoSA349VX';
-const REDIRECT_URL = 'http://127.0.0.1:6001/api/auth/vk/code';
+
+const { VK_CLIENT_ID, VK_REDIRECT_URL } = process.env;
 
 function openAuthWindow() {
     const authWindow = window.open(
-        `
-                    https://oauth.vk.com/authorize?client_id=${CLIENT_ID}&display=page&redirect_uri=${REDIRECT_URL}&scope=friends&response_type=code&v=5.103
-            `,
+        `https://oauth.vk.com/authorize?client_id=${VK_CLIENT_ID}&display=page&redirect_uri=${VK_REDIRECT_URL}&scope=friends&response_type=code&v=5.103`,
         '_blank',
         'width=250',
         'height=250',
