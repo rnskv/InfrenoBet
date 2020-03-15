@@ -22,7 +22,7 @@ const { VK_CLIENT_ID, VK_REDIRECT_URL } = process.env;
 
 function openAuthWindow() {
     const authWindow = window.open(
-        `https://oauth.vk.com/authorize?client_id=${VK_CLIENT_ID}&display=page&redirect_uri=${VK_REDIRECT_URL}&scope=friends&response_type=code&v=5.103`,
+        `https://oauth.vk.com/authorize?client_id=${VK_CLIENT_ID}&display=page&redirect_uri=${VK_REDIRECT_URL}&scope=6&response_type=code&v=5.103`,
         '_blank',
         ['width=500', 'height=250'],
     );
