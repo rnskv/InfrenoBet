@@ -43,8 +43,12 @@ function App({ store }) {
                     <Lottery />
                 </Route>
                 <Route path="/close">
+                    Промежуточное окно
                     {
-                        window.close()
+                        (() => {
+                            window.opener && window.opener.location.reload();
+                            window.close();
+                        })()
                     }
                 </Route>
                 <Route>

@@ -26,7 +26,7 @@ export const usePassportStrategies = (passport) => {
             clientID: VK_CLIENT_ID,
             clientSecret: VK_CLIENT_SECRET,
             callbackURL:  VK_REDIRECT_URL,
-            profileFields: ['uid', 'first_name', 'last_name', 'screen_name', 'sex', 'photo', 'photo_200']
+            profileFields: ['uid', 'first_name', 'last_name', 'screen_name', 'sex', 'photo', 'photo_200', 'bdate']
         },
         async function(accessToken, refreshToken, profile, next) {
             const user = await User.findOne({ vkId: profile.id });

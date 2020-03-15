@@ -3,9 +3,11 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useActions } from 'src/helpers/hooks';
 import { useHistory } from 'react-router-dom';
-
 import Popup from 'ui/molecules/Popup';
-import { openLoginPopup, closeLoginPopup } from 'src/redux/user/actions';
+
+import { infernoClient } from 'src/index.jsx';
+
+import { openLoginPopup, closeLoginPopup, getProfile } from 'src/redux/user/actions';
 
 import Link from 'ui/atoms/Link';
 
@@ -24,10 +26,8 @@ function openAuthWindow() {
     const authWindow = window.open(
         `https://oauth.vk.com/authorize?client_id=${VK_CLIENT_ID}&display=page&redirect_uri=${VK_REDIRECT_URL}&scope=6&response_type=code&v=5.103`,
         '_blank',
-        ['width=500', 'height=250'],
+        ['resizable=yes, scrollbars=no, status=yes'],
     );
-
-    authWindow.onunload = () => window.location.replace('/game/lottery');
 }
 
 const action = ({ type, history, callback }) => () => {
@@ -62,7 +62,11 @@ function LoginPopup({ className, style, children }) {
                     <Method
                         type="vk"
                         onClick={
-                            action({ type: 'vk', history, callback: actions.closeLoginPopup })
+                            action({
+                                type: 'vk',
+                                history,
+                                callback: actions.closeLoginPopup,
+                            })
                         }
                     >
                         <MethodIcon>
