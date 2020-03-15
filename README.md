@@ -1,5 +1,9 @@
 [![Build Status](https://travis-ci.com/rnskv/InfrenoBet.svg?branch=master)](https://travis-ci.com/rnskv/InfrenoBet)
 
+* [Pipelines](https://travis-ci.org/github/rnskv/InfrenoBet/builds)
+
+* [Trello deck](https://trello.com/b/hyBSf4AA/infernobet)
+
 # InfrenoBet
 Игровая платформа для проведения мгновенных лотерей.
 ### Докер
