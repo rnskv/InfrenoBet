@@ -1,4 +1,5 @@
 import { BET_SENDING } from 'shared/configs/notificationsTypes';
+import { getExchangedSum } from 'src/helpers/system';
 
 export default ({ app }) => {
     const { realtime, store } = app.modules;
@@ -22,7 +23,7 @@ export default ({ app }) => {
         dispatch(actions.user.addNotification({
             type: BET_SENDING,
             params: {
-                text: `Ваша ставка на сумму ${totalBet}₽ находится в очереди.
+                text: `Ваша ставка на сумму ${getExchangedSum(totalBet)} находится в очереди.
                    Она будет добавлена в игру через ~${items.length * 1} сек.`,
             },
         }));

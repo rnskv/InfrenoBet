@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 import React, { useRef } from 'react';
-import { getFormattedTime } from 'src/helpers/system';
+import { getFormattedTime, getExchangedSum } from 'src/helpers/system';
 import NotAuthPlaceHolder from 'ui/organisms/NotAuthPlaceholder';
 
 import {
@@ -33,7 +33,7 @@ function WinInfo({ isShowWinner, winner, totalBank, isVisible, time, openBetMake
                     <span>{ isShowWinner ? winner.bet.user.name : '???'}</span>
                 </WinnerName>
 
-                <BankNumbers>{`${totalBank.toFixed(2)}₽`}</BankNumbers>
+                <BankNumbers>{getExchangedSum(totalBank)}</BankNumbers>
             </Winner>
             <Arrow />
 

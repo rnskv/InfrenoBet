@@ -2,6 +2,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Button from 'ui/atoms/Button';
 
+import { getExchangedSum } from 'src/helpers/system';
+
 import {
     Container,
     BetSum,
@@ -18,9 +20,8 @@ function BetInfo({
         <Container className={className} style={style}>
             <BetSum>
                 Сумма:
-                {' '}
                 <span>
-                    { _getBetSum(userItems) }
+                    { getExchangedSum(_getBetSum(userItems)) }
                 </span>
             </BetSum>
             <Button onClick={() => sendBet({ items: userItems })}>Сделать ставку</Button>

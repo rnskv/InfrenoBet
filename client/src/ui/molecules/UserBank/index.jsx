@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 
 import React from 'react';
 import Avatar from 'ui/atoms/Avatar';
+import { getExchangedSum } from 'src/helpers/system';
 
 import {
     Container,
@@ -19,7 +20,7 @@ function UserBank({
                 { `${percent}%` }
             </Chance>
             <Bet>
-                { `${value}₽` }
+                { getExchangedSum(value) }
             </Bet>
         </Container>
     );

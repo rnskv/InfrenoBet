@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import Button from 'ui/atoms/Button';
+import { getExchangedSum } from 'src/helpers/system';
 
 import {
     Container,
@@ -19,7 +20,7 @@ function Balance({
         <Container className={className} style={style}>
             <Text>Ваш баланс:</Text>
             <Value>
-                <span>{ `${value.toFixed(1)}₽` }</span>
+                <span>{ getExchangedSum(value) }</span>
                 <Currency>{ currency }</Currency>
             </Value>
         </Container>

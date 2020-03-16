@@ -39,7 +39,7 @@ const createHandler = async (ctx) => {
     console.log('Find in bet item with cost:', itemData.cost);
 
     let ticketFrom = 1;
-    let ticketTo = itemData.cost;
+    let ticketTo = itemData.cost * 100;
 
     if (lastBet) {
         const lastGameTicket = lastBet.ticketTo;

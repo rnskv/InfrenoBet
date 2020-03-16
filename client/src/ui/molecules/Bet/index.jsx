@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import Avatar from 'ui/atoms/Avatar';
+import { getExchangedSum } from 'src/helpers/system';
 
 import {
     Container,
@@ -19,7 +20,7 @@ function Bet({
             <Avatar src={user.avatar} />
             <Description>
                 <div>
-                    {`Игрок ${user.name} сделал ставку на сумму ${item.cost}₽` }
+                    {`Игрок ${user.name} сделал ставку на сумму ${getExchangedSum(item.cost)}` }
                 </div>
                 <div>
                     <b>

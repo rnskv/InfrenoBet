@@ -1,10 +1,12 @@
 import PropTypes from 'prop-types';
 
 import React, { useRef } from 'react';
+import { useSelector } from 'react-redux';
+
 import WinInfo from 'ui/organisms/WinInfo';
 import Roulette from 'ui/organisms/Roulette';
 
-import { getFormattedTime } from 'src/helpers/system';
+import { getFormattedTime, getExchangedSum } from 'src/helpers/system';
 
 import {
     Container,
@@ -56,7 +58,7 @@ function GameInfo({
             <Bank hidden={roulette.isVisible}>
                 {'На кону: '}
                 <span>
-                    {`${bank.total}₽`}
+                    { getExchangedSum(bank.total) }
                 </span>
             </Bank>
 
