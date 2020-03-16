@@ -24,16 +24,16 @@ function GameInfo({
     return (
         <Container>
             <Title>{`Игра #${id}`}</Title>
+            <Roulette
+                transactions={transactions}
+                bank={bank}
+                users={users}
+                state={roulette}
+            />
             {
+
                 roulette.isVisible
-                    ? (
-                        <Roulette
-                            transactions={transactions}
-                            bank={bank}
-                            users={users}
-                            state={roulette}
-                        />
-                    )
+                    ? null
                     : (
                         <StartGame>
                             <ItemsCount>
@@ -80,7 +80,7 @@ GameInfo.propTypes = {
 
 
 GameInfo.defaultProps = {
-  id: 100500,
+    id: 100500,
 };
 
 export default GameInfo;

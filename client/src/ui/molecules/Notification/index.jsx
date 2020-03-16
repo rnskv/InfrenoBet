@@ -21,6 +21,7 @@ function Notification({
     type, title, text, date, className, style,
 }) {
     const svgId = type === 'ERROR' ? 'notification-error' : 'notification-success';
+    console.log('why render??')
     return (
         <Container className={className} style={style} type={type}>
             <Icon src={MOCK_ICONS[type]}>
@@ -54,4 +55,4 @@ Notification.defaultProps = {
     style: {},
 };
 
-export default Notification;
+export default React.memo(Notification, (prevProps, nextProps) => prevProps.text === nextProps.text);

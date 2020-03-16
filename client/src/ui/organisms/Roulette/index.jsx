@@ -30,7 +30,7 @@ const Roulette = React.memo(({
     }, [state.offset]);
 
     return (
-        <Container ref={containerRef}>
+        <Container ref={containerRef} hidden={!state.isVisible}>
             <Avatars ref={avatarsRef}>
                 {
                     state.avatars.map((avatar, index) => (<Avatar key={index}><img src={avatar} /></Avatar>))

@@ -46,4 +46,4 @@ function SidebarNotifications({
 SidebarNotifications.propTypes = {
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SidebarNotifications);
+export default connect(mapStateToProps, mapDispatchToProps)(React.memo(SidebarNotifications, (prevProps, nextProps) => prevProps.notifications.length === nextProps.notifications.length));

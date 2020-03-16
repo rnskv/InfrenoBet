@@ -61,4 +61,4 @@ Default.propTypes = {
     children: PropTypes.node.isRequired,
 };
 
-export default Default;
+export default React.memo(Default, () => false);

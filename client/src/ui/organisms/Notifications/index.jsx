@@ -30,4 +30,4 @@ Notifications.propTypes = {
     error: PropTypes.string.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Notifications);
+export default connect(mapStateToProps, mapDispatchToProps)(React.memo(Notifications, (prevProps, nextProps) => prevProps.notifications.length !== nextProps.notifications.length));
