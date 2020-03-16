@@ -1,14 +1,14 @@
 import mongoose from 'mongoose';
 import privatePaths from 'mongoose-private-paths';
-import Transaction from 'src/models/Transaction';
+import Bet from 'src/models/Bet';
 
 const { Schema } = mongoose;
 
 const gameSchema = new Schema({
-    transactions: {
+    bets: {
         type: [mongoose.Types.ObjectId],
         default: [],
-        ref: 'transaction'
+        ref: 'bet'
     },
     secret: {
         type: Number,
@@ -39,23 +39,44 @@ Game.getLastCreated = async () => {
         },
         { $limit: 1 },
         { $lookup: {
-                from: "transactions",
-                let: { "transactions": "$transactions" },
+                from: "bets",
+                let: { "bets": "$bets" },
                 pipeline: [
-                    { $match: { "$expr": { "$in": [ "$_id", "$$transactions" ] } } },
-                    { $lookup: {
+                    {
+                        $match: {
+                            "$expr": {
+                                "$in": [ "$_id", "$$bets" ]
+                            }
+                        }
+                    },
+                    {
+                        $lookup: {
+                            from: "items",
+                            let: { "item": "$item" },
+                            pipeline: [
+                                { "$match": { "$expr": { "$eq": [ "$_id", "$$item" ] } } }
+                            ],
+                            as: "item"
+                        }
+                    },
+                    {
+                        $lookup: {
                             from: "users",
                             let: { "user": "$user" },
                             pipeline: [
                                 { "$match": { "$expr": { "$eq": [ "$_id", "$$user" ] } } }
                             ],
                             as: "user"
-                        }},
-                    { $addFields: {
-                            "user": { "$arrayElemAt": [ "$user", 0 ] }
-                        }}
+                        }
+                    },
+                    {
+                        $addFields: {
+                            "user": { "$arrayElemAt": [ "$user", 0 ] },
+                            "item": { "$arrayElemAt": [ "$item", 0 ] },
+                        }
+                    }
                 ],
-                as: "transactions"
+                as: "bets"
             }}
     ]);
 
@@ -78,22 +99,22 @@ Game.update = async (data) => {
 
 Game.getWinnerById = async (id) => {
     const game = await Game.findById(id);
-    const lastGameTransaction = await Transaction.getLastInGameByGameId(id);
+    const lastGameBet = await Bet.getLastInGameByGameId(id);
 
-    const ticketsCount = lastGameTransaction.ticketTo;
+    const ticketsCount = lastGameBet.ticketTo;
 
     const secret = game.secret;
     const winnerTicket = Math.floor(secret * ticketsCount) + 1;
 
-    const winnerTransaction = await Transaction.findOne({
+    const winnerBet = await Bet.findOne({
         game: mongoose.Types.ObjectId(id),
         ticketFrom: { $lte: winnerTicket },
         ticketTo: { $gte: winnerTicket }
     }).populate('user');
 
-    winnerTransaction.winnerTicket = winnerTicket;
+    winnerBet.winnerTicket = winnerTicket;
     return {
-        transaction: winnerTransaction,
+        bet: winnerBet,
         ticket: winnerTicket
     };
     //Получаем игру

@@ -4,7 +4,7 @@ import Game from './Game';
 
 const { Schema } = mongoose;
 
-const transactionSchema = new Schema({
+const betSchema = new Schema({
     user: {
         type: mongoose.Types.ObjectId,
         isRequired: true,
@@ -19,9 +19,10 @@ const transactionSchema = new Schema({
         type: String,
         isRequired: true
     },
-    value: {
-        type: Number,
-        isRequired: true
+    item: {
+        type: mongoose.Types.ObjectId,
+        isRequired: true,
+        ref: 'item'
     },
     ticketFrom: {
         type: Number,
@@ -36,27 +37,29 @@ const transactionSchema = new Schema({
         default: Date.now(),
     }
 });
-const Transaction = mongoose.model('transaction', transactionSchema);
+const Bet = mongoose.model('bet', betSchema);
 
-Transaction.create = async (data) => {
-    return new Transaction(data).save()
+Bet.create = async (data) => {
+    console.log('New bet creating...')
+    return new Bet(data).save()
 };
 
-Transaction.getById = async (id) => {
-    return await Transaction
+Bet.getById = async (id) => {
+    return await Bet
         .findOne({ _id: mongoose.Types.ObjectId(id)})
-        .populate('user');
+        .populate('user')
+        .populate('item')
 };
 
-Transaction.getLastInGameByGameId = async (gameId) => {
-    const lastTransaction = await Transaction
+Bet.getLastInGameByGameId = async (gameId) => {
+    const lastBet = await Bet
         .findOne({ game: mongoose.Types.ObjectId(gameId) }, {}, { sort: { _id: -1 }});
 
-    return lastTransaction
+    return lastBet
 };
 
-Transaction.getGameBankSumById = async (gameId) => {
-      return (await Transaction.aggregate([
+Bet.getGameBankSumById = async (gameId) => {
+      return (await Bet.aggregate([
         {
             $match: { game: mongoose.Types.ObjectId(gameId) }
         },
@@ -69,4 +72,4 @@ Transaction.getGameBankSumById = async (gameId) => {
     ]))[0]
 };
 
-export default Transaction
+export default Bet

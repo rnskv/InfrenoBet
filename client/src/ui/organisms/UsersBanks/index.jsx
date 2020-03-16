@@ -4,7 +4,7 @@ import React, { useRef } from 'react';
 
 import UserBank from 'ui/molecules/UserBank';
 
-import { getTransactionChances, getUserChances, getUserColorsByEmail } from 'src/helpers/system';
+import { getBetChances, getUserChances, getUserColorsByEmail } from 'src/helpers/system';
 
 import {
     Container,
@@ -13,20 +13,20 @@ import {
     Banks,
 } from './styled';
 
-function UsersBanks({ users, bank, transactions }) {
+function UsersBanks({ users, bank, bets }) {
     return (
         users.length ? (
             <Container>
                 <ChancesBar>
-                    {transactions.map((transaction, index) => {
-                        const { user } = transaction;
+                    {bets.map((bet, index) => {
+                        const { user } = bet;
                         const { defaultColor } = getUserColorsByEmail(user.email);
 
                         return (
                             <Chance
-                                key={`${defaultColor}${transaction._id}`}
+                                key={`${defaultColor}${bet._id}`}
                                 color={defaultColor}
-                                percent={getTransactionChances(transaction, bank)}
+                                percent={getBetChances(bet, bank) || 0}
                             />
                         );
                     })}
@@ -40,8 +40,8 @@ function UsersBanks({ users, bank, transactions }) {
                                 <UserBank
                                     key={user._id}
                                     avatar={user.avatar}
-                                    percent={getUserChances(user, bank)}
-                                    bet={bank.users[user._id]}
+                                    percent={getUserChances(user, bank) || 0}
+                                    value={bank.users[user._id] || 10}
                                     containerColor={lightColor}
                                     borderColor={darkColor}
                                 />
@@ -57,7 +57,7 @@ function UsersBanks({ users, bank, transactions }) {
 UsersBanks.propTypes = {
     users: PropTypes.array.isRequired,
     bank: PropTypes.object.isRequired,
-    transactions: PropTypes.array.isRequired,
+    bets: PropTypes.array.isRequired,
 };
 
 export default UsersBanks;

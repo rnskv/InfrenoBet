@@ -19,13 +19,13 @@ import {
 } from './styled';
 
 function GameInfo({
-    id, time, transactions, bank, users, roulette, isShowWinner, isVisible, openBetMaker, isAuth,
+    id, time, bets, bank, users, roulette, isShowWinner, isVisible, openBetMaker, isAuth,
 }) {
     return (
         <Container>
             <Title>{`Игра #${id}`}</Title>
             <Roulette
-                transactions={transactions}
+                bets={bets}
                 bank={bank}
                 users={users}
                 state={roulette}
@@ -38,10 +38,10 @@ function GameInfo({
                         <StartGame>
                             <ItemsCount>
                                 <ItemsCountValue
-                                    percent={Math.round(transactions.length / 50 * 100)}
+                                    percent={Math.round(bets.length / 50 * 100)}
                                 />
                                 <ItemsText>
-                                    { `${transactions.length} / 50` }
+                                    { `${bets.length} / 50` }
                                     <span>предметов</span>
                                 </ItemsText>
                             </ItemsCount>

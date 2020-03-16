@@ -3,9 +3,10 @@ import mongoose from 'mongoose';
 import Action from 'src/core/Action';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import Transaction from 'src/models/Transaction';
+import Bet from 'src/models/Bet';
 import Game from 'src/models/Game';
 import User from 'src/models/User';
+import Item from 'src/models/Item';
 
 import config from 'src/config';
 
@@ -20,37 +21,46 @@ const getAllHandler = async (ctx) => {
 };
 
 const createHandler = async (ctx) => {
+    console.log('______CREATE_NEW_BET______');
     const {
         user,
-        value,
+        item,
         game,
         type
     } = ctx.request.body;
 
-    const lastTransaction = await Transaction.getLastInGameByGameId(game);
+    const lastBet = await Bet.getLastInGameByGameId(game);
+    const itemData = await Item.getById(item);
+
+    if (!itemData) {
+        ctx.throw('Не верно передан предмет');
+    }
+
+    console.log('Find in bet item with cost:', itemData.cost);
 
     let ticketFrom = 1;
-    let ticketTo = value;
+    let ticketTo = itemData.cost;
 
-    if (lastTransaction) {
-        const lastGameTicket = lastTransaction.ticketTo;
+    if (lastBet) {
+        const lastGameTicket = lastBet.ticketTo;
+        console.log('Fine last game ticket:', lastGameTicket);
         ticketFrom += lastGameTicket;
         ticketTo += lastGameTicket;
     }
 
-    const transaction = await Transaction.create({
+    const bet = await Bet.create({
         user: mongoose.Types.ObjectId(user),
         game: mongoose.Types.ObjectId(game),
-        value,
+        item: mongoose.Types.ObjectId(item),
         type,
         ticketFrom,
         ticketTo
     });
 
-    switch (transaction.type) {
+    switch (bet.type) {
         case 'GAME_CLASSIC': {
-            const game = await Game.findById(transaction.game);
-            game.transactions.push(transaction._id);
+            const game = await Game.findById(bet.game);
+            game.bets.push(bet._id);
             await game.save();
 
             break;
@@ -60,8 +70,9 @@ const createHandler = async (ctx) => {
             break;
         }
     }
-
-    ctx.body = await Transaction.getById(transaction._id);
+    console.log('New bet created!');
+    console.log('__________________________');
+    ctx.body = await Bet.getById(bet._id);
 };
 
 const getGameBankSumById = async (ctx) => {
@@ -69,7 +80,7 @@ const getGameBankSumById = async (ctx) => {
         id
     } = ctx.request.body;
 
-    ctx.body = await Transaction.getGameBankSumById(id);
+    ctx.body = await Bet.getGameBankSumById(id);
 };
 
 export const getBankSunById = new Action({

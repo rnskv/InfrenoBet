@@ -10,15 +10,16 @@ import {
     Item,
 } from './styled';
 
-function Transaction({
-    user, value, ticketFrom, ticketTo,
+function Bet({
+    user, ticketFrom, ticketTo, item,
 }) {
+    console.log(item)
     return (
         <Container>
             <Avatar src={user.avatar} />
             <Description>
                 <div>
-                    {`Игрок ${user.name} сделал ставку на сумму ${value}₽` }
+                    {`Игрок ${user.name} сделал ставку на сумму ${item.cost}₽` }
                 </div>
                 <div>
                     <b>
@@ -27,13 +28,13 @@ function Transaction({
                 </div>
             </Description>
             <Item>
-                <img src={`https://d2lomvz2jrw9ac.cloudfront.net/common/currency/${value}.png`} />
+                <img src={item.image} />
             </Item>
         </Container>
     );
 }
 
-Transaction.propTypes = {
+Bet.propTypes = {
 };
 
-export default Transaction;
+export default Bet;

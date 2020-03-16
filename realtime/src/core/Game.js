@@ -1,8 +1,9 @@
 import Roulette from 'src/core/Roulette';
 
-import { gameApi, transactionsApi } from 'src/modules/api';
+import { gameApi, betsApi, itemsApi } from 'src/modules/api';
 import { getRandomInt } from 'src/helpers/math';
-import { getTransactionsValue } from  'src/helpers/game';
+import { getBetsTotalValue } from  'src/helpers/game';
+import * as notificationsTypes from '../../../shared/configs/notificationsTypes';
 
 class Game {
     constructor({ hash, secret, app, onFinish }) {
@@ -11,17 +12,18 @@ class Game {
             sockets: this.app.io.sockets,
             onEnd: this.onRouletteRotateEnd.bind(this)
         });
-        this.transactions = [];
+        this.bets = [];
         this.onFinish = onFinish;
         this.time = 15;
         this.endingTime = 7;
         this.isStarted = false;
         this.isFinished = false;
-        this.isClosedForTransactions = false;
+        this.isClosedForBets = false;
         this.isShowWinner = false;
-        this.transactionsBlocksPool = [];
-        this.isWaitingTransactions = false;
+        this.betsQueue = [];
+        this.isWaitingLastBets = false;
         this.publicSecret = 0;
+
         gameApi.execute('create', {
             body: {
                 hash,
@@ -37,8 +39,8 @@ class Game {
     get users() {
         const uniqueUsers = {};
 
-        this.transactions.map(transaction => {
-            uniqueUsers[transaction.user._id] = transaction.user;
+        this.bets.map(bet => {
+            uniqueUsers[bet.user._id] = bet.user;
         });
 
         return Object.values(uniqueUsers).sort((a, b) => {
@@ -53,18 +55,18 @@ class Game {
     }
 
     get bank() {
-        const total = getTransactionsValue(this.transactions);
+        const total = getBetsTotalValue(this.bets);
 
         const users = {};
 
-        this.transactions.forEach(transaction => {
+        this.bets.forEach(bet => {
             //@todo Опасный участок, если удалить пользователя а транзакцию оставить - все ебанется
-            const userId = transaction.user._id;
+            const userId = bet.user._id;
 
             if (!!users[userId]) {
-                users[userId] += transaction.value
+                users[userId] += bet.item.cost
             } else {
-                users[userId] = transaction.value;
+                users[userId] = bet.item.cost;
             }
         });
 
@@ -76,11 +78,11 @@ class Game {
 
     get state() {
         return {
-            transactions: [...this.transactions].reverse(),
+            bets: [...this.bets].reverse(),
             hash: this.hash,
             time: this.time,
-            isWaitingTransactions: this.isWaitingTransactions,
-            transactionsPoolLength: this.transactionsBlocksPool.length,
+            isWaitingLastBets: this.isWaitingLastBets,
+            betsQueueLength: this.betsQueue.length,
             bank: this.bank,
             users: this.users,
             isShowWinner: this.isShowWinner,
@@ -89,11 +91,12 @@ class Game {
         }
     }
 
-    init({ _id, hash, secret, transactions }) {
+    init({ _id, hash, secret, bets }) {
+        if (!_id) throw new Error('Ooops, something went wrong');
         this._id = _id;
         this.hash = hash;
         this.secret = secret;
-        this.transactions = transactions;
+        this.bets = bets;
 
         this.app.io.sockets.emit('game.reset', this.state);
     }
@@ -107,7 +110,7 @@ class Game {
             await this.tick();
         }
 
-        while (this.isWaitingTransactions) {
+        while (this.isWaitingLastBets) {
             await this.tick();
         }
 
@@ -119,13 +122,13 @@ class Game {
             if (this.time > 0) {
                 this.time -= 1;
             } else {
-                this.app.io.sockets.emit('game.waitingTransactions', {
-                    transactionsPoolLength: this.state.transactionsPoolLength
+                this.app.io.sockets.emit('game.waitingLastBets', {
+                    betsQueueLength: this.state.betsQueueLength
                 });
             }
 
             if (this.time < 5) {
-                this.isClosedForTransactions = true;
+                this.isClosedForBets = true;
             }
 
             this.app.io.sockets.emit('game.tick', this.time);
@@ -176,8 +179,8 @@ class Game {
         });
 
         //@todo отедльный метод
-        if (this.app.usersSockets[winner.transaction.user._id]) {
-            this.app.usersSockets[winner.transaction.user._id].forEach(socketId => {
+        if (this.app.usersSockets[winner.bet.user._id]) {
+            this.app.usersSockets[winner.bet.user._id].forEach(socketId => {
                 if (this.app.io.sockets.connected[socketId]) {
                     this.app.io.sockets.connected[socketId].emit('game.win');
                 }
@@ -191,33 +194,46 @@ class Game {
         this.app.io.sockets.emit('game.join', userData);
     }
 
-    isFirstUserTransaction(user) {
+    isFirstUserBet(user) {
         return !this.users.filter((_user) => _user._id === user.id).length;
     }
 
-    async transaction(transactionData) {
+    async addBet(betData) {
         return new Promise((async resolve => {
-            const acceptedTransactions = [];
+            const acceptedBets = [];
+            console.log('addBet' ,betData)
 
-            for (const value of transactionData.values) {
-                const transaction = await transactionsApi.execute('create', {
+            // const acceptedBet = await betsApi.execute('create', {
+            //     body: {
+            //         type: 'GAME_CLASSIC',
+            //         game: this._id,
+            //         user: betData.user.id,
+            //         item: '5e6fc4a5dff153ea60d7c85d',
+            //     }
+            // }).catch(err => console.log(err));
+            //
+            // console.log('acceptedBet');
+
+            for (const item of betData.items) {
+                const bet = await betsApi.execute('create', {
                     body: {
                         type: 'GAME_CLASSIC',
                         game: this._id,
-                        user: transactionData.user.id,
-                        value,
+                        user: betData.user.id,
+                        item: item._id
                     }
-                });
+                }).catch(err => console.log(err));
 
-                acceptedTransactions.unshift(transaction)
+
+                acceptedBets.unshift(bet)
             }
 
-            for (const acceptedTransaction of acceptedTransactions) {
-                this.transactions.push(acceptedTransaction);
+            for (const acceptedBet of acceptedBets) {
+                this.bets.push(acceptedBet);
             }
 
-            this.app.io.sockets.emit('game.transactions', {
-                transactions: acceptedTransactions,
+            this.app.io.sockets.emit('game.bets', {
+                bets: acceptedBets,
                 bank: this.bank,
                 users: this.users
             });
@@ -230,30 +246,30 @@ class Game {
         }))
     }
 
-    async registerTransactionsBlock(data) {
-        if (this.isClosedForTransactions) {
+    async registerUserBets(data) {
+        if (this.isClosedForBets) {
             return;
         }
 
-        this.isWaitingTransactions = true;
+        this.isWaitingLastBets = true;
 
-        this.transactionsBlocksPool.push(data);
+        this.betsQueue.push(data);
 
-        const isNeedToStartProcessing = this.transactionsBlocksPool.length === 1;
+        const isNeedToStartProcessing = this.betsQueue.length === 1;
 
         if (isNeedToStartProcessing) {
-            while (this.transactionsBlocksPool.length) {
-                await this.processFirstTransaction();
-                this.isWaitingTransactions = !!this.transactionsBlocksPool.length;
+            while (this.betsQueue.length) {
+                await this.processFirstBet();
+                this.isWaitingLastBets = !!this.betsQueue.length;
             }
         }
     }
 
-    async processFirstTransaction() {
-        const transactionData = this.transactionsBlocksPool[0];
-        await this.transaction(transactionData);
-        transactionData.onAccept();
-        this.transactionsBlocksPool.shift();
+    async processFirstBet() {
+        const betData = this.betsQueue[0];
+        await this.addBet(betData);
+        betData.onAccept();
+        this.betsQueue.shift();
     }
 
     sync(socket) {

@@ -10,7 +10,7 @@ import {
 } from './styled';
 
 function UserBank({
-    avatar, bet, percent, containerColor, borderColor,
+    avatar, value, percent, containerColor, borderColor,
 }) {
     return (
         <Container containerColor={containerColor} borderColor={borderColor}>
@@ -19,7 +19,7 @@ function UserBank({
                 { `${percent}%` }
             </Chance>
             <Bet>
-                { `${bet}₽` }
+                { `${value}₽` }
             </Bet>
         </Container>
     );
@@ -27,7 +27,7 @@ function UserBank({
 
 UserBank.propTypes = {
     avatar: PropTypes.string.isRequired,
-    bet: PropTypes.number.isRequired,
+    value: PropTypes.number.isRequired,
     percent: PropTypes.number.isRequired,
     containerColor: PropTypes.string.isRequired,
     borderColor: PropTypes.string.isRequired,

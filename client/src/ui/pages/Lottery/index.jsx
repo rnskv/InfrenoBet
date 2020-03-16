@@ -10,7 +10,7 @@ import GameBeginFooter from 'ui/organisms/GameBeginFooter';
 import GameControls from 'ui/organisms/GameControls';
 import GameEndFooter from 'ui/organisms/GameEndFooter';
 import BetMaker from 'ui/organisms/BetMaker';
-import TransactionsContainer from 'ui/organisms/TransactionsContainer';
+import BetsContainer from 'ui/organisms/BetsContainer';
 import RoomNavigation from 'ui/organisms/RoomNavigation';
 
 
@@ -25,10 +25,10 @@ function Lottery({
     time,
     hash,
     secret,
-    transactions,
+    bets,
     users,
     bank,
-    transaction,
+    addBet,
     isShowWinner,
     roulette,
     userChance,
@@ -51,7 +51,7 @@ function Lottery({
             />
             <GameInfo
                 time={time}
-                transactions={transactions}
+                bets={bets}
                 bank={bank}
                 users={users}
                 roulette={roulette}
@@ -65,7 +65,7 @@ function Lottery({
                 isVisible={!roulette.isVisible}
                 percent={userChance}
                 itemsCount={userItemsCount}
-                transaction={transaction}
+                addBet={addBet}
                 openBetMaker={actions.betMaker.open}
                 isAuth={isAuth}
             />
@@ -73,7 +73,7 @@ function Lottery({
             <UsersBanks
                 users={users}
                 bank={bank}
-                transactions={transactions}
+                bets={bets}
             />
 
             <GameEndFooter
@@ -81,8 +81,8 @@ function Lottery({
                 secret={secret}
             />
 
-            <TransactionsContainer
-                transactions={transactions}
+            <BetsContainer
+                bets={bets}
                 isGameEnd={isShowWinner}
             />
 

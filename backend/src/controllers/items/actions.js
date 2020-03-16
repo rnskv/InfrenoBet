@@ -3,9 +3,7 @@ import passport from 'koa-passport';
 import Item from 'src/models/Item';
 
 const getAllHandler = async (ctx) => {
-    const items = await Item.find();
-
-    ctx.body = items;
+    ctx.body = await Item.find().sort({ cost: 1 });
 };
 
 const postHandler = async (ctx) => {

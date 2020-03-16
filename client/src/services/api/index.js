@@ -7,6 +7,15 @@ export default ({ app }) => {
         store, dispatch, getState, actions,
     } = app;
 
+    const itemsApi = new Api({
+        url: `${SERVER_PROTOCOL}://${SERVER_HOST}:${SERVER_PORT}/api/items`,
+        headers: {
+            'Content-Type': 'application/json',
+            // Authorization: store.getState().user.token,
+        },
+        onError: ({ type }) => store.dispatch(actions.user.addNotification({ type })),
+    });
+
     const authApi = new Api({
         url: `${SERVER_PROTOCOL}://${SERVER_HOST}:${SERVER_PORT}/api/auth`,
         headers: {
@@ -40,6 +49,13 @@ export default ({ app }) => {
         },
     });
 
+    itemsApi.addRequests({
+        getAll: new Request({
+            url: '/',
+            method: 'get',
+        }),
+    });
+
     authApi.addRequests({
         logIn: new Request({
             url: '/login',
@@ -70,5 +86,6 @@ export default ({ app }) => {
         user: usersApi,
         game: gameApi,
         auth: authApi,
+        items: itemsApi,
     };
 };

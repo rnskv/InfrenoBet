@@ -5,11 +5,11 @@ const userDomains = infernoClient.modules.store.domains.user;
 const gameDomains = infernoClient.modules.store.domains.game;
 
 // @todo to helper
-function getUsers(transactions) {
+function getUsers(bets) {
     const uniqueUsers = {};
 
-    transactions.map((transaction) => {
-        uniqueUsers[transaction.user._id] = transaction.user;
+    bets.map((bet) => {
+        uniqueUsers[bet.user._id] = bet.user;
     });
 
     return Object.values(uniqueUsers);
@@ -19,7 +19,7 @@ export function mapDispatchToProps(dispatch) {
     return {
         subscribe: () => dispatch(gameDomains.subscribe()),
         join: () => dispatch(gameDomains.join()),
-        transaction: () => dispatch(gameDomains.transaction()),
+        addBet: () => dispatch(gameDomains.addBet()),
         openBetMaker: () => dispatch(betMakerActions.open()),
         getProfile: () => dispatch(userDomains.getProfile()),
     };
@@ -30,11 +30,11 @@ export function mapStateToProps(state) {
     return {
         token: state.user.token,
         time: state.game.time,
-        transactions: state.game.transactions,
+        bets: state.game.bets,
         hash: state.game.hash,
         secret: state.game.secret,
-        transactionsPoolLength: state.game.transactionsPoolLength,
-        isWaitingTransactions: state.game.isWaitingTransactions,
+        betsQueueLength: state.game.betsQueueLength,
+        isWaitingLastBets: state.game.isWaitingLastBets,
         users: state.game.users,
         bank: state.game.bank,
         userDepositsCount: state.game.userDepositsCount,
@@ -43,6 +43,6 @@ export function mapStateToProps(state) {
         profile: state.user.profile,
         sidebars: state.user.sidebars,
         userChance: state.game.bank.users[state.user.profile._id] / state.game.bank.total * 100 || 0,
-        userItemsCount: state.game.transactions.filter((transaction) => transaction.user._id === state.user.profile._id).length,
+        userItemsCount: state.game.bets.filter((bet) => bet.user._id === state.user.profile._id).length,
     };
 }

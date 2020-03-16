@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import privatePaths from 'mongoose-private-paths';
-import Transaction from './Transaction';
+import Bet from './Bet';
 
 const { Schema } = mongoose;
 import { USER_NOT_ENOUGH_MONEY, USER_NOT_FOUND } from 'src/types/errors';

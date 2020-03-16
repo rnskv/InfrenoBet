@@ -5,8 +5,8 @@ export const join = (payload) => ({
     payload,
 });
 
-export const transactions = (payload) => ({
-    type: actionTypes.GAME_TRANSACTIONS,
+export const addBets = (payload) => ({
+    type: actionTypes.GAME_ADD_BETS,
     payload,
 });
 
@@ -35,8 +35,8 @@ export const sync = (payload) => ({
     payload,
 });
 
-export const waitingTransactions = (payload) => ({
-    type: actionTypes.GAME_WAITING_TRANSACTIONS,
+export const waitingLastBets = (payload) => ({
+    type: actionTypes.GAME_WAITING_LAST_BETS,
     payload,
 });
 
@@ -50,12 +50,12 @@ export const updateRoulette = (payload) => ({
     payload,
 });
 
-export const transactionAccepted = (payload) => ({
-    type: actionTypes.GAME_TRANSACTION_ACCEPTED,
+export const betAccepted = (payload) => ({
+    type: actionTypes.GAME_BET_ACCEPTED,
     payload,
 });
 
-export const transactionSended = (payload) => ({
-    type: actionTypes.GAME_TRANSACTION_SENDED,
+export const betSended = (payload) => ({
+    type: actionTypes.GAME_BET_SENDED,
     payload,
 });

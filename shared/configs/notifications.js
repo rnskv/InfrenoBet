@@ -5,12 +5,12 @@ import {
     USER_NOT_ENOUGH_MONEY,
     USER_WRONG_REGISTER_DATA,
     INTERNAL_SERVER_ERROR,
-    TRANSACTION_SENDING,
+    BET_SENDING,
     USER_NOT_AUTH,
-    GAME_CLOSED_FOR_TRANSACTIONS,
-    TRANSACTION_ACCEPTED,
+    GAME_CLOSED_FOR_BETS,
+    BET_ACCEPTED,
     REALTIME_DISCONNECTED,
-    USER_WIN
+    USER_WIN,
 } from './notificationsTypes';
 
 export default {
@@ -54,17 +54,17 @@ export default {
         title: 'Система',
         text: 'Произошел сбой на сервере. Пожалуйста, повторите попытку позже.',
     },
-    [GAME_CLOSED_FOR_TRANSACTIONS]: {
+    [GAME_CLOSED_FOR_BETS]: {
         type: 'ERROR',
         title: 'Игра',
         text: 'Ставки больше не принимаются. Игра скоро начнется"',
     },
-    [TRANSACTION_SENDING]: {
+    [BET_SENDING]: {
         type: 'SUCCESS',
         title: 'Игра',
         text: 'Ваша транзакция успешно поставлена в очередь! Она будет добавлена в игру в течении ~5 сек.',
     },
-    [TRANSACTION_ACCEPTED]: {
+    [BET_ACCEPTED]: {
         type: 'SUCCESS',
         title: 'Игра',
         text: 'Ваша ставка принята!',

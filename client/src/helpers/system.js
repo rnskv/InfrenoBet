@@ -20,8 +20,8 @@ export function getUserChances(user, bank) {
     return Number((bank.users[user._id] / bank.total * 100).toFixed(2));
 }
 
-export function getTransactionChances(transaction, bank) {
-    return Number((transaction.value / bank.total * 100).toFixed(2));
+export function getBetChances(bet, bank) {
+    return Number(((bet.item.cost) / (bank.total) * 100).toFixed(2));
 }
 
 export function getFormattedTime(time, { minutes = true, seconds = true } = {}) {

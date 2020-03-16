@@ -48,7 +48,7 @@ class Roulette {
             }
         }
         avatars = shuffle(avatars);
-        avatars[this.winnerAvatarIndex] = winner.transaction.user.avatar;
+        avatars[this.winnerAvatarIndex] = winner.bet.user.avatar;
         this.avatars = avatars;
     }
 

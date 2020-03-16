@@ -7,16 +7,16 @@ export function mapDispatchToProps(dispatch) {
     return {
         open: () => dispatch(betMakerActions.open()),
         close: () => dispatch(betMakerActions.close()),
-        sendTransaction: ({ values }) => dispatch(domains.betMaker.sendTransaction({ values })),
-        addBetInBetMaker: ({ value }) => dispatch(betMakerActions.addBetInBetMaker({ value })),
-        removeBetFromBetMaker: ({ index }) => dispatch(betMakerActions.removeBetFromBetMaker({ index })),
+        sendBet: ({ items }) => dispatch(domains.betMaker.sendBet({ items })),
+        addItemInBetMaker: ({ item }) => dispatch(betMakerActions.addItemInBetMaker({ item })),
+        removeItemFromBetMaker: ({ index }) => dispatch(betMakerActions.removeItemFromBetMaker({ index })),
     };
 }
 
 export function mapStateToProps(state) {
     return {
         isOpened: state.betMaker.isOpened,
-        allValues: state.betMaker.allValues,
-        userValues: state.betMaker.userValues,
+        userItems: state.betMaker.userItems,
+        items: state.betMaker.items,
     };
 }
