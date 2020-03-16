@@ -18,14 +18,16 @@ export const Container = styled.div`
    position: fixed;
    right: ${({ isOpened }) => (isOpened ? '0' : '-650px')};
    top: var(--header-height);
-   z-index: 10;
+   z-index: 11;
    height: calc(100vh - var(--header-height));
    transition: .6s right;
+   box-sizing: border-box;
 `;
 
 export const RightBlock = styled.div`
   background-color: var(--color-grey-500);
   padding: 15px;
+  overflow-y: auto;
   h1 {
     color: var(--color-blue);
     //background-color: var(--color-blue);
@@ -37,11 +39,12 @@ export const RightBlock = styled.div`
     border-radius: 5px;
     text-transform: uppercase;
     margin: 0;
-    padding: 15px 0;
+    padding: 10px 0;
   }
 `;
 
 export const LeftBlock = styled.div`
   background-color: var(--color-grey-600);
-  padding: 15px;
+  padding: 10px;
+  overflow-y: auto;
 `;

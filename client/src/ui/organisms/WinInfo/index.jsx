@@ -39,7 +39,8 @@ function WinInfo({ isShowWinner, winner, totalBank, isVisible, time, openBetMake
 
             {isShowWinner ? (
                 <WinnerItem>
-                    <img src={`https://d2lomvz2jrw9ac.cloudfront.net/common/currency/${winner.bet.value}.png`} />
+                    { console.log('winner', winner) }
+                    <img alt="Winner item" src={winner.bet.item.image} />
                 </WinnerItem>
             ) : null}
 

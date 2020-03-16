@@ -4,8 +4,8 @@ import { flipInX } from 'react-animations';
 export const Container = styled.div`
   animation: .6s ${keyframes`${flipInX}`};
   background-color: ${({ cost }) => (cost ? 'var(--color-darkblue)' : 'var(--color-grey-800)')};
-  width: 100px;
-  height: 100px;
+  width: 95px;
+  height: 95px;
   border-radius: 10px;
   display: flex;
   justify-content: center;
@@ -13,8 +13,8 @@ export const Container = styled.div`
   cursor: pointer;
   
   img {
-    width: 70%;
-    height: 70%;
+    width: 60%;
+    height: 60%;
     object-fit: scale-down;
   }
   

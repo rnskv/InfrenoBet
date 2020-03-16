@@ -4,7 +4,7 @@ import React, { useRef } from 'react';
 
 import UserBank from 'ui/molecules/UserBank';
 
-import { getBetChances, getUserChances, getUserColorsByEmail } from 'src/helpers/system';
+import { getBetChances, getUserChances, getUserColorsById } from 'src/helpers/system';
 
 import {
     Container,
@@ -14,27 +14,49 @@ import {
 } from './styled';
 
 function UsersBanks({ users, bank, bets }) {
+    const optimizedBets = [];
+
+    let lastBet = null;
+    let currentIndex = -1;
+
+    for (const bet of bets) {
+        if (!lastBet || lastBet.user._id !== bet.user._id) {
+            currentIndex += 1;
+        }
+
+        optimizedBets[currentIndex] = optimizedBets[currentIndex]
+            ? {
+                chance: optimizedBets[currentIndex].chance + getBetChances(bet, bank),
+                color: getUserColorsById(bet.user._id),
+            }
+            : {
+                chance: getBetChances(bet, bank),
+                color: getUserColorsById(bet.user._id),
+            };
+
+        lastBet = bet;
+    }
+
+    console.log(optimizedBets);
+
     return (
         users.length ? (
             <Container>
                 <ChancesBar>
-                    {bets.map((bet, index) => {
-                        const { user } = bet;
-                        const { defaultColor } = getUserColorsByEmail(user.email);
-
+                    {optimizedBets.map((bet, index) => {
                         return (
                             <Chance
-                                key={`${defaultColor}${bet._id}`}
-                                color={defaultColor}
-                                percent={getBetChances(bet, bank) || 0}
+                                key={`${bet.color}${bet.chance}${index}`}
+                                color={bet.color.defaultColor}
+                                percent={bet.chance || 0}
                             />
                         );
                     })}
                 </ChancesBar>
                 <Banks>
                     {
-                        users.map((user, index) => {
-                            const { lightColor, darkColor } = getUserColorsByEmail(user.email);
+                        users.map((user) => {
+                            const { lightColor, darkColor } = getUserColorsById(user._id);
 
                             return (
                                 <UserBank

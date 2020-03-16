@@ -1,8 +1,8 @@
 import crypto from 'crypto';
 
-export function getUserColorsByEmail(email) {
+export function getUserColorsById(id) {
     const nicknameHash = crypto.createHash('md5')
-        .update(String(email))
+        .update(String(id))
         .digest('hex');
 
     const lightColor = `#${nicknameHash.slice(0, 6)}59`;
@@ -21,7 +21,7 @@ export function getUserChances(user, bank) {
 }
 
 export function getBetChances(bet, bank) {
-    return Number(((bet.item.cost) / (bank.total) * 100).toFixed(2));
+    return Number(((bet.item.cost) / (bank.total) * 100).toFixed(10));
 }
 
 export function getFormattedTime(time, { minutes = true, seconds = true } = {}) {

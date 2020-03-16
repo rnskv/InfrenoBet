@@ -110,7 +110,7 @@ Game.getWinnerById = async (id) => {
         game: mongoose.Types.ObjectId(id),
         ticketFrom: { $lte: winnerTicket },
         ticketTo: { $gte: winnerTicket }
-    }).populate('user');
+    }).populate('user').populate('item');
 
     winnerBet.winnerTicket = winnerTicket;
     return {
