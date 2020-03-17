@@ -43,15 +43,13 @@ function UsersBanks({ users, bank, bets }) {
         users.length ? (
             <Container>
                 <ChancesBar>
-                    {optimizedBets.map((bet, index) => {
-                        return (
-                            <Chance
-                                key={`${bet.color}${bet.chance}${index}`}
-                                color={bet.color.defaultColor}
-                                percent={bet.chance || 0}
-                            />
-                        );
-                    })}
+                    {optimizedBets.map((bet, index) => (
+                        <Chance
+                            key={`${bet.color}${bet.chance}${index}`}
+                            color={bet.color.defaultColor}
+                            percent={bet.chance || 0}
+                        />
+                    ))}
                 </ChancesBar>
                 <Banks>
                     {

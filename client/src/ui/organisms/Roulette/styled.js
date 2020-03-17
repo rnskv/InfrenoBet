@@ -11,10 +11,10 @@ export const Container = styled.div`
   position: relative;
   box-sizing: border-box;
   overflow: hidden;
-  height: ${({ isVisible }) => isVisible ? 'auto' : 0};
-  transform: ${({ isVisible }) => isVisible ? 'rotateZ(0)' : 'rotateZ(-25deg)'};
-  left: ${({ isVisible }) => isVisible ? 0 : '-100%'};
-  opacity: ${({ isVisible }) => isVisible ? 1 : 0};
+  height: ${({ isVisible }) => (isVisible ? 'auto' : 0)};
+  transform: ${({ isVisible }) => (isVisible ? 'rotateZ(0)' : 'rotateZ(-25deg)')};
+  left: ${({ isVisible }) => (isVisible ? 0 : '-100%')};
+  opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
   transition: .6s ease-in-out;
   will-change: height, transform, opacity, left;
 `;

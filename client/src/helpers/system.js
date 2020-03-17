@@ -58,6 +58,6 @@ export const getExchangedSum = (dollarSum) => {
     return {
         EUR: `${exchangedSum}${currencyIcon}`,
         RUB: `${exchangedSum}${currencyIcon}`,
-        USD: `${currencyIcon}${exchangedSum}`
+        USD: `${currencyIcon}${exchangedSum}`,
     }[currency];
 };

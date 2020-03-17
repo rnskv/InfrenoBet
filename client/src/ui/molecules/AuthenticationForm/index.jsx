@@ -31,7 +31,7 @@ function AuthenticationForm({
 
 AuthenticationForm.propTypes = {
     children: PropTypes.node.isRequired,
-    title: PropTypes.string.isRequired
+    title: PropTypes.string.isRequired,
 };
 
 export default AuthenticationForm;

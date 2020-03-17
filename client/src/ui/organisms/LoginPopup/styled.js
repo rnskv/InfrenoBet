@@ -49,7 +49,7 @@ export const Method = styled.div`
   justify-content: center;
   margin: 0 10px;
   cursor: pointer;
-  pointer-events: ${({ isActive }) => isActive ? 'all' : 'none'};
+  pointer-events: ${({ isActive }) => (isActive ? 'all' : 'none')};
   span {
     margin-top: 10px;
     font-size: 16px;
@@ -59,7 +59,7 @@ export const Method = styled.div`
   
   ${MethodIcon} {
       background-color: ${({ type }) => colors[type]};
-      opacity: ${({ isActive }) => isActive ? '1' : '0.5'};
+      opacity: ${({ isActive }) => (isActive ? '1' : '0.5')};
       i {
         display: flex;
       }

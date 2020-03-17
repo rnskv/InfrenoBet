@@ -19,7 +19,7 @@ import {
 
 
 function GameControls({
-    percent, itemsCount, openBetMaker, isVisible, isAuth
+    percent, itemsCount, openBetMaker, isVisible, isAuth,
 }) {
     if (!isVisible) return null;
 

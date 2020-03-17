@@ -61,10 +61,12 @@ const StyledButton = styled.button`
     ${({ type }) => getButtonStyle(type)}
 `;
 
-function Button({ type, children, isLoading, ...props }) {
+function Button({
+    type, children, isLoading, ...props
+}) {
     return (
         <StyledButton type={type} {...props}>
-            {!isLoading ? children : <Loader type={'small'}/>}
+            {!isLoading ? children : <Loader type="small" />}
         </StyledButton>
     );
 }
@@ -76,7 +78,7 @@ Button.propTypes = {
 
 Button.defaultProps = {
     isLoading: false,
-    type: 'classic'
+    type: 'classic',
 };
 
 export default Button;

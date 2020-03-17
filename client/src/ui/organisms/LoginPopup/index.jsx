@@ -85,7 +85,7 @@ function LoginPopup({ className, style, children }) {
                         }
                     >
                         <MethodIcon>
-                            <InlineSVG src={vkIconSvg}/>
+                            <InlineSVG src={vkIconSvg} />
                         </MethodIcon>
                         <span>Вконтакте</span>
                     </Method>
@@ -98,7 +98,7 @@ function LoginPopup({ className, style, children }) {
                     >
                         <MethodIcon>
                             <MethodIcon>
-                                <InlineSVG src={emailIconSvg}/>
+                                <InlineSVG src={emailIconSvg} />
                             </MethodIcon>
                         </MethodIcon>
                         <span>E-mail</span>
@@ -109,7 +109,7 @@ function LoginPopup({ className, style, children }) {
                         onChange={onCheckBoxChange}
                         checked={isVerifiedAge}
                     />
-                    {`Мне уже исполнилось 18 лет, а так же я ознакомился с `}
+                    {'Мне уже исполнилось 18 лет, а так же я ознакомился с '}
                     <a>правилами и условиями</a>
                 </AgeConfirm>
             </Container>

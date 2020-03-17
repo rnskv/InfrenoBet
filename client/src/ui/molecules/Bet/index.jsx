@@ -9,13 +9,13 @@ import {
     Description,
     Item,
     StyledAvatar,
-    Tickets
+    Tickets,
 } from './styled';
 
 function Bet({
     user, ticketFrom, ticketTo, item,
 }) {
-    console.log(item)
+    console.log(item);
     return (
         <Container>
             <StyledAvatar src={user.avatar} />

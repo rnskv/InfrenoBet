@@ -18,11 +18,13 @@ import {
     DepositButton,
 } from './styled';
 
-function WinInfo({ isShowWinner, winner, totalBank, isVisible, time, openBetMaker, isAuth }) {
+function WinInfo({
+    isShowWinner, winner, totalBank, isVisible, time, openBetMaker, isAuth,
+}) {
     if (!isVisible) return null;
     return (
         <Container>
-            <NotAuthPlaceHolder isVisible={!isAuth}/>
+            <NotAuthPlaceHolder isVisible={!isAuth} />
             <Winner>
                 <WinnerTicket>
                     Победный билет:
