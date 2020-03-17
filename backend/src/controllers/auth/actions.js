@@ -6,7 +6,7 @@ import User from '../../models/User';
 import config from '../../config';
 const request = require('request-promise');
 
-import { USER_ALREAY_EXIST, USER_NOT_FOUND, USER_WRONG_PASSWORD, USER_WRONG_REGISTER_DATA } from 'shared/configs/notificationsTypes';
+import { USER_ALREADY_EXIST, USER_NOT_FOUND, USER_WRONG_PASSWORD, USER_WRONG_REGISTER_DATA } from 'shared/configs/notificationsTypes';
 const { VK_CLIENT_ID, VK_CLIENT_SECRET, VK_REDIRECT_URL, VK_CLOSE_PAGE_URL } = process.env;
 
 function createToken({ payload, expiresIn = 1000 * 60 * 60 * 24 }) {
@@ -23,7 +23,8 @@ const registerHandler = async (ctx) => {
     }
 
     if (user) {
-        ctx.throw({ type: USER_ALREAY_EXIST });
+        console.log('User already exist');
+        ctx.throw({ type: USER_ALREADY_EXIST });
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -63,8 +64,6 @@ const loginHandler = async (ctx) => {
 
 
 const loginVkHandler = (ctx) => {
-    //Будет что
-    console.log('Ooooh myy', ctx.state.user);
     const { user } = ctx.state;
 
     const token = createToken({

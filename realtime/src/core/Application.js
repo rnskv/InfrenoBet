@@ -3,6 +3,7 @@ import Room from './Room';
 import * as notificationsTypes from 'shared/configs/notificationsTypes';
 import { userApi } from 'src/modules/api';
 import { getBetsTotalValue, getBetValue } from  'src/helpers/game';
+import { BET_SENDING } from 'shared/configs/notificationsTypes';
 
 const socket = require('socket.io');
 
@@ -45,12 +46,30 @@ class Application {
 
         socket.on('game.bet', async (betData) => {
             if (!socket.jwtToken) {
-                socket.emit('project.error', { type: notificationsTypes.USER_NOT_AUTH });
+                socket.emit('project.notification', { type: notificationsTypes.USER_NOT_AUTH });
                 return;
             }
 
             if (this.rooms['classic'].game.isClosedForBets) {
-                socket.emit('project.error', { type: notificationsTypes.GAME_CLOSED_FOR_BETS });
+                socket.emit('project.notification', { type: notificationsTypes.GAME_CLOSED_FOR_BETS });
+                return;
+            }
+
+            if (!betData.items.length) {
+                socket.emit('project.notification', { type: notificationsTypes.USER_NOT_SELECT_ITEMS });
+                return;
+            }
+
+            const game = this.rooms['classic'].game;
+            const totalUserItemsCount = game.getUserBetsCount(socket.user) + game.getUserBetsCountInQueue(socket.user);
+
+            if (
+                !game.roulette.isVisible
+                    ? totalUserItemsCount + betData.items.length > game.maxUserItemsCount
+                    : game.getUserBetsCountInQueue(socket.user) + betData.items.length > game.maxUserItemsCount
+            ) {
+                socket.emit('project.notification', { type: notificationsTypes.SO_MANY_ITEMS });
+                return;
             }
             //Тут проверить надо хватает ли чуваку денег и если да то сразу вычесть их;
 
@@ -61,11 +80,17 @@ class Application {
                         amount: getBetValue(betData)
                     }
                 });
+
+                //Тут надо залогировать все ставки которые купил пользователь
             } catch (err) {
                 console.log(err);
-                socket.emit('project.error', { type: notificationsTypes.USER_NOT_ENOUGH_MONEY });
+                socket.emit('project.notification', { type: notificationsTypes.USER_NOT_ENOUGH_MONEY });
                 return;
             }
+
+            socket.emit('project.notification',{
+                type: BET_SENDING
+            });
 
             await this.rooms['classic'].game.registerUserBets({
                 user: socket.user,
@@ -75,7 +100,10 @@ class Application {
                     socket.emit('game.betWasAccepted')
                 },
                 onError: (error) => {
-                    socket.emit('user.error', error)
+                    socket.emit('project.error', error)
+                },
+                sendNotification: ({ type, params }) => {
+                    socket.emit('project.notification', { type, params })
                 }
             });
         });

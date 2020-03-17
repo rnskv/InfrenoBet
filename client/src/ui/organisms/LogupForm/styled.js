@@ -10,15 +10,16 @@ export const Container = styled.div`
     justify-content: center;
 `;
 
+export const StyledButton = styled(Button)`
+  min-width: 170px;
+  margin: 0 0;
+`;
+
 export const StyledForm = styled(AuthenticationForm)`
     ${Input} {
         width: 100%;
         box-sizing: border-box;
         margin-bottom: 20px;
-    }
-    
-    ${Button} {
-        margin: 0 0;
     }
 `;
 

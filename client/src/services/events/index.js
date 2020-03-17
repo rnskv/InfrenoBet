@@ -47,6 +47,12 @@ export default function ({ app }) {
     });
 
     realtime.io.on('game.waitingLastBets', ({ betsQueueLength }) => {
+        store.dispatch(actions.user.addNotification({
+            type: notificationsTypes.WAITING_LAST_BETS,
+            params: {
+                text: `Обрабатываются последние ставки. Ставок в очереди: ${betsQueueLength}`,
+            },
+        }));
         store.dispatch(actions.game.waitingLastBets({ betsQueueLength }));
     });
 
@@ -71,7 +77,7 @@ export default function ({ app }) {
         store.dispatch(actions.user.addNotification({ notification }));
     });
 
-    realtime.io.on('project.error', ({ type }) => {
-        store.dispatch(actions.user.addNotification({ type }));
+    realtime.io.on('project.notification', ({ type, params }) => {
+        store.dispatch(actions.user.addNotification({ type, params }));
     });
 }

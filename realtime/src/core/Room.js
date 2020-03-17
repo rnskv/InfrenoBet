@@ -8,21 +8,24 @@ class Room {
         this.game = null;
     }
 
-    reset() {
+    reset({ betsQueue } = { betsQueue: [] }) {
         this.gamesCount++;
         const secret = Math.random();
         const hash = crypto.createHash('md5').update(String(secret)).digest("hex");
 
+        console.log('reset game', betsQueue);
+
         this.game = new Game({
             hash,
             secret,
+            betsQueue,
             app: this.app,
             onFinish: this.onFinish.bind(this)
         });
     }
 
-    onFinish() {
-        this.reset();
+    onFinish({ betsQueue }) {
+        this.reset({ betsQueue });
     }
 }
 

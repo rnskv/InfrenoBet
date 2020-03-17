@@ -19,12 +19,11 @@ const StyledForm = styled.form`
 `;
 
 function AuthenticationForm({
-    children, title, error, ...props
+    children, title, ...props
 }) {
     return (
         <StyledForm {...props}>
             <Title>{title}</Title>
-            <ErrorNotification error={error} />
             { children }
         </StyledForm>
     );
@@ -32,8 +31,7 @@ function AuthenticationForm({
 
 AuthenticationForm.propTypes = {
     children: PropTypes.node.isRequired,
-    title: PropTypes.string.isRequired,
-    error: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired
 };
 
 export default AuthenticationForm;

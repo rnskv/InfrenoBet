@@ -1,6 +1,8 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import styled from 'styled-components';
+import Loader from 'ui/atoms//Loader';
 
 const getButtonStyle = (type, props) => {
     switch (type) {
@@ -45,7 +47,7 @@ const getButtonStyle = (type, props) => {
 };
 
 const StyledButton = styled.button`
-    padding: 10px 15px;
+    padding: 0 15px;
     font-size: 14px;
     outline: none;
     cursor: pointer;
@@ -54,19 +56,27 @@ const StyledButton = styled.button`
     display: flex;
     align-items: center;
     justify-content: center;
+    min-width: 50px;
+    min-height: 40px;
     ${({ type }) => getButtonStyle(type)}
 `;
 
-function Button({ type, children, ...props }) {
+function Button({ type, children, isLoading, ...props }) {
     return (
         <StyledButton type={type} {...props}>
-            {children}
+            {!isLoading ? children : <Loader type={'small'}/>}
         </StyledButton>
     );
 }
 
+Button.propTypes = {
+    isLoading: PropTypes.bool,
+    type: PropTypes.string,
+};
+
 Button.defaultProps = {
-    type: 'classic',
+    isLoading: false,
+    type: 'classic'
 };
 
 export default Button;

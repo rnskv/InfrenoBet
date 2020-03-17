@@ -15,8 +15,11 @@ function Login({
     if (token) return <Redirect to="/" />;
     return (
         <PopupTemplate>
-            { isLoading ? 'Loading...' : null}
-            <LoginForm logIn={logIn} error={error} />
+            <LoginForm
+                logIn={logIn}
+                error={error}
+                isLoading={isLoading}
+            />
         </PopupTemplate>
     );
 }
@@ -24,12 +27,11 @@ function Login({
 Login.propTypes = {
     token: PropTypes.string.isRequired,
     logIn: PropTypes.func.isRequired,
-    isLoading: PropTypes.bool.isRequired,
-    error: PropTypes.string,
+    isLoading: PropTypes.bool,
 };
 
 Login.defaultProps = {
-    error: '',
+    isLoading: false,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -21,8 +21,6 @@ function Logup({
 
     return (
         <PopupTemplate>
-            { isLoading ? 'Loading...' : null}
-
             { isRegister
                 ? (
                     <AfterLogup
@@ -32,7 +30,7 @@ function Logup({
                 : (
                     <LogupForm
                         logUp={logUp}
-                        error={error}
+                        isLoading={isLoading}
                     />
                 )}
 
@@ -44,13 +42,12 @@ Logup.propTypes = {
     token: PropTypes.string.isRequired,
     logUp: PropTypes.func.isRequired,
     reset: PropTypes.func.isRequired,
-    isLoading: PropTypes.bool.isRequired,
     isRegister: PropTypes.bool.isRequired,
-    error: PropTypes.string,
+    isLoading: PropTypes.bool,
 };
 
 Logup.defaultProps = {
-    error: '',
+    isLoading: false,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Logup);

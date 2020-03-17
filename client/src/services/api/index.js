@@ -4,8 +4,15 @@ const { SERVER_PROTOCOL, SERVER_PORT, SERVER_HOST } = process.env;
 
 export default ({ app }) => {
     const {
-        store, dispatch, getState, actions,
-    } = app;
+        store,
+    } = app.modules;
+
+    console.log(app.modules, store);
+
+    const {
+        actions,
+        domains,
+    } = store;
 
     const itemsApi = new Api({
         url: `${SERVER_PROTOCOL}://${SERVER_HOST}:${SERVER_PORT}/api/items`,
@@ -22,7 +29,8 @@ export default ({ app }) => {
             'Content-Type': 'application/json',
         },
         onError: ({ type }) => {
-            dispatch(actions.user.addNotification({ type }));
+            console.log(app);
+            store.dispatch(actions.user.addNotification({ type }));
         },
     });
 
@@ -32,7 +40,7 @@ export default ({ app }) => {
             'Content-Type': 'application/json',
             // Authorization: store.getState().user.token,
         },
-        onError: ({ type }) => store.dispatch(actions.user.addNotification({ type })),
+        onError: ({ type }) => dispatch(actions.user.addNotification({ type })),
     });
 
     const rootApi = new Api({
