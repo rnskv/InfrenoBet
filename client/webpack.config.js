@@ -45,7 +45,7 @@ function getClientConfig({ mode }) {
         output: {
             path: path.join(__dirname, '/dist'),
             filename: 'inferno-[name].js',
-            publicPath: path.join('/dist'),
+            publicPath: path.join('/dist/'),
         },
         module: {
             rules: [
@@ -79,7 +79,7 @@ function getServerConfig({ mode }) {
         output: {
             path: path.join(__dirname, '/dist'),
             filename: 'inferno-[name].js',
-            publicPath: path.join('/dist'),
+            publicPath: path.join('/dist/'),
         },
         externals: [nodeExternals()],
         module: {
