@@ -2,13 +2,14 @@ import PropTypes from 'prop-types';
 
 import React from 'react';
 
-import Avatar from 'ui/atoms/Avatar';
 import { getExchangedSum } from 'src/helpers/system';
 
 import {
     Container,
     Description,
     Item,
+    StyledAvatar,
+    Tickets
 } from './styled';
 
 function Bet({
@@ -17,19 +18,22 @@ function Bet({
     console.log(item)
     return (
         <Container>
-            <Avatar src={user.avatar} />
+            <StyledAvatar src={user.avatar} />
             <Description>
                 <div>
-                    {`Игрок ${user.name} сделал ставку на сумму ${getExchangedSum(item.cost)}` }
+                    {`${user.name} вложил монету ( ${getExchangedSum(item.cost)} )` }
                 </div>
                 <div>
                     <b>
-                        {`Билеты: от ${ticketFrom} до ${ticketTo} (+${ticketTo - ticketFrom + 1} билетов)`}
+                        {`Билеты: от ${ticketFrom} до ${ticketTo}`}
                     </b>
                 </div>
             </Description>
             <Item>
                 <img src={item.image} />
+                <Tickets>
+                    <span>{`+${ticketTo - ticketFrom + 1}`}</span>
+                </Tickets>
             </Item>
         </Container>
     );

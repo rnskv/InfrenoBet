@@ -238,7 +238,7 @@ class Game {
                 users: this.users
             });
 
-            if (this.users.length >= 1 && !this.isStarted) {
+            if (this.users.length >= 2 && !this.isStarted) {
                 this.start();
             }
 
