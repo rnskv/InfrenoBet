@@ -6,7 +6,7 @@ import { getBetsTotalValue } from  'src/helpers/game';
 import * as notificationsTypes from '../../../shared/configs/notificationsTypes';
 
 class Game {
-    constructor({ hash, secret, app, onFinish }) {
+    constructor({ hash, secret, app, betsQueue, onFinish }) {
         this.app = app;
         this.roulette = new Roulette({
             sockets: this.app.io.sockets,
@@ -16,11 +16,15 @@ class Game {
         this.onFinish = onFinish;
         this.time = 15;
         this.endingTime = 7;
+        this.closingGameTime = 5;
+        this.maxItemsCount = 50;
+        this.maxUserItemsCount = 10;
+
         this.isStarted = false;
         this.isFinished = false;
         this.isClosedForBets = false;
         this.isShowWinner = false;
-        this.betsQueue = [];
+        this.betsQueue = betsQueue;
         this.isWaitingLastBets = false;
         this.publicSecret = 0;
 
@@ -29,8 +33,16 @@ class Game {
                 hash,
                 secret
             }
-        }).then((game) => {
-            this.init({ ...game })
+        }).then(async (game) => {
+            this.init({ ...game });
+
+            if (betsQueue.length) {
+                while (this.betsQueue.length) {
+                    await this.processFirstBet();
+                    this.isWaitingLastBets = !!this.betsQueue.length;
+                    console.log('Обработка ставки из очереди прошлой игры')
+                }
+            }
         }).catch((err) => {
             console.log(err)
         });
@@ -110,6 +122,12 @@ class Game {
             await this.tick();
         }
 
+        if (this.isWaitingLastBets) {
+            this.app.io.sockets.emit('game.waitingLastBets', {
+                betsQueueLength: this.state.betsQueueLength
+            });
+        }
+
         while (this.isWaitingLastBets) {
             await this.tick();
         }
@@ -121,13 +139,9 @@ class Game {
         return new Promise((resolve) => {
             if (this.time > 0) {
                 this.time -= 1;
-            } else {
-                this.app.io.sockets.emit('game.waitingLastBets', {
-                    betsQueueLength: this.state.betsQueueLength
-                });
             }
 
-            if (this.time < 5) {
+            if (this.time < this.closingGameTime && !this.roulette.isVisible) {
                 this.isClosedForBets = true;
             }
 
@@ -146,7 +160,7 @@ class Game {
         });
         this.roulette.setVisible(false);
         this.isFinished = true;
-        this.onFinish();
+        this.onFinish({ betsQueue: this.betsQueue });
     }
 
     async getWinner() {
@@ -157,6 +171,7 @@ class Game {
         }).catch(err => console.log('GET_WINNER', err));
 
         this.roulette.start({ winner, bank: this.state.bank, users: this.state.users });
+        this.isClosedForBets = false;
 
         this.time = this.roulette.duration + this.endingTime;
 
@@ -192,6 +207,14 @@ class Game {
 
     join(userData) {
         this.app.io.sockets.emit('game.join', userData);
+    }
+
+    getUserBetsCount(user) {
+        return this.bets.filter((bet) => bet.user._id === user.id).length
+    }
+
+    getUserBetsCountInQueue(user) {
+        return this.betsQueue.filter((bet) => bet.user.id === user.id).reduce((acc, bet) => acc + bet.items.length, 0)
     }
 
     isFirstUserBet(user) {
@@ -242,6 +265,10 @@ class Game {
                 this.start();
             }
 
+            if (this.bets.length >= this.maxItemsCount) {
+                this.time = this.closingGameTime;
+            }
+
             resolve()
         }))
     }
@@ -255,12 +282,18 @@ class Game {
 
         this.betsQueue.push(data);
 
+        if (this.roulette.isVisible) {
+            console.log('Перенарпавляем ставки в следующую игру')
+            return;
+        }
+
         const isNeedToStartProcessing = this.betsQueue.length === 1;
 
         if (isNeedToStartProcessing) {
             while (this.betsQueue.length) {
                 await this.processFirstBet();
                 this.isWaitingLastBets = !!this.betsQueue.length;
+                console.log('Обработка новой ставки!')
             }
         }
     }

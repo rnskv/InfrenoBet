@@ -47,6 +47,12 @@ export default function ({ app }) {
     });
 
     realtime.io.on('game.waitingLastBets', ({ betsQueueLength }) => {
+        store.dispatch(actions.user.addNotification({
+            type: notificationsTypes.WAITING_LAST_BETS,
+            params: {
+                text: `Обрабатываются последние ставки. Ставок в очереди: ${betsQueueLength}`,
+            },
+        }));
         store.dispatch(actions.game.waitingLastBets({ betsQueueLength }));
     });
 

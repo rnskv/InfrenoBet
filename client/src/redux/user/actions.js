@@ -36,7 +36,7 @@ export const reset = () => ({
 export const addNotification = ({ type, params = {} }) => {
     const notification = {
         ...NOTIFICATIONS[type],
-        date: new Date(),
+        date: Date.now(),
         ...params,
     };
 

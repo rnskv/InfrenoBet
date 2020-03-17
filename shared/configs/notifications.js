@@ -13,6 +13,8 @@ import {
     BET_ACCEPTED,
     REALTIME_DISCONNECTED,
     USER_WIN,
+    WAITING_LAST_BETS,
+    SO_MANY_ITEMS,
 } from './notificationsTypes';
 
 export default {
@@ -85,6 +87,16 @@ export default {
         type: 'ERROR',
         title: 'Сервер',
         text: 'На сервере возникли технические неполадки!',
+    },
+    [WAITING_LAST_BETS]: {
+        type: 'SUCCESS',
+        title: 'Игра',
+        text: 'Игра начнется после того как будут обработаны последние ставки.',
+    },
+    [SO_MANY_ITEMS]: {
+        type: 'ERROR',
+        title: 'Игра',
+        text: 'Максимальное количество предметов в игре - 10',
     },
     undefined: {
         type: 'ERROR',

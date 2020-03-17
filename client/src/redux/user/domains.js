@@ -42,22 +42,24 @@ export default ({ app }) => {
     const logIn = ({ email, password }) => async (dispatch) => {
         dispatch(actions.user.loading());
 
-        const response = await api.services.auth.execute('logIn', {
+        api.services.auth.execute('logIn', {
             body: {
                 email,
                 password,
             },
+        }).then((response) => {
+            if (response.token) {
+                Cookies.set('token', response.token);
+                dispatch(actions.user.logIn({ token: response.token }));
+                realtime.io.emit('project.logIn', response.token);
+                api.services.user.setHeader('Authorization', response.token);
+                dispatch(getProfile());
+            } else {
+                dispatch(actions.user.error());
+            }
+        }).catch(() => {
+            dispatch(actions.user.error());
         });
-
-        if (response.token) {
-            Cookies.set('token', response.token);
-            dispatch(actions.user.logIn({ token: response.token }));
-            realtime.io.emit('project.logIn', response.token);
-            api.services.user.setHeader('Authorization', response.token);
-            dispatch(getProfile());
-        } else {
-            dispatch(actions.error({ loginError: response.error }));
-        }
     };
 
     const logOut = () => (dispatch) => {
