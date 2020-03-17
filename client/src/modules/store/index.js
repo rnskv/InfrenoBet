@@ -1,5 +1,5 @@
 import Module from 'src/core/Module';
-import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 
 class Store extends Module {
@@ -32,9 +32,11 @@ class Store extends Module {
     }
 
     create() {
+        const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
         this.instanse = createStore(
             combineReducers(this.reducers),
-            applyMiddleware(thunk),
+            composeEnhancers(applyMiddleware(thunk)),
         );
     }
 }

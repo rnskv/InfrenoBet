@@ -47,6 +47,9 @@ export const Item = styled.div`
   box-sizing: border-box;
   display: flex;
   justify-content: center;
+  min-height: 100px;
+  align-items: center;
+    
   img {
     width: 50px;
   }
