@@ -1,9 +1,11 @@
 import {
-    USER_ALREAY_EXIST,
+    USER_ALREADY_EXIST,
     USER_WRONG_PASSWORD,
     USER_NOT_FOUND,
     USER_NOT_ENOUGH_MONEY,
     USER_WRONG_REGISTER_DATA,
+    USER_NOT_SELECT_ITEMS,
+    USER_SUCCESS_REGISTER,
     INTERNAL_SERVER_ERROR,
     BET_SENDING,
     USER_NOT_AUTH,
@@ -14,7 +16,7 @@ import {
 } from './notificationsTypes';
 
 export default {
-    [USER_ALREAY_EXIST]: {
+    [USER_ALREADY_EXIST]: {
         type: 'ERROR',
         title: 'Система',
         text: 'Пользователь с таким именем уже существует.',
@@ -34,6 +36,11 @@ export default {
         title: 'Система',
         text: 'Вы ввели некорретные данные при регистрации.',
     },
+    [USER_SUCCESS_REGISTER]: {
+        type: 'SUCCESS',
+        title: 'Система',
+        text: 'Вы успешно зарегистрировались! Можете войти в игру используя свои данные.',
+    },
     [USER_NOT_AUTH]: {
         type: 'ERROR',
         title: 'Ошибка доступа',
@@ -43,6 +50,11 @@ export default {
         type: 'ERROR',
         title: 'Игра',
         text: 'У вас недостаточно средств. Пожалуйста, пополните ваш баланс',
+    },
+    [USER_NOT_SELECT_ITEMS]: {
+        type: 'ERROR',
+        title: 'Игра',
+        text: 'Вы не выбрали предметы для ставки.',
     },
     [USER_WIN]: {
         type: 'SUCCESS',
@@ -62,7 +74,7 @@ export default {
     [BET_SENDING]: {
         type: 'SUCCESS',
         title: 'Игра',
-        text: 'Ваша транзакция успешно поставлена в очередь! Она будет добавлена в игру в течении ~5 сек.',
+        text: 'Ваша ставка находится в очереди! В скором времени она будет добавлена в игру.',
     },
     [BET_ACCEPTED]: {
         type: 'SUCCESS',
@@ -73,5 +85,10 @@ export default {
         type: 'ERROR',
         title: 'Сервер',
         text: 'На сервере возникли технические неполадки!',
+    },
+    undefined: {
+        type: 'ERROR',
+        title: 'Клиент',
+        text: 'Неизвестная ошибка!',
     }
 }

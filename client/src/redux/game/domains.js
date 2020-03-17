@@ -20,13 +20,6 @@ export default ({ app }) => {
         realtime.io.emit('game.bet', { items });
 
         dispatch(actions.game.betSended());
-        dispatch(actions.user.addNotification({
-            type: BET_SENDING,
-            params: {
-                text: `Ваша ставка на сумму ${getExchangedSum(totalBet)} находится в очереди.
-                   Она будет добавлена в игру через ~${items.length * 1} сек.`,
-            },
-        }));
         dispatch(actions.user.changeBalance({ amount: -totalBet }));
     };
 

@@ -15,8 +15,11 @@ function Login({
     if (token) return <Redirect to="/" />;
     return (
         <PopupTemplate>
-            { isLoading ? 'Loading...' : null}
-            <LoginForm logIn={logIn} error={error} />
+            <LoginForm
+                logIn={logIn}
+                error={error}
+                isLoading={isLoading}
+            />
         </PopupTemplate>
     );
 }

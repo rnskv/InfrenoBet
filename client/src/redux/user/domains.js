@@ -1,4 +1,5 @@
 import Cookies from 'js-cookie';
+import { USER_SUCCESS_REGISTER } from 'shared/configs/notificationsTypes';
 
 export default ({ app }) => {
     const { api, store, realtime } = app.modules;
@@ -24,20 +25,18 @@ export default ({ app }) => {
 
     const logUp = ({ email, name, password }) => async (dispatch) => {
         dispatch(actions.user.loading());
-
-        const response = await api.services.auth.execute('logUp', {
+        await api.services.auth.execute('logUp', {
             body: {
                 email,
                 password,
                 name,
             },
-        });
-
-        if (response.ok) {
+        }).then(() => {
             dispatch(actions.user.register());
-        } else {
-            dispatch(actions.user.error({ logupError: response.error }));
-        }
+            dispatch(actions.user.addNotification({ type: USER_SUCCESS_REGISTER }));
+        }).catch(() => {
+            dispatch(actions.user.error());
+        });
     };
 
     const logIn = ({ email, password }) => async (dispatch) => {

@@ -2,12 +2,8 @@ import Cookies from 'js-cookie';
 import * as actionTypes from './actionsTypes';
 
 const getClearState = () => ({
-    isLoading: false,
-    isRegister: false,
-    loginError: '',
-    logupError: '',
     notifications: [],
-    isOpenedLoginPopup: false
+    isOpenedLoginPopup: false,
 });
 
 const initialState = {
@@ -41,7 +37,6 @@ function userReducer(state = initialState, action) {
         return {
             ...state,
             isLoading: false,
-            ...action.payload,
         };
     }
 

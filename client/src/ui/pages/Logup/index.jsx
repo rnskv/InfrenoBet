@@ -21,8 +21,6 @@ function Logup({
 
     return (
         <PopupTemplate>
-            { isLoading ? 'Loading...' : null}
-
             { isRegister
                 ? (
                     <AfterLogup
@@ -32,7 +30,7 @@ function Logup({
                 : (
                     <LogupForm
                         logUp={logUp}
-                        error={error}
+                        isLoading={isLoading}
                     />
                 )}
 

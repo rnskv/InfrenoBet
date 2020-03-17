@@ -3,6 +3,7 @@ import Room from './Room';
 import * as notificationsTypes from 'shared/configs/notificationsTypes';
 import { userApi } from 'src/modules/api';
 import { getBetsTotalValue, getBetValue } from  'src/helpers/game';
+import { BET_SENDING } from 'shared/configs/notificationsTypes';
 
 const socket = require('socket.io');
 
@@ -45,13 +46,19 @@ class Application {
 
         socket.on('game.bet', async (betData) => {
             if (!socket.jwtToken) {
-                socket.emit('project.error', { type: notificationsTypes.USER_NOT_AUTH });
+                socket.emit('project.notification', { type: notificationsTypes.USER_NOT_AUTH });
                 return;
             }
 
             if (this.rooms['classic'].game.isClosedForBets) {
-                socket.emit('project.error', { type: notificationsTypes.GAME_CLOSED_FOR_BETS });
+                socket.emit('project.notification', { type: notificationsTypes.GAME_CLOSED_FOR_BETS });
             }
+
+            if (!betData.items.length) {
+                socket.emit('project.notification', { type: notificationsTypes.USER_NOT_SELECT_ITEMS });
+                return;
+            }
+
             //Тут проверить надо хватает ли чуваку денег и если да то сразу вычесть их;
 
             try {
@@ -63,9 +70,13 @@ class Application {
                 });
             } catch (err) {
                 console.log(err);
-                socket.emit('project.error', { type: notificationsTypes.USER_NOT_ENOUGH_MONEY });
+                socket.emit('project.notification', { type: notificationsTypes.USER_NOT_ENOUGH_MONEY });
                 return;
             }
+
+            socket.emit('project.notification',{
+                type: BET_SENDING
+            });
 
             await this.rooms['classic'].game.registerUserBets({
                 user: socket.user,

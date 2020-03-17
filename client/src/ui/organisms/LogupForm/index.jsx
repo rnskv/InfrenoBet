@@ -10,9 +10,10 @@ import {
     StyledForm,
     Label,
     Name,
+    StyledButton,
 } from './styled';
 
-function LogupForm({ logUp, error }) {
+function LogupForm({ logUp, isLoading }) {
     const emailInput = useRef(null);
     const passwordInput = useRef(null);
     const nameInput = useRef(null);
@@ -36,7 +37,6 @@ function LogupForm({ logUp, error }) {
             <StyledForm
                 onSubmit={onSubmit}
                 title="Регистрация"
-                error={error}
             >
                 <Label>
                     <Name>Имя:</Name>
@@ -52,7 +52,7 @@ function LogupForm({ logUp, error }) {
                     <Name>Пароль:</Name>
                     <Input ref={passwordInput} type="password" name="password" />
                 </Label>
-                <Button>Зарегистрироваться</Button>
+                <StyledButton isLoading={isLoading}>Зарегистрироваться</StyledButton>
             </StyledForm>
         </Container>
     );
@@ -60,7 +60,11 @@ function LogupForm({ logUp, error }) {
 
 LogupForm.propTypes = {
     logUp: PropTypes.func.isRequired,
-    error: PropTypes.string.isRequired,
+    isLoading: PropTypes.bool,
+};
+
+LogupForm.defaultProps = {
+    isLoading: false,
 };
 
 export default LogupForm;
