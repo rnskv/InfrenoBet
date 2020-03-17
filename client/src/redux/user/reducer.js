@@ -7,14 +7,8 @@ const getClearState = () => ({
     loginError: '',
     logupError: '',
     notifications: [],
-    isOpenedLoginPopup: false,
+    isOpenedLoginPopup: false
 });
-
-console.log(Cookies.get('test'));
-
-setTimeout(() => {
-    console.log(Cookies.get('token'));
-}, 1000);
 
 const initialState = {
     token: Cookies.get('token') || '',

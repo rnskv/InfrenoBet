@@ -2,6 +2,13 @@ import { Api, Request } from 'shared/api';
 import { connection } from 'src/app';
 import config from 'src/config';
 
+export const itemsApi = new Api({
+    url: `http://${config.server_host}:${config.server_port}/api/items`,
+    headers: {
+        'Content-Type': 'application/json',
+    },
+});
+
 export const userApi = new Api({
     url: `http://${config.server_host}:${config.server_port}/api/users`,
     headers: {
@@ -16,11 +23,18 @@ export const gameApi = new Api({
     },
 });
 
-export const transactionsApi = new Api({
-    url: `http://${config.server_host}:${config.server_port}/api/transactions`,
+export const betsApi = new Api({
+    url: `http://${config.server_host}:${config.server_port}/api/bets`,
     headers: {
         'Content-Type': 'application/json',
     }
+});
+
+itemsApi.addRequests({
+    getAll: new Request({
+        url: '/',
+        method: 'get',
+    }),
 });
 
 userApi.addRequests({
@@ -53,7 +67,7 @@ gameApi.addRequests({
     })
 });
 
-transactionsApi.addRequests({
+betsApi.addRequests({
     create: new Request({
         url: '/',
         method: 'post',

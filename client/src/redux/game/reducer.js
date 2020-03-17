@@ -1,7 +1,7 @@
 import * as actionTypes from './actionsTypes';
 
 const getClearGameState = () => ({
-    transactions: [],
+    bets: [],
     users: [],
     bank: {
         users: {},
@@ -10,8 +10,8 @@ const getClearGameState = () => ({
     time: 0,
     hash: '',
     secret: 0,
-    isWaitingTransactions: false,
-    transactionsPoolLength: 0,
+    isWaitingLastBets: false,
+    betsQueueLength: 0,
     userDepositsCount: 0,
     isShowWinner: false,
     roulette: {
@@ -35,13 +35,13 @@ function gameReducer(state = initialState, action) {
         };
     }
 
-    case actionTypes.GAME_TRANSACTIONS: {
-        const { transactions, bank, users } = action.payload;
+    case actionTypes.GAME_ADD_BETS: {
+        const { bets, bank, users } = action.payload;
         return {
             ...state,
             bank,
             users,
-            transactions: [...transactions, ...state.transactions],
+            bets: [...bets, ...state.bets],
         };
     }
 
@@ -64,7 +64,7 @@ function gameReducer(state = initialState, action) {
             ...state,
             secret: action.payload.secret,
             isShowWinner: true,
-            isWaitingTransactions: false,
+            isWaitingLastBets: false,
         };
     }
 
@@ -83,11 +83,11 @@ function gameReducer(state = initialState, action) {
         };
     }
 
-    case actionTypes.GAME_WAITING_TRANSACTIONS: {
+    case actionTypes.GAME_WAITING_LAST_BETS: {
         return {
             ...state,
-            isWaitingTransactions: true,
-            transactionsPoolLength: action.payload.transactionsPoolLength,
+            isWaitingLastBets: true,
+            betsQueueLength: action.payload.betsQueueLength,
         };
     }
 
@@ -105,14 +105,14 @@ function gameReducer(state = initialState, action) {
         };
     }
 
-    case actionTypes.GAME_TRANSACTION_ACCEPTED: {
+    case actionTypes.GAME_BET_ACCEPTED: {
         return {
             ...state,
             userDepositsCount: state.userDepositsCount - 1,
         };
     }
 
-    case actionTypes.GAME_TRANSACTION_SENDED: {
+    case actionTypes.GAME_BET_SENDED: {
         return {
             ...state,
             userDepositsCount: state.userDepositsCount + 1,

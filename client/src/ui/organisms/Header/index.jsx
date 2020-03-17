@@ -18,7 +18,7 @@ import {
 import { NavigationIcon } from '../Navigation/styled';
 import Link from '../../atoms/Link';
 
-function BetMaker({
+function Header({
     profile,
     logOut,
 }) {
@@ -50,9 +50,9 @@ function BetMaker({
     );
 }
 
-BetMaker.propTypes = {
+Header.propTypes = {
     profile: PropTypes.object.isRequired,
     logOut: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(BetMaker);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

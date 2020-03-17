@@ -1,10 +1,12 @@
 import PropTypes from 'prop-types';
 
 import React, { useRef } from 'react';
+import { useSelector } from 'react-redux';
+
 import WinInfo from 'ui/organisms/WinInfo';
 import Roulette from 'ui/organisms/Roulette';
 
-import { getFormattedTime } from 'src/helpers/system';
+import { getFormattedTime, getExchangedSum } from 'src/helpers/system';
 
 import {
     Container,
@@ -19,29 +21,29 @@ import {
 } from './styled';
 
 function GameInfo({
-    id, time, transactions, bank, users, roulette, isShowWinner, isVisible, openBetMaker, isAuth,
+    id, time, bets, bank, users, roulette, isShowWinner, isVisible, openBetMaker, isAuth,
 }) {
     return (
         <Container>
             <Title>{`Игра #${id}`}</Title>
+            <Roulette
+                bets={bets}
+                bank={bank}
+                users={users}
+                state={roulette}
+            />
             {
+
                 roulette.isVisible
-                    ? (
-                        <Roulette
-                            transactions={transactions}
-                            bank={bank}
-                            users={users}
-                            state={roulette}
-                        />
-                    )
+                    ? null
                     : (
                         <StartGame>
                             <ItemsCount>
                                 <ItemsCountValue
-                                    percent={Math.round(transactions.length / 50 * 100)}
+                                    percent={Math.round(bets.length / 50 * 100)}
                                 />
                                 <ItemsText>
-                                    { `${transactions.length} / 50` }
+                                    { `${bets.length} / 50` }
                                     <span>предметов</span>
                                 </ItemsText>
                             </ItemsCount>
@@ -56,7 +58,7 @@ function GameInfo({
             <Bank hidden={roulette.isVisible}>
                 {'На кону: '}
                 <span>
-                    {`${bank.total}₽`}
+                    { getExchangedSum(bank.total) }
                 </span>
             </Bank>
 
@@ -80,7 +82,7 @@ GameInfo.propTypes = {
 
 
 GameInfo.defaultProps = {
-  id: 100500,
+    id: 100500,
 };
 
 export default GameInfo;

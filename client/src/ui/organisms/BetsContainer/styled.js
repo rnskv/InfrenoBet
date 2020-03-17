@@ -9,7 +9,7 @@ export const Container = styled.div`
 export const Wrapper = styled.div`
   @keyframes slideFromTop {
     from {
-      margin-top:-${({ transactionsCount }) => 108 * transactionsCount}px; 
+      margin-top:-${({ betsCount }) => 108 * betsCount}px; 
     } to {
       margin-top: 0;
     }
@@ -19,16 +19,16 @@ export const Wrapper = styled.div`
     from {
       margin-top: 0; 
     } to {
-      margin-top: -${({ totalTransactionsCount }) => 108 * totalTransactionsCount}px;
+      margin-top: -${({ totalBetsCount }) => 108 * totalBetsCount}px;
     }
   }
   
   animation: 
-    ${({ transactionsCount, totalTransactionsCount, isGameEnd }) => {
+    ${({ betsCount, totalBetsCount, isGameEnd }) => {
         if (!isGameEnd) {
-            return `${0.4 * transactionsCount < 1 ? 0.4 * transactionsCount : 1}s`;
+            return `${0.4 * betsCount < 1 ? 0.4 * betsCount : 1}s`;
         }
-        return `${0.3 * totalTransactionsCount < 1 ? 0.3 * totalTransactionsCount : 1}s`;
+        return `${0.3 * totalBetsCount < 1 ? 0.3 * totalBetsCount : 1}s`;
     }}
     ease-out 
     ${({ isGameEnd }) => (isGameEnd ? 'slideFromGame' : 'slideFromTop')}

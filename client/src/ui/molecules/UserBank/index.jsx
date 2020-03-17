@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 
 import React from 'react';
 import Avatar from 'ui/atoms/Avatar';
+import { getExchangedSum } from 'src/helpers/system';
 
 import {
     Container,
@@ -10,7 +11,7 @@ import {
 } from './styled';
 
 function UserBank({
-    avatar, bet, percent, containerColor, borderColor,
+    avatar, value, percent, containerColor, borderColor,
 }) {
     return (
         <Container containerColor={containerColor} borderColor={borderColor}>
@@ -19,7 +20,7 @@ function UserBank({
                 { `${percent}%` }
             </Chance>
             <Bet>
-                { `${bet}₽` }
+                { getExchangedSum(value) }
             </Bet>
         </Container>
     );
@@ -27,7 +28,7 @@ function UserBank({
 
 UserBank.propTypes = {
     avatar: PropTypes.string.isRequired,
-    bet: PropTypes.number.isRequired,
+    value: PropTypes.number.isRequired,
     percent: PropTypes.number.isRequired,
     containerColor: PropTypes.string.isRequired,
     borderColor: PropTypes.string.isRequired,

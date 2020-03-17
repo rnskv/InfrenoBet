@@ -5,7 +5,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import Game from 'src/models/Game';
 import User from 'src/models/User';
-import Transaction from 'src/models/Transaction';
+import Bet from 'src/models/Bet';
 
 import config from 'src/config';
 
@@ -37,9 +37,9 @@ const getWinner = async (ctx) => {
     } = ctx.request.body;
 
     const winner = await Game.getWinnerById(id);
-    const bank = await Transaction.getGameBankSumById(id);
+    const bank = await Bet.getGameBankSumById(id);
     //@todo 0.9 - процент отдаци пользователю (вынести в настройки)
-    await User.changeBalance(winner.transaction.user.id, bank.sum * 0.90);
+    await User.changeBalance(winner.bet.user.id, bank.sum * 0.90);
 
     ctx.body = winner;
 };

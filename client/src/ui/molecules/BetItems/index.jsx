@@ -7,23 +7,24 @@ import {
 } from './styled';
 
 function BetItems({
-    onItemClick, values, style, className,
+    onItemClick, items, style, className,
 }) {
     return (
         <Container style={style} className={className}>
             {
-                values.map((value, index) => {
+                items.map((item, index) => {
                     function onClick() {
                         if (onItemClick) {
-                            onItemClick({ value, index });
+                            onItemClick({ item, index });
                         }
                     }
 
                     return (
                         <StyledBetItem
-                            key={`${value}-${index}`}
+                            key={`${item._id}-${index}`}
                             onClick={onClick}
-                            value={value}
+                            cost={item.cost || 0}
+                            image={item.image || ''}
                         />
                     );
                 })

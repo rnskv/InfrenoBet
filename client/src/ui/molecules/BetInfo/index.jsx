@@ -2,29 +2,29 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Button from 'ui/atoms/Button';
 
+import { getExchangedSum } from 'src/helpers/system';
+
 import {
     Container,
     BetSum,
 } from './styled';
 
-function _getTransactionSum(userValues) {
-    return userValues.reduce((acc, value) => acc + value, 0);
+function _getBetSum(userItems) {
+    return userItems.reduce((acc, item) => acc + item.cost, 0);
 }
 
 function BetInfo({
-    userValues, sendTransaction, className, style,
+    userItems, sendBet, className, style,
 }) {
     return (
         <Container className={className} style={style}>
             <BetSum>
                 Сумма:
-                {' '}
                 <span>
-                    { _getTransactionSum(userValues) }
-₽
+                    { getExchangedSum(_getBetSum(userItems)) }
                 </span>
             </BetSum>
-            <Button onClick={() => sendTransaction({ values: userValues })}>Сделать ставку</Button>
+            <Button onClick={() => sendBet({ items: userItems })}>Сделать ставку</Button>
         </Container>
     );
 }

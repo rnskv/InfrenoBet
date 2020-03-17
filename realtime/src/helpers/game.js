@@ -1,11 +1,11 @@
-export function getTransactionsValue(transactions) {
-    return transactions.reduce((acc,transaction) => {
-        return acc + transaction.value;
+export function getBetsTotalValue(bets) {
+    return bets.reduce((acc, bet) => {
+        return acc + bet.item.cost;
     }, 0);
 }
 
-export function getTransactionValue(transaction) {
-    return transaction.values.reduce((acc, value) => {
-        return acc + value;
+export function getBetValue(bet) {
+    return bet.items.reduce((acc, item) => {
+        return acc + item.cost;
     }, 0);
 }

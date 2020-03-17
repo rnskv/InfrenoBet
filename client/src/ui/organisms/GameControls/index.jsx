@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 
 import React from 'react';
 import NotAuthPlaceHolder from 'ui/organisms/NotAuthPlaceholder';
+import { getExchangedSum } from 'src/helpers/system';
 
 import { useSelector } from 'react-redux';
 
@@ -30,8 +31,8 @@ function GameControls({
                     {`Вы вложили в игру - ${itemsCount} из 10 монет.`}
                 </Information>
                 <Description>
-                    Мин.ставка 1₽, максимум предметов 10.
-                    Чем выше ставка, тем больше шанс победить.
+                    {`Мин.ставка ${getExchangedSum(0.013)}, максимум предметов 10.
+                    Чем выше ставка, тем больше шанс победить.`}
                     <More>Подробнее</More>
                 </Description>
             </ItemsCount>

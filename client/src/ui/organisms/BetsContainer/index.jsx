@@ -5,7 +5,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import Button from 'ui/atoms/Button';
 import Input from 'ui/atoms/Input';
 
-import Transaction from 'ui/molecules/Transaction';
+import Bet from 'ui/molecules/Bet';
 
 import {
     Wrapper,
@@ -26,26 +26,26 @@ function usePrevious(value) {
     return ref.current;
 }
 
-function TransactionsContainer({ transactions, isGameEnd }) {
-    const prevTransactions = usePrevious(transactions) || [];
-
+function BetsContainer({ bets, isGameEnd }) {
+    const prevBets = usePrevious(bets) || [];
+    console.log(bets);
     return (
         <Container>
             <Wrapper
-                key={transactions.length}
-                transactionsCount={Math.abs(transactions.length - prevTransactions.length)}
-                totalTransactionsCount={transactions.length}
+                key={bets.length}
+                betsCount={Math.abs(bets.length - prevBets.length)}
+                totalBetsCount={bets.length}
                 isGameEnd={isGameEnd}
             >
                 {
-                    (transactions || prevTransactions).map((transaction, index) => (
-                        <Transaction
-                            key={`${transaction.ticketTo}`}
+                    (bets || prevBets).map((bet, index) => (
+                        <Bet
+                            key={`${bet.ticketTo}`}
                             index={index}
-                            user={transaction.user}
-                            value={transaction.value}
-                            ticketFrom={transaction.ticketFrom}
-                            ticketTo={transaction.ticketTo}
+                            user={bet.user}
+                            item={bet.item}
+                            ticketFrom={bet.ticketFrom}
+                            ticketTo={bet.ticketTo}
                         />
                     ))
                 }
@@ -54,7 +54,7 @@ function TransactionsContainer({ transactions, isGameEnd }) {
     );
 }
 
-TransactionsContainer.propTypes = {
+BetsContainer.propTypes = {
 };
 
-export default React.memo(TransactionsContainer);
+export default React.memo(BetsContainer);

@@ -5,6 +5,7 @@ export default function ({ app }) {
     const { actions, domains } = store;
 
     store.dispatch(domains.user.getProfile());
+    store.dispatch(domains.betMaker.getItems());
 
     realtime.io.emit('game.sync');
 
@@ -17,8 +18,8 @@ export default function ({ app }) {
         store.dispatch(domains.user.getProfile());
     });
 
-    realtime.io.on('game.transactions', ({ transactions, bank, users }) => {
-        store.dispatch(actions.game.transactions({ transactions, bank, users }));
+    realtime.io.on('game.bets', ({ bets, bank, users }) => {
+        store.dispatch(actions.game.addBets({ bets, bank, users }));
         // for synchronization
         store.dispatch(domains.user.getProfile());
     });
@@ -45,8 +46,8 @@ export default function ({ app }) {
         store.dispatch(domains.user.getProfile());
     });
 
-    realtime.io.on('game.waitingTransactions', ({ transactionsPoolLength }) => {
-        store.dispatch(actions.game.waitingTransactions({ transactionsPoolLength }));
+    realtime.io.on('game.waitingLastBets', ({ betsQueueLength }) => {
+        store.dispatch(actions.game.waitingLastBets({ betsQueueLength }));
     });
 
     realtime.io.on('game.startRoulette', () => {
@@ -57,9 +58,9 @@ export default function ({ app }) {
         store.dispatch(actions.game.updateRoulette({ state }));
     });
 
-    realtime.io.on('game.transactionAccepted', () => {
-        store.dispatch(actions.user.addNotification({ type: notificationsTypes.TRANSACTION_ACCEPTED }));
-        store.dispatch(actions.game.transactionAccepted());
+    realtime.io.on('game.betWasAccepted', () => {
+        store.dispatch(actions.user.addNotification({ type: notificationsTypes.BET_ACCEPTED }));
+        store.dispatch(actions.game.betAccepted());
     });
 
     realtime.io.on('game.win', () => {

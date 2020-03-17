@@ -2,37 +2,37 @@ import * as actionTypes from './actionsTypes';
 
 const initialState = {
     isOpened: false,
-    userValues: [],
-    allValues: [1, 5, 10, 50, 100, 500, 1000, 5000],
+    userItems: [],
+    items: [],
 };
 
 function betMakerReducer(state = initialState, action) {
     switch (action.type) {
-    case actionTypes.ADD_BET_IN_BET_MAKER: {
-        if (state.userValues.length >= 8) {
+    case actionTypes.ADD_ITEM_IN_BET_MAKER: {
+        if (state.userItems.length >= 8) {
             return {
                 ...state,
             };
         }
         return {
             ...state,
-            userValues: [...state.userValues, action.payload.value],
+            userItems: [...state.userItems, action.payload.item],
         };
     }
 
-    case actionTypes.REMOVE_BET_FROM_BET_MAKER: {
-        const copy = [...state.userValues];
+    case actionTypes.REMOVE_ITEM_FROM_BET_MAKER: {
+        const copy = [...state.userItems];
         copy.splice(action.payload.index, 1);
         return {
             ...state,
-            userValues: copy,
+            userItems: copy,
         };
     }
 
     case actionTypes.OPEN_BET_MAKER: {
         return {
             ...state,
-            userValues: [],
+            userItems: [],
             isOpened: true,
         };
     }
@@ -41,6 +41,13 @@ function betMakerReducer(state = initialState, action) {
         return {
             ...state,
             isOpened: false,
+        };
+    }
+
+    case actionTypes.BET_MAKER_ADD_ITEMS: {
+        return {
+            ...state,
+            items: [...action.payload.items, ...state.items],
         };
     }
 

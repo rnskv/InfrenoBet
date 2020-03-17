@@ -1,4 +1,5 @@
-import { TRANSACTION_SENDING } from 'shared/configs/notificationsTypes';
+import { BET_SENDING } from 'shared/configs/notificationsTypes';
+import { getExchangedSum } from 'src/helpers/system';
 
 export default ({ app }) => {
     const { realtime, store } = app.modules;
@@ -14,16 +15,16 @@ export default ({ app }) => {
         realtime.io.emit('game.join', { name: 'Roma' });
     };
 
-    const transaction = ({ values }) => async (dispatch) => {
-        const totalBet = values.reduce((acc, value) => acc + value, 0);
-        realtime.io.emit('game.transaction', { values });
+    const addBet = ({ items }) => async (dispatch) => {
+        const totalBet = items.reduce((acc, item) => acc + item.cost, 0);
+        realtime.io.emit('game.bet', { items });
 
-        dispatch(actions.game.transactionSended());
+        dispatch(actions.game.betSended());
         dispatch(actions.user.addNotification({
-            type: TRANSACTION_SENDING,
+            type: BET_SENDING,
             params: {
-                text: `Ваша ставка на сумму ${totalBet}₽ находится в очереди.
-                   Она будет добавлена в игру через ~${values.length * 1} сек.`,
+                text: `Ваша ставка на сумму ${getExchangedSum(totalBet)} находится в очереди.
+                   Она будет добавлена в игру через ~${items.length * 1} сек.`,
             },
         }));
         dispatch(actions.user.changeBalance({ amount: -totalBet }));
@@ -32,6 +33,6 @@ export default ({ app }) => {
     return {
         subscribe,
         join,
-        transaction,
+        addBet,
     };
 };

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 import React, { useRef } from 'react';
-import { getFormattedTime } from 'src/helpers/system';
+import { getFormattedTime, getExchangedSum } from 'src/helpers/system';
 import NotAuthPlaceHolder from 'ui/organisms/NotAuthPlaceholder';
 
 import {
@@ -30,16 +30,17 @@ function WinInfo({ isShowWinner, winner, totalBank, isVisible, time, openBetMake
                 </WinnerTicket>
                 <WinnerName>
                     Победитель:
-                    <span>{ isShowWinner ? winner.transaction.user.name : '???'}</span>
+                    <span>{ isShowWinner ? winner.bet.user.name : '???'}</span>
                 </WinnerName>
 
-                <BankNumbers>{`${totalBank.toFixed(2)}₽`}</BankNumbers>
+                <BankNumbers>{getExchangedSum(totalBank)}</BankNumbers>
             </Winner>
             <Arrow />
 
             {isShowWinner ? (
                 <WinnerItem>
-                    <img src={`https://d2lomvz2jrw9ac.cloudfront.net/common/currency/${winner.transaction.value}.png`} />
+                    { console.log('winner', winner) }
+                    <img alt="Winner item" src={winner.bet.item.image} />
                 </WinnerItem>
             ) : null}
 
@@ -69,7 +70,7 @@ WinInfo.defaultProps = {
     time: 0,
     winner: {
         ticket: 0,
-        transaction: {
+        bet: {
             value: 1,
             user: {
                 name: 'Unknown',

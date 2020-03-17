@@ -2,7 +2,7 @@ import jwtDecode from 'jwt-decode';
 import Room from './Room';
 import * as notificationsTypes from 'shared/configs/notificationsTypes';
 import { userApi } from 'src/modules/api';
-import { getTransactionsValue, getTransactionValue } from  'src/helpers/game';
+import { getBetsTotalValue, getBetValue } from  'src/helpers/game';
 
 const socket = require('socket.io');
 
@@ -43,14 +43,14 @@ class Application {
             this.removeUserSocket(socket);
         });
 
-        socket.on('game.transaction', async (transactionData) => {
+        socket.on('game.bet', async (betData) => {
             if (!socket.jwtToken) {
                 socket.emit('project.error', { type: notificationsTypes.USER_NOT_AUTH });
                 return;
             }
 
-            if (this.rooms['classic'].game.isClosedForTransactions) {
-                socket.emit('project.error', { type: notificationsTypes.GAME_CLOSED_FOR_TRANSACTIONS });
+            if (this.rooms['classic'].game.isClosedForBets) {
+                socket.emit('project.error', { type: notificationsTypes.GAME_CLOSED_FOR_BETS });
             }
             //Тут проверить надо хватает ли чуваку денег и если да то сразу вычесть их;
 
@@ -58,7 +58,7 @@ class Application {
                 await userApi.execute('changeBalance', {
                     body: {
                         id: socket.user.id,
-                        amount: getTransactionValue(transactionData)
+                        amount: getBetValue(betData)
                     }
                 });
             } catch (err) {
@@ -67,12 +67,12 @@ class Application {
                 return;
             }
 
-            await this.rooms['classic'].game.registerTransactionsBlock({
+            await this.rooms['classic'].game.registerUserBets({
                 user: socket.user,
-                values: transactionData.values,
+                items: betData.items,
                 onAccept: () => {
                     //@todo Сомнительно, и придумай как привязать socket к транзакции...
-                    socket.emit('game.transactionAccepted')
+                    socket.emit('game.betWasAccepted')
                 },
                 onError: (error) => {
                     socket.emit('user.error', error)
