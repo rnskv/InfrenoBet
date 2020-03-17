@@ -27,12 +27,11 @@ function Login({
 Login.propTypes = {
     token: PropTypes.string.isRequired,
     logIn: PropTypes.func.isRequired,
-    isLoading: PropTypes.bool.isRequired,
-    error: PropTypes.string,
+    isLoading: PropTypes.bool,
 };
 
 Login.defaultProps = {
-    error: '',
+    isLoading: false,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
