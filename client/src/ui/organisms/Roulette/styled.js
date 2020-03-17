@@ -11,7 +11,12 @@ export const Container = styled.div`
   position: relative;
   box-sizing: border-box;
   overflow: hidden;
-  margin: 10px 0;
+  height: ${({ isVisible }) => isVisible ? 'auto' : 0};
+  transform: ${({ isVisible }) => isVisible ? 'rotateZ(0)' : 'rotateZ(-25deg)'};
+  left: ${({ isVisible }) => isVisible ? 0 : '-100%'};
+  opacity: ${({ isVisible }) => isVisible ? 1 : 0};
+  transition: .6s ease-in-out;
+  will-change: height, transform, opacity, left;
 `;
 
 export const Avatars = styled.div`
@@ -19,7 +24,7 @@ export const Avatars = styled.div`
     width: 24080px;
     height: 80px;
     overflow: hidden;
-    transition: 16000ms;
+    transition: transform 16000ms;
     transition-timing-function: cubic-bezier(0.32, 0.64, 0.45, 1);
     will-change: transform;
     transform: translate(${({ offset }) => `${-offset}px`}, 0);
@@ -38,7 +43,7 @@ export const Avatar = styled.div`
        height: 100%;
        min-width: 100%;
        object-fit: cover;
-       background-color: red;
+       background-color: var(--color-white);
     }
 `;
 
@@ -60,5 +65,6 @@ export const Arrow = styled.div`
         border-top: none;
         position: absolute;
         transition: .16s;
+        top: 5px;
     }
 `;
