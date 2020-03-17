@@ -60,16 +60,29 @@ Bet.getLastInGameByGameId = async (gameId) => {
 
 Bet.getGameBankSumById = async (gameId) => {
       return (await Bet.aggregate([
-        {
-            $match: { game: mongoose.Types.ObjectId(gameId) }
-        },
-        {
-            $group: {
-                _id: '$game',
-                sum: { $sum: '$value' }
-            }
-        }
-    ]))[0]
+          {
+              $match: { game: mongoose.Types.ObjectId(gameId) }
+          },
+          {
+              $lookup: {
+                  "from": "items",
+                  "localField":"item",
+                  "foreignField":"_id",
+                  "as":"item"
+              }
+          },
+          {
+              $unwind: '$item'
+          },
+          {
+              $group: {
+                  _id: '$game',
+                  sum: {
+                      $sum: '$item.cost'
+                  }
+              }
+          }
+      ]))[0]
 };
 
 export default Bet

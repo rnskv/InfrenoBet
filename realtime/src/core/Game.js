@@ -14,7 +14,7 @@ class Game {
         });
         this.bets = [];
         this.onFinish = onFinish;
-        this.time = 15;
+        this.time = 6;
         this.endingTime = 7;
         this.closingGameTime = 5;
         this.maxItemsCount = 50;

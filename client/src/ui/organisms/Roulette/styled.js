@@ -15,11 +15,17 @@ export const Container = styled.div`
 `;
 
 export const Avatars = styled.div`
+    position: absolute;
     width: 24080px;
     height: 80px;
     overflow: hidden;
     transition: 16000ms;
     transition-timing-function: cubic-bezier(0.32, 0.64, 0.45, 1);
+    will-change: transform;
+    transform: translate(${({ offset }) => `${-offset}px`}, 0);
+    top: 0;
+    left: 50%;
+    background-color: var(--color-grey-400);
 `;
 
 export const Avatar = styled.div`
@@ -32,11 +38,12 @@ export const Avatar = styled.div`
        height: 100%;
        min-width: 100%;
        object-fit: cover;
+       background-color: red;
     }
 `;
 
 export const Arrow = styled.div`
-    margin-top: 15px;
+    margin-top: 95px;
     width: 100%;
     height: 5px;
     border-bottom: 1px solid var(--color-blue-500);
