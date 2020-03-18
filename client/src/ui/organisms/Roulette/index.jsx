@@ -22,12 +22,18 @@ const Roulette = React.memo(({
 }) => {
     const avatarsRef = useRef(null);
     const containerRef = useRef(null);
-    console.log(state.offset);
+
+    const preloadedAvatars = state.avatars.map((avatar, index) => (
+        <Avatar key={index}>
+            <img src={avatar} />
+        </Avatar>
+    ));
+
     return (
         <Container ref={containerRef} isVisible={state.isVisible}>
             <Avatars ref={avatarsRef} offset={state.offset}>
                 {
-                    state.avatars.map((avatar, index) => (<Avatar key={index}><img src={avatar} /></Avatar>))
+                    [preloadedAvatars]
                 }
             </Avatars>
             <Arrow />
