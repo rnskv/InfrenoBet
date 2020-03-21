@@ -1,0 +1,1 @@
+export const CASHIER_CHANGE_TAB = 'CASHIER_CHANGE_TAB';

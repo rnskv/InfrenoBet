@@ -1,11 +1,5 @@
 import styled from 'styled-components';
 
-import Button from 'ui/atoms/Button';
-import Input from 'ui/atoms/Input';
-import CommonTitle from 'ui/atoms/Title';
-
-import AuthenticationForm from 'ui/molecules/AuthenticationForm';
-
 export const Container = styled.div`
   width: 100%;
   position: relative;

@@ -26,4 +26,6 @@
     --color-shadow: #0c0c0c;
 
     --header-height: 60px;
+
+    --muted: rgba(255, 255, 255, 0.6);
 }

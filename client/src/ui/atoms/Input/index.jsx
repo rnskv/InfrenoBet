@@ -1,3 +1,4 @@
+import React from 'react';
 import styled from 'styled-components';
 
 const StyledInput = styled.input`
@@ -7,12 +8,40 @@ const StyledInput = styled.input`
     padding: 10px 10px;
     font-size: 14px; 
     border-radius: 3px;
- 
+    width: 100%;
+    box-sizing: border-box;
+    
     &:focus {
         border-color: var(--color-yellow);
         outline: none;
     }
 `;
 
+const Label = styled.label`
+  display: block;
 
-export default StyledInput;
+  span {
+    color: var(--color-white);
+    padding: 10px;
+    font-size: 14px;
+    display: block;
+  }
+`;
+
+const Container = styled.div`
+  width: 100%;
+  box-sizing: border-box;
+`;
+
+function Input({ label, ...props }) {
+    return (
+        <Container>
+            <Label>
+                <span>{ label }</span>
+                <StyledInput {...props} />
+            </Label>
+        </Container>
+    );
+}
+
+export default Input;
