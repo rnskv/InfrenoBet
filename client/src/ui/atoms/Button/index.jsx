@@ -47,8 +47,8 @@ const getButtonStyle = (type, props) => {
 };
 
 const StyledButton = styled.button`
-    pointer-events: ${({ disabled }) => disabled ? 'none' : 'all'};
-    opacity: ${({ disabled }) => disabled ? 0.5 : 1};
+    pointer-events: ${({ disabled }) => (disabled ? 'none' : 'all')};
+    opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
 
     padding: 0 15px;
     font-size: 14px;
