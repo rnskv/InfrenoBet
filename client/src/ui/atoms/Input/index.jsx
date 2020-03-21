@@ -37,7 +37,7 @@ const Input = React.forwardRef(({ label, ...props }, ref) =>  {
     return (
         <Container>
             <Label>
-                <span>{ label }</span>
+                { label ? <span>{ label }</span> : null }
                 <StyledInput ref={ref} {...props} />
             </Label>
         </Container>

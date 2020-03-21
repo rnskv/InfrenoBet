@@ -12,7 +12,7 @@ export const Container = styled.div`
 
 export const StyledButton = styled(Button)`
   min-width: 170px;
-  margin: 0 0;
+  margin: 20px 0 0;
 `;
 
 export const StyledForm = styled(AuthenticationForm)`

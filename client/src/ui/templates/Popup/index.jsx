@@ -9,6 +9,7 @@ import Header from 'ui/organisms/Header';
 
 import SidebarNotifications from 'ui/molecules/SidebarNotifications';
 import SidebarProfile from 'ui/molecules/SidebarProfile';
+import LoginPopup from 'ui/organisms/LoginPopup';
 
 const Content = styled.div`
     margin: 75px auto;
@@ -29,6 +30,7 @@ function Default({ children, ...props }) {
     return (
         <div {...props}>
             <Header />
+            <LoginPopup />
             <Page>
                 <Sidebar params={{
                     side: 'left',
