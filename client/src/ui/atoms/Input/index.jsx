@@ -33,15 +33,15 @@ const Container = styled.div`
   box-sizing: border-box;
 `;
 
-function Input({ label, ...props }) {
+const Input = React.forwardRef(({ label, ...props }, ref) =>  {
     return (
         <Container>
             <Label>
                 <span>{ label }</span>
-                <StyledInput {...props} />
+                <StyledInput ref={ref} {...props} />
             </Label>
         </Container>
     );
-}
+})
 
 export default Input;

@@ -10,12 +10,14 @@ import BetItem from 'ui/atoms/BetItem';
 import { getExchangedSum } from 'src/helpers/system';
 
 import { useSelector } from 'react-redux';
+import { changeValue} from 'src/redux/cashier/actions';
 
 import {
     Container,
     InputContainer,
     StyledBetItem,
 } from './styled';
+import { useActions } from 'src/helpers/hooks';
 
 const DEPOSIT_COINS = [
     {
@@ -52,14 +54,20 @@ const DEPOSIT_COINS = [
     },
 ];
 
-function DepositCoins() {
+function DepositCoins({ disabled }) {
+    const value = useSelector(state => state.cashier.value);
+    const actions = useActions({ changeValue });
+
     return (
-        <Container>
+        <Container disabled={disabled}>
             { DEPOSIT_COINS.map((coin) => (
                 <StyledBetItem
+                    key={coin.cost}
                     image={coin.image}
-                    onClick={() => alert('Пополним на ' + coin.cost)}
+                    onClick={() => actions.changeValue({ value: getExchangedSum(coin.cost, { isNeedIcon: false, accuracy: 1 }) })}
                     cost={coin.cost}
+                    isExtendedView
+                    isActive={Number(value) === getExchangedSum(coin.cost, { isNeedIcon: false, accuracy: 1 })}
                 />
             ))}
         </Container>

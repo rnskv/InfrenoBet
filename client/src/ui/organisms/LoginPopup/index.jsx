@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 import InlineSVG from 'svg-inline-react';
 
 import Popup from 'ui/molecules/Popup';
-
+import VerifyAge from 'ui/molecules/VerifyAge';
 // import Checkbox from 'ui/atoms/Checkbox';
 import emailIconSvg from 'src/resources/svg/mail-icon.svg';
 import vkIconSvg from 'src/resources/svg/vkontakte-icon.svg';
@@ -21,9 +21,7 @@ import {
     Container,
     Title,
     Method,
-    AgeConfirm,
     MethodIcon,
-    StyledCheckbox,
 } from './styled';
 
 const { VK_CLIENT_ID, VK_REDIRECT_URL } = process.env;
@@ -104,14 +102,10 @@ function LoginPopup({ className, style, children }) {
                         <span>E-mail</span>
                     </Method>
                 </MethodSelection>
-                <AgeConfirm>
-                    <StyledCheckbox
-                        onChange={onCheckBoxChange}
-                        checked={isVerifiedAge}
-                    />
-                    {'Мне уже исполнилось 18 лет, а так же я ознакомился с '}
-                    <a>правилами и условиями</a>
-                </AgeConfirm>
+                <VerifyAge
+                    onChange={onCheckBoxChange}
+                    isVerified={isVerifiedAge}
+                />
             </Container>
         </Popup>
     );

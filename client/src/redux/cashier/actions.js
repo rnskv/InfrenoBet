@@ -6,3 +6,10 @@ export const changeTab = ({ name }) => ({
         name,
     },
 });
+
+export const changeValue = ({ value }) => ({
+    type: actionTypes.CASHIER_CHANGE_VALUE,
+    payload: {
+        value,
+    },
+});
