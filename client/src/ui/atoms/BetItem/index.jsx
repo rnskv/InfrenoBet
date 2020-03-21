@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { getExchangedSum } from 'src/helpers/system';
 
 import {
     Container,
@@ -7,13 +8,18 @@ import {
 } from './styled';
 
 function BetItem({
-    image, cost, className, style, onClick,
+    image, cost, className, style, onClick, isExtendedView, isActive,
 }) {
     return (
-        <Container className={className} style={style} cost={cost} onClick={onClick}>
-            {
-                cost ? <img src={image} /> : null
-            }
+        <Container
+            className={className}
+            style={style}
+            cost={cost}
+            onClick={onClick}
+            isActive={isActive}
+        >
+            <img src={image} hidden={!cost} />
+            <span hidden={!isExtendedView}>{ getExchangedSum(cost, { accuracy: 1 }) }</span>
         </Container>
     );
 }
@@ -21,7 +27,14 @@ function BetItem({
 BetItem.propTypes = {
     image: PropTypes.string.isRequired,
     cost: PropTypes.number.isRequired,
-    onClick: PropTypes.func.isRequired
+    onClick: PropTypes.func.isRequired,
+    isExtendedView: PropTypes.bool,
+    isActive: PropTypes.bool,
+};
+
+BetItem.defaultProps = {
+    isExtendedView: false,
+    isActive: false,
 };
 
 export default BetItem;

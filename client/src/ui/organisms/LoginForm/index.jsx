@@ -10,7 +10,7 @@ import {
     StyledForm,
     Label,
     Name,
-    StyledButton
+    StyledButton,
 } from './styled';
 import LogupForm from '../LogupForm';
 

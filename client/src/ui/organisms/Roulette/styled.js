@@ -1,25 +1,28 @@
 import styled from 'styled-components';
 
-import Button from 'ui/atoms/Button';
-import Input from 'ui/atoms/Input';
-import CommonTitle from 'ui/atoms/Title';
-
-import AuthenticationForm from 'ui/molecules/AuthenticationForm';
-
 export const Container = styled.div`
   width: 100%;
   position: relative;
   box-sizing: border-box;
   overflow: hidden;
-  margin: 10px 0;
+  height: ${({ isVisible }) => (isVisible ? 'auto' : 0)};
+  opacity: ${({ isVisible }) => (isVisible ? 1 : 0)};
+  transition: .6s ease-in-out;
+  will-change: height, opacity;
 `;
 
 export const Avatars = styled.div`
+    position: absolute;
     width: 24080px;
     height: 80px;
     overflow: hidden;
-    transition: 16000ms;
+    transition: transform 16000ms;
     transition-timing-function: cubic-bezier(0.32, 0.64, 0.45, 1);
+    will-change: transform;
+    transform: translate(${({ offset }) => `${-offset}px`}, 0);
+    top: 0;
+    left: 50%;
+    background-color: var(--color-grey-400);
 `;
 
 export const Avatar = styled.div`
@@ -32,11 +35,12 @@ export const Avatar = styled.div`
        height: 100%;
        min-width: 100%;
        object-fit: cover;
+       background-color: var(--color-white);
     }
 `;
 
 export const Arrow = styled.div`
-    margin-top: 15px;
+    margin-top: 95px;
     width: 100%;
     height: 5px;
     border-bottom: 1px solid var(--color-blue-500);
@@ -53,5 +57,6 @@ export const Arrow = styled.div`
         border-top: none;
         position: absolute;
         transition: .16s;
+        top: 5px;
     }
 `;

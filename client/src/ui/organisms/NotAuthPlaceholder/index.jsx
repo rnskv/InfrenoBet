@@ -7,7 +7,7 @@ import { openLoginPopup } from 'src/redux/user/actions';
 import {
     Container,
     LogInButton,
-    Title
+    Title,
 } from './styled';
 
 function NotAuthPlaceHolder({ isVisible }) {

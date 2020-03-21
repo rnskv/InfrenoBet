@@ -35,7 +35,7 @@ function Lottery({
     userItemsCount,
 }) {
     const isAuth = useSelector((state) => Boolean(state.user.token));
-    console.log('isAuth', isAuth)
+    console.log('isAuth', isAuth);
     const actions = {
         user: useActions(userActions),
         game: useActions(gameActions),

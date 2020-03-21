@@ -28,7 +28,7 @@ export const MethodSelection = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 35px;
+  margin: 35px 0;
 `;
 
 export const MethodIcon = styled.div`
@@ -49,7 +49,7 @@ export const Method = styled.div`
   justify-content: center;
   margin: 0 10px;
   cursor: pointer;
-  pointer-events: ${({ isActive }) => isActive ? 'all' : 'none'};
+  pointer-events: ${({ isActive }) => (isActive ? 'all' : 'none')};
   span {
     margin-top: 10px;
     font-size: 16px;
@@ -59,7 +59,7 @@ export const Method = styled.div`
   
   ${MethodIcon} {
       background-color: ${({ type }) => colors[type]};
-      opacity: ${({ isActive }) => isActive ? '1' : '0.5'};
+      opacity: ${({ isActive }) => (isActive ? '1' : '0.5')};
       i {
         display: flex;
       }
@@ -68,18 +68,4 @@ export const Method = styled.div`
         width: 50px;
       }
   }
-`;
-export const AgeConfirm = styled.div`
-  color: var(--color-grey);
-  font-size: 14px;
-  text-align: center;
-  margin-top: 35px;
-  
-  a {
-    color: var(--color-blue-500)
-  }
-`;
-
-export const StyledCheckbox = styled(Checkbox)`
-  margin: 0 15px 0 0;
 `;

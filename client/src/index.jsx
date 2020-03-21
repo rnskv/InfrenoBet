@@ -14,9 +14,7 @@ import userDomains from 'src/redux/user/domains';
 import gameDomains from 'src/redux/game/domains';
 import betMakerDomains from 'src/redux/betMaker/domains';
 
-import userReducer from 'src/redux/user/reducer';
-import gameReducer from 'src/redux/game/reducer';
-import betMakerReducer from 'src/redux/betMaker/reducer';
+import reducers from 'src/redux/reducers';
 
 import * as userActions from 'src/redux/user/actions';
 import * as gameActions from 'src/redux/game/actions';
@@ -47,11 +45,7 @@ export const store = new Store({
         game: gameActions,
         betMaker: betMakerActions,
     },
-    reducers: {
-        user: userReducer,
-        game: gameReducer,
-        betMaker: betMakerReducer,
-    },
+    reducers,
     domains: {
         user: userDomains,
         game: gameDomains,

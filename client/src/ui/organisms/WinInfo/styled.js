@@ -48,7 +48,8 @@ export const WinnerItem = styled.div`
   justify-content: center;
   align-items: center;
   left: calc(50% - 45px);
-  margin-top: -10px;
+  top: 35px;
+  
   img {
     width: 50px;
   }
@@ -67,7 +68,7 @@ export const Arrow = styled.div`
   background-image: url('https://fun.csgocasino.ru/src/img/sprite-arrows.png?v=08776de5804eec7e0a4d13410b7767d6');
   background-position: 0 -102px;
   position: absolute;
-  top: -15px;
+  top: 0;
   left: calc(50% - 15px);
   opacity: 0.9;
   &:after {

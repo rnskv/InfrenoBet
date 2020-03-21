@@ -27,7 +27,7 @@ function Popup({
     isVisible, close, className, style, children,
 }) {
     return (
-        <Transition in={isVisible} timeout={{ enter: duration, exit: duration}}>
+        <Transition in={isVisible} timeout={{ enter: duration, exit: duration }}>
             {
                 (state) => (
                     <Background

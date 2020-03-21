@@ -39,12 +39,13 @@ export function getFormattedTime(time, { minutes = true, seconds = true } = {}) 
     return `${MM >= 10 ? MM : `0${MM}`} : ${SS >= 10 ? SS : `0${SS}`}`;
 }
 
-export const getExchangedSum = (dollarSum) => {
+export const getExchangedSum = (dollarSum, { accuracy = 2, isNeedIcon = true } = {}) => {
     const currency = 'RUB';
+
     const exchange = {
         USD: 1,
-        EUR: 1.12,
-        RUB: 0.013,
+        EUR: 1.07,
+        RUB: 0.0125,
     };
 
     const icon = {
@@ -52,12 +53,26 @@ export const getExchangedSum = (dollarSum) => {
         RUB: '₽',
         EUR: '€',
     };
-    const exchangedSum = (dollarSum / exchange[currency]).toFixed(2);
+
+
+    const exchangedSum = (dollarSum / exchange[currency]);
+    const formattedExchangedSum = !(exchangedSum % 10)
+        ? exchangedSum
+        : (dollarSum / exchange[currency]).toFixed(accuracy);
+
     const currencyIcon = icon[currency];
 
+    if (isNeedIcon) {
+        return {
+            EUR: `${formattedExchangedSum}${currencyIcon}`,
+            RUB: `${formattedExchangedSum}${currencyIcon}`,
+            USD: `${currencyIcon}${formattedExchangedSum}`,
+        }[currency];
+    }
+
     return {
-        EUR: `${exchangedSum}${currencyIcon}`,
-        RUB: `${exchangedSum}${currencyIcon}`,
-        USD: `${currencyIcon}${exchangedSum}`
+        EUR: Number(formattedExchangedSum),
+        RUB: Number(formattedExchangedSum),
+        USD: Number(formattedExchangedSum),
     }[currency];
 };

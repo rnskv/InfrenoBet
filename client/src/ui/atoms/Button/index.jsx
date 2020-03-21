@@ -9,7 +9,7 @@ const getButtonStyle = (type, props) => {
     case 'classic': {
         return `
             background-color: var(--color-yellow);
-          
+            color: var(--color-grey-800);
             border: none;
             
             &:hover {
@@ -47,6 +47,9 @@ const getButtonStyle = (type, props) => {
 };
 
 const StyledButton = styled.button`
+    pointer-events: ${({ disabled }) => disabled ? 'none' : 'all'};
+    opacity: ${({ disabled }) => disabled ? 0.5 : 1};
+
     padding: 0 15px;
     font-size: 14px;
     outline: none;
@@ -61,10 +64,12 @@ const StyledButton = styled.button`
     ${({ type }) => getButtonStyle(type)}
 `;
 
-function Button({ type, children, isLoading, ...props }) {
+function Button({
+    type, disabled, children, isLoading, ...props
+}) {
     return (
-        <StyledButton type={type} {...props}>
-            {!isLoading ? children : <Loader type={'small'}/>}
+        <StyledButton type={type} {...props} disabled={disabled}>
+            {!isLoading ? children : <Loader type="small" />}
         </StyledButton>
     );
 }
@@ -76,7 +81,7 @@ Button.propTypes = {
 
 Button.defaultProps = {
     isLoading: false,
-    type: 'classic'
+    type: 'classic',
 };
 
 export default Button;
