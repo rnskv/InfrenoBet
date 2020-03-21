@@ -3,7 +3,7 @@ import Button from 'ui/atoms/Button';
 import BetItem from 'ui/atoms/BetItem';
 
 export const Container = styled.div`
-  margin-top: 25px;
+  margin: 25px 0;
   display: flex;
   flex-wrap: wrap;
   box-sizing: border-box;
