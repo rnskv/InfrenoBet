@@ -38,7 +38,7 @@ function BetsContainer({ bets, isGameEnd }) {
                 isGameEnd={isGameEnd}
             >
                 {
-                    (bets || prevBets).map((bet, index) => (
+                    (bets || prevBets).reverse().map((bet, index) => (
                         <Bet
                             key={`${bet.ticketTo}`}
                             index={index}

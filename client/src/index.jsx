@@ -45,12 +45,12 @@ export const store = new Store({
         game: gameActions,
         betMaker: betMakerActions,
     },
-    reducers,
     domains: {
         user: userDomains,
         game: gameDomains,
         betMaker: betMakerDomains,
     },
+    reducers,
 });
 
 export const infernoClient = new Application({
