@@ -30,7 +30,7 @@ const registerHandler = async (ctx) => {
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
 
-    await new User({ email, name, password: hash }).save();
+    await new User({ email, name, password: hash, avatar: `https://api.adorable.io/avatars/12/${hash}`}).save();
 
     ctx.body = {
         ok: true
