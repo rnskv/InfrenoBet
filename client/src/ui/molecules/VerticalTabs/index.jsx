@@ -12,13 +12,14 @@ import {
 function VerticalTabs({
     tabs,
     activeTabName,
+    onTabClick,
     title,
     style,
     className,
 }) {
     return (
         <Container style={style} className={className}>
-            <Title>{ title }</Title>
+            { title ? <Title>{ title }</Title> : null }
             {
                 tabs.map((tab) => (
                     <VerticalTab
@@ -26,7 +27,7 @@ function VerticalTabs({
                         name={tab.name}
                         title={tab.title}
                         svg={tab.svg}
-                        onClick={tab.onClick}
+                        onClick={() => onTabClick(tab)}
                         isActive={tab.name === activeTabName}
                     />
                 ))
@@ -36,13 +37,15 @@ function VerticalTabs({
 }
 
 VerticalTabs.propTypes = {
-    title: PropTypes.string.isRequired,
+    title: PropTypes.string,
     tabs: PropTypes.array.isRequired,
     activeTabName: PropTypes.string.isRequired,
+    onTabClick: PropTypes.func,
 };
 
 VerticalTabs.defaultProps = {
-
+    onTabClick: null,
+    title: '',
 };
 
 export default VerticalTabs;

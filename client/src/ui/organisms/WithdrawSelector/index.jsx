@@ -1,12 +1,16 @@
 import PropTypes from 'prop-types';
 
 import React from 'react';
+import SVG from 'svg-inline-react';
+
 import NotAuthPlaceHolder from 'ui/organisms/NotAuthPlaceholder';
 import { getExchangedSum } from 'src/helpers/system';
 
 import { useSelector } from 'react-redux';
 
 import DepositCreditCards from 'ui/organisms/DepositCreditCards';
+import chooseSvg from 'src/resources/svg/choose.svg';
+import WithdrawQiwi from 'ui/organisms/WithdrawQiwi';
 
 import {
     Container,
@@ -14,14 +18,25 @@ import {
 } from './styled';
 
 const TAB_COMPONENT = {
-    CREDIT_CARDS: DepositCreditCards,
+    QIWI: WithdrawQiwi,
 };
 
-function DepositSelector({
+function WithdrawSelector({
 }) {
     const isAuth = useSelector((state) => !!state.user.token);
-    const activeDepositTabName = useSelector((state) => state.cashier.activeDepositTabName);
-    const Tab = TAB_COMPONENT[activeDepositTabName];
+    const activeWithdrawTabName = useSelector((state) => state.cashier.activeWithdrawTabName);
+    const Tab = TAB_COMPONENT[activeWithdrawTabName];
+
+    if (activeWithdrawTabName === '') {
+        return (
+            <Container>
+                <NotFound>
+                    <SVG src={chooseSvg} />
+                    <span>Выберите платежную систему</span>
+                </NotFound>
+            </Container>
+        );
+    }
 
     if (!Tab) {
         return (
@@ -39,12 +54,12 @@ function DepositSelector({
     );
 }
 
-DepositSelector.propTypes = {
+WithdrawSelector.propTypes = {
 
 };
 
-DepositSelector.defaultProps = {
+WithdrawSelector.defaultProps = {
 
 };
 
-export default DepositSelector;
+export default WithdrawSelector;

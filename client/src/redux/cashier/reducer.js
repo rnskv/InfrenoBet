@@ -1,16 +1,23 @@
 import * as actionTypes from './actionsTypes';
 
 const initialState = {
-    activeTabName: 'CREDIT_CARDS',
-    value: 2.5,
+    activeDepositTabName: 'CREDIT_CARDS',
+    activeWithdrawTabName: '',
+    value: 0,
 };
 
 function cashierReducer(state = initialState, action) {
     switch (action.type) {
-    case actionTypes.CASHIER_CHANGE_TAB: {
+    case actionTypes.CASHIER_CHANGE_DEPOSIT_TAB: {
         return {
             ...state,
-            activeTabName: action.payload.name,
+            activeDepositTabName: action.payload.name,
+        };
+    }
+    case actionTypes.CASHIER_CHANGE_WITHDRAW_TAB: {
+        return {
+            ...state,
+            activeWithdrawTabName: action.payload.name,
         };
     }
     case actionTypes.CASHIER_CHANGE_VALUE: {

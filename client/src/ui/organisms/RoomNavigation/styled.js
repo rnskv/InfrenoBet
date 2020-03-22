@@ -6,6 +6,7 @@ export const Container = styled.div`
     width: 100%;
     padding: 10px 10px;
     background-color: var(--color-grey-400);
+    border-bottom: 1px solid var(--color-grey-500);
 `;
 
 export const Logo = styled.div`

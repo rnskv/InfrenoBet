@@ -3,6 +3,9 @@ import React from 'react';
 
 import DefaultTemplate from 'ui/templates/Default';
 import RoomNavigation from 'ui/organisms/RoomNavigation';
+import Section from 'ui/atoms/Section';
+import WithdrawSelector from 'ui/organisms/WithdrawSelector';
+import WithdrawRouter from 'ui/organisms/WithdrawRouter';
 
 function Deposit() {
     return (
@@ -11,9 +14,10 @@ function Deposit() {
                 url="/withdraw"
                 title="Вывод"
             />
-            <div style={{ padding: 100, fontSize: 25, textAlign: 'center' }}>
-                Раздел в разработке
-            </div>
+            <Section>
+                <WithdrawRouter />
+                <WithdrawSelector />
+            </Section>
         </DefaultTemplate>
     );
 }

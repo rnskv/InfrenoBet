@@ -22,7 +22,7 @@ const Label = styled.label`
 
   span {
     color: var(--color-white);
-    padding: 10px;
+    padding: 10px 0;
     font-size: 14px;
     display: block;
   }
@@ -33,15 +33,23 @@ const Container = styled.div`
   box-sizing: border-box;
 `;
 
-const Input = React.forwardRef(({ label, ...props }, ref) =>  {
+const Description = styled.span`
+    color: var(--color-grey);
+    padding: 5px 0;
+    font-size: 12px;
+    display: block;
+`;
+
+const Input = React.forwardRef(({ label, description, style, className, ...props }, ref) =>  {
     return (
-        <Container>
+        <Container style={style} className={className}>
             <Label>
                 { label ? <span>{ label }</span> : null }
                 <StyledInput ref={ref} {...props} />
             </Label>
+            { description ? <Description>{ description }</Description> : null }
         </Container>
     );
-})
+});
 
 export default Input;
