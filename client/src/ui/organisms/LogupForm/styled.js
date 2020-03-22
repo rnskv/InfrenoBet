@@ -16,11 +16,7 @@ export const StyledButton = styled(Button)`
 `;
 
 export const StyledForm = styled(AuthenticationForm)`
-    ${Input} {
-        width: 100%;
-        box-sizing: border-box;
-        margin-bottom: 20px;
-    }
+
 `;
 
 export const Label = styled.label`

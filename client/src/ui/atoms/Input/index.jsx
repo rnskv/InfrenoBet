@@ -40,16 +40,16 @@ const Description = styled.span`
     display: block;
 `;
 
-const Input = React.forwardRef(({ label, description, style, className, ...props }, ref) =>  {
-    return (
-        <Container style={style} className={className}>
-            <Label>
-                { label ? <span>{ label }</span> : null }
-                <StyledInput ref={ref} {...props} />
-            </Label>
-            { description ? <Description>{ description }</Description> : null }
-        </Container>
-    );
-});
+const Input = React.forwardRef(({
+    label, description, style, className, ...props
+}, ref) => (
+    <Container style={style} className={className}>
+        <Label>
+            { label ? <span>{ label }</span> : null }
+            <StyledInput ref={ref} {...props} />
+        </Label>
+        { description ? <Description>{ description }</Description> : null }
+    </Container>
+));
 
 export default Input;

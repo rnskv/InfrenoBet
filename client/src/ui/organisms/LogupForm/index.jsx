@@ -38,20 +38,30 @@ function LogupForm({ logUp, isLoading }) {
                 onSubmit={onSubmit}
                 title="Регистрация"
             >
-                <Label>
-                    <Name>Имя:</Name>
-                    <Input ref={nameInput} type="name" name="name" />
-                </Label>
+                <Input
+                    ref={nameInput}
+                    type="name"
+                    name="name"
+                    label="Имя"
+                    // description="Ваше настоящее имя"
+                />
 
-                <Label>
-                    <Name>Эл. Почта:</Name>
-                    <Input ref={emailInput} type="email" name="email" />
-                </Label>
+                <Input
+                    ref={emailInput}
+                    type="email"
+                    name="email"
+                    label="E-mail"
+                    // description="Ваша электронная почта"
+                />
 
-                <Label>
-                    <Name>Пароль:</Name>
-                    <Input ref={passwordInput} type="password" name="password" />
-                </Label>
+                <Input
+                    ref={passwordInput}
+                    type="password"
+                    name="password"
+                    label="Пароль"
+                    // description="Придумайте достаточно сложный пароль"
+                />
+
                 <StyledButton isLoading={isLoading}>Зарегистрироваться</StyledButton>
             </StyledForm>
         </Container>

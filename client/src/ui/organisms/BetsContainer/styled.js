@@ -9,7 +9,7 @@ export const Container = styled.div`
 export const Wrapper = styled.div`
   @keyframes slideFromTop {
     from {
-      margin-top:-${({ betsCount }) => 108 * betsCount}px; 
+      margin-top:-${({ betsCount }) => 100 * betsCount}px; 
     } to {
       margin-top: 0;
     }
@@ -19,7 +19,7 @@ export const Wrapper = styled.div`
     from {
       margin-top: 0; 
     } to {
-      margin-top: -${({ totalBetsCount }) => 108 * totalBetsCount}px;
+      margin-top: -${({ totalBetsCount }) => 100 * totalBetsCount}px;
     }
   }
   
