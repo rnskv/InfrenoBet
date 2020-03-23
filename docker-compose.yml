@@ -5,7 +5,7 @@ services:
         build: ./backend
         image: rnskv/inferno_backend
         ports:
-            - '6001:80'
+            - '6001:6001'
         depends_on:
             - db
         container_name: inferno_backend
@@ -21,7 +21,7 @@ services:
         build: ./client
         image: rnskv/inferno_client
         ports:
-            - '6003:6003'
+            - '6003:80'
         depends_on:
             - realtime
         container_name: inferno_client
