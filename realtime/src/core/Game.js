@@ -283,7 +283,7 @@ class Game {
         this.betsQueue.push(data);
 
         if (this.roulette.isVisible) {
-            console.log('Перенарпавляем ставки в следующую игру')
+            console.log('Перенарпавляем ставки в следующую игру');
             return;
         }
 

@@ -21,7 +21,7 @@ services:
         build: ./client
         image: rnskv/inferno_client
         ports:
-            - '6003:80'
+            - '80:6003'
         depends_on:
             - realtime
         container_name: inferno_client

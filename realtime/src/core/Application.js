@@ -45,12 +45,14 @@ class Application {
         });
 
         socket.on('game.bet', async (betData) => {
+            const { game } = this.rooms['classic'];
+
             if (!socket.jwtToken) {
                 socket.emit('project.notification', { type: notificationsTypes.USER_NOT_AUTH });
                 return;
             }
 
-            if (this.rooms['classic'].game.isClosedForBets) {
+            if (game.isClosedForBets) {
                 socket.emit('project.notification', { type: notificationsTypes.GAME_CLOSED_FOR_BETS });
                 return;
             }
@@ -60,7 +62,6 @@ class Application {
                 return;
             }
 
-            const game = this.rooms['classic'].game;
             const totalUserItemsCount = game.getUserBetsCount(socket.user) + game.getUserBetsCountInQueue(socket.user);
 
             if (
