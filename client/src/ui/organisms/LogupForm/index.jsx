@@ -43,7 +43,6 @@ function LogupForm({ logUp, isLoading }) {
                     type="name"
                     name="name"
                     label="Имя"
-                    // description="Ваше настоящее имя"
                 />
 
                 <Input
@@ -51,7 +50,6 @@ function LogupForm({ logUp, isLoading }) {
                     type="email"
                     name="email"
                     label="E-mail"
-                    // description="Ваша электронная почта"
                 />
 
                 <Input
@@ -59,7 +57,6 @@ function LogupForm({ logUp, isLoading }) {
                     type="password"
                     name="password"
                     label="Пароль"
-                    // description="Придумайте достаточно сложный пароль"
                 />
 
                 <StyledButton isLoading={isLoading}>Зарегистрироваться</StyledButton>
