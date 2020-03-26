@@ -77,6 +77,7 @@ export default function ({ app }) {
                 type: BET_SENDING
             });
 
+            console.log('Ставим ставку')
             await app.managers.rooms.get('roulette').game.registerUserBets({
                 user: socket.user,
                 items: betData.items

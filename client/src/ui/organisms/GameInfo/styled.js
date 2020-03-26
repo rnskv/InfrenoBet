@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 import CommonTitle from 'ui/atoms/Title';
 import NumbersPlace from 'ui/atoms/NumbersPlace';
+import media from 'src/helpers/media';
 
 export const Container = styled.div`
     background: var(--color-blue);
@@ -73,6 +74,11 @@ export const ItemsCount = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  
+  ${media.tablet`
+     max-width: 300px;
+     min-width: 200px;
+  `}
 `;
 
 export const ItemsText = styled.div`

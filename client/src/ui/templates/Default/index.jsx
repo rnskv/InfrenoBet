@@ -11,6 +11,7 @@ import SidebarNotifications from 'ui/molecules/SidebarNotifications';
 import SidebarProfile from 'ui/molecules/SidebarProfile';
 import LoginPopup from 'ui/organisms/LoginPopup';
 import Popup from 'ui/molecules/Popup';
+import media from 'src/helpers/media';
 
 const Content = styled.div`
     margin: 75px auto;
@@ -22,7 +23,10 @@ const Content = styled.div`
     box-shadow: 0px 0px 3px 0px var(--color-shadow);
     align-self: flex-start;
     overflow: hidden;
-    min-width: 900px;
+
+    ${media.tablet`
+        width: calc(100% - 110px);
+    `}
 `;
 
 const Page = styled.div`

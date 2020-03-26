@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import media from 'src/helpers/media';
 
 export const Container = styled.div`
   width: 700px;
@@ -8,6 +9,13 @@ export const Container = styled.div`
   position: relative;
   top: 6rem;
   border: 1px solid rgba(0, 0, 0, 0.2);
+  
+  ${media.tablet`
+    top: 0;
+    width: 70%;
+    height: 100%;
+  `}
+    
 `;
 
 export const Background = styled.div`
@@ -20,5 +28,5 @@ export const Background = styled.div`
   top: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 0.7);
-  z-index: 10;
+  z-index: 11;
 `;

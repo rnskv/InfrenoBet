@@ -26,6 +26,7 @@
     --color-shadow: #0c0c0c;
 
     --header-height: 60px;
-
+    --mobile-screen-width: 800px;
     --muted: rgba(255, 255, 255, 0.6);
+
 }

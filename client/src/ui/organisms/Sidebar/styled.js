@@ -1,5 +1,6 @@
 import Title from 'ui/atoms/Title';
 import styled from 'styled-components';
+import media from 'src/helpers/media';
 
 export const Wrapper = styled.div`
   width: 280px;
@@ -55,4 +56,9 @@ export const StaticContainer = styled.div`
             }
         }
     }
+    
+    ${media.tablet`
+        width: 80px;
+        display:  ${({ side }) => side === 'left' ? 'flex' : 'none'}
+    `}
 `;
