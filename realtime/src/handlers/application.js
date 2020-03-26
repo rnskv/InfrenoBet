@@ -29,7 +29,7 @@ export default function ({ app }) {
         });
 
         socket.on('game.roulette.bet', async (betData) => {
-            const { game } = app.rooms['roulette'];
+            const { game } = app.managers.rooms.get('roulette');
 
             if (!socket.jwtToken) {
                 socket.emit('project.notification', { type: notificationsTypes.USER_NOT_AUTH });
@@ -78,14 +78,14 @@ export default function ({ app }) {
                 type: BET_SENDING
             });
 
-            await app.rooms['roulette'].game.registerUserBets({
+            await app.managers.rooms.get('roulette').game.registerUserBets({
                 user: socket.user,
                 items: betData.items
             });
         });
 
         socket.on('game.roulette.sync', () => {
-            app.rooms['roulette'].game.sync(socket);
+            app.managers.rooms.get('roulette').game.sync(socket);
         });
     }
 }

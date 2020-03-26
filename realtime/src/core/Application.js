@@ -3,7 +3,6 @@ import Room from './Room';
 class Application {
     constructor() {
         this.usersSockets = {};
-        this.rooms = {};
         this.managers = {};
     }
 
@@ -23,16 +22,12 @@ class Application {
             throw new Error(`Property 'name' is required for manager`);
         }
 
-        if (manager[name]) {
+        if (this.managers[name]) {
             throw new Error(`Manager ${name} is already exist`);
         }
+
         this.managers[name] = manager;
         return this;
-    }
-
-    createRoom({ id }) {
-        this.rooms[id] = new Room({ app: this });
-        this.rooms[id].reset();
     }
 }
 

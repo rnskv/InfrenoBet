@@ -8,6 +8,7 @@ import config from './config';
 import Room from './core/Room';
 
 import SocketsManager from './managers/SocketsManager';
+import RoomsManager from './managers/RoomsManager';
 import handlers from './handlers/application';
 
 const app = express();
@@ -16,14 +17,16 @@ const server = http.Server(app);
 const infernoIO = new Application(server);
 
 const socketsManager = new SocketsManager();
+const roomsManager = new RoomsManager();
 
 infernoIO.addManager('sockets', socketsManager);
+infernoIO.addManager('rooms', roomsManager);
 
 infernoIO.init();
 
 socketsManager.init({ handlers });
 socketsManager.connect({ socket, server });
 
-infernoIO.createRoom({ id: 'roulette'});
+roomsManager.create('roulette');
 
 server.listen(config.realtime_port, config.realtime_host);
