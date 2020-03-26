@@ -17,7 +17,7 @@ export default ({ app }) => {
 
     const addBet = ({ items }) => async (dispatch) => {
         const totalBet = items.reduce((acc, item) => acc + item.cost, 0);
-        realtime.io.emit('game.bet', { items });
+        realtime.io.emit('game.roulette.bet', { items });
 
         dispatch(actions.game.betSended());
         dispatch(actions.user.changeBalance({ amount: -totalBet }));

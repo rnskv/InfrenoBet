@@ -14,7 +14,7 @@ const options = {
 
 export const usePassportStrategies = (passport) => {
     const jwtStrategy = new JwtStrategy(options, async (payload, done) => {
-        const user = await User.findById(payload.id);
+        const user = await User.findById(payload._id);
         if (user) {
             done(null, user);
         } else {
@@ -29,11 +29,11 @@ export const usePassportStrategies = (passport) => {
             profileFields: ['uid', 'first_name', 'last_name', 'screen_name', 'sex', 'photo', 'photo_200', 'bdate']
         },
         async function(accessToken, refreshToken, profile, next) {
-            const user = await User.findOne({ vkId: profile.id });
+            const user = await User.findOne({ vkId: profile._id });
             console.log(profile);
             if (!user) {
                 const user = await new User({
-                    vkId: profile.id,
+                    vkId: profile._id,
                     name: profile.displayName,
                     login: profile.username,
                     avatar: profile._json.photo_200

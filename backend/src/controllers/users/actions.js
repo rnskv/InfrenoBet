@@ -16,7 +16,7 @@ const changeBalanceHandler = async (ctx) => {
 };
 
 const getHandler = async (ctx) => {
-    const user = await User.findById(mongoose.Types.ObjectId(String(ctx.params.id)));
+    const user = await User.findById(mongoose.Types.ObjectId(String(ctx.params._id)));
 
     if (!user) {
         ctx.throw({ type: USER_NOT_FOUND });
@@ -30,6 +30,7 @@ const getAllHandler = async (ctx) => {
 };
 
 const getMeHandler = async (ctx) => {
+    console.log('get me')
     ctx.body = {
         profile: ctx.state.user
     };

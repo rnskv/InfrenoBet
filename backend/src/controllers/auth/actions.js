@@ -50,7 +50,7 @@ const loginHandler = async (ctx) => {
     if (isEqualPasswords) {
         const token = createToken({
             payload: {
-                id: user.id,
+                _id: user._id,
                 name: user.name,
                 email: user.email,
             }
@@ -65,10 +65,10 @@ const loginHandler = async (ctx) => {
 
 const loginVkHandler = (ctx) => {
     const { user } = ctx.state;
-
+    console.log( user._id );
     const token = createToken({
         payload: {
-            id: user.id,
+            _id: user._id,
             name: user.name,
             email: user.email,
         }

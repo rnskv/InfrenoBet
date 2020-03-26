@@ -1,15 +1,14 @@
 import Roulette from 'src/core/Roulette';
 
-import { gameApi, betsApi, itemsApi } from 'src/modules/api';
-import { getRandomInt } from 'src/helpers/math';
+import { gameApi, betsApi } from 'src/modules/api';
 import { getBetsTotalValue } from  'src/helpers/game';
-import * as notificationsTypes from '../../../shared/configs/notificationsTypes';
+import * as notificationsTypes from 'shared/configs/notificationsTypes';
 
 class Game {
     constructor({ hash, secret, app, betsQueue, onFinish }) {
         this.app = app;
         this.roulette = new Roulette({
-            sockets: this.app.io.sockets,
+            sockets: this.app.managers.sockets.io.sockets,
             onEnd: this.onRouletteRotateEnd.bind(this)
         });
         this.bets = [];
@@ -110,22 +109,22 @@ class Game {
         this.secret = secret;
         this.bets = bets;
 
-        this.app.io.sockets.emit('game.reset', this.state);
+        this.app.managers.sockets.emitAllUsers({ eventName: 'game.reset', data: this.state});
     }
 
     async start() {
         this.isStarted = true;
 
-        this.app.io.sockets.emit('game.start', this.time);
+        this.app.managers.sockets.emitAllUsers({ eventName: 'game.start', data: this.time});
 
         while (this.time > 0) {
             await this.tick();
         }
 
         if (this.isWaitingLastBets) {
-            this.app.io.sockets.emit('game.waitingLastBets', {
+            this.app.managers.sockets.emitAllUsers({ eventName: 'game.waitingLastBets', data: {
                 betsQueueLength: this.state.betsQueueLength
-            });
+            }});
         }
 
         while (this.isWaitingLastBets) {
@@ -145,8 +144,7 @@ class Game {
                 this.isClosedForBets = true;
             }
 
-            this.app.io.sockets.emit('game.tick', this.time);
-
+            this.app.managers.sockets.emitAllUsers({ eventName: 'game.tick', data: this.time });
             setTimeout(resolve, 1000)
         });
     }
@@ -180,7 +178,7 @@ class Game {
         }
 
         //@todo вынести в отедльный метод
-        this.app.io.sockets.emit('game.startRoulette');
+        this.app.managers.sockets.emitAllUsers({ eventName: 'game.startRoulette' });
     }
 
     onRouletteRotateEnd(winner) {
@@ -188,65 +186,46 @@ class Game {
         this.isFinished = true;
         this.publicSecret = this.secret;
 
-        this.app.io.sockets.emit('game.getWinner', {
+        this.app.managers.sockets.emitAllUsers({ eventName: 'game.getWinner', data: {
             winner,
             secret: this.secret
-        });
+        } });
 
+        this.app.managers.sockets.emitUserById(winner.bet.user._id, { eventName: 'game.win' });
         //@todo отедльный метод
-        if (this.app.usersSockets[winner.bet.user._id]) {
-            this.app.usersSockets[winner.bet.user._id].forEach(socketId => {
-                if (this.app.io.sockets.connected[socketId]) {
-                    this.app.io.sockets.connected[socketId].emit('game.win');
-                }
-            });
-        }
 
         setTimeout(this.onGameEnd.bind(this), this.endingTime * 1000)
     }
 
     join(userData) {
-        this.app.io.sockets.emit('game.join', userData);
+        this.app.managers.sockets.emitAllUsers({ eventName: 'game.join', userData });
     }
 
     getUserBetsCount(user) {
-        return this.bets.filter((bet) => bet.user._id === user.id).length
+        return this.bets.filter((bet) => bet.user._id === user._id).length
     }
 
     getUserBetsCountInQueue(user) {
-        return this.betsQueue.filter((bet) => bet.user.id === user.id).reduce((acc, bet) => acc + bet.items.length, 0)
+        return this.betsQueue.filter((bet) => bet.user._id === user._id).reduce((acc, bet) => acc + bet.items.length, 0)
     }
 
     isFirstUserBet(user) {
-        return !this.users.filter((_user) => _user._id === user.id).length;
+        return !this.users.filter((_user) => _user._id === user._id).length;
     }
 
     async addBet(betData) {
         return new Promise((async resolve => {
             const acceptedBets = [];
-            console.log('addBet' ,betData)
-
-            // const acceptedBet = await betsApi.execute('create', {
-            //     body: {
-            //         type: 'GAME_CLASSIC',
-            //         game: this._id,
-            //         user: betData.user.id,
-            //         item: '5e6fc4a5dff153ea60d7c85d',
-            //     }
-            // }).catch(err => console.log(err));
-            //
-            // console.log('acceptedBet');
 
             for (const item of betData.items) {
                 const bet = await betsApi.execute('create', {
                     body: {
                         type: 'GAME_CLASSIC',
                         game: this._id,
-                        user: betData.user.id,
+                        user: betData.user._id,
                         item: item._id
                     }
                 }).catch(err => console.log(err));
-
 
                 acceptedBets.unshift(bet)
             }
@@ -255,11 +234,11 @@ class Game {
                 this.bets.push(acceptedBet);
             }
 
-            this.app.io.sockets.emit('game.bets', {
+            this.app.managers.sockets.emitAllUsers({ eventName: 'game.bets', data: {
                 bets: acceptedBets,
                 bank: this.bank,
                 users: this.users
-            });
+            }});
 
             if (this.users.length >= 2 && !this.isStarted) {
                 this.start();
@@ -300,13 +279,25 @@ class Game {
 
     async processFirstBet() {
         const betData = this.betsQueue[0];
-        await this.addBet(betData);
-        betData.onAccept();
+        try {
+            await this.addBet(betData);
+            console.log('Сообщаем пользователю', betData)
+            this.app.managers.sockets.emitUserById(betData.user._id, {
+                eventName: 'project.notification',
+                data: { type: notificationsTypes.BET_ACCEPTED }
+            });
+        } catch (err) {
+            this.app.managers.sockets.emitUserById(betData.user._id, {
+                eventName: 'project.notification',
+                data: { type: notificationsTypes.INTERNAL_SERVER_ERROR }
+            });
+        }
+
         this.betsQueue.shift();
     }
 
     sync(socket) {
-        socket.emit('game.sync', this.state);
+        socket.emit('game.roulette.sync', this.state);
     }
 }
 

@@ -39,7 +39,7 @@ const getWinner = async (ctx) => {
     const winner = await Game.getWinnerById(id);
     const bank = await Bet.getGameBankSumById(id);
     //@todo 0.9 - процент отдаци пользователю (вынести в настройки)
-    await User.changeBalance(winner.bet.user.id, bank.sum * 0.90);
+    await User.changeBalance(winner.bet.user._id, bank.sum * 0.90);
 
     ctx.body = winner;
 };
