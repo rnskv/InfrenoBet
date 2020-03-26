@@ -1,49 +1,56 @@
 import Manager from 'src/core/Manager';
 
-class SocketsManager extends Manager{
+class SocketsManager extends Manager {
     constructor() {
         super();
         this.io = null;
         this.usersSocketsMap = {};
+
     }
 
-    setIO(io) {
-        this.io = io;
+    init({ handlers }) {
+        super.init();
+        this.handlers = handlers({ app: this.app });
     }
 
-    emitAllUsers({ eventName, params = {} }) {
+    connect({ socket, server }) {
+        this.io = socket(server, { serveClient: false });
+        this.io.on('connection', this.handlers.bind(this));
+    }
+
+    emitAllUsers({ eventName, data = {} }) {
         if (!eventName) {
             throw new Error('app.emitAllUsers property eventName is required')
         }
 
-        this.io.sockets.emit(eventName, params);
+        this.io.sockets.emit(eventName, data);
     }
 
-    emitUserById(id, { eventName, params = {} }) {
+    emitUserById(id, { eventName, data = {} }) {
         if (!eventName) {
             throw new Error('app.emitUserById property eventName is required')
         }
 
+        console.log('user sockets', this.usersSocketsMap[id]);
         if (this.usersSocketsMap[id]) {
             this.usersSocketsMap[id].forEach(socketId => {
                 if (this.io.sockets.connected[socketId]) {
-                    this.io.sockets.connected[socketId].emit(eventName, params);
+                    this.io.sockets.connected[socketId].emit(eventName, data);
                 }
             });
         }
     }
 
-    emitSocket(socket, { eventName, params = {} }) {
+    emit(socket, { eventName, data = {} }) {
         if (!eventName) {
             throw new Error('app.emitSocket property eventName is required')
         }
 
         if (socket.user) {
-            console.log('emitSocket', socket.user._id, eventName, params);
-
-            this.emitUserById(socket.user._id, { eventName, params })
+            console.log('emitSocket', socket.user._id, eventName, data);
+            this.emitUserById(socket.user._id, { eventName, data })
         } else {
-            socket.emit(eventName, params);
+            socket.emit(eventName, data);
         }
     }
 

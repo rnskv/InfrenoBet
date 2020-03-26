@@ -7,7 +7,7 @@ export default function ({ app }) {
     store.dispatch(domains.user.getProfile());
     store.dispatch(domains.betMaker.getItems());
 
-    realtime.io.emit('game.sync');
+    realtime.io.emit('game.roulette.sync');
 
     realtime.io.on('disconnect', () => {
         store.dispatch(actions.user.addNotification({ type: notificationsTypes.REALTIME_DISCONNECTED }));
@@ -41,7 +41,7 @@ export default function ({ app }) {
         store.dispatch(domains.user.getProfile());
     });
 
-    realtime.io.on('game.sync', (state) => {
+    realtime.io.on('game.roulette.sync', (state) => {
         store.dispatch(actions.game.sync({ state }));
         store.dispatch(domains.user.getProfile());
     });
@@ -64,7 +64,7 @@ export default function ({ app }) {
         store.dispatch(actions.game.updateRoulette({ state }));
     });
 
-    realtime.io.on('game.betWasAccepted', () => {
+    realtime.io.on('game.roulette.betWasAccepted', () => {
         store.dispatch(actions.user.addNotification({ type: notificationsTypes.BET_ACCEPTED }));
         store.dispatch(actions.game.betAccepted());
     });
