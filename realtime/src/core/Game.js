@@ -210,15 +210,15 @@ class Game {
     }
 
     getUserBetsCount(user) {
-        return this.bets.filter((bet) => bet.user._id === user.id).length
+        return this.bets.filter((bet) => bet.user._id === user._id).length
     }
 
     getUserBetsCountInQueue(user) {
-        return this.betsQueue.filter((bet) => bet.user.id === user.id).reduce((acc, bet) => acc + bet.items.length, 0)
+        return this.betsQueue.filter((bet) => bet.user._id === user._id).reduce((acc, bet) => acc + bet.items.length, 0)
     }
 
     isFirstUserBet(user) {
-        return !this.users.filter((_user) => _user._id === user.id).length;
+        return !this.users.filter((_user) => _user._id === user._id).length;
     }
 
     async addBet(betData) {
@@ -242,7 +242,7 @@ class Game {
                     body: {
                         type: 'GAME_CLASSIC',
                         game: this._id,
-                        user: betData.user.id,
+                        user: betData.user._id,
                         item: item._id
                     }
                 }).catch(err => console.log(err));

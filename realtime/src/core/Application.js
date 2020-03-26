@@ -72,12 +72,13 @@ class Application {
                 socket.emit('project.notification', { type: notificationsTypes.SO_MANY_ITEMS });
                 return;
             }
+
             //Тут проверить надо хватает ли чуваку денег и если да то сразу вычесть их;
 
             try {
                 await userApi.execute('changeBalance', {
                     body: {
-                        id: socket.user.id,
+                        id: socket.user._id,
                         amount: getBetValue(betData)
                     }
                 });
@@ -116,16 +117,16 @@ class Application {
 
     addUserSocket(socket) {
         if (!socket.user) return;
-        if (!this.usersSockets[socket.user.id]) {
-            this.usersSockets[socket.user.id] = [socket.id]
+        if (!this.usersSockets[socket.user._id]) {
+            this.usersSockets[socket.user._id] = [socket.id]
         } else {
-            this.usersSockets[socket.user.id].push(socket.id);
+            this.usersSockets[socket.user._id].push(socket.id);
         }
     }
 
     removeUserSocket(socket) {
         if (!socket.user) return;
-        this.usersSockets[socket.user.id] = this.usersSockets[socket.user.id].filter((socketId) => socketId !== socket.id);
+        this.usersSockets[socket.user._id] = this.usersSockets[socket.user._id].filter((socketId) => socketId !== socket.id);
     }
 }
 

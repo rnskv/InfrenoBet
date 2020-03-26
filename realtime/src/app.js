@@ -6,8 +6,8 @@ import config from './config';
 import Room from './core/Room';
 
 const app = express();
-export const server = http.Server(app);
+const server = http.Server(app);
 
-export const application = new Application(server);
+const infernoIO = new Application(server);
 
 server.listen(config.realtime_port, config.realtime_host);
