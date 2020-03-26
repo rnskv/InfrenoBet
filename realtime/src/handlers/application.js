@@ -66,7 +66,6 @@ export default function ({ app }) {
                         amount: getBetValue(betData)
                     }
                 });
-
                 //Тут надо залогировать все ставки которые купил пользователь
             } catch (err) {
                 console.log(err);
