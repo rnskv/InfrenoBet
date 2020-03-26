@@ -4,6 +4,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Title from 'ui/atoms/Title';
 import ErrorNotification from 'ui/atoms/FormErrorNotification';
+import media from 'src/helpers/media';
 
 const StyledForm = styled.form`
     width: 500px;
@@ -12,6 +13,7 @@ const StyledForm = styled.form`
     padding: 25px;
     margin: 25px;
     border-radius: 8px;
+   
     
     ${Title} {
         margin: 0 0 25px;
