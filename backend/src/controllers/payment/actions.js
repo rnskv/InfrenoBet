@@ -6,7 +6,6 @@ import User from '../../models/User';
 import config from '../../config';
 
 import FreekassaPayment from 'src/models/FreekassaPayment';
-
 import freekassa from 'freekassa-node';
 const request = require('request-promise');
 
@@ -26,6 +25,14 @@ function unitPayHandler(ctx) {
             message: "Обработчик unitpay инициализирован"
         }
     }
+}
+
+async function freeKassaGetUserPaymentHandler(ctx) {
+    ctx.body = await FreekassaPayment.getByUserId(ctx.params.id);
+}
+
+async function freeKassaGetAllHandler(ctx) {
+    ctx.body = await FreekassaPayment.getAll(ctx.params);
 }
 
 async function freeKassaHandler(ctx) {
@@ -115,7 +122,19 @@ export const freekassaRedirect = new Action({
 });
 
 export const freekassaPay = new Action({
-    method: 'get',
+    method: 'post',
     url: '/freekassa',
     handler: freeKassaHandler,
+});
+
+export const freekassaGetAll = new Action({
+    method: 'get',
+    url: '/freekassa',
+    handler: freeKassaGetAllHandler,
+});
+
+export const freekassaGetByUserId = new Action({
+    method: 'get',
+    url: '/freekassa/:id',
+    handler: freeKassaGetUserPaymentHandler,
 });

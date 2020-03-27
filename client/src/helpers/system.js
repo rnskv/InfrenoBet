@@ -1,4 +1,9 @@
 import crypto from 'crypto';
+import moment from 'moment';
+
+export function getFormattedDate(date) {
+    return moment(date).format('DD/MM/YYYY, HH:MM:SS');
+}
 
 export function getUserColorsById(id) {
     const nicknameHash = crypto.createHash('md5')

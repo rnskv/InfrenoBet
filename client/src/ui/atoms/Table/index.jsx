@@ -1,9 +1,10 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import { TableContainer } from './styled';
 
 function Table({
-    children, heads, rows, getRowItemColor, ...props
+    children, heads, rows, getRowItemColor, getRowItemValue, ...props
 }) {
     const generatedRows = [];
 
@@ -12,7 +13,7 @@ function Table({
 
         heads.forEach((head, id) => {
             generatedRows[index][id] = {
-                value: row[head.key] !== undefined ? row[head.key] : 'x',
+                value: getRowItemValue(row, head.key),
                 color: getRowItemColor(row, head.key),
             };
             generatedRows[index].keyIndex = index;
@@ -32,12 +33,16 @@ function Table({
                     generatedRows.map((row) => (
                         <tr key={row.keyIndex}>
                             {
-                                row.map((item, index) => <td
-                                    key={index}
-                                    style={{ color: item.color }}
-                                >
-                                    { item.value }
-                                </td>)
+                                row.map((item, index) => (
+                                    <td
+                                        key={index}
+                                        style={{ color: item.color }}
+                                    >
+                                        <div>
+                                            { item.value }
+                                        </div>
+                                    </td>
+                                ))
                             }
                         </tr>
                     ))
@@ -47,5 +52,19 @@ function Table({
         </TableContainer>
     );
 }
+
+Table.propTypes = {
+    heads: PropTypes.array,
+    rows: PropTypes.array,
+    getRowItemColor: PropTypes.func,
+    getRowItemValue: PropTypes.func,
+};
+
+Table.defaultProps = {
+    heads: [],
+    rows: [],
+    getRowItemColor: () => 'white',
+    getRowItemValue: (row, key) => row[key],
+};
 
 export default Table;

@@ -105,7 +105,13 @@ export default ({ app }) => {
         }),
     });
 
-    window.test = paymentApi;
+    paymentApi.addRequests({
+        getAllFreekassaPayments: new Request({
+            url: '/freekassa',
+            method: 'get',
+        }),
+    });
+
     return {
         root: rootApi,
         user: usersApi,

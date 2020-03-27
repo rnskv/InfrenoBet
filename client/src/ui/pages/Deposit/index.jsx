@@ -6,6 +6,8 @@ import RoomNavigation from 'ui/organisms/RoomNavigation';
 
 import DepositRouter from 'ui/organisms/DepositRouter';
 import DepositSelector from 'ui/organisms/DepositSelector';
+import DepositHistory from 'ui/organisms/DepositHistory';
+
 import Section from 'ui/atoms/Section';
 
 function Deposit() {
@@ -19,6 +21,7 @@ function Deposit() {
                 <DepositRouter />
                 <DepositSelector />
             </Section>
+            <DepositHistory />
         </DefaultTemplate>
     );
 }

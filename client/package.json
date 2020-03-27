@@ -62,7 +62,6 @@
     "webpack-node-externals": "1.7.2"
   },
   "dependencies": {
-    "react-redux": "7.2.0",
     "babel-polyfill": "^6.26.0",
     "crypto": "^1.0.1",
     "dotenv": "^8.2.0",
@@ -71,9 +70,11 @@
     "history": "^4.10.1",
     "js-cookie": "^2.2.1",
     "mobx": "5.9.4",
+    "moment": "^2.24.0",
     "nodemon": "^2.0.2",
     "prop-types": "^15.7.2",
     "react": "16.8.6",
+    "react-redux": "7.2.0",
     "react-router-dom": "^5.1.0",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",

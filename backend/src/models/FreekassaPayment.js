@@ -30,7 +30,15 @@ const freekassaPaymentSchema = new Schema({
     },
     us_key: {
         type: String,
-    }
+    },
+    STATUS: {
+        type: String,
+        default: 'SUCCESS',
+    },
+    createDate: {
+        type: Date,
+        default: Date.now(),
+    },
 });
 
 const fkPayment = mongoose.model('fkPayment', freekassaPaymentSchema);
@@ -39,9 +47,16 @@ fkPayment.create = async (data) => {
     return new fkPayment(data).save()
 };
 
+fkPayment.getAll = async (id) => {
+    return await fkPayment.find()
+        .select({ MERCHANT_ORDER_ID: 1, AMOUNT: 1, intid: 1, createDate: 1, STATUS: 1 })
+        .populate('MERCHANT_ORDER_ID')
+};
+
 fkPayment.getByUserId = async (id) => {
     return await fkPayment
         .findOne({ MERCHANT_ORDER_ID: mongoose.Types.ObjectId(id)})
+        .select({ MERCHANT_ORDER_ID: 1, AMOUNT: 1, intid: 1, createDate: 1, STATUS: 1 })
         .populate('MERCHANT_ORDER_ID')
 };
 
