@@ -71,7 +71,9 @@ async function freeKassaHandler(ctx) {
         us_key,
     });
 
-    console.log('created', payment, signature);
+    const user = await User.changeBalance(MERCHANT_ORDER_ID, AMOUNT);
+
+    console.log('created', payment, signature, user);
 
     ctx.body = 'YES';
 }

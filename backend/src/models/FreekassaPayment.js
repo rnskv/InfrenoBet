@@ -40,7 +40,7 @@ fkPayment.create = async (data) => {
 };
 
 fkPayment.getByUserId = async (id) => {
-    return await Item
+    return await fkPayment
         .findOne({ MERCHANT_ORDER_ID: mongoose.Types.ObjectId(id)})
         .populate('MERCHANT_ORDER_ID')
 };
