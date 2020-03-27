@@ -36,8 +36,6 @@ const Page = styled.div`
 function Default({ children, ...props }) {
     return (
         <div {...props}>
-
-            <a href={'http://127.0.0.1:6001/api/payment/freekassa/redirect'}>test merchant</a>
             <Header />
             <LoginPopup />
             <Page>
