@@ -53,8 +53,10 @@ export default ({ app }) => {
                 Cookies.set('token', response.token);
                 dispatch(actions.user.logIn({ token: response.token }));
                 realtime.io.emit('project.logIn', response.token);
-                api.services.user.setHeader('Authorization', response.token);
                 dispatch(getProfile());
+
+                api.services.user.setBearerFromCookies();
+                api.services.payment.setBearerFromCookies();
             } else {
                 dispatch(actions.user.error());
             }
