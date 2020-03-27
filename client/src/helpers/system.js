@@ -39,22 +39,23 @@ export function getFormattedTime(time, { minutes = true, seconds = true } = {}) 
     return `${MM >= 10 ? MM : `0${MM}`} : ${SS >= 10 ? SS : `0${SS}`}`;
 }
 
+const currency = 'RUB';
+
+const exchange = {
+    USD: 1,
+    EUR: 1.07,
+    RUB: 0.0125,
+};
+
+const icon = {
+    USD: '$',
+    RUB: '₽',
+    EUR: '€',
+};
+
+export const getSumInUSD = (sum) => sum * exchange[currency];
+
 export const getExchangedSum = (dollarSum, { accuracy = 2, isNeedIcon = true } = {}) => {
-    const currency = 'RUB';
-
-    const exchange = {
-        USD: 1,
-        EUR: 1.07,
-        RUB: 0.0125,
-    };
-
-    const icon = {
-        USD: '$',
-        RUB: '₽',
-        EUR: '€',
-    };
-
-
     const exchangedSum = (dollarSum / exchange[currency]);
     const formattedExchangedSum = !(exchangedSum % 10)
         ? exchangedSum

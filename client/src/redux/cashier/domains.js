@@ -1,3 +1,5 @@
+import { getSumInUSD } from 'src/helpers/system';
+
 export default ({ app }) => {
     const { store, api } = app.modules;
     const { domains, actions } = store;
@@ -7,7 +9,7 @@ export default ({ app }) => {
 
         api.services.payment.execute('getFreekassaUrl', {
             body: {
-                amount,
+                amount: getSumInUSD(amount),
             },
         })
             .then((response) => {
