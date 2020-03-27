@@ -31,7 +31,7 @@ const userSchema = new Schema({
     },
     balance: {
         type: Number,
-        default: 10,
+        default: 0.01,
     },
     experience: {
         type: Number,
