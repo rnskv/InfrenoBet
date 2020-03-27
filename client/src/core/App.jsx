@@ -42,7 +42,7 @@ function App({ store }) {
                 <Route path="/game/lottery">
                     <Lottery />
                 </Route>
-                <Route path="/close">
+                <Route path="/close" exact>
                     Промежуточное окно
                     {
                         (() => {
