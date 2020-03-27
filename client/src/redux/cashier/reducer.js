@@ -1,7 +1,7 @@
 import * as actionTypes from './actionsTypes';
 
 const initialState = {
-    activeDepositTabName: 'CREDIT_CARDS',
+    activeDepositTabName: 'FREE_KASSA',
     activeWithdrawTabName: '',
     value: 0,
     isLoading: false,

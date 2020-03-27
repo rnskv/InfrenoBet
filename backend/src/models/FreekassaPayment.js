@@ -36,7 +36,7 @@ const freekassaPaymentSchema = new Schema({
 const fkPayment = mongoose.model('fkPayment', freekassaPaymentSchema);
 
 fkPayment.create = async (data) => {
-    return new Item(data).save()
+    return new fkPayment(data).save()
 };
 
 fkPayment.getByUserId = async (id) => {

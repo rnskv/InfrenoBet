@@ -15,7 +15,7 @@ import {
 import Sidebar from 'ui/organisms/Sidebar';
 
 const TAB_COMPONENT = {
-    CREDIT_CARDS: DepositCreditCards,
+    FREE_KASSA: DepositCreditCards,
 };
 
 function DepositSelector({

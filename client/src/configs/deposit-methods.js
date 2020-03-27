@@ -1,7 +1,13 @@
 import CreditCardsSvg from 'src/resources/svg/credit-cards.svg';
 import QiwiSvg from 'src/resources/svg/qiwi.svg';
+import CashierSvg from 'src/resources/svg/cashier.svg';
 
 export default [
+    {
+        name: 'FREE_KASSA',
+        title: 'Free Kassa',
+        svg: CashierSvg,
+    },
     {
         name: 'CREDIT_CARDS',
         title: 'Visa/MasterCard',
