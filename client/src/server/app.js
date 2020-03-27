@@ -58,7 +58,8 @@ function renderFullPage(html, preloadedState, styleTags) {
             <meta name="viewport"
                   content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
             <meta http-equiv="X-UA-Compatible" content="ie=edge">
-            <title>Document</title>
+            <title>INFERNO BET - онлайн лотерея</title>
+            <meta name="verification" content="cf0bb3d99b3a1dba77e550d078a322" />
             ${styleTags}
         </head>
         <body>
