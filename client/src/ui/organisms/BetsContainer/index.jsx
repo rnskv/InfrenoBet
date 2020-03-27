@@ -28,7 +28,7 @@ function usePrevious(value) {
 
 function BetsContainer({ bets, isGameEnd }) {
     const prevBets = usePrevious(bets) || [];
-    console.log(bets);
+    const comparator = (a, b) => (a.ticketTo < b.ticketTo ? 1 : -1);
     return (
         <Container>
             <Wrapper
@@ -38,7 +38,7 @@ function BetsContainer({ bets, isGameEnd }) {
                 isGameEnd={isGameEnd}
             >
                 {
-                    (bets || prevBets).reverse().map((bet, index) => (
+                    (bets || prevBets).sort(comparator).map((bet, index) => (
                         <Bet
                             key={`${bet.ticketTo}`}
                             index={index}
