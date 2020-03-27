@@ -14,6 +14,15 @@ export default ({ app }) => {
         domains,
     } = store;
 
+    const paymentApi = new Api({
+        url: `${SERVER_PROTOCOL}://${SERVER_HOST}:${SERVER_PORT}/api/payment`,
+        headers: {
+            'Content-Type': 'application/json',
+            // Authorization: store.getState().user.token,
+        },
+        onError: ({ type }) => store.dispatch(actions.user.addNotification({ type })),
+    });
+
     const itemsApi = new Api({
         url: `${SERVER_PROTOCOL}://${SERVER_HOST}:${SERVER_PORT}/api/items`,
         headers: {
@@ -89,11 +98,20 @@ export default ({ app }) => {
         }),
     });
 
+    paymentApi.addRequests({
+        getFreekassaUrl: new Request({
+            url: '/freekassa/redirect',
+            method: 'post',
+        }),
+    });
+
+    window.test = paymentApi;
     return {
         root: rootApi,
         user: usersApi,
         game: gameApi,
         auth: authApi,
         items: itemsApi,
+        payment: paymentApi,
     };
 };

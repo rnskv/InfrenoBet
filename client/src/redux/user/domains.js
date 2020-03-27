@@ -6,6 +6,7 @@ export default ({ app }) => {
     const { actions, domains } = store;
 
     api.services.user.setBearerFromCookies();
+    api.services.payment.setBearerFromCookies();
 
     if (store.getState().user.token) {
         realtime.io.emit('project.logIn', store.getState().user.token);

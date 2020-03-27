@@ -4,6 +4,7 @@ const initialState = {
     activeDepositTabName: 'CREDIT_CARDS',
     activeWithdrawTabName: '',
     value: 0,
+    isLoading: false,
 };
 
 function cashierReducer(state = initialState, action) {
@@ -24,6 +25,20 @@ function cashierReducer(state = initialState, action) {
         return {
             ...state,
             value: action.payload.value,
+        };
+    }
+
+    case actionTypes.CASHIER_LOADING_START: {
+        return {
+            ...state,
+            isLoading: true,
+        };
+    }
+
+    case actionTypes.CASHIER_LOADING_STOP: {
+        return {
+            ...state,
+            isLoading: false,
         };
     }
 

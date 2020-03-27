@@ -20,3 +20,11 @@ export const changeValue = ({ value }) => ({
         value,
     },
 });
+
+export const startLoading = () => ({
+    type: actionTypes.CASHIER_LOADING_START
+});
+
+export const stopLoading = () => ({
+    type: actionTypes.CASHIER_LOADING_STOP
+});

@@ -5,11 +5,18 @@ import jwt from 'jsonwebtoken';
 import User from '../../models/User';
 import config from '../../config';
 
+import FreekassaPayment from 'src/models/FreekassaPayment';
+
 import freekassa from 'freekassa-node';
 const request = require('request-promise');
 
 import { USER_ALREADY_EXIST, USER_NOT_FOUND, USER_WRONG_PASSWORD, USER_WRONG_REGISTER_DATA } from 'shared/configs/notificationsTypes';
 const { VK_CLIENT_ID, VK_CLIENT_SECRET, VK_REDIRECT_URL, VK_CLOSE_PAGE_URL } = process.env;
+
+const SECRET_WORD_1 = 'l2tz7nn9';
+const SECRET_WORD_2 = 'eevxffrj';
+
+const shopID = 198358;
 
 function unitPayHandler(ctx) {
     console.log('pay unit');
@@ -21,7 +28,7 @@ function unitPayHandler(ctx) {
     }
 }
 
-function freeKassaHandler(ctx) {
+async function freeKassaHandler(ctx) {
     const {
         MERCHANT_ID,
         AMOUNT,
@@ -46,24 +53,34 @@ function freeKassaHandler(ctx) {
         us_key,
     });
 
-    ctx.body = {
-        result: {
-            message: "Обработчик freekassa инициализирован"
-        }
-    }
+    const signature = freekassa({
+        "AMOUNT": AMOUNT,
+        "MERCHANT_ORDER_ID": MERCHANT_ORDER_ID,
+        "MERCHANT_ID": shopID,
+    }, SECRET_WORD_2);
+
+    const payment = await FreekassaPayment.create({
+        MERCHANT_ID,
+        AMOUNT,
+        intid,
+        MERCHANT_ORDER_ID,
+        P_EMAIL,
+        P_PHONE,
+        CUR_ID,
+        SIGN,
+        us_key,
+    });
+
+    console.log('created', payment, signature);
+
+    ctx.body = 'YES';
 }
 
 function freeKassaRedirectHandler(ctx) {
-    console.log('redirect to freekassa');
+    console.log('redirect to freekassa', ctx.request.body);
+    const userID = ctx.state.user._id;
+    const amount = ctx.request.body.amount; // in USD
 
-    const SECRET_WORD_1 = 'l2tz7nn9';
-    const SECRET_WORD_2 = 'eevxffrj';
-
-    const shopID = 198358;
-    const userID = 1337;
-    const amount = 4; // in USD
-
-    console.log('Redirect to robokassa system');
     const signature = freekassa({
         "AMOUNT": amount,
         "MERCHANT_ORDER_ID": userID,
@@ -76,7 +93,10 @@ function freeKassaRedirectHandler(ctx) {
         "m": shopID,
     }, SECRET_WORD_1);
 
-    ctx.redirect(paymentForm.url);
+    ctx.body = {
+        url: paymentForm.url
+    };
+    // ctx.redirect(paymentForm.url);
 }
 
 export const unitPay = new Action({
@@ -86,9 +106,10 @@ export const unitPay = new Action({
 });
 
 export const freekassaRedirect = new Action({
-    method: 'get',
+    method: 'post',
     url: '/freekassa/redirect',
-    handler: freeKassaRedirectHandler
+    handler: freeKassaRedirectHandler,
+    middleware: passport.authenticate('jwt')
 });
 
 export const freekassaPay = new Action({

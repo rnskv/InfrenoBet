@@ -29,6 +29,8 @@ class Store extends Module {
 
     provideApp() {
         Object.keys(this.domains).forEach((name) => {
+            console.log(this.domains)
+            // console.log(this.domains[name], name)
             this.domains[name] = this.domains[name]({ app: this.app });
         });
     }

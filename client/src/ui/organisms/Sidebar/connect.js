@@ -1,14 +1,9 @@
-import { infernoClient } from 'src/index';
-
-import * as userActions from 'src/redux/user/actions';
-
-const userDomains = infernoClient.modules.store.domains.user;
-const gameDomains = infernoClient.modules.store.domains.game;
+import actions from 'src/redux/actions';
 
 export function mapDispatchToProps(dispatch) {
     return {
-        open: ({ side }) => dispatch(userActions.openSidebar({ side })),
-        close: ({ side }) => dispatch(userActions.closeSidebar({ side })),
+        open: ({ side }) => dispatch(actions.user.openSidebar({ side })),
+        close: ({ side }) => dispatch(actions.user.closeSidebar({ side })),
     };
 }
 
