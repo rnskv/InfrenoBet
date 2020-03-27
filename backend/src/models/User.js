@@ -62,11 +62,11 @@ User.changeBalance = async (id, amount) => {
         throw USER_NOT_FOUND;
     }
 
-    if (user.balance + amount < 0) {
+    if (Number(user.balance) + Number(amount) < 0) {
         throw USER_NOT_ENOUGH_MONEY;
     }
 
-    user.balance = user.balance + amount;
+    user.balance = Number(user.balance) + Number(amount);
     user.save();
 
     return user
