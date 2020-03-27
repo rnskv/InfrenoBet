@@ -65,6 +65,9 @@ function renderFullPage(html, preloadedState, styleTags) {
         <body>
             <div id="root">
                 ${html}
+                <a href="//showstreams.tv/" style={{ textAlign: 'center', margin: '25px 0', display: 'block' }}>
+                    <img src="//www.free-kassa.ru/img/fk_btn/17.png" title="Бесплатный видеохостинг" />
+                </a>
             </div>
             <script>
                   // WARNING: See the following for security issues around embedding JSON in HTML:
