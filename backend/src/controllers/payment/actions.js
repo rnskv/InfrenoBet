@@ -46,7 +46,7 @@ async function freeKassaHandler(ctx) {
         CUR_ID,
         SIGN,
         us_key,
-    } = ctx.request.query;
+    } = ctx.request.body;
 
     console.log('Пришла платежка', {
         MERCHANT_ID,
