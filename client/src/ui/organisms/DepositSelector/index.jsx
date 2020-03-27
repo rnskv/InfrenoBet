@@ -12,6 +12,7 @@ import {
     Container,
     NotFound
 } from './styled';
+import Sidebar from 'ui/organisms/Sidebar';
 
 const TAB_COMPONENT = {
     CREDIT_CARDS: DepositCreditCards,
@@ -35,6 +36,9 @@ function DepositSelector({
         <Container>
             <NotAuthPlaceHolder isVisible={!isAuth} />
             <Tab />
+            <a href="//showstreams.tv/" style={{ textAlign: 'center', margin: '25px 0', display: 'block' }}>
+                <img src="//www.free-kassa.ru/img/fk_btn/17.png" title="Бесплатный видеохостинг" />
+            </a>
         </Container>
     );
 }

@@ -81,5 +81,5 @@ function renderFullPage(html, preloadedState, styleTags) {
 }
 
 app.listen(port, process.env.CLIENT_HOST, () => {
-    console.log('Server started at port', port, app);
+    console.log('Server started at', process.env.CLIENT_HOST, port, app);
 });
