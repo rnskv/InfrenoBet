@@ -6,7 +6,6 @@ export default ({ app }) => {
 
     const redirectToFreekassa = ({ amount }) => async (dispatch) => {
         dispatch(actions.cashier.startLoading());
-
         api.services.payment.execute('getFreekassaUrl', {
             body: {
                 amount: getSumInUSD(amount),

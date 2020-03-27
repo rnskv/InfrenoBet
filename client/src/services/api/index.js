@@ -99,16 +99,13 @@ export default ({ app }) => {
     });
 
     paymentApi.addRequests({
-        getFreekassaUrl: new Request({
-            url: '/freekassa/redirect',
-            method: 'post',
-        }),
-    });
-
-    paymentApi.addRequests({
         getAllFreekassaPayments: new Request({
             url: '/freekassa',
             method: 'get',
+        }),
+        getFreekassaUrl: new Request({
+            url: '/freekassa/redirect',
+            method: 'post',
         }),
     });
 
