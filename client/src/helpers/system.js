@@ -1,8 +1,9 @@
 import crypto from 'crypto';
-import moment from 'moment';
+import moment from 'moment-timezone';
 
-export function getFormattedDate(date) {
-    return moment(date).format('DD/MM/YYYY, HH:MM:SS');
+export function getTimeFromNow(date) {
+    moment.locale('ru');
+    return moment.tz(date, 'Europe/Moscow').fromNow();
 }
 
 export function getUserColorsById(id) {

@@ -114,6 +114,10 @@ export default ({ app }) => {
             url: '/freekassa/redirect',
             method: 'post',
         }),
+        getMyDeposits: new Request({
+            url: '/deposits/my',
+            method: 'get',
+        }),
     });
 
     return {

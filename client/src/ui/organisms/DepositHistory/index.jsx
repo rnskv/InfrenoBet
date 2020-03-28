@@ -5,7 +5,7 @@ import { infernoClient } from 'src/index';
 
 import Table from 'ui/atoms/Table';
 
-import { getFormattedDate, getExchangedSum } from 'src/helpers/system';
+import { getTimeFromNow, getExchangedSum } from 'src/helpers/system';
 import {
     Container,
 } from './styled';
@@ -16,7 +16,8 @@ function DepositHistory() {
     useEffect(() => {
         const { payment } = infernoClient.modules.api.services;
         async function fetchData() {
-            const response = await payment.execute('getAllFreekassaPayments');
+            const response = await payment.execute('getMyDeposits');
+            console.log('REPOS', response)
             setHistory(response);
         }
 
@@ -24,17 +25,19 @@ function DepositHistory() {
     }, []);
 
     const heads = [
-        { key: 'MERCHANT_ORDER_ID', name: 'Пользователь' },
-        { key: 'intid', name: 'ID' },
-        { key: 'AMOUNT', name: 'СУММА' },
-        { key: 'createDate', name: 'ДАТА' },
-        { key: 'STATUS', name: 'СТАТУС' },
+        { key: 'user', name: 'Пользователь' },
+        { key: '_id', name: 'Идентификатор' },
+        { key: 'system', name: 'Платежная система' },
+        { key: 'amount', name: 'Сумма' },
+        { key: 'createDate', name: 'Время' },
+        { key: 'status', name: 'Статус' },
     ];
 
     const getRowItemColor = (row, key) => {
-        if (key !== 'STATUS') return 'white';
+        if (key === 'amount') return 'var(--color-green)';
+        if (key !== 'status') return 'white';
 
-        switch (row.STATUS) {
+        switch (row.status) {
         case 'SUCCESS': {
             return 'var(--color-green)';
         }
@@ -47,12 +50,12 @@ function DepositHistory() {
 
     const getRowItemValue = (row, key) => {
         if (key === 'createDate') {
-            return getFormattedDate(row[key]);
+            return getTimeFromNow(row[key]);
         }
-        if (key === 'AMOUNT') {
-            return getExchangedSum(row[key]);
+        if (key === 'amount') {
+            return `+${getExchangedSum(row[key])}`;
         }
-        if (key === 'MERCHANT_ORDER_ID') {
+        if (key === 'user') {
             return <div>
                 { row[key].name }
                 <img src={row[key].avatar} width={20}/>

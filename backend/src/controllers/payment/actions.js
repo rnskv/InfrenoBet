@@ -38,6 +38,12 @@ async function freeKassaGetAllHandler(ctx) {
     ctx.body = await FreekassaPayment.getAll(ctx.params);
 }
 
+async function getMyDepositsHandler(ctx) {
+    console.log('get my deposits', ctx.state.user);
+    ctx.body = await Deposit.getByUserId(ctx.state.user._id);
+}
+
+
 async function getUserDepositsHandler(ctx) {
     ctx.body = await Deposit.getByUserId(ctx.params.id);
 }
@@ -157,4 +163,11 @@ export const getAllByUserId = new Action({
     url: '/:id',
     handler: getUserDepositsHandler,
     middlewares: [passport.authenticate('jwt'), accessMiddleware({ accessLevel: 1 })]
+});
+
+export const getMy = new Action({
+    method: 'get',
+    url: '/deposits/my',
+    handler: getMyDepositsHandler,
+    middlewares: [passport.authenticate('jwt')]
 });

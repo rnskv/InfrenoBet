@@ -40,9 +40,9 @@ Deposit.getAll = async () => {
 };
 
 Deposit.getByUserId = async (id) => {
-    return await Deposit.findOne({ user: mongoose.Types.ObjectId(id)})
+    return await Deposit.find({ user: mongoose.Types.ObjectId(id)})
         .sort({ createDate: -1 })
-        .populate('user')
+        .populate('user') || []
 };
 
 export default Deposit
