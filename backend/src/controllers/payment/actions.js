@@ -85,7 +85,7 @@ async function freeKassaHandler(ctx) {
     ctx.body = 'YES';
 }
 
-function freeKassaRedirectHandler(ctx) {
+async function freeKassaRedirectHandler(ctx) {
     console.log('redirect to freekassa', ctx.request.body);
     const userID = ctx.state.user._id;
     const amount = ctx.request.body.amount; // in USD

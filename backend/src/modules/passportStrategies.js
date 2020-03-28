@@ -29,11 +29,15 @@ export const usePassportStrategies = (passport) => {
             profileFields: ['uid', 'first_name', 'last_name', 'screen_name', 'sex', 'photo', 'photo_200', 'bdate']
         },
         async function(accessToken, refreshToken, profile, next) {
-            const user = await User.findOne({ vkId: profile._id });
-            console.log(profile);
+            if (!profile.id) {
+                return next(null, false);
+            }
+
+            const user = await User.findOne({ vkId: profile.id });
+
             if (!user) {
                 const user = await new User({
-                    vkId: profile._id,
+                    vkId: profile.id,
                     name: profile.displayName,
                     login: profile.username,
                     avatar: profile._json.photo_200
