@@ -37,7 +37,7 @@ const freekassaPaymentSchema = new Schema({
     },
     createDate: {
         type: Date,
-        default: Date.now(),
+        default: Date.now,
     },
 });
 
@@ -50,6 +50,7 @@ fkPayment.create = async (data) => {
 fkPayment.getAll = async (id) => {
     return await fkPayment.find()
         .select({ MERCHANT_ORDER_ID: 1, AMOUNT: 1, intid: 1, createDate: 1, STATUS: 1 })
+        .sort({ createDate: -1 })
         .populate('MERCHANT_ORDER_ID')
 };
 
@@ -57,6 +58,7 @@ fkPayment.getByUserId = async (id) => {
     return await fkPayment
         .findOne({ MERCHANT_ORDER_ID: mongoose.Types.ObjectId(id)})
         .select({ MERCHANT_ORDER_ID: 1, AMOUNT: 1, intid: 1, createDate: 1, STATUS: 1 })
+        .sort({ createDate: -1 })
         .populate('MERCHANT_ORDER_ID')
 };
 
