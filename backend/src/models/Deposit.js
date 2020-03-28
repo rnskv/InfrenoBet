@@ -1,13 +1,8 @@
 import mongoose from 'mongoose';
-const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 const { Schema } = mongoose;
 
 const depositSchema = new Schema({
-    seq: {
-      type: Number,
-      default: 0,
-    },
     user: {
         type: mongoose.Types.ObjectId,
         ref: 'user'
@@ -26,10 +21,6 @@ const depositSchema = new Schema({
         type: Date,
         default: Date.now,
     },
-});
-
-depositSchema.plugin(AutoIncrement, {
-    inc_field: 'seq'
 });
 
 const Deposit = mongoose.model('deposit', depositSchema);

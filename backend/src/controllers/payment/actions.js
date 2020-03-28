@@ -57,18 +57,6 @@ async function freeKassaHandler(ctx) {
         us_key,
     } = ctx.request.body;
 
-    console.log('Пришла платежка', {
-        MERCHANT_ID,
-        AMOUNT,
-        intid,
-        MERCHANT_ORDER_ID,
-        P_EMAIL,
-        P_PHONE,
-        CUR_ID,
-        SIGN,
-        us_key,
-    });
-
     await Deposit.create({
         user: MERCHANT_ORDER_ID,
         amount: AMOUNT,
