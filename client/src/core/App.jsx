@@ -47,7 +47,7 @@ function App({ store }) {
                     {
                         (() => {
                             window.opener && window.opener.location.reload();
-                            window.close();
+                            // window.close();
                         })()
                     }
                 </Route>
