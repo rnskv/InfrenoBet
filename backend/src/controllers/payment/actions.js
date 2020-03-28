@@ -6,6 +6,7 @@ import User from '../../models/User';
 import config from '../../config';
 
 import FreekassaPayment from 'src/models/FreekassaPayment';
+import Deposit from 'src/models/Deposit';
 import freekassa from 'freekassa-node';
 import accessMiddleware from 'src/middlewares/check-access';
 
@@ -35,6 +36,14 @@ async function freeKassaGetAllHandler(ctx) {
     ctx.body = await FreekassaPayment.getAll(ctx.params);
 }
 
+async function getUserDepositsHandler(ctx) {
+    ctx.body = await Deposit.getByUserId(ctx.params.id);
+}
+
+async function getAllDepositsHandler(ctx) {
+    ctx.body = await Deposit.getAll(ctx.params);
+}
+
 async function freeKassaHandler(ctx) {
     const {
         MERCHANT_ID,
@@ -60,13 +69,14 @@ async function freeKassaHandler(ctx) {
         us_key,
     });
 
-    const signature = freekassa({
-        "AMOUNT": AMOUNT,
-        "MERCHANT_ORDER_ID": MERCHANT_ORDER_ID,
-        "MERCHANT_ID": shopID,
-    }, SECRET_WORD_2);
+    await Deposit.create({
+        user: MERCHANT_ORDER_ID,
+        amount: AMOUNT,
+        system: 'FREE_KASSA',
+        status: 'SUCCESS'
+    });
 
-    const payment = await FreekassaPayment.create({
+    await FreekassaPayment.create({
         MERCHANT_ID,
         AMOUNT,
         intid,
@@ -78,9 +88,7 @@ async function freeKassaHandler(ctx) {
         us_key,
     });
 
-    const user = await User.changeBalance(MERCHANT_ORDER_ID, AMOUNT);
-
-    console.log('created', payment, signature, user);
+    await User.changeBalance(MERCHANT_ORDER_ID, AMOUNT);
 
     ctx.body = 'YES';
 }
@@ -131,12 +139,27 @@ export const freekassaGetAll = new Action({
     method: 'get',
     url: '/freekassa',
     handler: freeKassaGetAllHandler,
-    middlewares: [passport.authenticate('jwt'), accessMiddleware]
+    middlewares: [passport.authenticate('jwt'), accessMiddleware({ accessLevel: 1 })]
 });
 
 export const freekassaGetByUserId = new Action({
     method: 'get',
     url: '/freekassa/:id',
     handler: freeKassaGetUserPaymentHandler,
-    middlewares: [passport.authenticate('jwt'), accessMiddleware]
+    middlewares: [passport.authenticate('jwt'), accessMiddleware({ accessLevel: 1 })]
+});
+
+
+export const getAll = new Action({
+    method: 'get',
+    url: '/',
+    handler: getAllDepositsHandler,
+    middlewares: [passport.authenticate('jwt'), accessMiddleware({ accessLevel: 1 })]
+});
+
+export const getAllByUserId = new Action({
+    method: 'get',
+    url: '/:id',
+    handler: getUserDepositsHandler,
+    middlewares: [passport.authenticate('jwt'), accessMiddleware({ accessLevel: 1 })]
 });

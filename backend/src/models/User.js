@@ -41,6 +41,10 @@ const userSchema = new Schema({
         type: Boolean,
         default: false,
     },
+    accessLevel: {
+        type: Number,
+        default: 1,
+    },
     createDate: {
         type: Date,
         default: Date.now(),

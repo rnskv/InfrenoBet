@@ -1,8 +1,10 @@
 import notifications from 'shared/configs/notifications';
-import { INTERNAL_SERVER_ERROR } from 'shared/configs/notificationsTypes';
+import { USER_NOT_ENOUGHT_ACCESS_RIGHT } from 'shared/configs/notificationsTypes';
 
-export default async (ctx = {}, next) => {
+export default ({ accessLevel }) => async (ctx = {}, next) => {
     const user = ctx.state.user;
-    console.log('Check access middleware', user);
+    if (user.accessLevel < accessLevel) {
+        ctx.throw({ type: USER_NOT_ENOUGHT_ACCESS_RIGHT });
+    }
     await next(ctx);
 };

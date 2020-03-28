@@ -5,6 +5,7 @@ import {
     USER_NOT_ENOUGH_MONEY,
     USER_WRONG_REGISTER_DATA,
     USER_NOT_SELECT_ITEMS,
+    USER_NOT_ENOUGHT_ACCESS_RIGHT,
     USER_SUCCESS_REGISTER,
     INTERNAL_SERVER_ERROR,
     BET_SENDING,
@@ -52,6 +53,11 @@ export default {
         type: 'ERROR',
         title: 'Игра',
         text: 'У вас недостаточно средств. Пожалуйста, пополните ваш баланс',
+    },
+    [USER_NOT_ENOUGHT_ACCESS_RIGHT]: {
+        type: 'ERROR',
+        title: 'Сервер',
+        text: 'У вас недостаточно прав для выполнения запроса',
     },
     [USER_NOT_SELECT_ITEMS]: {
         type: 'ERROR',
