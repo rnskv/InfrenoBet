@@ -46,8 +46,8 @@ function SidebarProfile({
                                     <ExperienceBar />
                                 </TotalExperienceBar>
                                 <Information>
-                                    <Level>LVL 25</Level>
-                                    <Experience>100500/30000XP</Experience>
+                                    <Level>LVL 1</Level>
+                                    <Experience>0/500XP</Experience>
                                 </Information>
                             </Wrapper>
                         </>

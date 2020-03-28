@@ -31,7 +31,7 @@ function GameControls({
                     {`Вы вложили в игру - ${itemsCount} из 10 монет.`}
                 </Information>
                 <Description>
-                    {`Мин.ставка ${getExchangedSum(0.013)}, максимум предметов 10.
+                    {`Мин.ставка ${getExchangedSum(0.01)}, максимум предметов 10.
                     Чем выше ставка, тем больше шанс победить.`}
                     <More>Подробнее</More>
                 </Description>
