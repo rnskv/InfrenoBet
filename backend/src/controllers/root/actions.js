@@ -17,7 +17,7 @@ const postHandler = async (ctx) => {
 export const root = new Action({
     method: 'get',
     url: '/',
-    middleware: passport.authenticate('jwt'),
+    middlewares: [passport.authenticate('jwt')],
     handler: getHandler,
 });
 

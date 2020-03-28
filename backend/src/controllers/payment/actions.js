@@ -7,7 +7,7 @@ import config from '../../config';
 
 import FreekassaPayment from 'src/models/FreekassaPayment';
 import freekassa from 'freekassa-node';
-const request = require('request-promise');
+import accessMiddleware from 'src/middlewares/check-access';
 
 import { USER_ALREADY_EXIST, USER_NOT_FOUND, USER_WRONG_PASSWORD, USER_WRONG_REGISTER_DATA } from 'shared/configs/notificationsTypes';
 const { VK_CLIENT_ID, VK_CLIENT_SECRET, VK_REDIRECT_URL, VK_CLOSE_PAGE_URL } = process.env;
@@ -118,7 +118,7 @@ export const freekassaRedirect = new Action({
     method: 'post',
     url: '/freekassa/redirect',
     handler: freeKassaRedirectHandler,
-    middleware: passport.authenticate('jwt')
+    middlewares: [passport.authenticate('jwt')]
 });
 
 export const freekassaPay = new Action({
@@ -131,10 +131,12 @@ export const freekassaGetAll = new Action({
     method: 'get',
     url: '/freekassa',
     handler: freeKassaGetAllHandler,
+    middlewares: [passport.authenticate('jwt'), accessMiddleware]
 });
 
 export const freekassaGetByUserId = new Action({
     method: 'get',
     url: '/freekassa/:id',
     handler: freeKassaGetUserPaymentHandler,
+    middlewares: [passport.authenticate('jwt'), accessMiddleware]
 });

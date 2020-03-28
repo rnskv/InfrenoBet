@@ -95,7 +95,7 @@ export const loginVk = new Action({
     method: 'get',
     url: '/vk',
     handler: loginVkHandler,
-    middleware: passport.authenticate('vkontakte-token'),
+    middlewares: [passport.authenticate('vkontakte-token')],
 });
 
 export const loginVkGetCode = new Action({

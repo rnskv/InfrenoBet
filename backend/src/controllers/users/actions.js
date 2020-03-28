@@ -40,7 +40,7 @@ const getMeHandler = async (ctx) => {
 export const getMe = new Action({
     method: 'get',
     url: '/me',
-    middleware: passport.authenticate('jwt'),
+    middlewares: [passport.authenticate('jwt')],
     handler: getMeHandler,
 });
 
