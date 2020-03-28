@@ -4,6 +4,7 @@ import passport from 'koa-passport';
 import jwt from 'jsonwebtoken';
 import User from '../../models/User';
 import config from '../../config';
+import * as notificationsTypes from 'shared/configs/notificationsTypes';
 
 import FreekassaPayment from 'src/models/FreekassaPayment';
 import Deposit from 'src/models/Deposit';
@@ -11,6 +12,7 @@ import freekassa from 'freekassa-node';
 import accessMiddleware from 'src/middlewares/check-access';
 
 import { USER_ALREADY_EXIST, USER_NOT_FOUND, USER_WRONG_PASSWORD, USER_WRONG_REGISTER_DATA } from 'shared/configs/notificationsTypes';
+import notifications from 'shared/configs/notifications';
 const { VK_CLIENT_ID, VK_CLIENT_SECRET, VK_REDIRECT_URL, VK_CLOSE_PAGE_URL } = process.env;
 
 const SECRET_WORD_1 = 'l2tz7nn9';
@@ -57,26 +59,31 @@ async function freeKassaHandler(ctx) {
         us_key,
     } = ctx.request.body;
 
-    await Deposit.create({
-        user: MERCHANT_ORDER_ID,
-        amount: AMOUNT,
-        system: 'FREE_KASSA',
-        status: 'SUCCESS'
-    });
+    try {
+        await Deposit.create({
+            user: MERCHANT_ORDER_ID,
+            amount: AMOUNT,
+            system: 'FREE_KASSA',
+            status: 'SUCCESS'
+        });
 
-    await FreekassaPayment.create({
-        MERCHANT_ID,
-        AMOUNT,
-        intid,
-        MERCHANT_ORDER_ID,
-        P_EMAIL,
-        P_PHONE,
-        CUR_ID,
-        SIGN,
-        us_key,
-    });
+        await FreekassaPayment.create({
+            MERCHANT_ID,
+            AMOUNT,
+            intid,
+            MERCHANT_ORDER_ID,
+            P_EMAIL,
+            P_PHONE,
+            CUR_ID,
+            SIGN,
+            us_key,
+        });
 
-    await User.changeBalance(MERCHANT_ORDER_ID, AMOUNT);
+        await User.changeBalance(MERCHANT_ORDER_ID, AMOUNT);
+    } catch (err) {
+        ctx.throw({ type: notificationsTypes.INTERNAL_SERVER_ERROR })
+    }
+
 
     ctx.body = 'YES';
 }
