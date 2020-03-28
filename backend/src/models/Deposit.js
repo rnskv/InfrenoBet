@@ -26,7 +26,7 @@ const depositSchema = new Schema({
 const Deposit = mongoose.model('deposit', depositSchema);
 
 Deposit.create = async (data) => {
-    return new fkPayment(data).save()
+    return new Deposit(data).save()
 };
 
 Deposit.update = async (id, data) => {
