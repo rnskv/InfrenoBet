@@ -14,6 +14,8 @@ export default ({ app }) => {
 
     const getProfile = () => async (dispatch) => {
         // @todo вынести в геттер апи isAut или что то такое
+        console.log('getProfile', api.services.user.headers.Authorization);
+
         if (!api.services.user.headers.Authorization) {
             return;
         }
@@ -69,6 +71,7 @@ export default ({ app }) => {
     };
 
     const logOut = () => (dispatch) => {
+        console.log('LOG OUT')
         Cookies.remove('token');
         api.services.user.setHeader('Authorization', null);
         dispatch(actions.user.logOut());

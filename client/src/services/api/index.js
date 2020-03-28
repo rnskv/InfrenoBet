@@ -1,4 +1,5 @@
 import { Api, Request } from 'shared/api';
+import { USER_NOT_FOUND } from 'shared/configs/notificationsTypes';
 
 const { SERVER_PROTOCOL, SERVER_PORT, SERVER_HOST } = process.env;
 
@@ -20,7 +21,7 @@ export default ({ app }) => {
             'Content-Type': 'application/json',
             // Authorization: store.getState().user.token,
         },
-        onError: ({ type }) => store.dispatch(actions.user.addNotification({ type })),
+        onError: ({ type }) => app.modules.store.dispatch(actions.user.addNotification({ type })),
     });
 
     const itemsApi = new Api({
@@ -29,7 +30,7 @@ export default ({ app }) => {
             'Content-Type': 'application/json',
             // Authorization: store.getState().user.token,
         },
-        onError: ({ type }) => store.dispatch(actions.user.addNotification({ type })),
+        onError: ({ type }) => app.modules.store.dispatch(actions.user.addNotification({ type })),
     });
 
     const authApi = new Api({
@@ -39,7 +40,7 @@ export default ({ app }) => {
         },
         onError: ({ type }) => {
             console.log(app);
-            store.dispatch(actions.user.addNotification({ type }));
+            app.modules.store.dispatch(actions.user.addNotification({ type }));
         },
     });
 
@@ -47,9 +48,15 @@ export default ({ app }) => {
         url: `${SERVER_PROTOCOL}://${SERVER_HOST}:${SERVER_PORT}/api/users`,
         headers: {
             'Content-Type': 'application/json',
-            // Authorization: store.getState().user.token,
         },
-        onError: ({ type }) => dispatch(actions.user.addNotification({ type })),
+        onError: ({ type }) => {
+            console.log(type, 'ERROR');
+            app.modules.store.dispatch(actions.user.addNotification({ type }));
+
+            if (type === USER_NOT_FOUND) {
+                app.modules.store.dispatch(domains.user.logOut());
+            }
+        },
     });
 
     const rootApi = new Api({

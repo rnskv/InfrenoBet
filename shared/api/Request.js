@@ -12,6 +12,7 @@ export default class Request {
         this.method = method;
         this.body = body;
         this.headers = headers;
+        this.isLoading = true;
     }
 
     execute({
@@ -20,7 +21,9 @@ export default class Request {
         headers = {},
         onError = null
     }) {
-        return new Promise((resolve, reject) => {
+        if (this.promise) return this.promise;
+
+        this.promise = new Promise((resolve, reject) => {
             const url = `${apiUrl}${this.url}`;
 
             const resultOptions = {
@@ -67,7 +70,12 @@ export default class Request {
                         .catch(err => {
                             console.error(`Api can't parse json object in answer from server`, err)
                         });
+                })
+                .finally(() => {
+                    this.promise = null;
                 });
         });
+
+        return this.promise;
     }
 }

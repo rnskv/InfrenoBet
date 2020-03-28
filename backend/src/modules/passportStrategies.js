@@ -3,6 +3,7 @@ import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 import VkTokenStrategy from 'passport-vkontakte-token';
 import config from 'src/config';
 import User from 'src/models/User';
+import { USER_NOT_FOUND } from 'shared/configs/notificationsTypes';
 
 const { VK_CLIENT_ID, VK_CLIENT_SECRET, VK_REDIRECT_URL } = process.env;
 
@@ -18,7 +19,7 @@ export const usePassportStrategies = (passport) => {
         if (user) {
             done(null, user);
         } else {
-            done(null, false);
+            done({ type: USER_NOT_FOUND }, false);
         }
     });
 

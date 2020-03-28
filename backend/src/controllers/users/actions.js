@@ -30,7 +30,8 @@ const getAllHandler = async (ctx) => {
 };
 
 const getMeHandler = async (ctx) => {
-    console.log('get me')
+    console.log('get me');
+
     ctx.body = {
         profile: ctx.state.user
     };
