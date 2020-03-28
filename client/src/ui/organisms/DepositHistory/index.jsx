@@ -8,6 +8,7 @@ import Table from 'ui/atoms/Table';
 import { getTimeFromNow, getExchangedSum } from 'src/helpers/system';
 import {
     Container,
+    StyledLoader
 } from './styled';
 
 
@@ -73,8 +74,9 @@ function DepositHistory() {
                         getRowItemValue={getRowItemValue}
                         heads={heads}
                         rows={history}
+                        emptyText={'Здесь будет выводится история ваших пополнений'}
                     />
-                ) : '....loading....'
+                ) : <StyledLoader />
             }
 
         </Container>

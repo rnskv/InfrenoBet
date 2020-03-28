@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { TableContainer } from './styled';
+import { TableContainer, EmptyText } from './styled';
 
 function Table({
-    children, heads, rows, getRowItemColor, getRowItemValue, ...props
+    children, heads, rows, getRowItemColor, getRowItemValue, emptyText, ...props
 }) {
     const generatedRows = [];
 
@@ -22,38 +22,46 @@ function Table({
 
 
     return (
-        <TableContainer {...props}>
-            <tbody>
-                <tr>
+        <>
+            <TableContainer {...props}>
+                <tbody>
+                    <tr>
+                        {
+                            heads.map((head, index) => <td key={index}>{ head.name }</td>)
+                        }
+                    </tr>
                     {
-                        heads.map((head, index) => <td key={index}>{ head.name }</td>)
+                        generatedRows.map((row) => (
+                            <tr key={row.keyIndex}>
+                                {
+                                    row.map((item, index) => (
+                                        <td
+                                            key={index}
+                                            style={{ color: item.color }}
+                                        >
+                                            <div>
+                                                { item.value }
+                                            </div>
+                                        </td>
+                                    ))
+                                }
+                            </tr>
+                        ))
                     }
-                </tr>
-                {
-                    generatedRows.map((row) => (
-                        <tr key={row.keyIndex}>
-                            {
-                                row.map((item, index) => (
-                                    <td
-                                        key={index}
-                                        style={{ color: item.color }}
-                                    >
-                                        <div>
-                                            { item.value }
-                                        </div>
-                                    </td>
-                                ))
-                            }
-                        </tr>
-                    ))
-                }
-                { children }
-            </tbody>
-        </TableContainer>
+                    { children }
+                </tbody>
+            </TableContainer>
+            { rows.length === 0 ? (
+                <EmptyText>
+                    { emptyText }
+                </EmptyText>
+            ) : null}
+        </>
     );
 }
 
 Table.propTypes = {
+    emptyText: PropTypes.string,
     heads: PropTypes.array,
     rows: PropTypes.array,
     getRowItemColor: PropTypes.func,
@@ -61,6 +69,7 @@ Table.propTypes = {
 };
 
 Table.defaultProps = {
+    emptyText: 'Нет данных',
     heads: [],
     rows: [],
     getRowItemColor: () => 'white',

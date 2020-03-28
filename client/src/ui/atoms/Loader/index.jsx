@@ -4,6 +4,7 @@ import React from 'react';
 
 import InlineSVG from 'svg-inline-react';
 import ovalLoaderSvg from 'src/resources/svg/oval-loader.svg';
+
 import {
     Container,
 } from './styled';

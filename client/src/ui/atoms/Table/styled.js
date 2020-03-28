@@ -2,6 +2,15 @@ import { Link as RouterLink } from 'react-router-dom';
 
 import styled from 'styled-components';
 
+export const EmptyText = styled.div`
+  color: var(--color-white);
+  text-align: center;
+  padding: 25px;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: var(--color-grey-600);
+`;
+
 export const TableContainer = styled.table`
   width: 100%;
   background-color: var(--color-grey-600);
