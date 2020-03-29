@@ -73,7 +73,7 @@ function DepositHistory() {
         }
 
         if (key === 'status') {
-            return depositTypes[value];
+            return depositTypes[value].text;
         }
 
         return value;
