@@ -8,11 +8,11 @@ import { useSelector } from 'react-redux';
 
 import DepositCreditCards from 'ui/organisms/DepositCreditCards';
 
+import Sidebar from 'ui/organisms/Sidebar';
 import {
     Container,
-    NotFound
+    NotFound,
 } from './styled';
-import Sidebar from 'ui/organisms/Sidebar';
 
 const TAB_COMPONENT = {
     FREE_KASSA: DepositCreditCards,

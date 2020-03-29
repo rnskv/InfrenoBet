@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import SVG from 'svg-inline-react';
 import {
     Container,
-    Title
+    Title,
 } from './styled';
 
 

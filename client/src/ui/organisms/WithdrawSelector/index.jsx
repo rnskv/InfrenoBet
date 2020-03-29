@@ -14,7 +14,7 @@ import WithdrawQiwi from 'ui/organisms/WithdrawQiwi';
 
 import {
     Container,
-    NotFound
+    NotFound,
 } from './styled';
 
 const TAB_COMPONENT = {

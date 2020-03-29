@@ -41,12 +41,12 @@ export default ({ app }) => {
             .then((withdraw) => {
                 dispatch(actions.user.addNotification({ type: WITHDRAW_CREATED_QIWI }));
             })
-            .catch(e => {
+            .catch((e) => {
                 console.log('Во время создания вывода произошла ошибка', e);
             })
             .finally(() => {
                 dispatch(actions.cashier.stopLoading());
-            })
+            });
     };
 
     return {

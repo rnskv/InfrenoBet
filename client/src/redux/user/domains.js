@@ -5,7 +5,7 @@ export default ({ app }) => {
     const { api, store, realtime } = app.modules;
     const { actions, domains } = store;
 
-    //@todo Нужен отдельный метод
+    // @todo Нужен отдельный метод
     api.services.user.setBearerFromCookies();
     api.services.payment.setBearerFromCookies();
     api.services.withdraw.setBearerFromCookies();

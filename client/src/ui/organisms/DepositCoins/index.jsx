@@ -10,14 +10,14 @@ import BetItem from 'ui/atoms/BetItem';
 import { getExchangedSum } from 'src/helpers/system';
 
 import { useSelector } from 'react-redux';
-import { changeValue} from 'src/redux/cashier/actions';
+import { changeValue } from 'src/redux/cashier/actions';
 
+import { useActions } from 'src/helpers/hooks';
 import {
     Container,
     InputContainer,
     StyledBetItem,
 } from './styled';
-import { useActions } from 'src/helpers/hooks';
 
 const DEPOSIT_COINS = [
     {
@@ -55,7 +55,7 @@ const DEPOSIT_COINS = [
 ];
 
 function DepositCoins({ disabled }) {
-    const value = useSelector(state => state.cashier.value);
+    const value = useSelector((state) => state.cashier.value);
     const actions = useActions({ changeValue });
 
     return (

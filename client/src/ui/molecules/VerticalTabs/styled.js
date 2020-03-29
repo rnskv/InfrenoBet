@@ -13,4 +13,3 @@ export const Title = styled.h3`
     font-weight: 400;
     text-transform: uppercase;
 `;
-

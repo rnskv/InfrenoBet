@@ -59,6 +59,6 @@ export const StaticContainer = styled.div`
     
     ${media.tablet`
         width: 80px;
-        display:  ${({ side }) => side === 'left' ? 'flex' : 'none'}
+        display:  ${({ side }) => (side === 'left' ? 'flex' : 'none')}
     `}
 `;
