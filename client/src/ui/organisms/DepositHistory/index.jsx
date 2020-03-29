@@ -5,20 +5,23 @@ import { infernoClient } from 'src/index';
 
 import Table from 'ui/atoms/Table';
 
+import { useAuth } from 'src/helpers/hooks';
 import { getTimeFromNow, getExchangedSum } from 'src/helpers/system';
 import {
     Container,
-    StyledLoader
+    StyledLoader,
 } from './styled';
 
 
 function DepositHistory() {
+    const isAuth = useAuth();
+
     const [history, setHistory] = useState(null);
     useEffect(() => {
         const { payment } = infernoClient.modules.api.services;
         async function fetchData() {
             const response = await payment.execute('getMyDeposits');
-            console.log('REPOS', response)
+            console.log('REPOS', response);
             setHistory(response);
         }
 
@@ -57,13 +60,17 @@ function DepositHistory() {
             return `+${getExchangedSum(row[key])}`;
         }
         if (key === 'user') {
-            return <div>
-                { row[key].name }
-                <img src={row[key].avatar} width={20}/>
-            </div>;
+            return (
+                <div>
+                    { row[key].name }
+                    <img src={row[key].avatar} width={20} />
+                </div>
+            );
         }
         return row[key];
     };
+
+    if (!isAuth) return <></>;
 
     return (
         <Container>
@@ -74,7 +81,7 @@ function DepositHistory() {
                         getRowItemValue={getRowItemValue}
                         heads={heads}
                         rows={history}
-                        emptyText={'Здесь будет выводится история ваших пополнений'}
+                        emptyText="Здесь будет выводится история ваших пополнений"
                     />
                 ) : <StyledLoader />
             }

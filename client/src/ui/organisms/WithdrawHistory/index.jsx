@@ -8,6 +8,7 @@ import { infernoClient } from 'src/index';
 import Table from 'ui/atoms/Table';
 
 import { getTimeFromNow, getExchangedSum } from 'src/helpers/system';
+import { useAuth } from 'src/helpers/hooks';
 import {
     Container,
     StyledLoader,
@@ -15,6 +16,8 @@ import {
 
 
 function WithdrawHistory() {
+    const isAuth = useAuth();
+
     const [history, setHistory] = useState(null);
     const isLoading = useSelector((state) => state.cashier.isLoading);
 
@@ -26,7 +29,7 @@ function WithdrawHistory() {
         }
 
         fetchData();
-    }, [ isLoading ]);
+    }, [isLoading]);
 
     const heads = [
         { key: 'user', name: 'Пользователь' },
@@ -66,10 +69,12 @@ function WithdrawHistory() {
             return `-${getExchangedSum(row[key])}`;
         }
         if (key === 'user') {
-            return <div>
-                { row[key].name }
-                <img src={row[key].avatar} width={20}/>
-            </div>;
+            return (
+                <div>
+                    { row[key].name }
+                    <img src={row[key].avatar} width={20} />
+                </div>
+            );
         }
 
         if (key === 'status') {
@@ -78,6 +83,8 @@ function WithdrawHistory() {
 
         return row[key];
     };
+
+    if (!isAuth) return <></>;
 
     return (
         <Container>
@@ -88,7 +95,7 @@ function WithdrawHistory() {
                         getRowItemValue={getRowItemValue}
                         heads={heads}
                         rows={history}
-                        emptyText={'Здесь будет выводится история ваших выводов'}
+                        emptyText="Здесь будет выводится история ваших выводов"
                     />
                 ) : <StyledLoader />
             }

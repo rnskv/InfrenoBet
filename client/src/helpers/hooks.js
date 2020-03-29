@@ -19,3 +19,7 @@ export function useActions(actions, deps) {
 export function useShallowEqualSelector(selector) {
     return useSelector(selector, shallowEqual);
 }
+
+export function useAuth() {
+    return useSelector((state) => Boolean(state.user.token));
+}
