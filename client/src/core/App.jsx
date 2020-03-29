@@ -44,12 +44,12 @@ function App({ store }) {
                 </Route>
                 <Route path="/close" exact>
                     Промежуточное окно
-                    {
-                        (() => {
-                            window.opener && window.opener.location.reload();
-                            // window.close();
-                        })()
-                    }
+                    {/*{*/}
+                    {/*    (() => {*/}
+                    {/*        window.opener && window.opener.location.reload();*/}
+                    {/*        // window.close();*/}
+                    {/*    })()*/}
+                    {/*}*/}
                 </Route>
                 <Route>
                     <div>404</div>

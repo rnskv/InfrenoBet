@@ -10,7 +10,7 @@ import Table from 'ui/atoms/Table';
 import { getTimeFromNow, getExchangedSum } from 'src/helpers/system';
 import {
     Container,
-    StyledLoader
+    StyledLoader,
 } from './styled';
 
 

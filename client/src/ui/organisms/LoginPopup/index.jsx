@@ -26,12 +26,63 @@ import {
 
 const { VK_CLIENT_ID, VK_REDIRECT_URL } = process.env;
 
+class CorsPopup {
+    constructor({
+        url, finalPath, features, params, target, onClose,
+    }) {
+        this._url = url;
+        this._finalPath = finalPath;
+        this._target = target;
+        this._features = features;
+        this._params = params;
+        this._onClose = onClose;
+        this._window = null;
+
+        this.check = this.check.bind(this);
+    }
+
+    open() {
+        this._window = window.open(
+            this._url,
+            this._target,
+            this._params,
+            this._features,
+        );
+
+        setTimeout(this.check, 1000);
+    }
+
+    close() {
+        this._onClose();
+        console.log('ПЕРЕЗАГРУЖАЙ');
+        this._window.close();
+    }
+
+    check() {
+        if (!this._window.closed) {
+            if (this._window.location.pathname === this._finalPath) {
+                this.close();
+                return true;
+            }
+            setTimeout(this.check, 1000);
+        }
+
+        return false;
+    }
+}
+
 function openAuthWindow() {
-    window.open(
-        `https://oauth.vk.com/authorize?client_id=${VK_CLIENT_ID}&display=page&redirect_uri=${VK_REDIRECT_URL}&scope=6&response_type=code&v=5.103`,
-        '_blank',
-        ['resizable=yes, scrollbars=no, status=yes'],
-    );
+    const vkUrl = `https://oauth.vk.com/authorize?client_id=${VK_CLIENT_ID}&display=page&redirect_uri=${VK_REDIRECT_URL}&scope=6&response_type=code&v=5.103`;
+    const authPopup = new CorsPopup({
+        url: vkUrl,
+        finalPath: '/close',
+        params: `width=800,height=400, top=${((screen.height - 400) / 2)},left=+${((screen.width - 800) / 2)}`,
+        features: ['resizable=yes, scrollbars=no, status=yes'],
+        target: '_blank',
+        onClose: () => window.location.reload(),
+    });
+
+    authPopup.open();
 }
 
 const action = ({ type, history, callback }) => () => {
