@@ -6,6 +6,7 @@ import games from './games/index.js';
 import bets from './bets/index.js';
 import items from './items/index.js';
 import payment from './payment/index.js';
+import withdraw from './withdraw/index.js';
 
 const router = new Router().prefix('/api');
 
@@ -16,5 +17,6 @@ router.use(games.routes);
 router.use(bets.routes);
 router.use(items.routes);
 router.use(payment.routes);
+router.use(withdraw.routes);
 
 export default router;

@@ -16,6 +16,9 @@ import {
     USER_WIN,
     WAITING_LAST_BETS,
     SO_MANY_ITEMS,
+    WITHDRAW_CREATED_QIWI,
+    WITHDRAW_ERROR_DATA_QIWI,
+    WITHDRAW_ERROR_MIN_AMOUNT,
 } from './notificationsTypes';
 
 export default {
@@ -103,6 +106,21 @@ export default {
         type: 'ERROR',
         title: 'Игра',
         text: 'Максимальное количество предметов в игре - 10',
+    },
+    [WITHDRAW_CREATED_QIWI]: {
+        type: 'SUCCESS',
+        title: 'Платежная система',
+        text: 'Вывод на систему QIWI успешно создан. Начисление средств произойдет в течении 24 часов.',
+    },
+    [WITHDRAW_ERROR_DATA_QIWI]: {
+        type: 'ERROR',
+        title: 'Платежная система',
+        text: 'При создании вывода произошла ошибка. Не верно указаны платежные данные.',
+    },
+    [WITHDRAW_ERROR_MIN_AMOUNT]: {
+        type: 'ERROR',
+        title: 'Платежная система',
+        text: 'При выводе средств, Вы указали сумму меньше минимальной.',
     },
     undefined: {
         type: 'ERROR',

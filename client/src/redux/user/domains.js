@@ -5,8 +5,10 @@ export default ({ app }) => {
     const { api, store, realtime } = app.modules;
     const { actions, domains } = store;
 
+    //@todo Нужен отдельный метод
     api.services.user.setBearerFromCookies();
     api.services.payment.setBearerFromCookies();
+    api.services.withdraw.setBearerFromCookies();
 
     if (store.getState().user.token) {
         realtime.io.emit('project.logIn', store.getState().user.token);
@@ -60,6 +62,7 @@ export default ({ app }) => {
 
                 api.services.user.setBearerFromCookies();
                 api.services.payment.setBearerFromCookies();
+                api.services.withdraw.setBearerFromCookies();
 
                 dispatch(getProfile());
             } else {
@@ -71,7 +74,7 @@ export default ({ app }) => {
     };
 
     const logOut = () => (dispatch) => {
-        console.log('LOG OUT')
+        console.log('LOG OUT');
         Cookies.remove('token');
         api.services.user.setHeader('Authorization', null);
         dispatch(actions.user.logOut());

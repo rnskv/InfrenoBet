@@ -5,13 +5,20 @@ const { Schema } = mongoose;
 const withdrawSchema = new Schema({
     user: {
         type: mongoose.Types.ObjectId,
-        ref: 'user'
+        ref: 'user',
+        isRequired: true,
+    },
+    destination: {
+        type: String,
+        isRequired: true,
     },
     amount: {
         type: Number,
+        isRequired: true,
     },
     system: {
         type: String,
+        isRequired: true,
     },
     status: {
         type: String,
@@ -45,4 +52,4 @@ Withdraw.getByUserId = async (id) => {
         .populate('user') || []
 };
 
-export default Deposit
+export default Withdraw

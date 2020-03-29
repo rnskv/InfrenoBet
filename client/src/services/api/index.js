@@ -1,6 +1,8 @@
 import { Api, Request } from 'shared/api';
 import { USER_NOT_FOUND } from 'shared/configs/notificationsTypes';
 
+import createWithdrawApi from './withdraw';
+
 const { SERVER_PROTOCOL, SERVER_PORT, SERVER_HOST } = process.env;
 
 export default ({ app }) => {
@@ -8,12 +10,14 @@ export default ({ app }) => {
         store,
     } = app.modules;
 
-    console.log(app.modules, store);
-
     const {
         actions,
         domains,
     } = store;
+
+    const errorDefaultHandler = ({ type }) => app.modules.store.dispatch(actions.user.addNotification({ type }));
+
+    const withdrawApi = createWithdrawApi({ app, onError: errorDefaultHandler });
 
     const paymentApi = new Api({
         url: `${SERVER_PROTOCOL}://${SERVER_HOST}:${SERVER_PORT}/api/payment`,
@@ -21,7 +25,7 @@ export default ({ app }) => {
             'Content-Type': 'application/json',
             // Authorization: store.getState().user.token,
         },
-        onError: ({ type }) => app.modules.store.dispatch(actions.user.addNotification({ type })),
+        onError: errorDefaultHandler,
     });
 
     const itemsApi = new Api({
@@ -30,7 +34,7 @@ export default ({ app }) => {
             'Content-Type': 'application/json',
             // Authorization: store.getState().user.token,
         },
-        onError: ({ type }) => app.modules.store.dispatch(actions.user.addNotification({ type })),
+        onError: errorDefaultHandler,
     });
 
     const authApi = new Api({
@@ -38,10 +42,7 @@ export default ({ app }) => {
         headers: {
             'Content-Type': 'application/json',
         },
-        onError: ({ type }) => {
-            console.log(app);
-            app.modules.store.dispatch(actions.user.addNotification({ type }));
-        },
+        onError: errorDefaultHandler,
     });
 
     const usersApi = new Api({
@@ -50,7 +51,6 @@ export default ({ app }) => {
             'Content-Type': 'application/json',
         },
         onError: ({ type }) => {
-            console.log(type, 'ERROR');
             app.modules.store.dispatch(actions.user.addNotification({ type }));
 
             if (type === USER_NOT_FOUND) {
@@ -127,5 +127,6 @@ export default ({ app }) => {
         auth: authApi,
         items: itemsApi,
         payment: paymentApi,
+        withdraw: withdrawApi,
     };
 };

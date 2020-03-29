@@ -10,23 +10,27 @@ import DepositCoins from 'ui/organisms/DepositCoins';
 import VerifyAge from 'ui/molecules/VerifyAge';
 import WithdrawExchanger from 'ui/organisms/WithdrawExchanger';
 
-import { getExchangedSum } from 'src/helpers/system';
+import { getExchangedSum, getSumInUSD } from 'src/helpers/system';
 
 import { useSelector } from 'react-redux';
 
 import { useActions } from 'src/helpers/hooks';
-import { changeValue } from 'src/redux/cashier/actions';
 
+import { infernoClient } from 'src/index';
+
+import { WithdrawInput } from 'ui/organisms/WithdrawExchanger/styled';
 import {
     Container,
     InputContainer,
     StyledButton,
 } from './styled';
-import { WithdrawInput } from 'ui/organisms/WithdrawExchanger/styled';
+
+const { changeValue } = infernoClient.modules.store.actions.cashier;
+const { createQiwiWithdraw } = infernoClient.modules.store.domains.cashier;
 
 
 function WithdrawQiwi() {
-    const actions = useActions({ changeValue });
+    const actions = useActions({ changeValue, createQiwiWithdraw });
     const value = useSelector((state) => state.cashier.value);
     const inputRef = useRef(null);
 
@@ -35,18 +39,21 @@ function WithdrawQiwi() {
     });
 
     const submitWithdraw = ({ amount }) => {
-        console.log(`Выводим на киви кошелек ${inputRef.current.value} сумму ${amount}`)
+        console.log(`Выводим на киви кошелек ${inputRef.current.value} сумму ${amount}`);
+        actions.createQiwiWithdraw({ amount: getSumInUSD(amount), phone: inputRef.current.value });
     };
 
     return (
         <Container>
             <InputContainer>
                 <Input
+                    type="tel"
+                    required
+                    name="phone"
                     label="Номер QIWI кошелька"
-                    description={`Введите свой QIWI кошелёк без знака +`}
+                    description="Введите свой QIWI кошелёк без знака +"
                     ref={inputRef}
                 />
-
                 <WithdrawExchanger onSubmit={submitWithdraw} />
             </InputContainer>
         </Container>

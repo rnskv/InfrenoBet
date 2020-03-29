@@ -25,8 +25,9 @@ import {
 
 
 function WithdrawExchanger({
-    onSubmit
+    onSubmit,
 }) {
+    const isLoading = useSelector((state) => state.cashier.isLoading);
     const [isVerifiedAge, setIsVerifiedAge] = useState(false);
     const sumInputRef = useRef(null);
     const sumRealInputRef = useRef(null);
@@ -38,11 +39,11 @@ function WithdrawExchanger({
     };
 
     const onClick = () => {
-        onSubmit({ amount: sumInputRef.current.value })
+        onSubmit({ amount: sumInputRef.current.value });
     };
 
     const sumRealOnChange = () => {
-      console.log('Меняется сумма с комиссией');
+        console.log('Меняется сумма с комиссией');
         sumInputRef.current.value = (sumRealInputRef.current.value / (1 - commission)).toFixed(2);
     };
 
@@ -72,7 +73,13 @@ function WithdrawExchanger({
                 isVerified={isVerifiedAge}
                 text="Я подтверждаю правильность введенных реквизитов и согласен с суммой выплаты."
             />
-            <WithdrawButton onClick={onClick} disabled={!isVerifiedAge}>Вывести</WithdrawButton>
+            <WithdrawButton
+                isLoading={isLoading}
+                onClick={onClick}
+                disabled={!isVerifiedAge}
+            >
+                Вывести
+            </WithdrawButton>
         </Container>
     );
 }
