@@ -3,6 +3,7 @@ import Roulette from 'src/core/Roulette';
 import { gameApi, betsApi } from 'src/modules/api';
 import { getBetsTotalValue } from  'src/helpers/game';
 import * as notificationsTypes from 'shared/configs/notificationsTypes';
+import config from 'src/config';
 
 class Game {
     constructor({ hash, secret, app, betsQueue, onFinish }) {
@@ -13,7 +14,7 @@ class Game {
         });
         this.bets = [];
         this.onFinish = onFinish;
-        this.time = 6;
+        this.time = config.rouletteGameTime;
         this.endingTime = 7;
         this.closingGameTime = 5;
         this.maxItemsCount = 50;
