@@ -7,5 +7,5 @@ export default {
     server_host: process.env.SERVER_HOST || '127.0.0.1',
     mongoUri: process.env.MONGO_URI || '',
     jwtSecret: process.env.JWT_SECRET,
-    rouletteGameTime: process.env.ROULETTE_GAME_TIME
+    rouletteGameTime: Number(process.env.ROULETTE_GAME_TIME)
 };

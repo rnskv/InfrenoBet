@@ -14,6 +14,7 @@ class Game {
         });
         this.bets = [];
         this.onFinish = onFinish;
+        console.log(config)
         this.time = config.rouletteGameTime;
         this.endingTime = 7;
         this.closingGameTime = 5;
