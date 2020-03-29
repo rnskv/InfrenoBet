@@ -1,20 +1,21 @@
 import PropTypes from 'prop-types';
 import React, { useRef, useState } from 'react';
+import InlineSVG from 'svg-inline-react';
+
 import { useSelector } from 'react-redux';
 import { useActions } from 'src/helpers/hooks';
 import { useHistory } from 'react-router-dom';
-import InlineSVG from 'svg-inline-react';
 
 import Popup from 'ui/molecules/Popup';
 import VerifyAge from 'ui/molecules/VerifyAge';
-// import Checkbox from 'ui/atoms/Checkbox';
+
 import emailIconSvg from 'src/resources/svg/mail-icon.svg';
 import vkIconSvg from 'src/resources/svg/vkontakte-icon.svg';
-import { infernoClient } from 'src/index.jsx';
 
-import { openLoginPopup, closeLoginPopup, getProfile } from 'src/redux/user/actions';
+import CorsPopup from 'src/helpers/CorsPopup';
 
-import Link from 'ui/atoms/Link';
+import { openLoginPopup, closeLoginPopup } from 'src/redux/user/actions';
+
 
 import {
     MethodSelection,
@@ -25,51 +26,6 @@ import {
 } from './styled';
 
 const { VK_CLIENT_ID, VK_REDIRECT_URL } = process.env;
-
-class CorsPopup {
-    constructor({
-        url, finalPath, features, params, target, onClose,
-    }) {
-        this._url = url;
-        this._finalPath = finalPath;
-        this._target = target;
-        this._features = features;
-        this._params = params;
-        this._onClose = onClose;
-        this._window = null;
-
-        this.check = this.check.bind(this);
-    }
-
-    open() {
-        this._window = window.open(
-            this._url,
-            this._target,
-            this._params,
-            this._features,
-        );
-
-        setTimeout(this.check, 1000);
-    }
-
-    close() {
-        this._onClose();
-        console.log('ПЕРЕЗАГРУЖАЙ');
-        this._window.close();
-    }
-
-    check() {
-        if (!this._window.closed) {
-            if (this._window.location.pathname === this._finalPath) {
-                this.close();
-                return true;
-            }
-            setTimeout(this.check, 1000);
-        }
-
-        return false;
-    }
-}
 
 function openAuthWindow() {
     const vkUrl = `https://oauth.vk.com/authorize?client_id=${VK_CLIENT_ID}&display=page&redirect_uri=${VK_REDIRECT_URL}&scope=6&response_type=code&v=5.103`;
