@@ -43,13 +43,17 @@ function App({ store }) {
                     <Lottery />
                 </Route>
                 <Route path="/close" exact>
-                    Промежуточное окно
-                    {/*{*/}
-                    {/*    (() => {*/}
-                    {/*        window.opener && window.opener.location.reload();*/}
-                    {/*        // window.close();*/}
-                    {/*    })()*/}
-                    {/*}*/}
+                    <div style={{
+                        width: '100vw',
+                        height: '100vh',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        color: 'white',
+                    }}
+                    >
+                        Перенаправление...
+                    </div>
                 </Route>
                 <Route>
                     <div>404</div>

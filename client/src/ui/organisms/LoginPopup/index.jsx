@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useRef, useState } from 'react';
 import InlineSVG from 'svg-inline-react';
-
+import { infernoClient } from 'src/index';
 import { useSelector } from 'react-redux';
 import { useActions } from 'src/helpers/hooks';
 import { useHistory } from 'react-router-dom';
@@ -35,7 +35,16 @@ function openAuthWindow() {
         params: `width=800,height=400, top=${((screen.height - 400) / 2)},left=+${((screen.width - 800) / 2)}`,
         features: ['resizable=yes, scrollbars=no, status=yes'],
         target: '_blank',
-        onClose: () => window.location.reload(),
+        onClose: () => {
+            const { api, store } = infernoClient.modules;
+
+            api.services.user.setBearerFromCookies();
+            api.services.payment.setBearerFromCookies();
+            api.services.withdraw.setBearerFromCookies();
+
+            store.dispatch(store.actions.user.logIn());
+            store.dispatch(store.domains.user.getProfile());
+        },
     });
 
     authPopup.open();

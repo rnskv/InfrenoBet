@@ -44,6 +44,7 @@ function userReducer(state = initialState, action) {
         return {
             ...state,
             isLoading: false,
+            token: Cookies.get('token'),
             ...action.payload,
         };
     }

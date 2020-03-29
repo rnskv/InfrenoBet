@@ -35,7 +35,7 @@ class CorsPopup {
                 this.close();
                 return true;
             }
-            setTimeout(this.check, 1000);
+            setTimeout(this.check, 2000);
         }
 
         return false;
