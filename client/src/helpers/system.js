@@ -1,5 +1,7 @@
 import crypto from 'crypto';
 import moment from 'moment-timezone';
+import Cookies from 'js-cookie';
+import { infernoClient } from 'src/index';
 
 export function getTimeFromNow(date) {
     moment.locale('ru');
@@ -82,4 +84,17 @@ export const getExchangedSum = (dollarSum, { accuracy = 2, isNeedIcon = true } =
         RUB: Number(formattedExchangedSum),
         USD: Number(formattedExchangedSum),
     }[currency];
+};
+
+
+export const logInProccesing = ({ app }) => {
+    if (!Cookies.get('token')) return;
+
+    const { api, store, realtime } = app.modules;
+    api.setServicesToken();
+
+    realtime.io.emit('project.logIn', Cookies.get('token'));
+
+    store.dispatch(store.actions.user.logIn());
+    store.dispatch(store.domains.user.getProfile());
 };

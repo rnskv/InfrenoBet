@@ -1,5 +1,6 @@
 import apiServices from 'src/services/api';
 import events from 'src/services/events';
+import { logInProccesing } from 'src/helpers/system';
 
 const { REALTIME_PROTOCOL, REALTIME_PORT, REALTIME_HOST } = process.env;
 
@@ -21,6 +22,8 @@ export const afterApplicationSetupCallback = (app) => {
     realtime.provideApp();
 
     view.render();
+
+    logInProccesing({ app });
 };
 
 export const onApplicationRunCallback = (app) => {

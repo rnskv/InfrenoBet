@@ -19,6 +19,8 @@ export default function ({ app }) {
         });
 
         socket.on('project.logOut', (token) => {
+            if (!socket.user) return;
+            app.managers.sockets.removeSocketFromUserById(socket.user._id, { socket });
             delete socket.jwtToken;
             delete socket.user;
         });

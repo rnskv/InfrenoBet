@@ -24,6 +24,7 @@ import {
     Method,
     MethodIcon,
 } from './styled';
+import { logInProccesing } from 'src/helpers/system';
 
 const { VK_CLIENT_ID, VK_REDIRECT_URL } = process.env;
 
@@ -36,14 +37,7 @@ function openAuthWindow() {
         features: ['resizable=yes, scrollbars=no, status=yes'],
         target: '_blank',
         onClose: () => {
-            const { api, store } = infernoClient.modules;
-
-            api.services.user.setBearerFromCookies();
-            api.services.payment.setBearerFromCookies();
-            api.services.withdraw.setBearerFromCookies();
-
-            store.dispatch(store.actions.user.logIn());
-            store.dispatch(store.domains.user.getProfile());
+            logInProccesing({ app: infernoClient });
         },
     });
 

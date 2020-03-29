@@ -59,6 +59,7 @@ class SocketsManager extends Manager {
         if (!this.usersSocketsMap[id]) {
             this.usersSocketsMap[id] = [socket.id]
         } else {
+            if (this.usersSocketsMap[id].includes(socket.id)) return;
             this.usersSocketsMap[id].push(socket.id);
         }
     }

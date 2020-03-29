@@ -1,18 +1,11 @@
 import Cookies from 'js-cookie';
 import { USER_SUCCESS_REGISTER } from 'shared/configs/notificationsTypes';
+import { logInProccesing } from 'src/helpers/system';
+import { infernoClient } from 'src/index';
 
 export default ({ app }) => {
     const { api, store, realtime } = app.modules;
     const { actions, domains } = store;
-
-    // @todo Нужен отдельный метод
-    api.services.user.setBearerFromCookies();
-    api.services.payment.setBearerFromCookies();
-    api.services.withdraw.setBearerFromCookies();
-
-    if (store.getState().user.token) {
-        realtime.io.emit('project.logIn', store.getState().user.token);
-    }
 
     const getProfile = () => async (dispatch) => {
         // @todo вынести в геттер апи isAut или что то такое
@@ -55,13 +48,7 @@ export default ({ app }) => {
             if (response.token) {
                 Cookies.set('token', response.token);
 
-                dispatch(actions.user.logIn({ token: response.token }));
-
-                realtime.io.emit('project.logIn', response.token);
-
-                api.services.user.setBearerFromCookies();
-                api.services.payment.setBearerFromCookies();
-                api.services.withdraw.setBearerFromCookies();
+                logInProccesing({ app });
 
                 dispatch(getProfile());
             } else {

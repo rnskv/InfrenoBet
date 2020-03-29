@@ -24,6 +24,10 @@ export default class Api {
         this.setHeader('Authorization', Cookies.get('token'));
     }
 
+    removeBearer() {
+        this.setHeader('Authorization', null);
+    }
+
     setBearerFromCookies() {
         this.setHeader('Authorization', Cookies.get('token'));
     }

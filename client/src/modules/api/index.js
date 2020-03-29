@@ -9,6 +9,13 @@ class Api extends Module {
     setServices(services) {
         this.services = services({ app: this.app });
     }
+
+    setServicesToken() {
+        Object.values(this.services).forEach((service) => {
+            service.removeBearer();
+            service.setBearerFromCookies();
+        });
+    }
 }
 
 export default Api;
