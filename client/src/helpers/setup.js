@@ -24,7 +24,7 @@ export const afterApplicationSetupCallback = (app) => {
 };
 
 export const onApplicationRunCallback = (app) => {
-    console.log('Приложение запущено.', app);
+    console.log('Приложение запущено.');
 };
 
 export const onApplicationFailedRunCallback = (err) => {

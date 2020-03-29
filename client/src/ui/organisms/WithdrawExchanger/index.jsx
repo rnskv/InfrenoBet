@@ -43,12 +43,10 @@ function WithdrawExchanger({
     };
 
     const sumRealOnChange = () => {
-        console.log('Меняется сумма с комиссией');
         sumInputRef.current.value = (sumRealInputRef.current.value / (1 - commission)).toFixed(2);
     };
 
     const sumOnChange = () => {
-        console.log('Меняется сумма');
         sumRealInputRef.current.value = (sumInputRef.current.value * (1 - commission)).toFixed(2);
     };
 

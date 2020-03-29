@@ -7,6 +7,9 @@ import Table from 'ui/atoms/Table';
 
 import { useAuth } from 'src/helpers/hooks';
 import { getTimeFromNow, getExchangedSum } from 'src/helpers/system';
+
+import depositTypes from 'shared/configs/depositTypes';
+
 import {
     Container,
     StyledLoader,
@@ -21,7 +24,6 @@ function DepositHistory() {
         const { payment } = infernoClient.modules.api.services;
         async function fetchData() {
             const response = await payment.execute('getMyDeposits');
-            console.log('REPOS', response);
             setHistory(response);
         }
 
@@ -53,21 +55,28 @@ function DepositHistory() {
     };
 
     const getRowItemValue = (row, key) => {
+        const value = row[key];
+
         if (key === 'createDate') {
-            return getTimeFromNow(row[key]);
+            return getTimeFromNow(value);
         }
         if (key === 'amount') {
-            return `+${getExchangedSum(row[key])}`;
+            return `+${getExchangedSum(value)}`;
         }
         if (key === 'user') {
             return (
                 <div>
-                    { row[key].name }
-                    <img src={row[key].avatar} width={20} />
+                    { value.name }
+                    <img alt="avatar" src={value.avatar} width={20} />
                 </div>
             );
         }
-        return row[key];
+
+        if (key === 'status') {
+            return depositTypes[value];
+        }
+
+        return value;
     };
 
     if (!isAuth) return <></>;

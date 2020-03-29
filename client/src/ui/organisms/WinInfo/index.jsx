@@ -41,7 +41,6 @@ function WinInfo({
 
             {isShowWinner ? (
                 <WinnerItem>
-                    { console.log('winner', winner) }
                     <img alt="Winner item" src={winner.bet.item.image} />
                 </WinnerItem>
             ) : null}

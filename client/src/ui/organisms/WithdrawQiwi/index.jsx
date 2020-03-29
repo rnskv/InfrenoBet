@@ -39,7 +39,6 @@ function WithdrawQiwi() {
     });
 
     const submitWithdraw = ({ amount }) => {
-        console.log(`Выводим на киви кошелек ${inputRef.current.value} сумму ${amount}`);
         actions.createQiwiWithdraw({ amount: getSumInUSD(amount), phone: inputRef.current.value });
     };
 

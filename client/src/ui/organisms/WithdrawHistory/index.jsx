@@ -9,6 +9,9 @@ import Table from 'ui/atoms/Table';
 
 import { getTimeFromNow, getExchangedSum } from 'src/helpers/system';
 import { useAuth } from 'src/helpers/hooks';
+
+import withdrawTypes from 'shared/configs/withdrawTypes';
+
 import {
     Container,
     StyledLoader,
@@ -78,7 +81,7 @@ function WithdrawHistory() {
         }
 
         if (key === 'status') {
-            return row[key];
+            return withdrawTypes[row[key]].text;
         }
 
         return row[key];

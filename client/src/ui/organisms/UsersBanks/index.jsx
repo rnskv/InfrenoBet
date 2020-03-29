@@ -37,8 +37,6 @@ function UsersBanks({ users, bank, bets }) {
         lastBet = bet;
     }
 
-    console.log(optimizedBets);
-
     return (
         users.length ? (
             <Container>

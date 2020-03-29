@@ -39,7 +39,6 @@ export default ({ app }) => {
             },
         })
             .then((withdraw) => {
-                console.log('Вывод', withdraw, 'успешно создан');
                 dispatch(actions.user.addNotification({ type: WITHDRAW_CREATED_QIWI }));
             })
             .catch(e => {
