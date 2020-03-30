@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useRef, useState } from 'react';
+import Cookie from 'js-cookie';
 import InlineSVG from 'svg-inline-react';
 import { infernoClient } from 'src/index';
 import { useSelector } from 'react-redux';
@@ -32,7 +33,7 @@ function openAuthWindow() {
     const vkUrl = `https://oauth.vk.com/authorize?client_id=${VK_CLIENT_ID}&display=page&redirect_uri=${VK_REDIRECT_URL}&scope=6&response_type=code&v=5.103`;
     const authPopup = new CorsPopup({
         url: vkUrl,
-        finalPath: '/close',
+        checkMethod: () => Cookie.get('token'),
         params: `width=800,height=400, top=${((screen.height - 400) / 2)},left=+${((screen.width - 800) / 2)}`,
         features: ['resizable=yes, scrollbars=no, status=yes'],
         target: '_blank',

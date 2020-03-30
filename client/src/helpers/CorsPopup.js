@@ -1,9 +1,9 @@
 class CorsPopup {
     constructor({
-        url, finalPath, features, params, target, onClose,
+        url, checkMethod, features, params, target, onClose,
     }) {
         this._url = url;
-        this._finalPath = finalPath;
+        this._checkMethod = checkMethod;
         this._target = target;
         this._features = features;
         this._params = params;
@@ -30,8 +30,9 @@ class CorsPopup {
     }
 
     check() {
+        console.log('check', this._window.closed);
         if (!this._window.closed) {
-            if (this._window.location.pathname === this._finalPath) {
+            if (this._checkMethod()) {
                 this.close();
                 return true;
             }
