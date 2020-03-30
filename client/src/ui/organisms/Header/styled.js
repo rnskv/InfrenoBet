@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import Button from 'ui/atoms/Button';
 import Balance from 'ui/molecules/Balance';
+import media from 'src/helpers/media';
 
 export const StyledButton = styled(Button)`
   height: 40px;
@@ -39,12 +40,20 @@ export const Logo = styled.div`
     width: 100px;
     align-items: center;
     display: flex;
-    
+     
     svg {
       height: 40px;
     }
+    
+   ${media.tablet`
+      display: none;
+  `}
 `;
 
 export const StyledBalance = styled(Balance)`
   margin-right: 25px;
+  
+  ${media.tablet`
+      display: none;
+  `}
 `;

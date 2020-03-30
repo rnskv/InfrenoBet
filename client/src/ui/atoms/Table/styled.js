@@ -14,6 +14,7 @@ export const EmptyText = styled.div`
 export const TableContainer = styled.table`
   width: 100%;
   background-color: var(--color-grey-600);
+
   tr {
     color: var(--color-white);
     font-size: 12px;

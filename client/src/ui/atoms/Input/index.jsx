@@ -110,7 +110,7 @@ const Input = React.memo(React.forwardRef((
             {description ? <Description>{description}</Description> : null}
         </Container>
     );
-}), (prevProps, nextProps) => prevProps.value === nextProps.value);
+}));
 
 Input.defaultProps = {
     maskType: null,

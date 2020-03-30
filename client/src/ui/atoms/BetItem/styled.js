@@ -1,5 +1,6 @@
 import styled, { keyframes } from 'styled-components';
 import { flipInX } from 'react-animations';
+import media from 'src/helpers/media';
 
 export const Container = styled.div`
   animation: .6s ${keyframes`${flipInX}`};
@@ -29,4 +30,9 @@ export const Container = styled.div`
   &:hover {
     background-color: ${({ cost }) => (cost ? 'var(--color-darkblue-active)' : 'var(--color-grey-800)')};
   }
+  
+  ${media.tablet`
+     width: 70px;
+     min-height: 55px;
+  `}
 `;

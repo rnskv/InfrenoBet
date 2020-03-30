@@ -26,7 +26,6 @@ function SidebarNotifications({
                 <Button onClick={removeAllNotifications}>Очистить</Button>
                 <Button>Закрыть</Button>
             </Controls>
-            <Icon src="https://sun9-12.userapi.com/c206516/v206516687/49d7a/c7wnfazUB98.jpg?ava=1" />
             <NotificationsList>
                 {
                     notifications.length

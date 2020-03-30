@@ -2,6 +2,7 @@ import styled, { keyframes } from 'styled-components';
 
 import Button from 'ui/atoms/Button';
 import Avatar from 'ui/atoms/Avatar';
+import media from 'src/helpers/media';
 
 export const Container = styled.div`
    width: 100%;
@@ -18,6 +19,12 @@ export const StyledAvatar = styled(Avatar)`
   width: 60px;
   height: 60px;
   border: 2px solid var(--color-grey-400);
+  
+  ${media.tablet`
+      min-width: 30px;
+      width: 30px;
+      height: 30px;
+  `}
 
 `;
 
@@ -53,6 +60,10 @@ export const Item = styled.div`
     
   img {
     width: 50px;
+    
+    ${media.tablet`
+        width: 30px;
+    `}
   }
 `;
 

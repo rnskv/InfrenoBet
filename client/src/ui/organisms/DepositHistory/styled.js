@@ -20,4 +20,5 @@ export const StyledLoader = styled(Loader)`
 export const Container = styled.div`
   width: 100%;
   box-sizing: border-box;
+  overflow-x: auto;
 `;

@@ -76,7 +76,7 @@ export const ItemsCount = styled.div`
   flex-direction: column;
   
   ${media.tablet`
-     max-width: 300px;
+     max-width: 60%;
      min-width: 200px;
   `}
 `;
@@ -124,4 +124,7 @@ export const StartGame = styled.div`
   margin: 20px 0 0 0;
   display: flex;
   align-items: center;
+  ${media.tablet`
+     flex-direction: column-reverse;
+  `}
 `;

@@ -11,6 +11,8 @@ import SidebarNotifications from 'ui/molecules/SidebarNotifications';
 import SidebarProfile from 'ui/molecules/SidebarProfile';
 import LoginPopup from 'ui/organisms/LoginPopup';
 import Popup from 'ui/molecules/Popup';
+import SidebarCompact from 'ui/molecules/SidebarCompact';
+
 import media from 'src/helpers/media';
 
 const Content = styled.div`
@@ -25,7 +27,7 @@ const Content = styled.div`
     overflow: hidden;
 
     ${media.tablet`
-        width: calc(100% - 110px);
+        width: 100%;
     `}
 `;
 
@@ -56,6 +58,7 @@ function Default({ children, ...props }) {
                     {/* <SidebarNavigation /> */}
                     <SidebarNotifications />
                 </Sidebar>
+                <SidebarCompact />
             </Page>
         </div>
     );

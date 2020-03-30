@@ -10,6 +10,8 @@ export const FairGame = styled.div`
   display: flex;
   align-items: center;
   font-size: 14px;
+  text-align: center;
+  
   div {
     color: var(--color-white);
     background-color: var(--color-black);

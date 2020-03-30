@@ -27,13 +27,11 @@ function Header({
 
     return (
         <Container>
-            <Group>
-                <Logo>
-                    <svg>
-                        <use xlinkHref="#currency-logo" />
-                    </svg>
-                </Logo>
-            </Group>
+            <Logo>
+                <svg>
+                    <use xlinkHref="#currency-logo" />
+                </svg>
+            </Logo>
             <Group>
                 <Balance value={profile.balance} />
                 <Link to="/deposit"><Button type="transparent">Пополнить</Button></Link>

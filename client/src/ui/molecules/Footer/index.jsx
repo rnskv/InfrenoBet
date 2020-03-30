@@ -14,6 +14,7 @@ export const Container = styled.div`
     flex-direction: column;
     z-index: 2;
     position: relative;
+    text-align: center;
 `;
 
 export const Title = styled(CommonTitle)`

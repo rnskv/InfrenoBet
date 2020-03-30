@@ -6,6 +6,7 @@ import Input from 'ui/atoms/Input';
 import CommonTitle from 'ui/atoms/Title';
 
 import AuthenticationForm from 'ui/molecules/AuthenticationForm';
+import media from 'src/helpers/media';
 
 export const StyledButton = styled(Button)`
   align-self: center;
@@ -25,6 +26,10 @@ export const Container = styled.div`
     justify-content: space-between;
     z-index: 1;
     position: relative;
+    
+    ${ media.tablet`
+        flex-direction: column;
+   `}
 `;
 
 export const More = styled.span`
@@ -39,12 +44,19 @@ export const Chance = styled.div`
   align-items: center;
   margin: 0 50px;
   color: var(--color-black);
-   font-size: 24px;
+  font-size: 24px;
+  
+  ${ media.tablet`
+        font-size: 20px;
+        margin: 25px 0;
+  `}
   span {
     color: var(--color-blue);
     margin-left: 10px;
     font-size: 28px;
   }
+  
+  
 `;
 
 export const SplitArrow = styled.div`
@@ -55,6 +67,10 @@ export const SplitArrow = styled.div`
     border: none;
     background-position: 0 -142px;
     height: 60px;
+    
+    ${ media.tablet`
+        display: none;
+   `}
 `;
 
 export const Information = styled.div`
@@ -65,6 +81,11 @@ export const ItemsCount = styled.div`
   display: flex;
   flex-direction: column;
   width: 40%;
+  
+  ${ media.tablet`
+       width: 100%;
+       text-align: center;
+  `}
 `;
 
 export const Description = styled.div`
