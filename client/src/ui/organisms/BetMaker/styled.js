@@ -17,13 +17,13 @@ export const StyledClose = styled(Close)`
 export const Container = styled.div`
    display: flex;
    position: fixed;
-   right: ${({ isOpened }) => (isOpened ? '0' : '-600px')};
+   right: ${({ isOpened }) => (isOpened ? '0' : '-650px')};
    top: var(--header-height);
    z-index: 11;
    max-height: calc(100vh - var(--header-height));
    transition: .6s right;
    box-sizing: border-box;
-   width: 550px;
+   width: 600px;
    
    ${media.tablet`
      right: ${({ isOpened }) => (isOpened ? '0' : 'calc(-100% - 50px)')};
