@@ -3,7 +3,7 @@ import Input from 'ui/atoms/Input';
 import Button from 'ui/atoms/Button';
 
 export const WithdrawInput = styled(Input)`
-
+  width: 45%;
 `;
 
 export const Container = styled.div`
@@ -19,9 +19,6 @@ export const InputsContainer = styled.div`
  height: 100%;
  display: flex;
  justify-content: space-between;
- ${WithdrawInput} {
-  width: 45%;
- }
  
  margin: 25px 0;
 `;

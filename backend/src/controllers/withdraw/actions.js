@@ -17,14 +17,16 @@ async function createWithdraw(ctx) {
     const { user } = ctx.state;
     const { phone, amount } = ctx.request.body;
 
+    console.log(phone);
 
     if (!phone) {
         ctx.throw({ type: WITHDRAW_ERROR_DATA_QIWI });
         return;
     } else {
-        if (phone[0] === '+') {
-            ctx.throw({ type: WITHDRAW_ERROR_DATA_QIWI });
-        }
+        // if (false) { //тут валидацию номера добавить надо
+        //     ctx.throw({ type: WITHDRAW_ERROR_DATA_QIWI });
+        //     return;
+        // }
     }
 
     if (!amount) {

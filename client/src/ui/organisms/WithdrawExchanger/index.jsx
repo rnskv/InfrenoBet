@@ -29,6 +29,9 @@ function WithdrawExchanger({
 }) {
     const isLoading = useSelector((state) => state.cashier.isLoading);
     const [isVerifiedAge, setIsVerifiedAge] = useState(false);
+    const [realSum , setRealSum] = useState(0);
+    const [sum , setSum] = useState(0);
+
     const sumInputRef = useRef(null);
     const sumRealInputRef = useRef(null);
 
@@ -42,12 +45,17 @@ function WithdrawExchanger({
         onSubmit({ amount: sumInputRef.current.value });
     };
 
-    const sumRealOnChange = () => {
-        sumInputRef.current.value = (sumRealInputRef.current.value / (1 - commission)).toFixed(2);
+    const sumRealOnChange = (e) => {
+        sumInputRef.current.value = (sumRealInputRef.current.value / (1 - commission)).toFixed(0);
     };
 
-    const sumOnChange = () => {
-        sumRealInputRef.current.value = (sumInputRef.current.value * (1 - commission)).toFixed(2);
+    const sumOnChange = (e) => {
+        sumRealInputRef.current.value = (sumInputRef.current.value * (1 - commission)).toFixed(0);
+    };
+
+    const onFocus = (e) => {
+        sumRealInputRef.current.value = '';
+        sumInputRef.current.value = '';
     };
 
     return (
@@ -57,13 +65,17 @@ function WithdrawExchanger({
                     label="Вывести"
                     description={`Минимум ${getExchangedSum(2)}`}
                     ref={sumInputRef}
+                    maskType="money"
                     onChange={sumOnChange}
+                    onFocus={onFocus}
                 />
                 <WithdrawInput
                     label="Получить"
                     description={`С учетом комиссии ${commission * 100}%`}
                     ref={sumRealInputRef}
+                    maskType="money"
                     onChange={sumRealOnChange}
+                    onFocus={onFocus}
                 />
             </InputsContainer>
             <Verify

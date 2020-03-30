@@ -25,11 +25,6 @@ export default ({ app }) => {
     };
 
     const createQiwiWithdraw = ({ amount, phone }) => async (dispatch) => {
-        if (phone[0] === '+') {
-            dispatch(actions.user.addNotification({ type: WITHDRAW_ERROR_DATA_QIWI }));
-            return;
-        }
-
         dispatch(actions.cashier.startLoading());
 
         services.withdraw.execute('create', {

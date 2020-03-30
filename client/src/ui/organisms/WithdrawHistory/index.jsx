@@ -35,7 +35,6 @@ function WithdrawHistory() {
     }, [isLoading]);
 
     const heads = [
-        { key: 'user', name: 'Пользователь' },
         { key: '_id', name: 'Идентификатор' },
         { key: 'system', name: 'Платежная система' },
         { key: 'destination', name: 'Номер телефона' },

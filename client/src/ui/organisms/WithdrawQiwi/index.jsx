@@ -47,10 +47,11 @@ function WithdrawQiwi() {
             <InputContainer>
                 <Input
                     type="tel"
+                    maskType="tel"
                     required
                     name="phone"
                     label="Номер QIWI кошелька"
-                    description="Введите свой QIWI кошелёк без знака +"
+                    description="Введите номер своего QIWI кошелька"
                     ref={inputRef}
                 />
                 <WithdrawExchanger onSubmit={submitWithdraw} />

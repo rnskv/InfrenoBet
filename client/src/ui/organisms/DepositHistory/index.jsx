@@ -31,7 +31,6 @@ function DepositHistory() {
     }, []);
 
     const heads = [
-        { key: 'user', name: 'Пользователь' },
         { key: '_id', name: 'Идентификатор' },
         { key: 'system', name: 'Платежная система' },
         { key: 'amount', name: 'Сумма' },
