@@ -11,6 +11,8 @@ import SocketsManager from './managers/SocketsManager';
 import RoomsManager from './managers/RoomsManager';
 import handlers from './handlers/application';
 
+import SteamPlugin from './plugins/steam';
+
 const app = express();
 const server = http.Server(app);
 
@@ -21,6 +23,7 @@ const roomsManager = new RoomsManager();
 
 infernoIO.addManager('sockets', socketsManager);
 infernoIO.addManager('rooms', roomsManager);
+infernoIO.addPlugin('steam', SteamPlugin);
 
 infernoIO.init();
 

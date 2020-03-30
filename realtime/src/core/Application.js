@@ -4,6 +4,7 @@ class Application {
     constructor() {
         this.usersSockets = {};
         this.managers = {};
+        this.plugins = {};
     }
 
     init() {
@@ -15,6 +16,10 @@ class Application {
         Object.values(this.managers).forEach(manager => {
             manager.provideApp(this);
         })
+    }
+
+    addPlugin(name, plugin) {
+        this.plugins[name] = plugin({ app: this });
     }
 
     addManager(name, manager) {

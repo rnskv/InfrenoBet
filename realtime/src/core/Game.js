@@ -14,7 +14,6 @@ class Game {
         });
         this.bets = [];
         this.onFinish = onFinish;
-        console.log(config)
         this.time = config.rouletteGameTime;
         this.endingTime = 7;
         this.closingGameTime = 5;
@@ -41,7 +40,6 @@ class Game {
                 while (this.betsQueue.length) {
                     await this.processFirstBet();
                     this.isWaitingLastBets = !!this.betsQueue.length;
-                    console.log('Обработка ставки из очереди прошлой игры')
                 }
             }
         }).catch((err) => {
@@ -125,7 +123,7 @@ class Game {
 
         if (this.isWaitingLastBets) {
             this.app.managers.sockets.emitAllUsers({ eventName: 'game.waitingLastBets', data: {
-                betsQueueLength: this.state.betsQueueLength
+                betsQueueLength: this.betsQueue.length
             }});
         }
 

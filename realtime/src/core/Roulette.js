@@ -11,6 +11,7 @@ class Roulette {
         this.offset = 0;
         this.avatars = [];
         this.avatarsCount = 100;
+        this.minimalRouletteOffset = 10000; //in pixels
         this.duration = 16;
         this.destination = 0;
         this.isRotate = false;
@@ -72,7 +73,7 @@ class Roulette {
     start({ winner, bank, users }) {
         this.winner = winner;
         this.bank = bank;
-        this.destination = getRandomIntInclusive(10000, this.client.avatarsCount * this.client.avatar.width);
+        this.destination = getRandomIntInclusive(this.minimalRouletteOffset, this.client.avatarsCount * this.client.avatar.width);
         this.winnerAvatarIndex = Math.floor(this.destination / this.client.avatar.width);
 
         this.generateAvatars({  winner, bank, users});
