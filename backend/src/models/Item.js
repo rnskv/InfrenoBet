@@ -4,7 +4,20 @@ const { Schema } = mongoose;
 
 const itemSchema = new Schema({
     type: {
-      type: Number, //0 - currency, 1 - csgo
+        type: Number, //0 - currency, 1 - csgo
+    },
+    appId: {
+        type: Number,
+        default: 0,
+    },
+    classId: {
+        type: Number,
+        index: true,
+        unique: true,
+    },
+    name: {
+        type: String,
+        isRequired: true,
     },
     cost: {
         type: Number,
@@ -15,7 +28,19 @@ const itemSchema = new Schema({
     }
 });
 
+// itemSchema.index({name: 1});
+
 const Item = mongoose.model('item', itemSchema);
+
+Item.updateOrCreateByName = (name, data) => {
+    return Item.update({
+            name: name
+        }, data, {
+            upsert: true,
+            setDefaultsOnInsert: true
+        },
+    );
+};
 
 Item.create = async (data) => {
     return new Item(data).save()

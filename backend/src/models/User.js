@@ -7,7 +7,11 @@ import { USER_NOT_ENOUGH_MONEY, USER_NOT_FOUND } from 'src/types/errors';
 
 const userSchema = new Schema({
     vkId: {
-      type: Number,
+      type: String,
+      default: null,
+    },
+    steamId: {
+      type: String,
       default: null,
     },
     login: {
@@ -33,6 +37,10 @@ const userSchema = new Schema({
         type: Number,
         default: 0.01,
     },
+    inventory: {
+        type: [Number],
+        default: [],
+    },
     experience: {
         type: Number,
         default: 0,
@@ -57,6 +65,10 @@ const User = mongoose.model('user', userSchema);
 
 User.getById = async (id) => {
     return await User.findOne({ _id: mongoose.Types.ObjectId(id)})
+};
+
+User.getBySteamId = async (id) => {
+    return await User.findOne({ steamId: id })
 };
 
 User.changeBalance = async (id, amount) => {

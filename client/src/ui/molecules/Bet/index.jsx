@@ -31,7 +31,7 @@ function Bet({
             <Item>
                 <img src={item.image} />
                 <Tickets>
-                    <span>{`+${ticketTo - ticketFrom + 1}`}</span>
+                    <span>{`+${(ticketTo - ticketFrom + 1).toFixed(3)}`}</span>
                 </Tickets>
             </Item>
         </Container>

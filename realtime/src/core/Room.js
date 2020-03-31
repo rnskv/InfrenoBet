@@ -28,9 +28,9 @@ class Room {
                     return;
                 }
                 try {
+                    console.log(response);
                     const bet = JSON.parse(response);
                     if (!bet) return;
-
 
                     await this.game.addBet(bet)
                 } catch(e) {

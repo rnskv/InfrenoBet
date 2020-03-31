@@ -8,7 +8,7 @@ module.exports = (cli = { mode: 'development' }) => {
 
     return ({
         entry: {
-            app: './src/app.js'
+            app: './src/app.js',
         },
         output: {
             path: path.resolve(__dirname, 'dist'),
