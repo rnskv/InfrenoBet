@@ -36,3 +36,8 @@ services:
         ports:
             - "27017:27017"
         container_name: inferno_db
+    redis:
+        image: redis
+        ports:
+            - "27017:27017"
+        container_name: inferno_redis

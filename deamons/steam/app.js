@@ -6,7 +6,10 @@ const redis = require('redis');
 const rp = require('request-promise');
 const Steam = require('./Steam');
 const config = require('./config');
-const redisClient = redis.createClient();
+const redisClient = redis.createClient({
+    host: 'redis',
+    port: 6379
+});
 const community = new SteamCommunity();
 const client = new SteamUser();
 
