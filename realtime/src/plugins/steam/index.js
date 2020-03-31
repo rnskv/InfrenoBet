@@ -87,3 +87,7 @@ manager.on('newOffer', function(offer) {
 manager.on('sentOfferChanged', function(offer, oldState) {
     console.log(`Offer #${offer.id} changed: ${TradeOfferManager.ETradeOfferState[oldState]} -> ${TradeOfferManager.ETradeOfferState[offer.state]}`);
 });
+
+export default () => {
+    console.log('steam');
+}

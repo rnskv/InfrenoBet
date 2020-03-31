@@ -6,6 +6,8 @@ export default {
     server_port: process.env.SERVER_PORT || 8080,
     server_host: process.env.SERVER_HOST || '127.0.0.1',
     mongoUri: process.env.MONGO_URI || '',
+    redisHost: process.env.REDIS_HOST || '127.0.0.1',
+    redisPort: process.env.REDIS_PORT || '6379',
     jwtSecret: process.env.JWT_SECRET,
     rouletteGameTime: Number(process.env.ROULETTE_GAME_TIME)
 };

@@ -79,11 +79,19 @@ export default function ({ app }) {
                 type: BET_SENDING
             });
 
-            console.log('Ставим ставку')
-            await app.managers.rooms.get('roulette').game.registerUserBets({
-                user: socket.user,
-                items: betData.items
+            app.managers.redis.rpush('game.roulette.bets', JSON.stringify(
+                {
+                    user: socket.user,
+                    items: betData.items
+                }
+            ), (response) => {
+                console.log('Значение в редиску установлено', response)
             });
+
+            // await app.managers.rooms.get('roulette').game.registerUserBets({
+            //     user: socket.user,
+            //     items: betData.items
+            // });
         });
 
         socket.on('game.roulette.sync', () => {

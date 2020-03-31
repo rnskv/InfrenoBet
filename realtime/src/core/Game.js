@@ -36,12 +36,28 @@ class Game {
         }).then(async (game) => {
             this.init({ ...game });
 
-            if (betsQueue.length) {
-                while (this.betsQueue.length) {
-                    await this.processFirstBet();
-                    this.isWaitingLastBets = !!this.betsQueue.length;
-                }
+            while (this) {
+                this.app.managers.redis.lpop('game.roulette.bets', async (err, response) => {
+                    if (err) {
+                        return;
+                    }
+                    try {
+                        const bet = JSON.parse(response);
+                        if (!bet) return;
+                        await this.addBet(bet)
+                    } catch(e) {
+                        console.log('При принятии ставки произошла ошибка')
+                    }
+                });
+                await new Promise((resolve) => { setTimeout(resolve, 1000) })
             }
+
+            // if (betsQueue.length) {
+            //     while (this.betsQueue.length) {
+            //         await this.processFirstBet();
+            //         this.isWaitingLastBets = !!this.betsQueue.length;
+            //     }
+            // }
         }).catch((err) => {
             console.log(err)
         });
