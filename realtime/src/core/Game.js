@@ -79,7 +79,7 @@ class Game {
 
     get state() {
         return {
-            bets: [...this.bets].reverse(),
+            bets: this.bets,
             hash: this.hash,
             time: this.time,
             isWaitingLastBets: this.isWaitingLastBets,
