@@ -25,6 +25,12 @@ services:
         depends_on:
             - realtime
         container_name: inferno_client
+    deamons:
+        build: ./deamons
+        image: rnskv/inferno_deamons
+        depends_on:
+            - realtime
+        container_name: inferno_deamons
     db:
         image: mongo
         ports:
