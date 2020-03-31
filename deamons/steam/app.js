@@ -1,3 +1,6 @@
+const mode = process.env.MODE;
+console.log('BOT STARTED AT MODE:', mode);
+
 const SteamUser = require('steam-user');
 const SteamCommunity = require('steamcommunity');
 const TradeOfferManager = require('steam-tradeoffer-manager');
@@ -5,16 +8,17 @@ const FS = require('fs');
 const redis = require('redis');
 const rp = require('request-promise');
 const Steam = require('./Steam');
-const config = require('./config');
+const config = require('./config')[mode];
 const redisClient = redis.createClient({
-    host: 'redis',
-    port: 6379
+    host: config.REDIS_HOST,
+    port: config.REDIS_PORT
 });
 const community = new SteamCommunity();
 const client = new SteamUser();
 
 const userActions = require('./actions/user');
 const tradeOffersActions = require('./actions/tradeoffers');
+
 
 const tradeOfferManager = new TradeOfferManager({
     "steam": client,
