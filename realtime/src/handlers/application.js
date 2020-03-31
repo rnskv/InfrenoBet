@@ -78,7 +78,6 @@ export default function ({ app }) {
                             amount: getBetValue(betData)
                         }
                     });
-                    //Тут надо залогировать все ставки которые купил пользователь
                 } catch (err) {
                     console.log(err);
                     socket.emit('project.notification', { type: notificationsTypes.USER_NOT_ENOUGH_MONEY });

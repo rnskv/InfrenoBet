@@ -38,8 +38,9 @@ const userSchema = new Schema({
         default: 0.01,
     },
     inventory: {
-        type: [Number],
+        type: [mongoose.Types.ObjectId],
         default: [],
+        ref: 'item'
     },
     experience: {
         type: Number,
@@ -65,10 +66,18 @@ const User = mongoose.model('user', userSchema);
 
 User.getById = async (id) => {
     return await User.findOne({ _id: mongoose.Types.ObjectId(id)})
+        .populate({
+            path: 'inventory',
+            model: 'item'
+        })
 };
 
 User.getBySteamId = async (id) => {
     return await User.findOne({ steamId: id })
+        .populate({
+            path: 'inventory',
+            model: 'item'
+        })
 };
 
 User.changeBalance = async (id, amount) => {

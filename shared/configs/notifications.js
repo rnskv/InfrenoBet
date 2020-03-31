@@ -19,6 +19,8 @@ import {
     WITHDRAW_CREATED_QIWI,
     WITHDRAW_ERROR_DATA_QIWI,
     WITHDRAW_ERROR_MIN_AMOUNT,
+    INVENTORY_ITEMS_ADDED,
+    TRADEOFFER_ACCEPTED
 } from './notificationsTypes';
 
 export default {
@@ -121,6 +123,16 @@ export default {
         type: 'ERROR',
         title: 'Платежная система',
         text: 'При выводе средств, Вы указали сумму меньше минимальной.',
+    },
+    [TRADEOFFER_ACCEPTED]: {
+        type: 'SUCCESS',
+        title: 'Steam',
+        text: 'Мы приняли ваше предложение обмена. Вещи скоро будут добавлены в ваш инвентарь.',
+    },
+    [INVENTORY_ITEMS_ADDED]: {
+        type: 'SUCCESS',
+        title: 'Платформа',
+        text: 'Вещи были добавлены в инвентарь.',
     },
     undefined: {
         type: 'ERROR',

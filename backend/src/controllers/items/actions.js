@@ -110,6 +110,7 @@ const validateHandler = async (ctx) => {
     }
     let isHasCosts = true;
     const items = [];
+    console.log(itemsToReceive);
     for (let item of itemsToReceive) {
         const { appid, classid, icon_url_large } = item;
 
@@ -134,9 +135,14 @@ const validateHandler = async (ctx) => {
         items.push(itemInfo);
     }
 
-    console.log('Цена имеется?', isHasCosts);
-    // const item = await Item.findOne({ classId: classid });
-    // console.log('Принял', sid, offer);
+    if (!isHasCosts) {
+        ctx.body = {
+            ok: false,
+            message: 'Невозможно определить стоимость одного из предметов'
+        };
+    }
+
+    console.log('after validate', items);
 
     ctx.body = { ok: true, items, user }
 };
@@ -151,7 +157,7 @@ const parseHandler = async (ctx) => {
 
     for (let [name, data] of Object.entries(response.items)) {
         const { bcount, price, bprice, count } = data;
-
+        console.log('Check item: ', name);
         if (bcount === 0 || bprice > price * 2 || count === 0 ) {
             console.log('Skip item', name);
             continue;

@@ -34,7 +34,12 @@ export const usePassportStrategies = (passport) => {
                 return next(null, false);
             }
 
-            const user = await User.findOne({ vkId: profile.id });
+            const user = await User.findOne({ vkId: profile.id }).populate({
+                path: 'inventory',
+                model: 'item'
+            });
+
+            console.log(user);
 
             if (!user) {
                 const user = await new User({
@@ -48,7 +53,7 @@ export const usePassportStrategies = (passport) => {
                 user.avatar = profile._json.photo_200;
                 user.name = profile.displayName;
                 await user.save();
-
+                console.log('AGAAA', user);
                 return next(null, user);
             }
         }

@@ -70,6 +70,7 @@ module.exports = (root) => {
 
         offer.accept(async function(err, status) {
             const { items, user } = validation;
+
             if (err) {
                 console.log("Не получилось принять оффер: " + err.message);
                 return;
@@ -79,10 +80,9 @@ module.exports = (root) => {
 
             console.log("Отправляю в редис ", items, user);
 
-            const bet = { user, items };
+            const trade = { user, items };
 
-            root.redis.rpush('game.roulette.bets', JSON.stringify(bet))
-            // confirmTradeOffer(offer, status)
+            root.redis.publish('user.inventory.add', JSON.stringify(trade))
         });
     };
 

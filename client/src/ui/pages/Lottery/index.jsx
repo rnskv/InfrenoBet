@@ -12,7 +12,7 @@ import GameEndFooter from 'ui/organisms/GameEndFooter';
 import BetMaker from 'ui/organisms/BetMaker';
 import BetsContainer from 'ui/organisms/BetsContainer';
 import RoomNavigation from 'ui/organisms/RoomNavigation';
-
+import Inventory from 'ui/organisms/Inventory';
 
 // @todo Все экшены брать из контекста App (примерно так)
 import * as userActions from 'src/redux/user/actions';
@@ -69,6 +69,7 @@ function Lottery({
                 openBetMaker={actions.betMaker.open}
                 isAuth={isAuth}
             />
+            <Inventory />
 
             <UsersBanks
                 users={users}

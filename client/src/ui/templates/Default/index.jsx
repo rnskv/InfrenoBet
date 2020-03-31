@@ -48,7 +48,9 @@ function Default({ children, ...props }) {
                 >
                     <Navigation />
                 </Sidebar>
-                <Content>{children}</Content>
+                <Content>
+                    {children}
+                </Content>
                 <Sidebar
                     params={{
                         side: 'right',

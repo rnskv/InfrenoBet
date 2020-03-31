@@ -49,6 +49,10 @@ userApi.addRequests({
     changeBalance: new Request({
         url: '/changeBalance',
         method: 'put',
+    }),
+    addInventory: new Request({
+        url: '/inventory',
+        method: 'put'
     })
 });
 
