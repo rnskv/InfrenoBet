@@ -1,6 +1,8 @@
 import Action from 'src/core/Action';
 import passport from 'koa-passport';
 import Item from 'src/models/Item';
+import User from 'src/models/User';
+import request from 'request-promise';
 
 const dataForMigration = [
     {
@@ -85,9 +87,91 @@ const dataForMigration = [
     }
 ];
 
+const validateHandler = async (ctx) => {
+    const { steamId, offer } = ctx.request.body;
+    const { id, itemsToGive, itemsToReceive } = offer;
+
+    const user = await User.getBySteamId(steamId);
+
+    if (!user) {
+        ctx.body = {
+            ok: false,
+            message: 'Вы не зарегистрированы на нашем сайте'
+        };
+        return;
+    }
+
+    if (itemsToGive.length > 0) {
+        ctx.body = {
+            ok: false,
+            message: 'Вы не можете запрашивать предметы у бота'
+        };
+        return;
+    }
+    let isHasCosts = true;
+    const items = [];
+    for (let item of itemsToReceive) {
+        const { appid, classid, icon_url_large } = item;
+
+        const itemInfo = await Item.findOne({ classId: classid });
+
+        if (!itemInfo) {
+            isHasCosts = isHasCosts && false;
+            continue;
+        }
+
+        if (!itemInfo.image) {
+            itemInfo.image = 'https://steamcommunity-a.akamaihd.net/economy/image/' + icon_url_large;
+            itemInfo.save();
+        }
+
+        if (!itemInfo.cost) {
+            isHasCosts = isHasCosts && false;
+        } else {
+            isHasCosts = isHasCosts && true;
+        }
+
+        items.push(itemInfo);
+    }
+
+    console.log('Цена имеется?', isHasCosts);
+    // const item = await Item.findOne({ classId: classid });
+    // console.log('Принял', sid, offer);
+
+    ctx.body = { ok: true, items, user }
+};
+
+const parseHandler = async (ctx) => {
+    const { appId = 570 } = ctx.params;
+
+    const response = await request({
+        uri: `http://steamp.ru/v2/?key=${process.env.STEAMP_API_KEY}&appid=${appId}&usd=true&classid=true&bprice=true&bcount=true&count=true`,
+        json: true,
+    });
+
+    for (let [name, data] of Object.entries(response.items)) {
+        const { bcount, price, bprice, count } = data;
+
+        if (bcount === 0 || bprice > price * 2 || count === 0 ) {
+            console.log('Skip item', name);
+            continue;
+        }
+
+        const itemData = {
+            cost: data.price,
+            appId: data.appid,
+            classId: data.classid,
+            type: 1,
+        };
+
+        await Item.updateOrCreateByName(name, itemData);
+    }
+
+    ctx.body = response;
+};
 
 const getAllHandler = async (ctx) => {
-    const items = await Item.find().sort({ cost: 1 });
+    const items = await Item.find({ image: { $exists:true} }).sort({ cost: 1 });
 
     if (items.length <= 0) {
         console.log('Run migration for collection items');
@@ -97,7 +181,7 @@ const getAllHandler = async (ctx) => {
         console.log('Finish migration for collection items');
     }
 
-    ctx.body = await Item.find().sort({ cost: 1 });
+    ctx.body = await Item.find({ image: { $exists: true } }).sort({ cost: 1 });
 };
 
 const postHandler = async (ctx) => {
@@ -106,6 +190,12 @@ const postHandler = async (ctx) => {
         body: 'Hello from action post'
     };
 };
+
+export const parse = new Action({
+    method: 'get',
+    url: '/parse',
+    handler: parseHandler,
+});
 
 export const getAll = new Action({
     method: 'get',
@@ -117,4 +207,10 @@ export const add = new Action({
     method: 'post',
     url: '/',
     handler: postHandler,
+});
+
+export const validate = new Action({
+    method: 'post',
+    url: '/validate',
+    handler: validateHandler,
 });

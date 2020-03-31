@@ -32,6 +32,7 @@ export default function ({ app }) {
 
         socket.on('game.roulette.bet', async (betData) => {
             const { game } = app.managers.rooms.get('roulette');
+            const { user } = socket;
 
             if (!socket.jwtToken) {
                 socket.emit('project.notification', { type: notificationsTypes.USER_NOT_AUTH });
@@ -48,30 +49,15 @@ export default function ({ app }) {
                 return;
             }
 
-            const totalUserItemsCount = game.getUserBetsCount(socket.user) + game.getUserBetsCountInQueue(socket.user);
-
             if (
-                !game.roulette.isVisible
-                    ? totalUserItemsCount + betData.items.length > game.maxUserItemsCount
-                    : game.getUserBetsCountInQueue(socket.user) + betData.items.length > game.maxUserItemsCount
+                game.getUserBetsCount(user) + betData.items.length > game.maxUserItemsCount
             ) {
-                socket.emit('project.notification', { type: notificationsTypes.SO_MANY_ITEMS });
-                return;
-            }
-
-            //Тут проверить надо хватает ли чуваку денег и если да то сразу вычесть их;
-
-            try {
-                await userApi.execute('changeBalance', {
-                    body: {
-                        id: socket.user._id,
-                        amount: getBetValue(betData)
+                this.app.managers.sockets.emitUserById(user._id, {
+                    eventName: 'project.notification',
+                    data: {
+                        type:  notificationsTypes.SO_MANY_ITEMS
                     }
                 });
-                //Тут надо залогировать все ставки которые купил пользователь
-            } catch (err) {
-                console.log(err);
-                socket.emit('project.notification', { type: notificationsTypes.USER_NOT_ENOUGH_MONEY });
                 return;
             }
 
@@ -79,10 +65,26 @@ export default function ({ app }) {
                 type: BET_SENDING
             });
 
-            console.log('Ставим ставку')
-            await app.managers.rooms.get('roulette').game.registerUserBets({
-                user: socket.user,
-                items: betData.items
+            app.managers.redis.rpush('game.roulette.bets', JSON.stringify(
+                {
+                    user: user,
+                    items: betData.items
+                }
+            ), async (response) => {
+                try {
+                    await userApi.execute('changeBalance', {
+                        body: {
+                            id: user._id,
+                            amount: getBetValue(betData)
+                        }
+                    });
+                    //Тут надо залогировать все ставки которые купил пользователь
+                } catch (err) {
+                    console.log(err);
+                    socket.emit('project.notification', { type: notificationsTypes.USER_NOT_ENOUGH_MONEY });
+                    return;
+                }
+                console.log('Значение в редиску установлено', response)
             });
         });
 

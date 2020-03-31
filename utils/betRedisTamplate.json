@@ -1,0 +1,18 @@
+{
+  "user": {
+    "_id": "5e7e3c2fd3aa238a2969690d",
+    "name": "ROMAN NUYSKOV",
+    "email": "test@mail.ru",
+    "iat": 1585645798,
+    "exp": 1672045798
+  },
+  "items": [
+    {
+      "cost": 0.01,
+      "_id": "5e77d26b5d1f6e011e15fbba",
+      "type": 0,
+      "image": "/dist/resources/images/1_coin.png",
+      "__v": 0
+    }
+  ]
+}
