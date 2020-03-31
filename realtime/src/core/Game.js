@@ -2,11 +2,10 @@ import Roulette from 'src/core/Roulette';
 
 import { gameApi, betsApi } from 'src/modules/api';
 import { getBetsTotalValue } from  'src/helpers/game';
-import * as notificationsTypes from 'shared/configs/notificationsTypes';
 import config from 'src/config';
 
 class Game {
-    constructor({ hash, secret, app, betsQueue, onFinish }) {
+    constructor({ hash, secret, app, onFinish }) {
         this.app = app;
         this.roulette = new Roulette({
             sockets: this.app.managers.sockets.io.sockets,
@@ -21,10 +20,8 @@ class Game {
         this.maxUserItemsCount = 10;
 
         this.isStarted = false;
-        this.isFinished = false;
         this.isClosedForBets = false;
         this.isShowWinner = false;
-        this.betsQueue = betsQueue;
         this.isWaitingLastBets = false;
         this.publicSecret = 0;
 
@@ -35,29 +32,6 @@ class Game {
             }
         }).then(async (game) => {
             this.init({ ...game });
-
-            while (this) {
-                this.app.managers.redis.lpop('game.roulette.bets', async (err, response) => {
-                    if (err) {
-                        return;
-                    }
-                    try {
-                        const bet = JSON.parse(response);
-                        if (!bet) return;
-                        await this.addBet(bet)
-                    } catch(e) {
-                        console.log('При принятии ставки произошла ошибка')
-                    }
-                });
-                await new Promise((resolve) => { setTimeout(resolve, 1000) })
-            }
-
-            // if (betsQueue.length) {
-            //     while (this.betsQueue.length) {
-            //         await this.processFirstBet();
-            //         this.isWaitingLastBets = !!this.betsQueue.length;
-            //     }
-            // }
         }).catch((err) => {
             console.log(err)
         });
@@ -109,7 +83,6 @@ class Game {
             hash: this.hash,
             time: this.time,
             isWaitingLastBets: this.isWaitingLastBets,
-            betsQueueLength: this.betsQueue.length,
             bank: this.bank,
             users: this.users,
             isShowWinner: this.isShowWinner,
@@ -139,7 +112,7 @@ class Game {
 
         if (this.isWaitingLastBets) {
             this.app.managers.sockets.emitAllUsers({ eventName: 'game.waitingLastBets', data: {
-                betsQueueLength: this.betsQueue.length
+                betsQueueLength: null
             }});
         }
 
@@ -173,8 +146,7 @@ class Game {
             }
         });
         this.roulette.setVisible(false);
-        this.isFinished = true;
-        this.onFinish({ betsQueue: this.betsQueue });
+        this.onFinish();
     }
 
     async getWinner() {
@@ -199,7 +171,6 @@ class Game {
 
     onRouletteRotateEnd(winner) {
         this.isShowWinner = true;
-        this.isFinished = true;
         this.publicSecret = this.secret;
 
         this.app.managers.sockets.emitAllUsers({ eventName: 'game.getWinner', data: {
@@ -222,7 +193,7 @@ class Game {
     }
 
     getUserBetsCountInQueue(user) {
-        return this.betsQueue.filter((bet) => bet.user._id === user._id).reduce((acc, bet) => acc + bet.items.length, 0)
+        return [];
     }
 
     isFirstUserBet(user) {
@@ -233,6 +204,7 @@ class Game {
         return new Promise((async resolve => {
             const acceptedBets = [];
 
+            //В идеале нужно будет 1 ставку создавать
             for (const item of betData.items) {
                 const bet = await betsApi.execute('create', {
                     body: {
@@ -266,50 +238,6 @@ class Game {
 
             resolve()
         }))
-    }
-
-    async registerUserBets(data) {
-        if (this.isClosedForBets) {
-            return;
-        }
-
-        this.isWaitingLastBets = true;
-
-        this.betsQueue.push(data);
-
-        if (this.roulette.isVisible) {
-            console.log('Перенарпавляем ставки в следующую игру');
-            return;
-        }
-
-        const isNeedToStartProcessing = this.betsQueue.length === 1;
-
-        if (isNeedToStartProcessing) {
-            while (this.betsQueue.length) {
-                await this.processFirstBet();
-                this.isWaitingLastBets = !!this.betsQueue.length;
-                console.log('Обработка новой ставки!')
-            }
-        }
-    }
-
-    async processFirstBet() {
-        const betData = this.betsQueue[0];
-        try {
-            await this.addBet(betData);
-            console.log('Сообщаем пользователю', betData)
-            this.app.managers.sockets.emitUserById(betData.user._id, {
-                eventName: 'project.notification',
-                data: { type: notificationsTypes.BET_ACCEPTED }
-            });
-        } catch (err) {
-            this.app.managers.sockets.emitUserById(betData.user._id, {
-                eventName: 'project.notification',
-                data: { type: notificationsTypes.INTERNAL_SERVER_ERROR }
-            });
-        }
-
-        this.betsQueue.shift();
     }
 
     sync(socket) {

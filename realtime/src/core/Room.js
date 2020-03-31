@@ -6,6 +6,38 @@ class Room {
         this.gamesCount = 0;
         this.app = app;
         this.game = null;
+
+        this.startListening().then(() => {
+            console.log('Слушал ставки')
+        });
+    }
+
+    async startListening() {
+        while (this) {
+            await new Promise((resolve) => { setTimeout(resolve, 1000) });
+
+            if (!this.game) continue;
+
+            if (this.game.roulette.isVisible) {
+                console.log('Перенарпавляем ставки в следующую игру');
+                continue;
+            }
+
+            this.app.managers.redis.lpop('game.roulette.bets', async (err, response) => {
+                if (err) {
+                    return;
+                }
+                try {
+                    const bet = JSON.parse(response);
+                    if (!bet) return;
+
+
+                    await this.game.addBet(bet)
+                } catch(e) {
+                    console.log('При принятии ставки произошла ошибка', e)
+                }
+            });
+        }
     }
 
     reset({ betsQueue } = { betsQueue: [] }) {
@@ -24,8 +56,8 @@ class Room {
         });
     }
 
-    onFinish({ betsQueue }) {
-        this.reset({ betsQueue });
+    onFinish() {
+        this.reset();
     }
 }
 
