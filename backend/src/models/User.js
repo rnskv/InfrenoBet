@@ -80,6 +80,43 @@ User.getBySteamId = async (id) => {
         })
 };
 
+User.addItemsToInventory = async (id, items) => {
+    const user = await User.findById(id);
+
+    user.inventory = [...user.inventory, ...items];
+    try {
+        user.save();
+    } catch(error) {
+        return false;
+    }
+    return true
+};
+
+User.removeItemsFromInventory = async (id, items) => {
+    const user = await User.findById(id);
+
+    for (const item of items) {
+        const itemIndexInInventory = user.inventory.findIndex(i => {
+            return i && i.toString() === item.toString()
+        });
+
+        console.log('Ищу в инвентаре', user.inventory);
+        console.log('Ищу предмет', item);
+
+        if (itemIndexInInventory !== -1) {
+            console.log('Найден предмет в инвантаре', itemIndexInInventory);
+            user.inventory.splice(itemIndexInInventory, 1);
+        } else {
+            console.log('Не найден предмет', itemIndexInInventory);
+            return false;
+        }
+        console.log('Инвентарь после модификации', user.inventory);
+        user.save();
+    }
+
+    return true;
+};
+
 User.changeBalance = async (id, amount) => {
     const user = await User.getById(id);
 

@@ -31,15 +31,26 @@ const createHandler = async (ctx) => {
 
     const lastBet = await Bet.getLastInGameByGameId(game);
     const itemData = await Item.getById(item);
+    const userData = await User.findById(user);
 
     if (!itemData) {
         ctx.throw('Не верно передан предмет');
     }
 
+    if (itemData.type !== 0) {
+        console.log(itemData)
+
+        const result = await User.removeItemsFromInventory(user, [item]);
+        if (!result) {
+            ctx.throw({ type: 'INTERNAL_SERVER_ERROR' });
+            return;
+        }
+    }
+
     console.log('Find in bet item with cost:', itemData.cost);
 
     let ticketFrom = 1;
-    let ticketTo = itemData.cost * 100;
+    let ticketTo = itemData.cost * 10000;
 
     if (lastBet) {
         const lastGameTicket = lastBet.ticketTo;

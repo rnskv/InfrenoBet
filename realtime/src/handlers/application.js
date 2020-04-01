@@ -71,18 +71,18 @@ export default function ({ app }) {
                     items: betData.items
                 }
             ), async (response) => {
-                try {
-                    await userApi.execute('changeBalance', {
-                        body: {
-                            id: user._id,
-                            amount: getBetValue(betData)
-                        }
-                    });
-                } catch (err) {
-                    console.log(err);
-                    socket.emit('project.notification', { type: notificationsTypes.USER_NOT_ENOUGH_MONEY });
-                    return;
-                }
+                // try {
+                //     await userApi.execute('changeBalance', {
+                //         body: {
+                //             id: user._id,
+                //             amount: getBetValue(betData)
+                //         }
+                //     });
+                // } catch (err) {
+                //     console.log(err);
+                //     socket.emit('project.notification', { type: notificationsTypes.USER_NOT_ENOUGH_MONEY });
+                //     return;
+                // }
                 console.log('Значение в редиску установлено', response)
             });
         });

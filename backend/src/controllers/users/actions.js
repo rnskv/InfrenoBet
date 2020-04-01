@@ -37,14 +37,16 @@ const addInventoryHandler = async (ctx) => {
 
     console.log(currentUser.inventory);
 
-    // currentUser.inventory = currentUser.inventory || [];
-    currentUser.inventory = [...currentUser.inventory, ...itemsIds];
-    await currentUser.save();
+    const result = await User.addItemsToInventory(currentUser._id, itemsIds);
 
-    console.log('Добавляем вещи в инвентарь', user, items);
-
-    ctx.body = {
-        message: 'Вещи в инвентарь были добавлены'
+    if (result) {
+        ctx.body = {
+            message: 'Вещи в инвентарь были добавлены'
+        };
+    } else {
+        ctx.body = {
+            message: 'Вещи не были добавлены в инвентарь'
+        }
     }
 };
 
@@ -53,8 +55,6 @@ const getAllHandler = async (ctx) => {
 };
 
 const getMeHandler = async (ctx) => {
-    console.log('get me', ctx.state.user);
-
     ctx.body = {
         profile: await User.getById(ctx.state.user._id)
     };

@@ -106,11 +106,15 @@ Game.getWinnerById = async (id) => {
     const secret = game.secret;
     const winnerTicket = Math.floor(secret * ticketsCount) + 1;
 
+    console.log('Получаем победную ставку с билетом', winnerTicket);
+
     const winnerBet = await Bet.findOne({
         game: mongoose.Types.ObjectId(id),
         ticketFrom: { $lte: winnerTicket },
         ticketTo: { $gte: winnerTicket }
     }).populate('user').populate('item');
+
+    console.log('Получили победную ставку', winnerBet);
 
     winnerBet.winnerTicket = winnerTicket;
     return {
