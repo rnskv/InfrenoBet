@@ -110,8 +110,6 @@ const validateHandler = async (ctx) => {
         return;
     }
     let isHasCosts = true;
-    const items = [];
-    const inventoryItems = [];
 
     for (let item of itemsToReceive) {
         const { appid, assetid,  contextid, classid, icon_url_large } = item;
@@ -134,14 +132,6 @@ const validateHandler = async (ctx) => {
             isHasCosts = isHasCosts && true;
         }
 
-        const inventoryItem = await InventoryItem.create({
-            parent: itemInfo._id,
-            contextId: contextid,
-            assetId: assetid,
-            type: 1,
-        });
-
-        inventoryItems.push(inventoryItem);
     }
 
     if (!isHasCosts) {
@@ -152,11 +142,31 @@ const validateHandler = async (ctx) => {
         return;
     }
 
+    ctx.body = { ok: true, user }
+};
 
 
-    console.log('after validate', inventoryItems);
+const registerHandler = async (ctx) => {
+    const { items } = ctx.request.body;
 
-    ctx.body = { ok: true, items: inventoryItems, user }
+    const registeredItems = [];
+
+    for (let item of items) {
+        const { assetid,  contextid, classid } = item;
+
+        const itemInfo = await Item.findOne({ classId: classid });
+
+        const inventoryItem = await InventoryItem.create({
+            parent: itemInfo._id,
+            contextId: contextid,
+            assetId: assetid,
+            type: 1,
+        });
+
+        registeredItems.push(inventoryItem);
+    }
+
+    ctx.body = { ok: true, registeredItems }
 };
 
 const parseHandler = async (ctx) => {
@@ -238,4 +248,10 @@ export const validate = new Action({
     method: 'post',
     url: '/validate',
     handler: validateHandler,
+});
+
+export const register = new Action({
+    method: 'post',
+    url: '/register',
+    handler: registerHandler,
 });

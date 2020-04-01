@@ -38,7 +38,7 @@ TradeOffer.getAll = async (params = {}) => {
         .sort({ createDate: -1 })
         .populate('user')
         .populate({
-            path: 'inventory',
+            path: 'items',
             model: 'inventoryItem',
             populate: {
                 path: 'parent',

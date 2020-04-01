@@ -50,7 +50,8 @@ export default function ({ app }) {
             }
 
             if (
-                game.getUserBetsCount(user) + betData.items.length > game.maxUserItemsCount
+                game.getUserBetsCount(user) + betData.items.length > game.maxUserItemsCount &&
+                !game.roulette.isVisible
             ) {
                 this.app.managers.sockets.emitUserById(user._id, {
                     eventName: 'project.notification',

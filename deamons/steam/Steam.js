@@ -48,7 +48,7 @@ class Steam {
             const inventory = await this.actions.user.getInventory({ gameId: 570 });
 
             // const inventories = {};
-            this.actions.tradeoffers.sendOffer("https://steamcommunity.com/tradeoffer/new/?partner=879013079&token=EuZ8Ddih", inventory)
+            // this.actions.tradeoffers.sendOffer("https://steamcommunity.com/tradeoffer/new/?partner=879013079&token=EuZ8Ddih", inventory)
 
             const tradeRequests = await this.rp({
                 uri: `${this.config.API_URL}/api/tradeoffers`,
@@ -62,7 +62,7 @@ class Steam {
             });
             console.log(tradeRequests);
             for (const trade of tradeRequests) {
-                console.log('Обнаружен трейд от', trade.user.steamId, 'кол-во предметов', trade.items.length);
+                console.log('Обнаружена заявка на вывод от', trade.user.steamId, 'кол-во предметов', trade.items.length);
 
                 if (!trade.user.steamId) {
                     //отклоняем и закрываем трейд т.к не привязан профиль
@@ -71,19 +71,29 @@ class Steam {
 
                 if (!trade.user.steamTradeUrl) {
                     //отклоняем и закрываем трейд т.к не привязана ссылка на обмен
-                    console.log('отклоняем и закрываем трейд т.к не привязана ссылка на обмен');
+                    console.log('Отклоняем и закрываем трейд т.к не привязана ссылка на обмен');
                     return;
                 }
 
-                // for (const item of trade.items) {
-                //     console.log(inventories)
-                // }
+                const EItems = [];
 
-                // const inventory = await this.actions.user.getInventory({ gameId: 570 });
-                // console.log('Нашел предметы, кол-во:', inventory.length);
-                // this.actions.tradeoffers.sendOffer(inventory)
+                for (const _item of trade.items) {
+                    EItems.push({
+                        appid: _item.parent.appId,
+                        assetid: _item.assetId,
+                        contextid: _item.contextId,
+                        amount: 1,
+                    });
+                    console.log(_item.parent._id);
+                }
+
+                try {
+                    this.actions.tradeoffers.sendOffer(trade.user.steamTradeUrl, EItems)
+                } catch (e) {
+                    console.log('Ошибка при отправке трейда', e)
+                }
             }
-        }, 6000)
+        }, 13000)
     }
 
 }

@@ -38,7 +38,16 @@ const createHandler = async (ctx) => {
         ctx.throw('Не верно передан предмет');
     }
 
-    if (itemData.parent.type === 1) {
+    if (itemData.type === 0) {
+        try {
+            await User.changeBalance(user, -itemData.parent.cost)
+        } catch (err) {
+            ctx.body = err;
+            return;
+        }
+    }
+
+    if (itemData.type === 1) {
         const result = await User.removeItemsFromInventory(user, [item]);
         if (!result) {
             ctx.throw({ type: 'INTERNAL_SERVER_ERROR' });

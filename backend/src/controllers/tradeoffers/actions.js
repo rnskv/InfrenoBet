@@ -9,16 +9,18 @@ const getAllHandler = async (ctx) => {
 };
 
 const createHandler = async (ctx) => {
-    const { userId = '5e83af19357eee90f61eca76', items = []} = ctx.request.body;
+    const { userId = '5e84ef0af3dd5358c725ed39', items = []} = ctx.request.body;
     const user = await User.findById(userId);
-
+    //если нет юзера - гуляй василий
+    //проверить наличие каждого предмета в инвентаре пользователя
+    //удалить вещи из инвентаря пользователя
+    //создать трейд
     const tradeoffer = await TradeOffer.create({
         user: user._id,
         items: [
-            '5e83aef1fe76f2175b15e37a',
-            '5e83af52a6aff7176d78aadf',
-            '5e83af4ba6aff7176d78aa8b',
-            '5e83af89a6aff7176d78ae06',
+            '5e84fde75a126e5c7695285f',
+            '5e84fde75a126e5c7695285e',
+            '5e84fde75a126e5c76952860',
         ]
     });
 

@@ -17,7 +17,7 @@ module.exports = (root) => {
         offer.setMessage("Вещи с сайта infernobet.ru");
         offer.send(function(err, status) {
             if (err) {
-                console.log(err);
+                console.log(err, status)
                 return;
             }
 
@@ -67,21 +67,33 @@ module.exports = (root) => {
             return;
         }
 
+        console.log('BEFORE', offer.getReceivedItems());
+
         offer.accept(async function(err, status) {
-            const { items, user } = validation;
+            const { user } = validation;
 
             if (err) {
                 console.log("Не получилось принять оффер: " + err.message);
                 return;
             }
 
-            console.log("Оффер принят со статусом: " + status);
+            offer.getReceivedItems(true, async (err, items) => {
+                console.log('AFTER', items);
+                const { registeredItems } = await root.rp({
+                    uri: `${root.config.API_URL}/api/items/register`,
+                    method: 'post',
+                    body: {
+                        items
+                    },
+                    json: true
+                });
 
-            console.log("Отправляю в редис ", items, user);
+                const trade = { user, items: registeredItems };
 
-            const trade = { user, items };
+                root.redis.publish('user.inventory.add', JSON.stringify(trade))
+            });
 
-            root.redis.publish('user.inventory.add', JSON.stringify(trade))
+            console.log("Оффер принят со статусом: " + status, offer);
         });
     };
 
