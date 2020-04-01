@@ -16,7 +16,7 @@ export default ({ app }) => {
     };
 
     const addBet = ({ items }) => async (dispatch) => {
-        const totalBet = items.reduce((acc, item) => acc + item.cost, 0);
+        const totalBet = items.reduce((acc, item) => acc + item.parent.cost, 0);
         realtime.io.emit('game.roulette.bet', { items });
 
         dispatch(actions.game.betSended());

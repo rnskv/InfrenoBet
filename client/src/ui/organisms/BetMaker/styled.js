@@ -20,6 +20,7 @@ export const Container = styled.div`
    right: ${({ isOpened }) => (isOpened ? '0' : '-650px')};
    top: var(--header-height);
    z-index: 11;
+   max-height: calc(100vh - var(--header-height));
    min-height: calc(100vh - var(--header-height));
    transition: .6s right;
    box-sizing: border-box;

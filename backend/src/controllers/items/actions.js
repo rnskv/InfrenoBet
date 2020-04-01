@@ -1,6 +1,7 @@
 import Action from 'src/core/Action';
 import passport from 'koa-passport';
 import Item from 'src/models/Item';
+import InventoryItem from 'src/models/InventoryItem';
 import User from 'src/models/User';
 import request from 'request-promise';
 
@@ -110,9 +111,10 @@ const validateHandler = async (ctx) => {
     }
     let isHasCosts = true;
     const items = [];
-    console.log(itemsToReceive);
+    const inventoryItems = [];
+
     for (let item of itemsToReceive) {
-        const { appid, classid, icon_url_large } = item;
+        const { appid, assetid,  contextid, classid, icon_url_large } = item;
 
         const itemInfo = await Item.findOne({ classId: classid });
 
@@ -132,7 +134,14 @@ const validateHandler = async (ctx) => {
             isHasCosts = isHasCosts && true;
         }
 
-        items.push(itemInfo);
+        const inventoryItem = await InventoryItem.create({
+            parent: itemInfo._id,
+            contextId: contextid,
+            assetId: assetid,
+            type: 1,
+        });
+
+        inventoryItems.push(inventoryItem);
     }
 
     if (!isHasCosts) {
@@ -140,11 +149,14 @@ const validateHandler = async (ctx) => {
             ok: false,
             message: 'Невозможно определить стоимость одного из предметов'
         };
+        return;
     }
 
-    console.log('after validate', items);
 
-    ctx.body = { ok: true, items, user }
+
+    console.log('after validate', inventoryItems);
+
+    ctx.body = { ok: true, items: inventoryItems, user }
 };
 
 const parseHandler = async (ctx) => {
@@ -177,17 +189,24 @@ const parseHandler = async (ctx) => {
 };
 
 const getAllHandler = async (ctx) => {
-    const items = await Item.find({ image: { $exists:true} }).sort({ cost: 1 });
+    const items = await InventoryItem.find({ type: 0 })
 
     if (items.length <= 0) {
         console.log('Run migration for collection items');
+
         for (const data of dataForMigration) {
-            await Item.create(data);
+            const item = await Item.create(data);
+            const inventoryItem = await InventoryItem.create({ parent: item._id, type: 0 })
         }
+
+
         console.log('Finish migration for collection items');
     }
 
-    ctx.body = await Item.find({ image: { $exists: true } }).sort({ cost: 1 });
+    ctx.body = await InventoryItem.find({ type: 0 }).populate({
+        path: 'parent',
+        model: 'item',
+    });
 };
 
 const postHandler = async (ctx) => {

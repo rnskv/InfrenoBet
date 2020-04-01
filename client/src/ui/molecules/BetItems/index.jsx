@@ -10,24 +10,10 @@ import {
 function BetItems({
     onItemClick, items, selectedItems, useExtendedView, inactivityItems, style, className,
 }) {
-
-    const getFreeItems = () => {
-        const freeItems = [...items];
-
-        for (let item of inactivityItems) {
-            if (!item) continue;
-            let id = freeItems.findIndex((i => i._id === item._id));
-            freeItems.splice(id, 1);
-        }
-
-        return freeItems;
-    };
-
-
     return (
         <Container style={style} className={className}>
             {
-                getFreeItems().map((item, index) => {
+                items.map((item, index) => {
                     function onClick() {
                         if (onItemClick) {
                             onItemClick({ item, index });
@@ -38,12 +24,18 @@ function BetItems({
                         <StyledBetItem
                             key={`${item._id}-${index}`}
                             onClick={onClick}
-                            cost={item.cost || 0}
-                            image={item.image || ''}
                             isExtendedView={useExtendedView}
+                            cost={item.parent.cost}
+                            image={item.parent.image}
+                            isInactivity={!!inactivityItems.find((i) => i.assetId === item.assetId)}
                         />
                     );
                 })
+            }
+            {
+                items.length < 10 ? new Array(10 - items.length).fill(null).map((value, index) => <StyledBetItem
+                    key={`${index}`}
+                />) : null
             }
         </Container>
     );
@@ -58,7 +50,7 @@ BetItems.propTypes = {
 BetItems.defaultProps = {
     selectedItems: [],
     useExtendedView: false,
-    inactivityItems: []
+    inactivityItems: [],
 };
 
 export default BetItems;

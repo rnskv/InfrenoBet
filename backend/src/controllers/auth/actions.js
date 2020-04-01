@@ -16,11 +16,7 @@ function createToken({ payload, expiresIn = 1000 * 60 * 60 * 24 }) {
 }
 const registerHandler = async (ctx) => {
     const { name, email, password } = ctx.request.body;
-    const user = await User.findOne({ email }).populate({
-        path: 'inventory',
-        model: 'item'
-    });
-
+    const user = await User.getByParams({ email });
     if (!password || !email) {
         ctx.throw({ type: USER_WRONG_REGISTER_DATA });
     }
@@ -42,10 +38,7 @@ const registerHandler = async (ctx) => {
 
 const loginHandler = async (ctx) => {
     const { email, password } = ctx.request.body;
-    const user = await User.findOne({ email }).populate({
-        path: 'inventory',
-        model: 'item'
-    });
+    const user = await User.getByParams({ email })
 
     if (!user) {
         ctx.throw({ type: USER_NOT_FOUND });

@@ -15,12 +15,13 @@ import {
 function Bet({
     user, ticketFrom, ticketTo, item,
 }) {
+    console.log('ITEM', item)
     return (
         <Container>
             <StyledAvatar src={user.avatar} />
             <Description>
                 <div>
-                    {`${user.name} вложил монету ( ${getExchangedSum(item.cost)} )` }
+                    {`${user.name} вложил монету ( ${getExchangedSum(item.parent.cost)} )` }
                 </div>
                 <div>
                     <b>
@@ -29,9 +30,9 @@ function Bet({
                 </div>
             </Description>
             <Item>
-                <img src={item.image} />
+                <img src={item.parent.image} />
                 <Tickets>
-                    <span>{`+${(ticketTo - ticketFrom + 1).toFixed(3)}`}</span>
+                    <span>{`+${(ticketTo - ticketFrom + 1)}`}</span>
                 </Tickets>
             </Item>
         </Container>

@@ -1,6 +1,6 @@
 export function getBetsTotalValue(bets) {
     return bets.reduce((acc, bet) => {
-        return bet && bet.item ? acc + bet.item.cost : 0;
+        return bet && bet.item ? acc + bet.item.parent.cost : 0;
     }, 0);
 }
 

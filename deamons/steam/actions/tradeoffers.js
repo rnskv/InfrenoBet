@@ -10,12 +10,11 @@ module.exports = (root) => {
         }
     };
 
-    const sendOffer = (items) => {
-        const partnerUrl = 'https://steamcommunity.com/tradeoffer/new/?partner=879013079&token=EuZ8Ddih';
-        let offer = root.tradeOfferManager.createOffer(partnerUrl);
+    const sendOffer = (steamTradeUrl, items) => {
+        let offer = root.tradeOfferManager.createOffer(steamTradeUrl);
 
         offer.addMyItems(items);
-        offer.setMessage("Here, have some items!");
+        offer.setMessage("Вещи с сайта infernobet.ru");
         offer.send(function(err, status) {
             if (err) {
                 console.log(err);

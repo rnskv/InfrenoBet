@@ -18,6 +18,14 @@ import {
 function BetMaker({
     removeItemFromBetMaker, addItemInBetMaker, isOpened, open, close, sendBet, items, userItems,
 }) {
+
+    const [activeTab, setActiveTab] = useState('COINS');
+
+    const TABS = {
+        'SKINS': <Inventory inactivityItems={userItems} onItemClick={addItemInBetMaker} />,
+        'COINS': <StyledBetItems items={items} onItemClick={addItemInBetMaker} />,
+    };
+
     return (
         <Container isOpened={isOpened}>
             <StyledClose onClick={close} />
@@ -27,16 +35,19 @@ function BetMaker({
                     sendBet={sendBet}
                 />
                 <StyledBetItems
-                    items={[...userItems, 0, 0, 0, 0, 0, 0, 0, 0].slice(0, 8)}
+                    items={userItems}
                     onItemClick={removeItemFromBetMaker}
                 />
             </LeftBlock>
-            <RightBlock hidden>
-                <h1>Выберите монеты</h1>
-                <StyledBetItems items={items} onItemClick={addItemInBetMaker} />
-            </RightBlock>
             <RightBlock>
-                <Inventory inactivityItems={userItems} onItemClick={addItemInBetMaker} />
+                <h1>Выберите монеты</h1>
+                <button onClick={() => setActiveTab('COINS')}>Монеты</button>
+                <button onClick={() => setActiveTab('SKINS')}>Скины</button>
+
+                {
+                    TABS[activeTab]
+                }
+
             </RightBlock>
         </Container>
     );

@@ -55,6 +55,7 @@ const getAllHandler = async (ctx) => {
 };
 
 const getMeHandler = async (ctx) => {
+    console.log(await User.getById(ctx.state.user._id))
     ctx.body = {
         profile: await User.getById(ctx.state.user._id)
     };

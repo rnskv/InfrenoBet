@@ -40,7 +40,11 @@ const userSchema = new Schema({
     inventory: {
         type: [mongoose.Types.ObjectId],
         default: [],
-        ref: 'item'
+        ref: 'inventoryItem'
+    },
+    steamTradeUrl: {
+        type: String,
+        default: null
     },
     experience: {
         type: Number,
@@ -63,21 +67,24 @@ const userSchema = new Schema({
 userSchema.plugin(privatePaths);
 
 const User = mongoose.model('user', userSchema);
-
-User.getById = async (id) => {
-    return await User.findOne({ _id: mongoose.Types.ObjectId(id)})
+User.getByParams = async (params) => {
+    return await User.findOne(params)
         .populate({
             path: 'inventory',
-            model: 'item'
+            model: 'inventoryItem',
+            populate: {
+                path: 'parent',
+                model: 'item',
+            }
         })
 };
 
+User.getById = async (id) => {
+    return await User.getByParams({ _id: id })
+};
+
 User.getBySteamId = async (id) => {
-    return await User.findOne({ steamId: id })
-        .populate({
-            path: 'inventory',
-            model: 'item'
-        })
+    return await User.getByParams({ steamId: id })
 };
 
 User.addItemsToInventory = async (id, items) => {

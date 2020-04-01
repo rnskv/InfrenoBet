@@ -22,7 +22,7 @@ const betSchema = new Schema({
     item: {
         type: mongoose.Types.ObjectId,
         isRequired: true,
-        ref: 'item'
+        ref: 'inventoryItem'
     },
     ticketFrom: {
         type: Number,
@@ -48,7 +48,14 @@ Bet.getById = async (id) => {
     return await Bet
         .findOne({ _id: mongoose.Types.ObjectId(id)})
         .populate('user')
-        .populate('item')
+        .populate({
+            path: 'item',
+            model: 'inventoryItem',
+            populate: {
+                path: 'parent',
+                model: 'item',
+            }
+        })
 };
 
 Bet.getLastInGameByGameId = async (gameId) => {
@@ -59,22 +66,14 @@ Bet.getLastInGameByGameId = async (gameId) => {
 };
 
 Bet.getGameBets = async (gameId) => {
-    return (await Bet.aggregate([
-        {
-            $match: { game: mongoose.Types.ObjectId(gameId) }
-        },
-        {
-            $lookup: {
-                "from": "items",
-                "localField":"item",
-                "foreignField":"_id",
-                "as":"item"
-            }
-        },
-        {
-            $unwind: '$item'
-        },
-    ]))
+    return Bet.find({ game: mongoose.Types.ObjectId(gameId) }).populate({
+        path: 'item',
+        model: 'inventoryItem',
+        populate: {
+            path: 'parent',
+            model: 'item',
+        }
+    })
 };
 
 Bet.getGameBankSumById = async (gameId) => {

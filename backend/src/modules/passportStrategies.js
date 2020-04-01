@@ -34,10 +34,7 @@ export const usePassportStrategies = (passport) => {
                 return next(null, false);
             }
 
-            const user = await User.findOne({ vkId: profile.id }).populate({
-                path: 'inventory',
-                model: 'item'
-            });
+            const user = await User.getByParams({ vkId: profile.id });
 
             console.log(user);
 

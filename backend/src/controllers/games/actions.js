@@ -25,8 +25,11 @@ const createHandler = async (ctx) => {
 
     const existedGame = await Game.getLastCreated();
     if (existedGame) {
+        console.log('Игра существует')
         ctx.body = existedGame;
     } else {
+        console.log('Игра не существует')
+
         ctx.body = await Game.create({ secret, hash })
     }
 };
@@ -38,8 +41,6 @@ const getWinner = async (ctx) => {
 
     // const game = await Game.getById(id);
     const winner = await Game.getWinnerById(id);
-    const bank = await Bet.getGameBankSumById(id);
-
     const bets = await Bet.getGameBets(id);
 
     //@todo 0.9 - процент отдаци пользователю (вынести в настройки)
@@ -51,10 +52,10 @@ const getWinner = async (ctx) => {
 
     for (const bet of bets) {
         const item = bet.item;
-        globalSum += item.cost;
+        globalSum += item.parent.cost;
         if (item.type === 0) {
             //Монеты
-            totalSum += item.cost;
+            totalSum += item.parent.cost;
         }
 
         if (item.type === 1) {

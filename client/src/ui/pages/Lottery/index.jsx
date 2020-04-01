@@ -69,7 +69,7 @@ function Lottery({
                 openBetMaker={actions.betMaker.open}
                 isAuth={isAuth}
             />
-            <Inventory />
+            {/*<Inventory />*/}
 
             <UsersBanks
                 users={users}

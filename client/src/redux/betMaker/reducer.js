@@ -9,7 +9,7 @@ const initialState = {
 function betMakerReducer(state = initialState, action) {
     switch (action.type) {
     case actionTypes.ADD_ITEM_IN_BET_MAKER: {
-        if (state.userItems.length >= 8) {
+        if (state.userItems.length >= 10) {
             return {
                 ...state,
             };

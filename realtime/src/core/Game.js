@@ -66,9 +66,9 @@ class Game {
             const userId = bet.user._id;
 
             if (!!users[userId]) {
-                users[userId] += bet.item.cost
+                users[userId] += bet.item.parent.cost
             } else {
-                users[userId] = bet.item.cost;
+                users[userId] = bet.item.parent.cost;
             }
         });
 

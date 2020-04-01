@@ -31,56 +31,19 @@ const gameSchema = new Schema({
 const Game = mongoose.model('game', gameSchema);
 
 Game.getLastCreated = async () => {
-    const result = await Game.aggregate([
-        {
-            $match: {
-                status: 'CREATED'
-            }
-        },
-        { $limit: 1 },
-        { $lookup: {
-                from: "bets",
-                let: { "bets": "$bets" },
-                pipeline: [
-                    {
-                        $match: {
-                            "$expr": {
-                                "$in": [ "$_id", "$$bets" ]
-                            }
-                        }
-                    },
-                    {
-                        $lookup: {
-                            from: "items",
-                            let: { "item": "$item" },
-                            pipeline: [
-                                { "$match": { "$expr": { "$eq": [ "$_id", "$$item" ] } } }
-                            ],
-                            as: "item"
-                        }
-                    },
-                    {
-                        $lookup: {
-                            from: "users",
-                            let: { "user": "$user" },
-                            pipeline: [
-                                { "$match": { "$expr": { "$eq": [ "$_id", "$$user" ] } } }
-                            ],
-                            as: "user"
-                        }
-                    },
-                    {
-                        $addFields: {
-                            "user": { "$arrayElemAt": [ "$user", 0 ] },
-                            "item": { "$arrayElemAt": [ "$item", 0 ] },
-                        }
-                    }
-                ],
-                as: "bets"
-            }}
-    ]);
-
-    return result[0];
+    return Game.findOne({ status: 'CREATED' })
+        .populate({
+            path: 'bets',
+            model: 'bet',
+            populate: [{
+                path: 'item',
+                model: 'inventoryItem',
+                populate: {
+                    path: 'parent',
+                    model: 'item',
+                }
+            }, 'user'],
+        })
 };
 
 Game.create = async (data) => {
