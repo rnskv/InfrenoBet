@@ -9,19 +9,16 @@ const getAllHandler = async (ctx) => {
 };
 
 const createHandler = async (ctx) => {
-    const { userId = '5e84ef0af3dd5358c725ed39', items = []} = ctx.request.body;
-    const user = await User.findById(userId);
+    const { items = [] } = ctx.request.body;
+
     //если нет юзера - гуляй василий
     //проверить наличие каждого предмета в инвентаре пользователя
     //удалить вещи из инвентаря пользователя
     //создать трейд
+
     const tradeoffer = await TradeOffer.create({
-        user: user._id,
-        items: [
-            '5e84fde75a126e5c7695285f',
-            '5e84fde75a126e5c7695285e',
-            '5e84fde75a126e5c76952860',
-        ]
+        user: ctx.state.user._id,
+        items
     });
 
     console.log('Create tradeoffer', tradeoffer);
@@ -30,21 +27,21 @@ const createHandler = async (ctx) => {
 };
 
 const updateHandler = async (ctx) => {
-    ctx.status = 200;
-    ctx.body = {
-        body: 'Обновляю заявку на вывод'
-    };
+    const { id, data } = ctx.request.body;
+    console.log('update for tradeoffers');
+    ctx.body = TradeOffer.update(id, data);
 };
 
 export const createWithdrawRequest = new Action({
     method: 'post',
     url: '/',
     handler: createHandler,
+    middlewares: [passport.authenticate('jwt')],
 });
 
 export const updateWithdrowRequest = new Action({
     method: 'put',
-    url: '/:id',
+    url: '/',
     handler: updateHandler,
 });
 

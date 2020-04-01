@@ -8,7 +8,7 @@ import {
 } from './styled';
 
 function BetItems({
-    onItemClick, items, selectedItems, useExtendedView, inactivityItems, style, className,
+    onItemClick, items, selectedItems, isNeedDrawEmptyCells, emptyCellsCount, useExtendedView, inactivityItems, style, className,
 }) {
     return (
         <Container style={style} className={className}>
@@ -22,7 +22,7 @@ function BetItems({
 
                     return (
                         <StyledBetItem
-                            key={`${item._id}-${index}`}
+                            key={`${item._id}`}
                             onClick={onClick}
                             isExtendedView={useExtendedView}
                             cost={item.parent.cost}
@@ -33,9 +33,14 @@ function BetItems({
                 })
             }
             {
-                items.length < 10 ? new Array(10 - items.length).fill(null).map((value, index) => <StyledBetItem
-                    key={`${index}`}
-                />) : null
+                isNeedDrawEmptyCells && items.length < emptyCellsCount
+                    ? [...Array(emptyCellsCount - items.length).keys()].map((value, index) => (
+                        <StyledBetItem
+                            style={{animation: 'none'}}
+                            key={`${value}`}
+                        />
+                    )) : null
+
             }
         </Container>
     );
@@ -45,12 +50,16 @@ BetItems.propTypes = {
     selectedItems: PropTypes.array,
     useExtendedView: PropTypes.bool,
     inactivityItems: PropTypes.array,
+    isNeedDrawEmptyCells: PropTypes.bool,
+    emptyCellsCount: PropTypes.number,
 };
 
 BetItems.defaultProps = {
     selectedItems: [],
     useExtendedView: false,
     inactivityItems: [],
+    isNeedDrawEmptyCells: true,
+    emptyCellsCount: 10,
 };
 
 export default BetItems;

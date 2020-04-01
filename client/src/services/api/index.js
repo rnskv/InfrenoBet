@@ -2,6 +2,7 @@ import { Api, Request } from 'shared/api';
 import { USER_NOT_FOUND } from 'shared/configs/notificationsTypes';
 
 import createWithdrawApi from './withdraw';
+import createTradeOffersApi from './tradeoffers';
 
 const { SERVER_PROTOCOL, SERVER_PORT, SERVER_HOST } = process.env;
 
@@ -18,6 +19,7 @@ export default ({ app }) => {
     const errorDefaultHandler = ({ type }) => app.modules.store.dispatch(actions.user.addNotification({ type }));
 
     const withdrawApi = createWithdrawApi({ app, onError: errorDefaultHandler });
+    const tradeOffersApi = createTradeOffersApi({ app, onError: errorDefaultHandler });
 
     const paymentApi = new Api({
         url: `${SERVER_PROTOCOL}://${SERVER_HOST}:${SERVER_PORT}/api/payment`,
@@ -128,5 +130,6 @@ export default ({ app }) => {
         items: itemsApi,
         payment: paymentApi,
         withdraw: withdrawApi,
+        tradeOffers: tradeOffersApi,
     };
 };

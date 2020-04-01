@@ -18,7 +18,7 @@ import {
     StyledButton,
 } from './styled';
 
-function Inventory({ onItemClick, inactivityItems }) {
+function Inventory({ onItemClick, inactivityItems, isNeedDrawEmptyCells }) {
     const profile = useSelector((state) => state.user.profile);
 
     if (profile.isLoading) {
@@ -32,16 +32,19 @@ function Inventory({ onItemClick, inactivityItems }) {
                 items={profile.inventory}
                 inactivityItems={inactivityItems}
                 useExtendedView
+                isNeedDrawEmptyCells={isNeedDrawEmptyCells}
             />
         </Container>
     );
 }
 
 Inventory.propTypes = {
-    inactivityItems: PropTypes.array
+    inactivityItems: PropTypes.array,
+    isNeedDrawEmptyCells: PropTypes.bool,
 };
 
 Inventory.defaultProps = {
+    isNeedDrawEmptyCells: true,
 };
 
 export default Inventory;

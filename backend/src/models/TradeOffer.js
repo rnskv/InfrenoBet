@@ -30,7 +30,7 @@ TradeOffer.create = async (data) => {
 };
 
 TradeOffer.update = async (id, data) => {
-    // return new fkPayment(data).save()
+    return TradeOffer.updateOne({ _id: mongoose.Types.ObjectId(id)}, data)
 };
 
 TradeOffer.getAll = async (params = {}) => {

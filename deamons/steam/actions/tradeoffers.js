@@ -2,26 +2,63 @@ const TradeOfferManager = require('steam-tradeoffer-manager');
 const SteamID = require('steamid');
 
 module.exports = (root) => {
-    const confirmTradeOffer = (offer, status) => {
+    const addItemsToUserInventory = (user, acceptedOffer) => {
+        acceptedOffer.getReceivedItems(true, async (err, items) => {
+            const { registeredItems } = await root.rp({
+                uri: `${root.config.API_URL}/api/items/register`,
+                method: 'post',
+                body: {
+                    items
+                },
+                json: true
+            });
+
+            const trade = { user, items: registeredItems };
+
+            root.redis.publish('user.inventory.add', JSON.stringify(trade))
+        });
+    };
+
+    const confirmTradeOffer = (offer, status, onSuccess, onError) => {
         const { IDENTITY_SECRET } = root.config;
         if (status === root.types.STATUS.PENDING) {
             console.log("Оффер отправлен на подтверждение: " + status);
-            root.community.acceptConfirmationForObject(IDENTITY_SECRET, offer.id, onAcceptTradeOffer(offer));
+            root.community.acceptConfirmationForObject(IDENTITY_SECRET, offer.id, (err) => {
+                if (err) {
+                    onError({ err, offer });
+                    return;
+                }
+                onAcceptTradeOffer(offer);
+                onSuccess(offer);
+            });
         }
     };
 
-    const sendOffer = (steamTradeUrl, items) => {
-        let offer = root.tradeOfferManager.createOffer(steamTradeUrl);
+    const sendOffer = ({
+       steamTradeUrl,
+       items,
+       onSuccess,
+       onError = () => console.log('Произошла ошибка при отправке трейда. Попробую позже')
+    }) => {
+        const offer = root.tradeOfferManager.createOffer(steamTradeUrl);
+        console.log('sendOffer2')
 
         offer.addMyItems(items);
+        console.log('sendOffer3')
+
         offer.setMessage("Вещи с сайта infernobet.ru");
+        console.log('sendOffer5')
+
         offer.send(function(err, status) {
             if (err) {
-                console.log(err, status)
+                console.log('sendOffer error')
+
+                onError({ err, offer});
                 return;
             }
+            console.log('sendOffer4')
 
-            confirmTradeOffer(offer, status);
+            confirmTradeOffer(offer, status, onSuccess, onError);
         });
     };
 
@@ -38,15 +75,6 @@ module.exports = (root) => {
         const steamId = SteamID.fromIndividualAccountID(offer.partner.accountid).toString();
 
         console.log("Новый оффер #" + offer.id + " от пользователя " + steamId.toString());
-
-        const { itemsToReceive, itemsToGive, id, appId } = offer;
-
-        // if (itemsToGive.length > 0) {
-        //     offer.decline();
-        //     console.log('оффер отклонен по причине: пользователь запросил вещи');
-        //     return;
-        // }
-
 
         const validation = await root.rp({
             uri: `${root.config.API_URL}/api/items/validate`,
@@ -67,8 +95,6 @@ module.exports = (root) => {
             return;
         }
 
-        console.log('BEFORE', offer.getReceivedItems());
-
         offer.accept(async function(err, status) {
             const { user } = validation;
 
@@ -76,24 +102,9 @@ module.exports = (root) => {
                 console.log("Не получилось принять оффер: " + err.message);
                 return;
             }
-
-            offer.getReceivedItems(true, async (err, items) => {
-                console.log('AFTER', items);
-                const { registeredItems } = await root.rp({
-                    uri: `${root.config.API_URL}/api/items/register`,
-                    method: 'post',
-                    body: {
-                        items
-                    },
-                    json: true
-                });
-
-                const trade = { user, items: registeredItems };
-
-                root.redis.publish('user.inventory.add', JSON.stringify(trade))
-            });
-
             console.log("Оффер принят со статусом: " + status, offer);
+
+            addItemsToUserInventory(user, offer)
         });
     };
 
