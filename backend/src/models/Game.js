@@ -75,7 +75,14 @@ Game.getWinnerById = async (id) => {
         game: mongoose.Types.ObjectId(id),
         ticketFrom: { $lte: winnerTicket },
         ticketTo: { $gte: winnerTicket }
-    }).populate('user').populate('item');
+    }).populate('user').populate({
+        path: 'item',
+        model: 'inventoryItem',
+        populate: {
+            path: 'parent',
+            model: 'item',
+        }
+    });
 
     console.log('Получили победную ставку', winnerBet);
 
