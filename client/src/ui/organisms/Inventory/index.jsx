@@ -6,6 +6,10 @@ import Loader from 'ui/atoms/Loader';
 import Button from 'ui/atoms/Button';
 import Input from 'ui/atoms/Input';
 
+import { useShallowEqualSelector } from 'src/helpers/hooks';
+import BetItem from 'ui/atoms/BetItem';
+import { RightBlock, StyledBetItems } from 'ui/organisms/BetMaker/styled';
+import LogupForm from '../LogupForm';
 import {
     Container,
     StyledForm,
@@ -13,29 +17,28 @@ import {
     Name,
     StyledButton,
 } from './styled';
-import LogupForm from '../LogupForm';
-import { useShallowEqualSelector } from 'src/helpers/hooks';
 
-function Inventory() {
+function Inventory({ onItemClick, inactivityItems }) {
     const profile = useSelector((state) => state.user.profile);
 
     if (profile.isLoading) {
-        return <Loader />
+        return <Loader />;
     }
 
-    console.log(profile);
-
-    return (<div>
-       <h1>Тестовый инвентарь</h1>
-        {
-            profile.inventory.map(item => {
-                return <div>{ item.name }</div>})
-        }
-   </div>)
+    return (
+        <Container>
+            <StyledBetItems
+                onItemClick={onItemClick}
+                items={profile.inventory}
+                inactivityItems={inactivityItems}
+                useExtendedView
+            />
+        </Container>
+    );
 }
 
 Inventory.propTypes = {
-
+    inactivityItems: PropTypes.array
 };
 
 Inventory.defaultProps = {

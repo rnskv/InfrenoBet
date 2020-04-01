@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
 import BetInfo from 'ui/molecules/BetInfo';
+import Inventory from 'ui/organisms/Inventory';
 
 import { mapDispatchToProps, mapStateToProps } from './connect';
 
@@ -30,9 +31,12 @@ function BetMaker({
                     onItemClick={removeItemFromBetMaker}
                 />
             </LeftBlock>
-            <RightBlock>
+            <RightBlock hidden>
                 <h1>Выберите монеты</h1>
                 <StyledBetItems items={items} onItemClick={addItemInBetMaker} />
+            </RightBlock>
+            <RightBlock>
+                <Inventory inactivityItems={userItems} onItemClick={addItemInBetMaker} />
             </RightBlock>
         </Container>
     );

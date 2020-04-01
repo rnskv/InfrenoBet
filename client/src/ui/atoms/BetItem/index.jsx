@@ -8,8 +8,9 @@ import {
 } from './styled';
 
 function BetItem({
-    image, cost, className, style, onClick, isExtendedView, isActive,
+    image, cost, className, style, onClick, isExtendedView, isInactivity, isActive,
 }) {
+    console.log(isInactivity)
     return (
         <Container
             className={className}
@@ -18,8 +19,9 @@ function BetItem({
             onClick={onClick}
             isActive={isActive}
         >
+            { isInactivity ? 'X' : ''}
             <img src={image} hidden={!cost} />
-            <span hidden={!isExtendedView}>{ getExchangedSum(cost, { accuracy: 1 }) }</span>
+            <span hidden={!isExtendedView}>{ getExchangedSum(cost, { accuracy: 2 }) }</span>
         </Container>
     );
 }
@@ -30,11 +32,13 @@ BetItem.propTypes = {
     onClick: PropTypes.func.isRequired,
     isExtendedView: PropTypes.bool,
     isActive: PropTypes.bool,
+    isInactivity: PropTypes.bool,
 };
 
 BetItem.defaultProps = {
     isExtendedView: false,
     isActive: false,
+    isInactivity: false,
 };
 
 export default BetItem;

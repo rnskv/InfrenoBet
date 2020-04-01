@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import diff from 'deep-diff';
 
 import {
     Container,
@@ -7,12 +8,26 @@ import {
 } from './styled';
 
 function BetItems({
-    onItemClick, items, style, className,
+    onItemClick, items, selectedItems, useExtendedView, inactivityItems, style, className,
 }) {
+
+    const getFreeItems = () => {
+        const freeItems = [...items];
+
+        for (let item of inactivityItems) {
+            if (!item) continue;
+            let id = freeItems.findIndex((i => i._id === item._id));
+            freeItems.splice(id, 1);
+        }
+
+        return freeItems;
+    };
+
+
     return (
         <Container style={style} className={className}>
             {
-                items.map((item, index) => {
+                getFreeItems().map((item, index) => {
                     function onClick() {
                         if (onItemClick) {
                             onItemClick({ item, index });
@@ -25,6 +40,7 @@ function BetItems({
                             onClick={onClick}
                             cost={item.cost || 0}
                             image={item.image || ''}
+                            isExtendedView={useExtendedView}
                         />
                     );
                 })
@@ -34,6 +50,15 @@ function BetItems({
 }
 
 BetItems.propTypes = {
+    selectedItems: PropTypes.array,
+    useExtendedView: PropTypes.bool,
+    inactivityItems: PropTypes.array,
+};
+
+BetItems.defaultProps = {
+    selectedItems: [],
+    useExtendedView: false,
+    inactivityItems: []
 };
 
 export default BetItems;
