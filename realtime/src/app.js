@@ -74,6 +74,10 @@ infernoIO.init().then((app) => {
                     }
                 });
 
+                app.managers.sockets.emitUserById(user._id, {
+                    eventName: 'project.inventory.add'
+                });
+
                 userApi.execute('addInventory', {
                    body: {
                        user,
