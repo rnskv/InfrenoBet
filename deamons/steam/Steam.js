@@ -1,4 +1,5 @@
 const SteamTotp = require('steam-totp');
+const Api = require('./core/Api');
 
 class Steam {
     constructor({
@@ -15,12 +16,16 @@ class Steam {
         this.client = client;
         this.community = community;
         this.redis = redis;
+        this.actions = {};
         this.types = {
             STATUS: {
                 PENDING: 'pending'
             }
         };
-        this.actions = {};
+        this.api = new Api({
+            rp,
+            API_URL: config.API_URL
+        });
     }
 
     addActions(name, actions) {
@@ -54,69 +59,24 @@ class Steam {
 
     startWithdrawChecker() {
         setInterval(async () => {
-            const tradeRequests = await this.rp({
-                uri: `${this.config.API_URL}/api/tradeoffers`,
-                method: 'get',
+            const tradeRequests = await this.api.sendRequest({
+                url: `/api/tradeoffers`,
                 body: {
                     params: {
                         status: 'CREATED'
                     }
                 },
-                json: true
+                onSuccess: () => console.log('Трейды на вывод получены.'),
+                onError: () => console.log('Не удалось получить трейды на вывод')
             });
 
+            if (!tradeRequests.length) {
+                console.log('Трейдов на вывод нет');
+                return;
+            }
+
             for (const trade of tradeRequests) {
-                console.log('Обнаружена заявка на вывод от', trade.user.steamId, 'кол-во предметов', trade.items.length);
-                if (!trade.user.steamId) {
-                    console.log('отклоняем и закрываем трейд т.к не привязан профиль');
-                    return;
-                }
-
-                if (!trade.user.steamTradeUrl) {
-                    console.log('Отклоняем и закрываем трейд т.к не привязана ссылка на обмен');
-                    return;
-                }
-
-                try {
-                    console.log('sendOffer')
-                    this.actions.tradeoffers.sendOffer({
-                        steamTradeUrl: trade.user.steamTradeUrl,
-                        items: this.getEItems(trade),
-                        onError: ({ err, offer }) => {
-                            console.log('Ошибка при отправке трейда', offer.id);
-                            this.rp({
-                                uri: `${this.config.API_URL}/api/tradeoffers`,
-                                method: 'put',
-                                body: {
-                                    id: trade._id,
-                                    data: {
-                                        status: 'ERROR'
-                                    }
-                                },
-                                json: true
-                            });
-                        },
-                        onSuccess: (offer) => () => {
-                            console.log('Трейд успешно отправлен', offer.id);
-
-                            this.rp({
-                                uri: `${this.config.API_URL}/api/tradeoffers`,
-                                method: 'put',
-                                body: {
-                                    params: {
-                                        id: trade._id,
-                                        data: {
-                                            status: 'SUCCESS'
-                                        }
-                                    }
-                                },
-                                json: true
-                            });
-                        }
-                    })
-                } catch (e) {
-                    console.log('Ошибка при отправке трейда', e)
-                }
+                await this.actions.tradeoffers.sendWithdrawOffer({ trade })
             }
         }, 10000)
     };

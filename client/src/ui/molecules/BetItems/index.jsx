@@ -20,6 +20,7 @@ function BetItems({
                         }
                     }
 
+                    if (!item) return null;
                     return (
                         <StyledBetItem
                             key={`${item._id}`}

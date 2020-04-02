@@ -4,13 +4,14 @@ const SteamID = require('steamid');
 module.exports = (root) => {
     const addItemsToUserInventory = (user, acceptedOffer) => {
         acceptedOffer.getReceivedItems(true, async (err, items) => {
-            const { registeredItems } = await root.rp({
-                uri: `${root.config.API_URL}/api/items/register`,
+            const { registeredItems } = await root.api.sendRequest({
+                url: `/api/items/register`,
                 method: 'post',
                 body: {
                     items
                 },
-                json: true
+                onSuccess: () => console.log('Предметы успешно зарегистрированы на сервере'),
+                onError: () => console.log('Не удалось зарегистрировать предметы')
             });
 
             const trade = { user, items: registeredItems };
@@ -28,7 +29,6 @@ module.exports = (root) => {
                     onError({ err, offer });
                     return;
                 }
-                onAcceptTradeOffer(offer);
                 onSuccess(offer);
             });
         }
@@ -41,52 +41,25 @@ module.exports = (root) => {
        onError = () => console.log('Произошла ошибка при отправке трейда. Попробую позже')
     }) => {
         const offer = root.tradeOfferManager.createOffer(steamTradeUrl);
-        console.log('sendOffer2')
-
         offer.addMyItems(items);
-        console.log('sendOffer3')
-
         offer.setMessage("Вещи с сайта infernobet.ru");
-        console.log('sendOffer5')
 
         offer.send(function(err, status) {
             if (err) {
-                console.log('sendOffer error')
-
                 onError({ err, offer});
                 return;
             }
-            console.log('sendOffer4')
 
             confirmTradeOffer(offer, status, onSuccess, onError);
         });
     };
 
-    const onAcceptTradeOffer = (offer) => (err) => {
-        if (err) {
-            console.log("Не удалось подтвердить SteamGuard: " + err.message);
-        } else {
-            console.log("Оффер " + offer.id + " подтвержден");
-        }
-    };
-
     const onNewTradeOffer = async (offer) => {
-        // const sid = new SteamID(offer.partner.getSteam3RenderedID());
         const steamId = SteamID.fromIndividualAccountID(offer.partner.accountid).toString();
 
         console.log("Новый оффер #" + offer.id + " от пользователя " + steamId.toString());
 
-        const validation = await root.rp({
-            uri: `${root.config.API_URL}/api/items/validate`,
-            method: 'post',
-            body: {
-                offer: offer,
-                steamId,
-            },
-            json: true
-        });
-
-        console.log('Валидация:', validation.ok);
+        const validation = await validateUserOffer({ steamId, offer });
 
         if (!validation.ok) {
             offer.cancel(() => {
@@ -102,8 +75,8 @@ module.exports = (root) => {
                 console.log("Не получилось принять оффер: " + err.message);
                 return;
             }
-            console.log("Оффер принят со статусом: " + status, offer);
 
+            console.log("Оффер принят со статусом: " + status, offer);
             addItemsToUserInventory(user, offer)
         });
     };
@@ -115,12 +88,73 @@ module.exports = (root) => {
         );
     };
 
+    const setTradeofferStatus = async ({ id, status }) => {
+        await root.api.sendRequest({
+            url: `/api/tradeoffers`,
+            method: 'put',
+            body: {
+                params: {
+                    id,
+                    data: {
+                        status
+                    }
+                }
+            },
+            onSuccess: () => console.log('Статус трейда успешно обновлен'),
+            onError: () => console.log('Не удалось установить статус трейды')
+        });
+    };
 
-  return {
-      confirmTradeOffer,
-      sendOffer,
-      onAcceptTradeOffer,
-      onNewTradeOffer,
-      onSentOfferChanged
-  }
+    const validateUserOffer = async ({ steamId, offer }) => {
+        return await root.sendRequest({
+            url: `/api/items/validate`,
+            method: 'post',
+            body: {
+                offer: offer,
+                steamId,
+            },
+            onSuccess: () => console.log('Статус трейда успешно обновлен'),
+            onError: () => console.log('Не удалось установить статус трейды')
+        });
+    };
+
+    const sendWithdrawOffer = async ({ trade }) => {
+        console.log('Обнаружена заявка на вывод от', trade.user.steamId, 'кол-во предметов', trade.items.length);
+        if (!trade.user.steamId) {
+            console.log('отклоняем и закрываем трейд т.к не привязан профиль');
+            await setTradeofferStatus({ id: trade._id, status: 'ERROR'});
+            return;
+        }
+
+        if (!trade.user.steamTradeUrl) {
+            console.log('Отклоняем и закрываем трейд т.к не привязана ссылка на обмен');
+            await setTradeofferStatus({ id: trade._id, status: 'ERROR'});
+            return;
+        }
+
+        try {
+            sendOffer({
+                steamTradeUrl: trade.user.steamTradeUrl,
+                items: this.getEItems(trade),
+                onError: async ({ err, offer }) => {
+                    console.log('Ошибка при отправке трейда', offer.id);
+                    await setTradeofferStatus({ id: trade._id, status: 'ERROR'});
+                },
+                onSuccess: async (offer) => {
+                    console.log('Трейд успешно отправлен', offer.id);
+                    await setTradeofferStatus({ id: trade._id, status: 'SUCCESS'});
+                }
+            })
+        } catch (e) {
+            console.log('Ошибка при отправке трейда', e)
+        }
+    };
+
+    return {
+        confirmTradeOffer,
+        sendOffer,
+        onNewTradeOffer,
+        onSentOfferChanged,
+        sendWithdrawOffer
+    }
 };

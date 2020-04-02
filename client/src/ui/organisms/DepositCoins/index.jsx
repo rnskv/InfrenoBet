@@ -62,12 +62,21 @@ function DepositCoins({ disabled }) {
         <Container disabled={disabled}>
             { DEPOSIT_COINS.map((coin) => (
                 <StyledBetItem
-                    key={coin.parent.cost}
-                    image={coin.parent.image}
-                    onClick={() => actions.changeValue({ value: getExchangedSum(coin.parent.cost, { isNeedIcon: false, accuracy: 1 }) })}
-                    cost={coin.parent.cost}
+                    key={coin.cost}
+                    image={coin.image}
+                    cost={coin.cost}
                     isExtendedView
-                    isActive={Number(value) === getExchangedSum(coin.parent.cost, { isNeedIcon: false, accuracy: 1 })}
+                    isActive={
+                        Number(value) === getExchangedSum(coin.cost, {
+                            isNeedIcon: false,
+                            accuracy: 1,
+                        })
+                    }
+                    onClick={
+                        () => actions.changeValue({
+                            value: getExchangedSum(coin.cost, { isNeedIcon: false, accuracy: 1 }),
+                        })
+                    }
                 />
             ))}
         </Container>
