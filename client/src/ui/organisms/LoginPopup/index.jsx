@@ -12,6 +12,7 @@ import VerifyAge from 'ui/molecules/VerifyAge';
 
 import emailIconSvg from 'src/resources/svg/mail-icon.svg';
 import vkIconSvg from 'src/resources/svg/vkontakte-icon.svg';
+import steamIconSvg from 'src/resources/svg/steam.svg';
 
 import { openLoginPopup, closeLoginPopup } from 'src/redux/user/actions';
 import { openAuthSteamWindow, openAuthVkWindow } from 'src/helpers/auth';
@@ -79,7 +80,7 @@ function LoginPopup({ className, style, children }) {
                         }
                     >
                         <MethodIcon>
-                            <InlineSVG src={vkIconSvg} />
+                            <InlineSVG src={steamIconSvg} />
                         </MethodIcon>
                         <span>Steam</span>
                     </Method>

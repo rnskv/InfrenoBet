@@ -4,11 +4,13 @@ import Checkbox from 'ui/atoms/Checkbox';
 const colors = {
     vk: '#507699',
     email: 'var(--color-grey-400)',
+    steam: 'var(--color-yellow)',
 };
 
 const textColors = {
     vk: '#fff',
     email: 'var(--color-yellow)',
+    steam: 'var(--color-black)',
 };
 
 export const Container = styled.div`
