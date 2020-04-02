@@ -15,6 +15,7 @@ import Login from 'ui/pages/Login';
 import Logup from 'ui/pages/Logup';
 import Deposit from 'ui/pages/Deposit';
 import Withdraw from 'ui/pages/Withdraw';
+import Settings from 'ui/pages/Settings';
 
 import Lottery from 'ui/pages/Lottery';
 
@@ -38,6 +39,9 @@ function App({ store }) {
                 </Route>
                 <Route path="/logup">
                     <Logup />
+                </Route>
+                <Route path="/settings">
+                    <Settings />
                 </Route>
                 <Route path="/game/lottery">
                     <Lottery />

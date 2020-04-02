@@ -22,7 +22,10 @@ import {
     WITHDRAW_ERROR_MIN_AMOUNT,
     INVENTORY_ITEMS_ADDED,
     TRADEOFFER_ACCEPTED,
-    USER_HAS_NOT_ITEMS
+    USER_HAS_NOT_ITEMS,
+    STEAM_TRADE_URL_MIN_LENGTH,
+    STEAM_TRADE_URL_CHANGED,
+    STEAM_TRADE_URL_ALREADY_TAKEN
 } from './notificationsTypes';
 
 export default {
@@ -145,6 +148,21 @@ export default {
         type: 'SUCCESS',
         title: 'Платформа',
         text: 'Вещи были добавлены в инвентарь.',
+    },
+    [STEAM_TRADE_URL_MIN_LENGTH]: {
+        type: 'ERROR',
+        title: 'Аккаунт',
+        text: 'Необходимо указать ссылку',
+    },
+    [STEAM_TRADE_URL_CHANGED]: {
+        type: 'SUCCESS',
+        title: 'Аккаунт',
+        text: 'Ссылка на обмен STEAM успешно изменена!',
+    },
+    [STEAM_TRADE_URL_ALREADY_TAKEN]: {
+        type: 'ERROR',
+        title: 'Аккаунт',
+        text: 'Такая ссылка уже используется другим аккаунтом',
     },
     undefined: {
         type: 'ERROR',

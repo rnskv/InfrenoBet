@@ -98,6 +98,10 @@ export default ({ app }) => {
             url: '/me',
             method: 'get',
         }),
+        updateSteamTradeLink: new Request({
+            url: '/steam/url',
+            method: 'put',
+        }),
     });
 
     rootApi.addRequests({

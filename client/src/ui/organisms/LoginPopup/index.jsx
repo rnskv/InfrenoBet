@@ -13,10 +13,8 @@ import VerifyAge from 'ui/molecules/VerifyAge';
 import emailIconSvg from 'src/resources/svg/mail-icon.svg';
 import vkIconSvg from 'src/resources/svg/vkontakte-icon.svg';
 
-import CorsPopup from 'src/helpers/CorsPopup';
-
 import { openLoginPopup, closeLoginPopup } from 'src/redux/user/actions';
-
+import { openAuthSteamWindow, openAuthVkWindow } from 'src/helpers/auth';
 
 import {
     MethodSelection,
@@ -25,25 +23,7 @@ import {
     Method,
     MethodIcon,
 } from './styled';
-import { logInProccesing } from 'src/helpers/system';
 
-const { VK_CLIENT_ID, VK_REDIRECT_URL } = process.env;
-
-function openAuthWindow() {
-    const vkUrl = `https://oauth.vk.com/authorize?client_id=${VK_CLIENT_ID}&display=page&redirect_uri=${VK_REDIRECT_URL}&scope=6&response_type=code&v=5.103`;
-    const authPopup = new CorsPopup({
-        url: vkUrl,
-        checkMethod: () => Cookie.get('token'),
-        params: `width=800,height=400, top=${((screen.height - 400) / 2)},left=+${((screen.width - 800) / 2)}`,
-        features: ['resizable=yes, scrollbars=no, status=yes'],
-        target: '_blank',
-        onClose: () => {
-            logInProccesing({ app: infernoClient });
-        },
-    });
-
-    authPopup.open();
-}
 
 const action = ({ type, history, callback }) => () => {
     switch (type) {
@@ -53,7 +33,12 @@ const action = ({ type, history, callback }) => () => {
     }
 
     case 'vk': {
-        openAuthWindow();
+        openAuthVkWindow();
+        break;
+    }
+
+    case 'steam': {
+        openAuthSteamWindow();
         break;
     }
 
@@ -82,6 +67,22 @@ function LoginPopup({ className, style, children }) {
                     Выберите удобный способ входа:
                 </Title>
                 <MethodSelection>
+                    <Method
+                        isActive={isVerifiedAge}
+                        type="steam"
+                        onClick={
+                            action({
+                                type: 'steam',
+                                history,
+                                callback: actions.closeLoginPopup,
+                            })
+                        }
+                    >
+                        <MethodIcon>
+                            <InlineSVG src={vkIconSvg} />
+                        </MethodIcon>
+                        <span>Steam</span>
+                    </Method>
                     <Method
                         isActive={isVerifiedAge}
                         type="vk"

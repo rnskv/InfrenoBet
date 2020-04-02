@@ -4,6 +4,7 @@ import Bet from './Bet';
 
 const { Schema } = mongoose;
 import { USER_NOT_ENOUGH_MONEY, USER_NOT_FOUND } from 'src/types/errors';
+import TradeOffer from './TradeOffer';
 
 const userSchema = new Schema({
     vkId: {
@@ -17,10 +18,11 @@ const userSchema = new Schema({
     login: {
         type: String,
         default: 'Player Unknown',
+        required: true,
     },
     name: {
         type: String,
-        required: true,
+        default: 'Player Unknown'
     },
     email: {
         type: String,
@@ -81,6 +83,10 @@ User.getByParams = async (params) => {
 
 User.getById = async (id) => {
     return await User.getByParams({ _id: id })
+};
+
+User.update = async (id, data) => {
+    return User.updateOne({ _id: mongoose.Types.ObjectId(id)}, data)
 };
 
 User.getBySteamId = async (id) => {

@@ -64,16 +64,18 @@ const loginHandler = async (ctx) => {
 
 const loginVkHandler = (ctx) => {
     const { user } = ctx.state;
+
     console.log( user._id );
+
     const token = createToken({
         payload: {
             _id: user._id,
-            name: user.name,
-            email: user.email,
+            login: user.name
         }
     });
 
     ctx.cookies.set('token', token, { httpOnly: false });
+    ctx.cookies.set('isLinkVk', token, { httpOnly: false, maxAge: 60000 });
 
     ctx.redirect(VK_CLOSE_PAGE_URL);
 };
@@ -90,11 +92,46 @@ const loginVkGetCodeHandler = async (ctx) => {
     }
 };
 
+const loginSteamRedirectHandler = async (ctx) => {
+    const { user } = ctx.state;
+
+    const token = createToken({
+        payload: {
+            _id: user._id,
+            login: user.name
+        }
+    });
+
+    ctx.cookies.set('token', token, { httpOnly: false });
+    ctx.cookies.set('isLinkSteam', token, { httpOnly: false, maxAge: 60000 });
+
+    ctx.redirect(VK_CLOSE_PAGE_URL);
+};
+
+const loginSteamHandler = async (ctx) => {
+    console.log('loginSteamHandler');
+};
+
 export const loginVk = new Action({
     method: 'get',
     url: '/vk',
     handler: loginVkHandler,
     middlewares: [passport.authenticate('vkontakte-token')],
+});
+
+export const loginSteam = new Action({
+    method: 'get',
+    url: '/steam',
+    handler: loginSteamHandler,
+    middlewares: [passport.authenticate('steam')],
+});
+
+
+export const loginSteamRedirect = new Action({
+    method: 'get',
+    url: '/steam/return',
+    handler: loginSteamRedirectHandler,
+    middlewares: [passport.authenticate('steam', { failureRedirect: '/login' })],
 });
 
 export const loginVkGetCode = new Action({

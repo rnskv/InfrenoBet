@@ -8,7 +8,12 @@ const StyledInput = styled.input`
     border: 1px solid var(--color-black);
     padding: 10px 10px;
     font-size: 14px;
-    border-radius: 3px;
+    
+    border-top-left-radius: ${({ before }) => before ? '0' : '3px'};
+    border-top-right-radius: ${({ after }) => after ? '0' : '3px'};
+    border-bottom-right-radius: ${({ after }) => after ? '0' : '3px'};
+    border-bottom-left-radius: ${({ before }) => before ? '0' : '3px'};
+    
     width: 100%;
     box-sizing: border-box;
 
@@ -41,6 +46,32 @@ const Description = styled.span`
     display: block;
 `;
 
+const Group = styled.div`
+  display: flex;
+`;
+
+const Before = styled.div`
+  background: var(--color-grey-600);
+  font-size: 14px;
+  text-align: center;
+  min-width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px 0 0 4px;
+`;
+
+const After = styled.div`
+  background: var(--color-grey-600);
+  font-size: 14px;
+  text-align: center;
+  min-width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0 4px 4px 0px;
+`;
+
 const Input = React.memo(React.forwardRef((
     {
         label,
@@ -56,6 +87,8 @@ const Input = React.memo(React.forwardRef((
         onFocus,
         onBlur,
         value,
+        after,
+        before,
         ...props
     },
     ref,
@@ -69,43 +102,51 @@ const Input = React.memo(React.forwardRef((
         <Container style={style} className={className}>
             <Label>
                 {label ? <span>{label}</span> : null}
-                {
-                    maskType
-                        ? (
-                            <InputMask
-                                mask={MASK[maskType]}
-                                value={value}
-                                onChange={onChange}
-                                onKeyUp={onKeyUp}
-                                onMouseUp={onMouseUp}
-                                onFocus={onFocus}
-                                onBlur={onBlur}
-                                maskChar=" "
-                            >
-                                {(inputProps) => (
-                                    <StyledInput
-                                        ref={ref}
-                                        type={type}
-                                        {...inputProps}
-                                        {...props}
-                                    />
-                                )}
-                            </InputMask>
-                        )
-                        : (
-                            <StyledInput
-                                ref={ref}
-                                type={type}
-                                value={value}
-                                onChange={onChange}
-                                onKeyUp={onKeyUp}
-                                onMouseUp={onMouseUp}
-                                onFocus={onFocus}
-                                onBlur={onBlur}
-                                {...props}
-                            />
-                        )
-                }
+                <Group>
+                    {before ? <Before>{before}</Before> : null}
+                    {
+                        maskType
+                            ? (
+                                <InputMask
+                                    mask={MASK[maskType]}
+                                    value={value}
+                                    onChange={onChange}
+                                    onKeyUp={onKeyUp}
+                                    onMouseUp={onMouseUp}
+                                    onFocus={onFocus}
+                                    onBlur={onBlur}
+                                    maskChar=" "
+                                >
+                                    {(inputProps) => (
+                                        <StyledInput
+                                            ref={ref}
+                                            type={type}
+                                            after={after}
+                                            before={before}
+                                            {...inputProps}
+                                            {...props}
+                                        />
+                                    )}
+                                </InputMask>
+                            )
+                            : (
+                                <StyledInput
+                                    ref={ref}
+                                    type={type}
+                                    value={value}
+                                    onChange={onChange}
+                                    onKeyUp={onKeyUp}
+                                    onMouseUp={onMouseUp}
+                                    onFocus={onFocus}
+                                    onBlur={onBlur}
+                                    after={after}
+                                    before={before}
+                                    {...props}
+                                />
+                            )
+                    }
+                    {after ? <After>{after}</After> : null}
+                </Group>
             </Label>
             {description ? <Description>{description}</Description> : null}
         </Container>
@@ -114,6 +155,7 @@ const Input = React.memo(React.forwardRef((
 
 Input.defaultProps = {
     maskType: null,
+    icon: null,
 };
 
 export default Input;
