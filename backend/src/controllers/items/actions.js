@@ -1,6 +1,7 @@
 import Action from 'src/core/Action';
 import passport from 'koa-passport';
 import Item from 'src/models/Item';
+import InventoryItem from 'src/models/InventoryItem';
 import User from 'src/models/User';
 import request from 'request-promise';
 
@@ -109,9 +110,9 @@ const validateHandler = async (ctx) => {
         return;
     }
     let isHasCosts = true;
-    const items = [];
+
     for (let item of itemsToReceive) {
-        const { appid, classid, icon_url_large } = item;
+        const { appid, assetid,  contextid, classid, icon_url_large } = item;
 
         const itemInfo = await Item.findOne({ classId: classid });
 
@@ -131,14 +132,41 @@ const validateHandler = async (ctx) => {
             isHasCosts = isHasCosts && true;
         }
 
-        items.push(itemInfo);
     }
 
-    console.log('Цена имеется?', isHasCosts);
-    // const item = await Item.findOne({ classId: classid });
-    // console.log('Принял', sid, offer);
+    if (!isHasCosts) {
+        ctx.body = {
+            ok: false,
+            message: 'Невозможно определить стоимость одного из предметов'
+        };
+        return;
+    }
 
-    ctx.body = { ok: true, items, user }
+    ctx.body = { ok: true, user }
+};
+
+
+const registerHandler = async (ctx) => {
+    const { items } = ctx.request.body;
+
+    const registeredItems = [];
+
+    for (let item of items) {
+        const { assetid,  contextid, classid } = item;
+
+        const itemInfo = await Item.findOne({ classId: classid });
+
+        const inventoryItem = await InventoryItem.create({
+            parent: itemInfo._id,
+            contextId: contextid,
+            assetId: assetid,
+            type: 1,
+        });
+
+        registeredItems.push(inventoryItem);
+    }
+
+    ctx.body = { ok: true, registeredItems }
 };
 
 const parseHandler = async (ctx) => {
@@ -151,7 +179,7 @@ const parseHandler = async (ctx) => {
 
     for (let [name, data] of Object.entries(response.items)) {
         const { bcount, price, bprice, count } = data;
-
+        console.log('Check item: ', name);
         if (bcount === 0 || bprice > price * 2 || count === 0 ) {
             console.log('Skip item', name);
             continue;
@@ -171,17 +199,24 @@ const parseHandler = async (ctx) => {
 };
 
 const getAllHandler = async (ctx) => {
-    const items = await Item.find({ image: { $exists:true} }).sort({ cost: 1 });
+    const items = await InventoryItem.find({ type: 0 })
 
     if (items.length <= 0) {
         console.log('Run migration for collection items');
+
         for (const data of dataForMigration) {
-            await Item.create(data);
+            const item = await Item.create(data);
+            const inventoryItem = await InventoryItem.create({ parent: item._id, type: 0 })
         }
+
+
         console.log('Finish migration for collection items');
     }
 
-    ctx.body = await Item.find({ image: { $exists: true } }).sort({ cost: 1 });
+    ctx.body = await InventoryItem.find({ type: 0 }).populate({
+        path: 'parent',
+        model: 'item',
+    });
 };
 
 const postHandler = async (ctx) => {
@@ -213,4 +248,10 @@ export const validate = new Action({
     method: 'post',
     url: '/validate',
     handler: validateHandler,
+});
+
+export const register = new Action({
+    method: 'post',
+    url: '/register',
+    handler: registerHandler,
 });

@@ -10,7 +10,7 @@ import {
 } from './styled';
 
 function _getBetSum(userItems) {
-    return userItems.reduce((acc, item) => acc + item.cost, 0);
+    return userItems.reduce((acc, item) => acc + item.parent.cost, 0);
 }
 
 function BetInfo({

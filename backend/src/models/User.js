@@ -4,6 +4,7 @@ import Bet from './Bet';
 
 const { Schema } = mongoose;
 import { USER_NOT_ENOUGH_MONEY, USER_NOT_FOUND } from 'src/types/errors';
+import TradeOffer from './TradeOffer';
 
 const userSchema = new Schema({
     vkId: {
@@ -17,10 +18,11 @@ const userSchema = new Schema({
     login: {
         type: String,
         default: 'Player Unknown',
+        required: true,
     },
     name: {
         type: String,
-        required: true,
+        default: 'Player Unknown'
     },
     email: {
         type: String,
@@ -38,8 +40,13 @@ const userSchema = new Schema({
         default: 0.01,
     },
     inventory: {
-        type: [Number],
+        type: [mongoose.Types.ObjectId],
         default: [],
+        ref: 'inventoryItem'
+    },
+    steamTradeUrl: {
+        type: String,
+        default: null
     },
     experience: {
         type: Number,
@@ -62,13 +69,66 @@ const userSchema = new Schema({
 userSchema.plugin(privatePaths);
 
 const User = mongoose.model('user', userSchema);
+User.getByParams = async (params) => {
+    return await User.findOne(params)
+        .populate({
+            path: 'inventory',
+            model: 'inventoryItem',
+            populate: {
+                path: 'parent',
+                model: 'item',
+            }
+        })
+};
 
 User.getById = async (id) => {
-    return await User.findOne({ _id: mongoose.Types.ObjectId(id)})
+    return await User.getByParams({ _id: id })
+};
+
+User.update = async (id, data) => {
+    return User.updateOne({ _id: mongoose.Types.ObjectId(id)}, data)
 };
 
 User.getBySteamId = async (id) => {
-    return await User.findOne({ steamId: id })
+    return await User.getByParams({ steamId: id })
+};
+
+User.addItemsToInventory = async (id, itemsIds) => {
+    const user = await User.findById(id);
+
+    user.inventory = [...user.inventory, ...itemsIds];
+    try {
+        user.save();
+    } catch(error) {
+        return false;
+    }
+
+    return true
+};
+
+User.removeItemsFromInventory = async (id, itemsIds) => {
+    const user = await User.findById(id);
+
+    for (const item of itemsIds) {
+        const itemIndexInInventory = user.inventory.findIndex(i => {
+            return i && i.toString() === item.toString()
+        });
+
+        console.log('Ищу в инвентаре', user.inventory);
+        console.log('Ищу предмет', item);
+
+        if (itemIndexInInventory !== -1) {
+            console.log('Найден предмет в инвантаре', itemIndexInInventory);
+            user.inventory.splice(itemIndexInInventory, 1);
+        } else {
+            console.log('Не найден предмет', itemIndexInInventory);
+            return false;
+        }
+        console.log('Инвентарь после модификации', user.inventory);
+        user.save();
+    }
+
+    return true;
 };
 
 User.changeBalance = async (id, amount) => {
@@ -88,5 +148,16 @@ User.changeBalance = async (id, amount) => {
     return user
 };
 
+User.checkUserInventoryItems = async (id, itemsIds) => {
+    const user = await User.getById(id);
+
+    for (const item of itemsIds) {
+        if (!user.inventory.find(_item => _item._id.toString() === item.toString())) {
+            return false;
+        }
+    }
+
+    return true;
+};
 
 export default User;

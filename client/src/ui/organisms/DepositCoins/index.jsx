@@ -64,10 +64,22 @@ function DepositCoins({ disabled }) {
                 <StyledBetItem
                     key={coin.cost}
                     image={coin.image}
-                    onClick={() => actions.changeValue({ value: getExchangedSum(coin.cost, { isNeedIcon: false, accuracy: 1 }) })}
                     cost={coin.cost}
                     isExtendedView
-                    isActive={Number(value) === getExchangedSum(coin.cost, { isNeedIcon: false, accuracy: 1 })}
+                    isActive={
+                        Number(value) === getExchangedSum(coin.cost, {
+                            isNeedIcon: false,
+                            accuracy: 1,
+                        })
+                    }
+                    onClick={
+                        () => actions.changeValue({
+                            value: getExchangedSum(coin.cost, {
+                                isNeedIcon: false,
+                                accuracy: 1,
+                            }),
+                        })
+                    }
                 />
             ))}
         </Container>
@@ -75,11 +87,11 @@ function DepositCoins({ disabled }) {
 }
 
 DepositCoins.propTypes = {
-
+    disabled: PropTypes.bool,
 };
 
 DepositCoins.defaultProps = {
-
+    disabled: false,
 };
 
 export default DepositCoins;

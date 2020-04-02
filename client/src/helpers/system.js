@@ -29,7 +29,7 @@ export function getUserChances(user, bank) {
 }
 
 export function getBetChances(bet, bank) {
-    return Number(((bet.item.cost) / (bank.total) * 100).toFixed(10));
+    return Number(((bet.item.parent.cost) / (bank.total) * 100).toFixed(10));
 }
 
 export function getFormattedTime(time, { minutes = true, seconds = true } = {}) {

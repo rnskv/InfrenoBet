@@ -14,7 +14,8 @@ export const Container = styled.div`
   cursor: pointer;
   flex-direction: column;
   padding: 10px 0;
-  
+  opacity: ${({ isInactivity }) => (isInactivity ? '0.5' : 1)};
+  pointer-events: ${({ isInactivity }) => (isInactivity ? 'none' : 'auto')};
   img {
     width: 60%;
     height: 60%;

@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 import DepositCreditCards from 'ui/organisms/DepositCreditCards';
 import chooseSvg from 'src/resources/svg/choose.svg';
 import WithdrawQiwi from 'ui/organisms/WithdrawQiwi';
+import WithdrawSteamItems from 'ui/organisms/WithdrawSteamItems';
 
 import {
     Container,
@@ -19,6 +20,7 @@ import {
 
 const TAB_COMPONENT = {
     QIWI: WithdrawQiwi,
+    STEAM_ITEMS: WithdrawSteamItems,
 };
 
 function WithdrawSelector({

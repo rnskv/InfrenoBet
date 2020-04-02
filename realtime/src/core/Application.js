@@ -8,7 +8,11 @@ class Application {
     }
 
     init() {
-        this.provideAppToManagers();
+        return new Promise(resolve => {
+            this.provideAppToManagers();
+
+            resolve(this);
+        })
     }
 
 

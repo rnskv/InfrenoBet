@@ -41,7 +41,7 @@ function WinInfo({
 
             {isShowWinner ? (
                 <WinnerItem>
-                    <img alt="Winner item" src={winner.bet.item.image} />
+                    <img alt="Winner item" src={winner.bet.item.parent.image} />
                 </WinnerItem>
             ) : null}
 

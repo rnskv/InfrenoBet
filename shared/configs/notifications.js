@@ -7,6 +7,7 @@ import {
     USER_NOT_SELECT_ITEMS,
     USER_NOT_ENOUGHT_ACCESS_RIGHT,
     USER_SUCCESS_REGISTER,
+    USER_CREATE_STEAM_ITEMS_WITHDRAW,
     INTERNAL_SERVER_ERROR,
     BET_SENDING,
     USER_NOT_AUTH,
@@ -19,6 +20,12 @@ import {
     WITHDRAW_CREATED_QIWI,
     WITHDRAW_ERROR_DATA_QIWI,
     WITHDRAW_ERROR_MIN_AMOUNT,
+    INVENTORY_ITEMS_ADDED,
+    TRADEOFFER_ACCEPTED,
+    USER_HAS_NOT_ITEMS,
+    STEAM_TRADE_URL_MIN_LENGTH,
+    STEAM_TRADE_URL_CHANGED,
+    STEAM_TRADE_URL_ALREADY_TAKEN
 } from './notificationsTypes';
 
 export default {
@@ -72,6 +79,16 @@ export default {
         title: 'Игра',
         text: 'Поздравляем! Вы одержали победу в игре. Выигрыш будет зачислен на ваш баланс в ближайшее время.',
     },
+    [USER_HAS_NOT_ITEMS]: {
+        type: 'ERROR',
+        title: 'Сервер',
+        text: 'В вашем инвентаре нет указанных предметов.',
+    },
+    [USER_CREATE_STEAM_ITEMS_WITHDRAW]: {
+        type: 'SUCCES',
+        title: 'Steam',
+        text: 'Заявка на вывод предметов в steam создана. Наш бот отправит вам предложение обмена в ближайшее время.',
+    },
     [INTERNAL_SERVER_ERROR]: {
         type: 'ERROR',
         title: 'Система',
@@ -121,6 +138,31 @@ export default {
         type: 'ERROR',
         title: 'Платежная система',
         text: 'При выводе средств, Вы указали сумму меньше минимальной.',
+    },
+    [TRADEOFFER_ACCEPTED]: {
+        type: 'SUCCESS',
+        title: 'Steam',
+        text: 'Мы приняли ваше предложение обмена. Вещи скоро будут добавлены в ваш инвентарь.',
+    },
+    [INVENTORY_ITEMS_ADDED]: {
+        type: 'SUCCESS',
+        title: 'Платформа',
+        text: 'Вещи были добавлены в инвентарь.',
+    },
+    [STEAM_TRADE_URL_MIN_LENGTH]: {
+        type: 'ERROR',
+        title: 'Аккаунт',
+        text: 'Необходимо указать ссылку',
+    },
+    [STEAM_TRADE_URL_CHANGED]: {
+        type: 'SUCCESS',
+        title: 'Аккаунт',
+        text: 'Ссылка на обмен STEAM успешно изменена!',
+    },
+    [STEAM_TRADE_URL_ALREADY_TAKEN]: {
+        type: 'ERROR',
+        title: 'Аккаунт',
+        text: 'Такая ссылка уже используется другим аккаунтом',
     },
     undefined: {
         type: 'ERROR',

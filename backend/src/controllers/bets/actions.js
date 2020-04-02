@@ -11,6 +11,7 @@ import Item from 'src/models/Item';
 import config from 'src/config';
 
 import { USER_NOT_ENOUGH_MONEY } from 'src/types/errors';
+import InventoryItem from '../../models/InventoryItem';
 
 const getHandler = async (ctx) => {
 
@@ -30,16 +31,34 @@ const createHandler = async (ctx) => {
     } = ctx.request.body;
 
     const lastBet = await Bet.getLastInGameByGameId(game);
-    const itemData = await Item.getById(item);
+    const itemData = await InventoryItem.getById(item);
+    const userData = await User.findById(user);
 
     if (!itemData) {
         ctx.throw('Не верно передан предмет');
     }
 
-    console.log('Find in bet item with cost:', itemData.cost);
+    if (itemData.type === 0) {
+        try {
+            await User.changeBalance(user, -itemData.parent.cost)
+        } catch (err) {
+            ctx.body = err;
+            return;
+        }
+    }
+
+    if (itemData.type === 1) {
+        const result = await User.removeItemsFromInventory(user, [item]);
+        if (!result) {
+            ctx.throw({ type: 'INTERNAL_SERVER_ERROR' });
+            return;
+        }
+    }
+
+    console.log('Find in bet item with cost:', itemData.parent.cost);
 
     let ticketFrom = 1;
-    let ticketTo = itemData.cost * 100;
+    let ticketTo = itemData.parent.cost * 10000;
 
     if (lastBet) {
         const lastGameTicket = lastBet.ticketTo;
@@ -60,6 +79,8 @@ const createHandler = async (ctx) => {
     switch (bet.type) {
         case 'GAME_CLASSIC': {
             const game = await Game.findById(bet.game);
+            console.log('bet', bet, game)
+
             game.bets.push(bet._id);
             await game.save();
 

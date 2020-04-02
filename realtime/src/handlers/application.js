@@ -50,7 +50,8 @@ export default function ({ app }) {
             }
 
             if (
-                game.getUserBetsCount(user) + betData.items.length > game.maxUserItemsCount
+                game.getUserBetsCount(user) + betData.items.length > game.maxUserItemsCount &&
+                !game.roulette.isVisible
             ) {
                 this.app.managers.sockets.emitUserById(user._id, {
                     eventName: 'project.notification',
@@ -71,19 +72,18 @@ export default function ({ app }) {
                     items: betData.items
                 }
             ), async (response) => {
-                try {
-                    await userApi.execute('changeBalance', {
-                        body: {
-                            id: user._id,
-                            amount: getBetValue(betData)
-                        }
-                    });
-                    //Тут надо залогировать все ставки которые купил пользователь
-                } catch (err) {
-                    console.log(err);
-                    socket.emit('project.notification', { type: notificationsTypes.USER_NOT_ENOUGH_MONEY });
-                    return;
-                }
+                // try {
+                //     await userApi.execute('changeBalance', {
+                //         body: {
+                //             id: user._id,
+                //             amount: getBetValue(betData)
+                //         }
+                //     });
+                // } catch (err) {
+                //     console.log(err);
+                //     socket.emit('project.notification', { type: notificationsTypes.USER_NOT_ENOUGH_MONEY });
+                //     return;
+                // }
                 console.log('Значение в редиску установлено', response)
             });
         });

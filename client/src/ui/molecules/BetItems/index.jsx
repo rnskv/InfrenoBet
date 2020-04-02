@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import diff from 'deep-diff';
 
 import {
     Container,
@@ -7,7 +8,7 @@ import {
 } from './styled';
 
 function BetItems({
-    onItemClick, items, style, className,
+    onItemClick, items, selectedItems, isNeedDrawEmptyCells, emptyCellsCount, useExtendedView, inactivityItems, style, className,
 }) {
     return (
         <Container style={style} className={className}>
@@ -19,21 +20,47 @@ function BetItems({
                         }
                     }
 
+                    if (!item) return null;
                     return (
                         <StyledBetItem
-                            key={`${item._id}-${index}`}
+                            key={`${item._id}`}
                             onClick={onClick}
-                            cost={item.cost || 0}
-                            image={item.image || ''}
+                            isExtendedView={useExtendedView}
+                            cost={item.parent.cost}
+                            image={item.parent.image}
+                            isInactivity={!!inactivityItems.find((i) => i.assetId === item.assetId)}
                         />
                     );
                 })
+            }
+            {
+                isNeedDrawEmptyCells && items.length < emptyCellsCount
+                    ? [...Array(emptyCellsCount - items.length).keys()].map((value, index) => (
+                        <StyledBetItem
+                            style={{animation: 'none'}}
+                            key={`${value}`}
+                        />
+                    )) : null
+
             }
         </Container>
     );
 }
 
 BetItems.propTypes = {
+    selectedItems: PropTypes.array,
+    useExtendedView: PropTypes.bool,
+    inactivityItems: PropTypes.array,
+    isNeedDrawEmptyCells: PropTypes.bool,
+    emptyCellsCount: PropTypes.number,
+};
+
+BetItems.defaultProps = {
+    selectedItems: [],
+    useExtendedView: false,
+    inactivityItems: [],
+    isNeedDrawEmptyCells: true,
+    emptyCellsCount: 10,
 };
 
 export default BetItems;

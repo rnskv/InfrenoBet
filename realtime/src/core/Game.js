@@ -3,6 +3,7 @@ import Roulette from 'src/core/Roulette';
 import { gameApi, betsApi } from 'src/modules/api';
 import { getBetsTotalValue } from  'src/helpers/game';
 import config from 'src/config';
+import { BET_ACCEPTED } from 'shared/configs/notificationsTypes';
 
 class Game {
     constructor({ hash, secret, app, onFinish }) {
@@ -65,9 +66,9 @@ class Game {
             const userId = bet.user._id;
 
             if (!!users[userId]) {
-                users[userId] += bet.item.cost
+                users[userId] += bet.item.parent.cost
             } else {
-                users[userId] = bet.item.cost;
+                users[userId] = bet.item.parent.cost;
             }
         });
 
@@ -213,7 +214,25 @@ class Game {
                         user: betData.user._id,
                         item: item._id
                     }
-                }).catch(err => console.log(err));
+                }).catch(err => {
+                    console.log('ERROR', err)
+                    this.app.managers.sockets.emitUserById(betData.user._id, {
+                        eventName: 'project.notification',
+                        data: {
+                            type: err.type
+                        }
+                    });
+                });
+
+                if (bet.code === 400) {
+                    this.app.managers.sockets.emitUserById(betData.user._id, {
+                        eventName: 'project.notification',
+                        data: {
+                            type: bet.type
+                        }
+                    });
+                    continue;
+                }
 
                 acceptedBets.unshift(bet)
             }
@@ -221,6 +240,13 @@ class Game {
             for (const acceptedBet of acceptedBets) {
                 this.bets.push(acceptedBet);
             }
+
+            this.app.managers.sockets.emitUserById(betData.user._id, {
+                eventName: 'project.notification',
+                data: {
+                    type: BET_ACCEPTED
+                }
+            });
 
             this.app.managers.sockets.emitAllUsers({ eventName: 'game.bets', data: {
                 bets: acceptedBets,
