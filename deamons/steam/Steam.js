@@ -78,7 +78,7 @@ class Steam {
             for (const trade of tradeRequests) {
                 await this.actions.tradeoffers.sendWithdrawOffer({ trade })
             }
-        }, 10000)
+        }, 30000)
     };
 
     async subscribes() {
