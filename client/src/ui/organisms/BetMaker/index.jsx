@@ -17,10 +17,13 @@ import {
     TabTitle,
     Tabs,
 } from './styled';
+import { useProfile } from 'src/redux/user/hooks/selectors';
 
 function BetMaker({
     removeItemFromBetMaker, addItemInBetMaker, isOpened, open, close, sendBet, items, userItems,
 }) {
+    const profile = useProfile();
+    console.log('PROFILE', profile)
     const [activeTab, setActiveTab] = useState('COINS');
 
     const TABS = {
@@ -41,7 +44,7 @@ function BetMaker({
                     onItemClick={removeItemFromBetMaker}
                 />
                 <SteamLinkAttacher
-                    isVisible={activeTab === 'SKINS'}
+                    isVisible={activeTab === 'SKINS' && (!profile.steamTradeUrl || !profile.steamId)}
                 />
             </LeftBlock>
             <RightBlock>
