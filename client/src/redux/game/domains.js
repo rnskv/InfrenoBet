@@ -20,7 +20,7 @@ export default ({ app }) => {
         realtime.io.emit('game.roulette.bet', { items });
 
         dispatch(actions.game.betSended());
-        dispatch(actions.user.changeBalance({ amount: -totalBet }));
+        // dispatch(actions.user.changeBalance({ amount: -totalBet }));
     };
 
     return {

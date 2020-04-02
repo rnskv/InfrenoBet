@@ -25,7 +25,10 @@ import {
     USER_HAS_NOT_ITEMS,
     STEAM_TRADE_URL_MIN_LENGTH,
     STEAM_TRADE_URL_CHANGED,
-    STEAM_TRADE_URL_ALREADY_TAKEN
+    STEAM_TRADE_URL_ALREADY_TAKEN,
+    EMPTY_ITEM_COST,
+    USER_NOT_REGISTER,
+    FORBIDDEN_TAKE_ITEMS
 } from './notificationsTypes';
 
 export default {
@@ -163,6 +166,21 @@ export default {
         type: 'ERROR',
         title: 'Аккаунт',
         text: 'Такая ссылка уже используется другим аккаунтом',
+    },
+    [EMPTY_ITEM_COST]: {
+        type: 'ERROR',
+        title: 'Steam',
+        text: 'Не удалось определить цену на некоторые предметы.',
+    },
+    [USER_NOT_REGISTER]: {
+        type: 'ERROR',
+        title: 'Система',
+        text: 'Пользователь не зарегистрирован',
+    },
+    [FORBIDDEN_TAKE_ITEMS]: {
+        type: 'ERROR',
+        title: 'Система',
+        text: 'Вы не можете брать предметы из инвентаря бота.',
     },
     undefined: {
         type: 'ERROR',

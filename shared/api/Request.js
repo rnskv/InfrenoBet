@@ -19,9 +19,10 @@ export default class Request {
         apiUrl,
         body = {},
         headers = {},
-        onError = null
+        onError = null,
+        useCache = true
     }) {
-        if (this.promise) return this.promise;
+        if (useCache && this.promise) return this.promise;
 
         this.promise = new Promise((resolve, reject) => {
             const url = `${apiUrl}${this.url}`;
@@ -45,10 +46,11 @@ export default class Request {
                         if (onError) {
                             onError({ type: json.type });
                         }
+                        this.promise = null;
                         reject(json);
                         return;
                     }
-
+                    this.promise = null;
                     resolve(json)
                 })
                 .catch(err => {
@@ -56,7 +58,8 @@ export default class Request {
                         if (onError) {
                             onError({ type: 'INTERNAL_SERVER_ERROR' });
                         }
-                        return;
+                        this.promise = null;
+                        reject()
                     }
 
                     err.json()
@@ -65,6 +68,7 @@ export default class Request {
                                 console.log(`I'am really want call onError callback, but you not pass it to me :( You error is`, notification)
                                 onError(notification);
                             }
+                            this.promise = null;
                             reject(notification)
                         })
                         .catch(err => {
