@@ -25,6 +25,17 @@ const tradeOfferSchema = new Schema({
 
 const TradeOffer = mongoose.model('tradeoffer', tradeOfferSchema);
 
+TradeOffer.getById = async (id) => {
+    return TradeOffer.findOne({ _id: mongoose.Types.ObjectId(id) }).populate({
+        path: 'items',
+        model: 'inventoryItem',
+        populate: {
+            path: 'parent',
+            model: 'item',
+        }
+    })
+};
+
 TradeOffer.create = async (data) => {
     return new TradeOffer(data).save()
 };

@@ -87,22 +87,23 @@ User.getBySteamId = async (id) => {
     return await User.getByParams({ steamId: id })
 };
 
-User.addItemsToInventory = async (id, items) => {
+User.addItemsToInventory = async (id, itemsIds) => {
     const user = await User.findById(id);
 
-    user.inventory = [...user.inventory, ...items];
+    user.inventory = [...user.inventory, ...itemsIds];
     try {
         user.save();
     } catch(error) {
         return false;
     }
+
     return true
 };
 
-User.removeItemsFromInventory = async (id, items) => {
+User.removeItemsFromInventory = async (id, itemsIds) => {
     const user = await User.findById(id);
 
-    for (const item of items) {
+    for (const item of itemsIds) {
         const itemIndexInInventory = user.inventory.findIndex(i => {
             return i && i.toString() === item.toString()
         });
@@ -141,5 +142,16 @@ User.changeBalance = async (id, amount) => {
     return user
 };
 
+User.checkUserInventoryItems = async (id, itemsIds) => {
+    const user = await User.getById(id);
+
+    for (const item of itemsIds) {
+        if (!user.inventory.find(_item => _item._id.toString() === item.toString())) {
+            return false;
+        }
+    }
+
+    return true;
+};
 
 export default User;

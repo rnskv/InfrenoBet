@@ -17,10 +17,13 @@ import { useSelector } from 'react-redux';
 import { useActions } from 'src/helpers/hooks';
 import Inventory from 'ui/organisms/Inventory';
 import { infernoClient } from 'src/index';
-
+import { USER_CREATE_STEAM_ITEMS_WITHDRAW } from 'shared/configs/notificationsTypes';
 import { WithdrawInput } from 'ui/organisms/WithdrawExchanger/styled';
 import BetItems from 'ui/molecules/BetItems';
 import Title from 'ui/atoms/Title';
+
+import { useNotificationActions, userProfileActions } from 'src/redux/user/hooks/actions';
+
 import {
     Container,
     InputContainer,
@@ -33,6 +36,8 @@ const { createQiwiWithdraw } = infernoClient.modules.store.domains.cashier;
 
 
 function WithdrawSteamItems() {
+    const notificationsActions = useNotificationActions();
+
     const [isLoading, setIsLoading] = useState(false);
     const [cartItems, setCartItems] = useState([]);
     const getItemsIds = (items) => items.map((item) => item._id);
@@ -48,17 +53,14 @@ function WithdrawSteamItems() {
 
     const requestWithdraw = () => {
         setIsLoading(true);
-        console.log(infernoClient);
         infernoClient.modules.api.services.tradeOffers.execute('create', {
             body: {
                 items: cartItems,
             },
         })
-            .then((response) => {
-                console.log(response)
-            })
-            .catch((err) => {
-                console.log(err)
+            .then(() => {
+                notificationsActions.addNotification({ type: 'USER_CREATE_STEAM_ITEMS_WITHDRAW' });
+                userProfileActions.getProfile();
             })
             .finally(() => {
                 setIsLoading(false);
@@ -69,7 +71,11 @@ function WithdrawSteamItems() {
         <Container>
             <StyledTitle>Выберите вещи:</StyledTitle>
 
-            <Inventory inactivityItems={cartItems} onItemClick={addItemToCart} isNeedDrawEmptyCells={false} />
+            <Inventory
+                inactivityItems={cartItems}
+                onItemClick={addItemToCart}
+                isNeedDrawEmptyCells={false}
+            />
 
             <StyledTitle>
 

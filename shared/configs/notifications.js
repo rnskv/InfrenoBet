@@ -7,6 +7,7 @@ import {
     USER_NOT_SELECT_ITEMS,
     USER_NOT_ENOUGHT_ACCESS_RIGHT,
     USER_SUCCESS_REGISTER,
+    USER_CREATE_STEAM_ITEMS_WITHDRAW,
     INTERNAL_SERVER_ERROR,
     BET_SENDING,
     USER_NOT_AUTH,
@@ -20,7 +21,8 @@ import {
     WITHDRAW_ERROR_DATA_QIWI,
     WITHDRAW_ERROR_MIN_AMOUNT,
     INVENTORY_ITEMS_ADDED,
-    TRADEOFFER_ACCEPTED
+    TRADEOFFER_ACCEPTED,
+    USER_HAS_NOT_ITEMS
 } from './notificationsTypes';
 
 export default {
@@ -73,6 +75,16 @@ export default {
         type: 'SUCCESS',
         title: 'Игра',
         text: 'Поздравляем! Вы одержали победу в игре. Выигрыш будет зачислен на ваш баланс в ближайшее время.',
+    },
+    [USER_HAS_NOT_ITEMS]: {
+        type: 'ERROR',
+        title: 'Сервер',
+        text: 'В вашем инвентаре нет указанных предметов.',
+    },
+    [USER_CREATE_STEAM_ITEMS_WITHDRAW]: {
+        type: 'SUCCES',
+        title: 'Steam',
+        text: 'Заявка на вывод предметов в steam создана. Наш бот отправит вам предложение обмена в ближайшее время.',
     },
     [INTERNAL_SERVER_ERROR]: {
         type: 'ERROR',

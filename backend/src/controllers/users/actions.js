@@ -50,6 +50,10 @@ const addInventoryHandler = async (ctx) => {
     }
 };
 
+const removeInventoryHandler = async (ctx) => {
+    const { userId, itemsIds } = ctx;
+    await User.removeItemsFromInventory(userId, itemsIds)
+};
 const getAllHandler = async (ctx) => {
     ctx.body = 'getAllHandler'
 };
@@ -90,6 +94,12 @@ export const addInventory = new Action({
     method: 'put',
     url: '/inventory',
     handler: addInventoryHandler
+});
+
+export const removeInventory = new Action({
+    method: 'delete',
+    url: '/inventory',
+    handler: removeInventoryHandler
 });
 
 export const getInventory = new Action({

@@ -93,12 +93,11 @@ module.exports = (root) => {
             url: `/api/tradeoffers`,
             method: 'put',
             body: {
-                params: {
-                    id,
-                    data: {
-                        status
-                    }
-                }
+                id,
+                data: {
+                    status
+                },
+                isNeedReturnItems: status === 'ERROR'
             },
             onSuccess: () => console.log('Статус трейда успешно обновлен'),
             onError: () => console.log('Не удалось установить статус трейды')
@@ -106,7 +105,7 @@ module.exports = (root) => {
     };
 
     const validateUserOffer = async ({ steamId, offer }) => {
-        return await root.sendRequest({
+        return await root.api.sendRequest({
             url: `/api/items/validate`,
             method: 'post',
             body: {
@@ -119,7 +118,14 @@ module.exports = (root) => {
     };
 
     const sendWithdrawOffer = async ({ trade }) => {
+        console.log(trade)
         console.log('Обнаружена заявка на вывод от', trade.user.steamId, 'кол-во предметов', trade.items.length);
+        if (!trade.user) {
+            console.log('отклоняем и закрываем трейд т.к нет хозяина');
+            await setTradeofferStatus({ id: trade._id, status: 'ERROR'});
+            return;
+        }
+
         if (!trade.user.steamId) {
             console.log('отклоняем и закрываем трейд т.к не привязан профиль');
             await setTradeofferStatus({ id: trade._id, status: 'ERROR'});
@@ -135,9 +141,9 @@ module.exports = (root) => {
         try {
             sendOffer({
                 steamTradeUrl: trade.user.steamTradeUrl,
-                items: this.getEItems(trade),
+                items: root.getEItems(trade),
                 onError: async ({ err, offer }) => {
-                    console.log('Ошибка при отправке трейда', offer.id);
+                    console.log('Ошибка при отправке трейда', err);
                     await setTradeofferStatus({ id: trade._id, status: 'ERROR'});
                 },
                 onSuccess: async (offer) => {

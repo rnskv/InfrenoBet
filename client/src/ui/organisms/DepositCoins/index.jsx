@@ -74,7 +74,10 @@ function DepositCoins({ disabled }) {
                     }
                     onClick={
                         () => actions.changeValue({
-                            value: getExchangedSum(coin.cost, { isNeedIcon: false, accuracy: 1 }),
+                            value: getExchangedSum(coin.cost, {
+                                isNeedIcon: false,
+                                accuracy: 1,
+                            }),
                         })
                     }
                 />
@@ -84,11 +87,11 @@ function DepositCoins({ disabled }) {
 }
 
 DepositCoins.propTypes = {
-
+    disabled: PropTypes.bool,
 };
 
 DepositCoins.defaultProps = {
-
+    disabled: false,
 };
 
 export default DepositCoins;
