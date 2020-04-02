@@ -205,7 +205,6 @@ class Game {
         return new Promise((async resolve => {
             const acceptedBets = [];
 
-            //В идеале нужно будет 1 ставку создавать
             for (const item of betData.items) {
                 const bet = await betsApi.execute('create', {
                     body: {
@@ -214,14 +213,6 @@ class Game {
                         user: betData.user._id,
                         item: item._id
                     }
-                }).catch(err => {
-                    console.log('ERROR', err)
-                    this.app.managers.sockets.emitUserById(betData.user._id, {
-                        eventName: 'project.notification',
-                        data: {
-                            type: err.type
-                        }
-                    });
                 });
 
                 if (bet.code === 400) {

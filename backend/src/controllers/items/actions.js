@@ -4,6 +4,7 @@ import Item from 'src/models/Item';
 import InventoryItem from 'src/models/InventoryItem';
 import User from 'src/models/User';
 import request from 'request-promise';
+import { EMPTY_ITEM_COST, FORBIDDEN_TAKE_ITEMS, USER_NOT_REGISTER } from 'shared/configs/notificationsTypes';
 
 const dataForMigration = [
     {
@@ -97,7 +98,7 @@ const validateHandler = async (ctx) => {
     if (!user) {
         ctx.body = {
             ok: false,
-            message: 'Вы не зарегистрированы на нашем сайте'
+            type: USER_NOT_REGISTER
         };
         return;
     }
@@ -105,7 +106,8 @@ const validateHandler = async (ctx) => {
     if (itemsToGive.length > 0) {
         ctx.body = {
             ok: false,
-            message: 'Вы не можете запрашивать предметы у бота'
+            message: FORBIDDEN_TAKE_ITEMS,
+            user
         };
         return;
     }
@@ -137,7 +139,8 @@ const validateHandler = async (ctx) => {
     if (!isHasCosts) {
         ctx.body = {
             ok: false,
-            message: 'Невозможно определить стоимость одного из предметов'
+            type: EMPTY_ITEM_COST,
+            user
         };
         return;
     }

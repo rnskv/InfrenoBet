@@ -63,7 +63,13 @@ module.exports = (root) => {
 
         if (!validation.ok) {
             offer.cancel(() => {
-                console.log('Закрывает офер по причине:', validation.message);
+                console.log('Закрывает офер по причине:', validation.type);
+                root.redis.publish('user.notifications.add',
+                    JSON.stringify({
+                        userId: validation.user && validation.user._id,
+                        type: validation.type
+                    })
+                );
             });
             return;
         }
@@ -128,12 +134,15 @@ module.exports = (root) => {
 
         if (!trade.user.steamId) {
             console.log('отклоняем и закрываем трейд т.к не привязан профиль');
+            root.redis.publish('user.notifications.add', JSON.stringify({ type: 'INTERNAL_SERVER_ERROR'}));
+
             await setTradeofferStatus({ id: trade._id, status: 'ERROR'});
             return;
         }
 
         if (!trade.user.steamTradeUrl) {
             console.log('Отклоняем и закрываем трейд т.к не привязана ссылка на обмен');
+            root.redis.publish('user.notifications.add', JSON.stringify({ type: 'INTERNAL_SERVER_ERROR'}));
             await setTradeofferStatus({ id: trade._id, status: 'ERROR'});
             return;
         }

@@ -18,8 +18,8 @@ class Room {
 
             if (!this.game) continue;
 
-            if (this.game.roulette.isVisible) {
-                console.log('Перенарпавляем ставки в следующую игру');
+            if (this.game.roulette.isVisible || this.game.isClosedForBets) {
+                console.log('Перенаправляем ставки в следующую игру');
                 continue;
             }
 

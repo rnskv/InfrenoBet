@@ -8,7 +8,16 @@ import {
 } from './styled';
 
 function BetItems({
-    onItemClick, items, selectedItems, isNeedDrawEmptyCells, emptyCellsCount, useExtendedView, inactivityItems, style, className,
+    onItemClick,
+    items,
+    selectedItems,
+    checkInactivityItem,
+    isNeedDrawEmptyCells,
+    emptyCellsCount,
+    useExtendedView,
+    inactivityItems,
+    style,
+    className,
 }) {
     return (
         <Container style={style} className={className}>
@@ -23,12 +32,15 @@ function BetItems({
                     if (!item) return null;
                     return (
                         <StyledBetItem
-                            key={`${item._id}`}
+                            key={`${item._id}-${index}`}
                             onClick={onClick}
                             isExtendedView={useExtendedView}
                             cost={item.parent.cost}
                             image={item.parent.image}
-                            isInactivity={!!inactivityItems.find((i) => i.assetId === item.assetId)}
+                            isInactivity={
+                                !!inactivityItems.find((i) => i.assetId === item.assetId)
+                                || checkInactivityItem && checkInactivityItem(item)
+                            }
                         />
                     );
                 })
@@ -37,7 +49,7 @@ function BetItems({
                 isNeedDrawEmptyCells && items.length < emptyCellsCount
                     ? [...Array(emptyCellsCount - items.length).keys()].map((value, index) => (
                         <StyledBetItem
-                            style={{animation: 'none'}}
+                            style={{ animation: 'none' }}
                             key={`${value}`}
                         />
                     )) : null
@@ -53,6 +65,7 @@ BetItems.propTypes = {
     inactivityItems: PropTypes.array,
     isNeedDrawEmptyCells: PropTypes.bool,
     emptyCellsCount: PropTypes.number,
+    checkInactivityItem: PropTypes.func,
 };
 
 BetItems.defaultProps = {
@@ -61,6 +74,7 @@ BetItems.defaultProps = {
     inactivityItems: [],
     isNeedDrawEmptyCells: true,
     emptyCellsCount: 10,
+    checkInactivityItem: null,
 };
 
 export default BetItems;

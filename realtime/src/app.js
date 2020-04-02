@@ -46,13 +46,26 @@ infernoIO.addManager('redis', redisManager);
 // infernoIO.addPlugin('steam', SteamPlugin);
 
 infernoIO.init().then((app) => {
+    app.managers.redis.subscribe('user.notifications.add');
     app.managers.redis.subscribe('user.inventory.add');
     app.managers.redis.on('message', (channel, message) => {
-        console.log('redis учуял кровь!', channel)
+        console.log('redis учуял кровь!', channel);
         switch (channel) {
+            case 'user.notifications.add': {
+                const { userId, type } = JSON.parse(message);
+                if (!userId) return;
+                app.managers.sockets.emitUserById(userId, {
+                    eventName: 'project.notification',
+                    data: {
+                        type
+                    }
+                });
+            }
+
             case 'user.inventory.add': {
                 const { user, items } = JSON.parse(message);
-                console.log(user._id, items.length)
+
+                if (!user) return;
 
                 app.managers.sockets.emitUserById(user._id, {
                     eventName: 'project.notification',
