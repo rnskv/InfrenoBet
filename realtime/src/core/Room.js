@@ -40,6 +40,7 @@ class Room {
 
             });
         } catch (e) {
+            console.log(e.message);
             setTimeout(this.loop.bind(this), 1000);
         }
 
