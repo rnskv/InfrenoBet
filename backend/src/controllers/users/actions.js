@@ -18,7 +18,7 @@ const changeBalanceHandler = async (ctx) => {
 };
 
 const getSteamInventoryHandler = async (ctx) => {
-    const steamId = 76561198839278807;
+    const steamId = ctx.state.user.steamId;
     const gameId = 570;
     console.log('getSteamInventoryHandler');
 
@@ -171,5 +171,5 @@ export const getSteamInventory = new Action({
     method: 'get',
     url: '/steam/inventory',
     handler: getSteamInventoryHandler,
-    // middlewares: [passport.authenticate('jwt')],
+    middlewares: [passport.authenticate('jwt')],
 });
