@@ -46,6 +46,10 @@ Item.create = async (data) => {
     return new Item(data).save()
 };
 
+Item.getByClassId = async (classId) => {
+    return await Item.findOne({ classId })
+};
+
 Item.getById = async (id) => {
     return await Item
         .findOne({ _id: mongoose.Types.ObjectId(id)})

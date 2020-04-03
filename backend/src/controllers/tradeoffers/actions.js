@@ -21,7 +21,7 @@ const createHandler = async (ctx) => {
         return;
     }
 
-    await User.removeItemsFromInventory(userId, itemsIds)
+    await User.removeItemsFromInventory(userId, itemsIds);
     //удалить вещи из инвентаря пользователя
 
     //создать трейд

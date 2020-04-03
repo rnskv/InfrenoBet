@@ -1,18 +1,67 @@
 import mongoose from 'mongoose';
 import passport from 'koa-passport';
+import request from 'request-promise';
 
 import Action from 'src/core/Action';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import User from 'src/models/User';
+import Item from 'src/models/Item';
 import config from '../../config';
 
-import { USER_NOT_FOUND, STEAM_TRADE_URL_MIN_LENGTH } from 'shared/configs/notificationsTypes';
+import { USER_NOT_FOUND, STEAM_TRADE_URL_MIN_LENGTH, INTERNAL_SERVER_ERROR } from 'shared/configs/notificationsTypes';
 
 const changeBalanceHandler = async (ctx) => {
     const { id, amount } = ctx.request.body;
 
     ctx.body = await User.changeBalance(id, -amount);
+};
+
+const getSteamInventoryHandler = async (ctx) => {
+    const steamId = 76561198839278807;
+    const gameId = 570;
+    console.log('getSteamInventoryHandler');
+
+    if(!steamId) {
+        console.log('Игрок не привязал стим, нельзя проверить инвентарь');
+        return;
+    }
+
+    try {
+        const response = await request({
+            uri: `http://steamcommunity.com/inventory/76561198839278807/${gameId.toString()}/2?l=english&count=5000`,
+            json: true,
+        });
+
+        if (response.total_inventory_count === 0) {
+            console.log('Инвентарь пустой')
+            ctx.throw({ type: INTERNAL_SERVER_ERROR });
+            return;
+        }
+
+        const userItems = [];
+        console.log(response);
+        for (const item of response.assets) {
+            const { appid, contextid, assetid, classid, instanceid, amount } = item;
+
+            const itemData = await Item.getByClassId(classid);
+
+            if (!itemData) continue;
+
+            userItems.push({
+                parent: itemData,
+                contextId: contextid,
+                assetId: assetid,
+                instanceId: instanceid
+            })
+        }
+        ctx.body = userItems;
+    } catch(err) {
+        console.log('Не удалось получить стоимость инвентаря', err)
+        ctx.throw({ type: INTERNAL_SERVER_ERROR })
+    }
+
+
 };
 
 const setSteamTradeUrlHandler = async (ctx) => {
@@ -35,10 +84,6 @@ const getHandler = async (ctx) => {
     }
 
     ctx.body = user
-};
-
-const getInventoryHandler = async (ctx) => {
-    ctx.body = await User.getById(ctx.params.id);
 };
 
 const addInventoryHandler = async (ctx) => {
@@ -114,15 +159,17 @@ export const removeInventory = new Action({
     handler: removeInventoryHandler
 });
 
-export const getInventory = new Action({
-    method: 'get',
-    url: '/inventory/:id',
-    handler: getInventoryHandler
-});
 
 export const setSteamTradeUrl = new Action({
     method: 'put',
     url: '/steam/url',
     handler: setSteamTradeUrlHandler,
     middlewares: [passport.authenticate('jwt')],
+});
+
+export const getSteamInventory = new Action({
+    method: 'get',
+    url: '/steam/inventory',
+    handler: getSteamInventoryHandler,
+    // middlewares: [passport.authenticate('jwt')],
 });

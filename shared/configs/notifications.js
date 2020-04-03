@@ -22,6 +22,8 @@ import {
     WITHDRAW_ERROR_MIN_AMOUNT,
     INVENTORY_ITEMS_ADDED,
     TRADEOFFER_ACCEPTED,
+    TRADEOFFER_VERIFY_CODE,
+    TRADEOFFER_SENT_ERROR,
     USER_HAS_NOT_ITEMS,
     STEAM_TRADE_URL_MIN_LENGTH,
     STEAM_TRADE_URL_CHANGED,
@@ -145,12 +147,22 @@ export default {
     [TRADEOFFER_ACCEPTED]: {
         type: 'SUCCESS',
         title: 'Steam',
-        text: 'Мы приняли ваше предложение обмена. Вещи скоро будут добавлены в ваш инвентарь.',
+        text: 'Предметы получены. Скоро они будут добавлены в ваш инвентарь.',
+    },
+    [TRADEOFFER_VERIFY_CODE]: {
+        type: 'SUCCESS',
+        title: 'Steam',
+        text: '{text}',
+    },
+    [TRADEOFFER_SENT_ERROR]: {
+        type: 'ERROR',
+        title: 'Steam',
+        text: 'При отправке предложения обмена произошла ошибка.',
     },
     [INVENTORY_ITEMS_ADDED]: {
         type: 'SUCCESS',
         title: 'Платформа',
-        text: 'Вещи были добавлены в инвентарь.',
+        text: 'Предметы были добавлены в инвентарь.',
     },
     [STEAM_TRADE_URL_MIN_LENGTH]: {
         type: 'ERROR',

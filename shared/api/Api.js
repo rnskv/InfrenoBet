@@ -39,7 +39,7 @@ export default class Api {
     execute(requestName, {
         headers,
         body,
-        onError
+        onError,
     } = {}) {
         if (!this.requests[requestName]) {
             throw new Error(`Request ${requestName} isn't defined`);

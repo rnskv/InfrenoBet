@@ -51,6 +51,10 @@ class RedisManager extends Manager{
     subscribe(channelName) {
         this.sub.subscribe(channelName)
     }
+
+    publish(channelName, data, cb) {
+        this.pub.publish(channelName, data, cb)
+    }
 }
 
 export default RedisManager;

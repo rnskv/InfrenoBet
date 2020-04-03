@@ -30,7 +30,7 @@ class Room {
                 const bet = JSON.parse(response);
 
                 if (!bet) {
-                    console.log('Ставка не найдена');
+                    // console.log('Ставка не найдена');
                     setTimeout(this.loop.bind(this), 1000);
                 } else {
                     console.log('Зашел в ставку');

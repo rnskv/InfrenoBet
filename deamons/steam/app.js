@@ -13,6 +13,12 @@ const redisClient = redis.createClient({
     host: config.REDIS_HOST,
     port: config.REDIS_PORT
 });
+
+const redisSub = redis.createClient({
+    host: config.REDIS_HOST,
+    port: config.REDIS_PORT
+});
+
 const community = new SteamCommunity();
 const client = new SteamUser();
 
@@ -32,6 +38,7 @@ const bot1 = new Steam({
     client,
     community,
     redis: redisClient,
+    redisSub: redisSub,
     rp
 });
 

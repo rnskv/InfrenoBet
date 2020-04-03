@@ -215,7 +215,13 @@ class Game {
                         item: item._id,
                     }
                 }).catch((e) => {
-                    console.log('Ошибка при создании ставки в бд');
+                    console.log('Ошибка при создании ставки в бд', item);
+                    this.app.managers.sockets.emitUserById(betData.user._id, {
+                        eventName: 'project.notification',
+                        data: {
+                            type: bet.type
+                        }
+                    });
                     resolve();
                 });
 

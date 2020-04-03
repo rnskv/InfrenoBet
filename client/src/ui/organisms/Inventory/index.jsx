@@ -9,17 +9,16 @@ import Input from 'ui/atoms/Input';
 import { useShallowEqualSelector } from 'src/helpers/hooks';
 import BetItem from 'ui/atoms/BetItem';
 import { RightBlock, StyledBetItems } from 'ui/organisms/BetMaker/styled';
-import LogupForm from '../LogupForm';
+import { usePopupsActions } from 'src/redux/user/hooks/actions';
+
 import {
     Container,
-    StyledForm,
-    Label,
-    Name,
-    StyledButton,
+    GameBlock,
 } from './styled';
 
 function Inventory({ onItemClick, inactivityItems, isNeedDrawEmptyCells }) {
     const profile = useSelector((state) => state.user.profile);
+    const popupsActions = usePopupsActions();
 
     if (profile.isLoading) {
         return <Loader />;
@@ -27,6 +26,15 @@ function Inventory({ onItemClick, inactivityItems, isNeedDrawEmptyCells }) {
 
     return (
         <Container>
+            {/* <Button onClick={popupsActions.openSteamInventory}>Пополнить</Button> */}
+
+            <GameBlock onClick={popupsActions.openSteamInventory}>
+                <div>
+                    Пополнить
+                    <b>DOTA 2</b>
+                </div>
+            </GameBlock>
+
             <StyledBetItems
                 onItemClick={onItemClick}
                 items={profile.inventory}

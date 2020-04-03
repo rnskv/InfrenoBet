@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import diff from 'deep-diff';
-
+import Loader from 'ui/atoms/Loader';
 import {
     Container,
     StyledBetItem,
+    StyledLoader,
 } from './styled';
 
 function BetItems({
@@ -18,9 +19,11 @@ function BetItems({
     inactivityItems,
     style,
     className,
+    isLoading,
 }) {
     return (
         <Container style={style} className={className}>
+            <StyledLoader hidden={!isLoading} />
             {
                 items.map((item, index) => {
                     function onClick() {
@@ -30,6 +33,7 @@ function BetItems({
                     }
 
                     if (!item) return null;
+
                     return (
                         <StyledBetItem
                             key={`${item._id}-${index}`}
@@ -40,6 +44,9 @@ function BetItems({
                             isInactivity={
                                 !!inactivityItems.find((i) => i.assetId === item.assetId)
                                 || checkInactivityItem && checkInactivityItem(item)
+                            }
+                            isSelected={
+                                !!selectedItems.find((i) => i.assetId === item.assetId)
                             }
                         />
                     );
@@ -66,6 +73,7 @@ BetItems.propTypes = {
     isNeedDrawEmptyCells: PropTypes.bool,
     emptyCellsCount: PropTypes.number,
     checkInactivityItem: PropTypes.func,
+    isLoading: PropTypes.bool,
 };
 
 BetItems.defaultProps = {
@@ -75,6 +83,7 @@ BetItems.defaultProps = {
     isNeedDrawEmptyCells: true,
     emptyCellsCount: 10,
     checkInactivityItem: null,
+    isLoading: false,
 };
 
 export default BetItems;

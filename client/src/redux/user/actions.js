@@ -78,3 +78,11 @@ export const openLoginPopup = () => ({
 export const closeLoginPopup = () => ({
     type: actionTypes.CLOSE_LOGIN_POPUP,
 });
+
+export const openSteamInventory = () => ({
+    type: actionTypes.OPEN_STEAM_INVENTORY,
+});
+
+export const closeSteamInventory = () => ({
+    type: actionTypes.CLOSE_STEAM_INVENTORY,
+});

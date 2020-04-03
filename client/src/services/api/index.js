@@ -102,6 +102,10 @@ export default ({ app }) => {
             url: '/steam/url',
             method: 'put',
         }),
+        getInventory: new Request({
+            url: '/steam/inventory',
+            method: 'get',
+        }),
     });
 
     rootApi.addRequests({

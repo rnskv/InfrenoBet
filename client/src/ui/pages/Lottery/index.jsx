@@ -13,12 +13,14 @@ import BetMaker from 'ui/organisms/BetMaker';
 import BetsContainer from 'ui/organisms/BetsContainer';
 import RoomNavigation from 'ui/organisms/RoomNavigation';
 import Inventory from 'ui/organisms/Inventory';
-
+import SteamInventory from 'ui/organisms/SteamInventory';
 // @todo Все экшены брать из контекста App (примерно так)
 import * as userActions from 'src/redux/user/actions';
 import * as gameActions from 'src/redux/game/actions';
 import * as betMakerActions from 'src/redux/betMaker/actions';
 import { mapStateToProps, mapDispatchToProps } from './connect';
+import { Container } from 'ui/organisms/BetMaker/styled';
+import { usePopupsActions } from 'src/redux/user/hooks/actions';
 
 function Lottery({
 
@@ -41,6 +43,8 @@ function Lottery({
         game: useActions(gameActions),
         betMaker: useActions(betMakerActions),
     };
+
+    const popupActions = usePopupsActions();
 
     return (
         <DefaultTemplate>
@@ -90,6 +94,8 @@ function Lottery({
             <GameBeginFooter
                 hash={hash}
             />
+            <SteamInventory />
+
         </DefaultTemplate>
     );
 }

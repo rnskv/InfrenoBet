@@ -4,6 +4,7 @@ import * as actionTypes from './actionsTypes';
 const getClearState = () => ({
     notifications: [],
     isOpenedLoginPopup: false,
+    isOpenedSteamInventory: false,
 });
 
 const initialState = {
@@ -144,6 +145,20 @@ function userReducer(state = initialState, action) {
                     isOpened: false,
                 },
             },
+        };
+    }
+
+    case actionTypes.OPEN_STEAM_INVENTORY: {
+        return {
+            ...state,
+            isOpenedSteamInventory: true,
+        };
+    }
+
+    case actionTypes.CLOSE_STEAM_INVENTORY: {
+        return {
+            ...state,
+            isOpenedSteamInventory: false,
         };
     }
 

@@ -79,5 +79,38 @@ export default function ({ app }) {
         socket.on('game.roulette.sync', () => {
             app.managers.rooms.get('roulette').game.sync(socket);
         });
+
+        socket.on('user.steam.deposit.items', ({ profile, items }) => {
+            console.log('Пользователь депает предметы из стима');
+            if (!profile.steamId) {
+                console.log('Нету steamid при вводе предметов');
+                return;
+            }
+
+            if (!profile.steamTradeUrl) {
+                console.log('Нету steamTradeUrl при вводе предметов');
+                return;
+            }
+
+            app.managers.redis.publish(
+                'user.steam.deposit.items',
+                JSON.stringify({ profile, items }), (err) => {
+                    if (err) {
+                        console.log('Запрос на ввод предметов не прошел в редис', err);
+                        return;
+                    }
+                    console.log('Запрос на ввод предметов улетел в редис');
+                }
+            );
+        });
+
+        socket.on('project.ping', () => {
+            this.app.managers.sockets.emitAllUsers({
+                eventName: 'project.notification',
+                data: {
+                    type:  notificationsTypes.SO_MANY_ITEMS
+                }
+            });
+        });
     }
 }

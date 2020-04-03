@@ -12,22 +12,27 @@ const duration = 300;
 const backgroundTransitionStyle = {
     entering: { opacity: 1 },
     entered: { opacity: 1 },
-    exiting: { opacity: 0 },
-    exited: { opacity: 0, pointerEvents: 'none' },
+    exiting: { marginTop: 0 },
+    exited: { opacity: 0 },
 };
 
 const containerTransitionStyle = {
     entering: { marginTop: 0 },
     entered: { marginTop: 0 },
     exiting: { marginTop: -50 },
-    exited: { marginTop: -50, pointerEvents: 'none' },
+    exited: { marginTop: -50 },
 };
 
 function Popup({
     isVisible, close, className, style, children,
 }) {
     return (
-        <Transition in={isVisible} timeout={{ enter: duration, exit: duration }}>
+        <Transition
+            onEnter={node => node.offsetHeight}
+            unmountOnExit
+            in={isVisible}
+            timeout={duration}
+        >
             {
                 (state) => (
                     <Background
@@ -45,7 +50,6 @@ function Popup({
                             className={className}
                             style={{
                                 transition: `${duration}ms ease-in-out`,
-                                marginTop: -50,
                                 ...containerTransitionStyle[state],
                             }}
                         >

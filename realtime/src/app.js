@@ -52,12 +52,13 @@ infernoIO.init().then((app) => {
         console.log('redis учуял кровь!', channel);
         switch (channel) {
             case 'user.notifications.add': {
-                const { userId, type } = JSON.parse(message);
+                const { userId, type, params } = JSON.parse(message);
                 if (!userId) return;
                 app.managers.sockets.emitUserById(userId, {
                     eventName: 'project.notification',
                     data: {
-                        type
+                        type,
+                        params
                     }
                 });
             }
