@@ -54,7 +54,7 @@ export default class Request {
                     resolve(json)
                 })
                 .catch(err => {
-                    if (!err.json) {
+                    if (typeof err.json !== 'function') {
                         if (onError) {
                             onError({ type: 'INTERNAL_SERVER_ERROR' });
                         }

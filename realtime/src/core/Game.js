@@ -214,6 +214,9 @@ class Game {
                         user: betData.user._id,
                         item: item._id,
                     }
+                }).catch((e) => {
+                    console.log('Ошибка при создании ставки в бд');
+                    resolve();
                 });
 
                 if (bet.code === 400) {
