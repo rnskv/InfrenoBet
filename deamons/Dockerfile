@@ -5,4 +5,4 @@ COPY ./ ./
 WORKDIR /usr/src/deamons/steam
 RUN npm ci
 
-CMD [ "npm", "run", "start:prod" ]git
+CMD [ "npm", "run", "start:prod" ]
