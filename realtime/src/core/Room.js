@@ -45,7 +45,11 @@ class Room {
 
     };
     async startListening() {
-        await this.loop();
+        this.loop();
+        return new Promise((resolve) => {
+            resolve();
+        })
+
     }
 
     reset({ betsQueue } = { betsQueue: [] }) {
