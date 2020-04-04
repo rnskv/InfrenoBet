@@ -74,7 +74,7 @@ const createHandler = async (ctx) => {
 
     const bet = await Bet.create({
         user: mongoose.Types.ObjectId(user),
-        game: mongoose.Types.ObjectId(game),
+        game: gameData._id,
         item: mongoose.Types.ObjectId(item),
         type,
         ticketFrom,
