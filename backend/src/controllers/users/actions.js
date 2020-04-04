@@ -31,7 +31,6 @@ const getSteamInventoryHandler = async (ctx) => {
     }
 
     const gameId = 570;
-    console.log('getSteamInventoryHandler');
 
     if(!steamId) {
         console.log('Игрок не привязал стим, нельзя проверить инвентарь');
@@ -51,7 +50,7 @@ const getSteamInventoryHandler = async (ctx) => {
         }
 
         const userItems = [];
-        // console.log(response);
+
         for (const item of response.assets) {
             const { appid, contextid, assetid, classid, instanceid, amount } = item;
 
@@ -83,7 +82,7 @@ const getSteamInventoryHandler = async (ctx) => {
 
 const setSteamTradeUrlHandler = async (ctx) => {
     const { url } = ctx.request.body;
-    console.log(url)
+
     if (url.toString().length < 1) {
         ctx.throw({ type: STEAM_TRADE_URL_MIN_LENGTH })
     }
