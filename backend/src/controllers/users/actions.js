@@ -11,6 +11,10 @@ import config from '../../config';
 
 import { USER_NOT_FOUND, STEAM_TRADE_URL_MIN_LENGTH, INTERNAL_SERVER_ERROR } from 'shared/configs/notificationsTypes';
 
+const chachedInventories = {
+
+};
+
 const changeBalanceHandler = async (ctx) => {
     const { id, amount } = ctx.request.body;
 
@@ -19,6 +23,13 @@ const changeBalanceHandler = async (ctx) => {
 
 const getSteamInventoryHandler = async (ctx) => {
     const steamId = ctx.state.user.steamId;
+
+    if (chachedInventories[steamId] && chachedInventories[steamId].expires > Date.now()) {
+        console.log('Возвращаем данные о инвентаре из кэша');
+        ctx.body = chachedInventories[steamId].items;
+        return;
+    }
+
     const gameId = 570;
     console.log('getSteamInventoryHandler');
 
@@ -40,7 +51,7 @@ const getSteamInventoryHandler = async (ctx) => {
         }
 
         const userItems = [];
-        console.log(response);
+        // console.log(response);
         for (const item of response.assets) {
             const { appid, contextid, assetid, classid, instanceid, amount } = item;
 
@@ -55,6 +66,12 @@ const getSteamInventoryHandler = async (ctx) => {
                 instanceId: instanceid
             })
         }
+
+        chachedInventories[steamId] = {
+            expires: Date.now() + 60 * 1000,
+            items: userItems,
+        };
+
         ctx.body = userItems;
     } catch(err) {
         console.log('Не удалось получить стоимость инвентаря', err)

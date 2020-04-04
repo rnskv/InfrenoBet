@@ -108,6 +108,8 @@ class Steam {
         this.tradeOfferManager.on('newOffer', this.actions.tradeoffers.onNewTradeOffer);
         this.tradeOfferManager.on('sentOfferChanged', this.actions.tradeoffers.onSentOfferChanged);
 
+        this.community.on('sessionExpired', this.client.webLogOn);
+
         this.startWithdrawChecker();
     }
 
