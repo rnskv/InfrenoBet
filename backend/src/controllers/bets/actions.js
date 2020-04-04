@@ -33,8 +33,6 @@ const createHandler = async (ctx) => {
 
     const lastBet = await Bet.getLastInGameByGameId(game);
     const itemData = await InventoryItem.getById(item);
-    const userData = await User.findById(user);
-
     const gameData = await Game.findById(game);
 
     if (!gameData) {
