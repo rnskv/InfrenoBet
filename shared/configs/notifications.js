@@ -30,7 +30,8 @@ import {
     STEAM_TRADE_URL_ALREADY_TAKEN,
     EMPTY_ITEM_COST,
     USER_NOT_REGISTER,
-    FORBIDDEN_TAKE_ITEMS
+    FORBIDDEN_TAKE_ITEMS,
+    GAME_NOT_FOUND
 } from './notificationsTypes';
 
 export default {
@@ -194,9 +195,14 @@ export default {
         title: 'Система',
         text: 'Вы не можете брать предметы из инвентаря бота.',
     },
+    [GAME_NOT_FOUND]: {
+        type: 'ERROR',
+        title: 'Система',
+        text: 'Игра не найдена.',
+    },
     undefined: {
         type: 'ERROR',
-        title: 'Клиент',
+        title: 'Неизвестно',
         text: 'Неизвестная ошибка!',
     }
 }

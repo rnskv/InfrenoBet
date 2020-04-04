@@ -35,6 +35,12 @@ const createHandler = async (ctx) => {
     const itemData = await InventoryItem.getById(item);
     const userData = await User.findById(user);
 
+    const gameData = await Game.findById(game);
+
+    if (!gameData) {
+        ctx.throw({ type: 'GAME_NOT_FOUND' });
+    }
+
     if (!itemData) {
         ctx.throw('Не верно передан предмет');
     }
@@ -79,14 +85,8 @@ const createHandler = async (ctx) => {
 
     switch (bet.type) {
         case 'GAME_CLASSIC': {
-            const game = await Game.findById(bet.game);
-            if (!game) {
-                ctx.throw({ type: INTERNAL_SERVER_ERROR })
-            }
-            console.log('bet', bet, game);
-
-            game.bets.push(bet._id);
-            await game.save();
+            gameData.bets.push(bet._id);
+            await gameData.save();
 
             break;
         }
@@ -97,6 +97,7 @@ const createHandler = async (ctx) => {
     }
     console.log('New bet created!');
     console.log('__________________________');
+
     ctx.body = await Bet.getById(bet._id);
 };
 

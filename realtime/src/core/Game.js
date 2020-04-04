@@ -226,7 +226,7 @@ class Game {
                 });
 
                 if (!bet) {
-                    continue;
+                    return;
                 }
 
                 if (bet.code === 400) {
