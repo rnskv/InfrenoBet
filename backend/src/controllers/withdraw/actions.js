@@ -17,8 +17,6 @@ async function createWithdraw(ctx) {
     const { user } = ctx.state;
     const { phone, amount } = ctx.request.body;
 
-    console.log(phone);
-
     if (!phone) {
         ctx.throw({ type: WITHDRAW_ERROR_DATA_QIWI });
         return;

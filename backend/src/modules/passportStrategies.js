@@ -73,7 +73,6 @@ export const usePassportStrategies = (passport) => {
                 user.avatar = profile._json.photo_200;
                 user.name = profile.displayName;
                 await user.save();
-                console.log('AGAAA', user);
                 return next(null, user);
             }
         }

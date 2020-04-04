@@ -5,7 +5,6 @@ export default async (ctx = {}, next) => {
     try {
         await next();
     } catch (error) {
-        console.log(error)
         const notification = notifications[error.type] || {};
 
         ctx.status = notification.status || 500;

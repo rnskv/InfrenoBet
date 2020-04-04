@@ -22,7 +22,7 @@ module.exports = (root) => {
 
     const confirmTradeOffer = (offer, status, onSuccess, onError) => {
         const { IDENTITY_SECRET } = root.config;
-        console.log(status)
+
         if (status === root.types.STATUS.PENDING) {
             console.log("Оффер отправлен на подтверждение: " + status);
             root.community.acceptConfirmationForObject(IDENTITY_SECRET, offer.id, (err) => {
@@ -103,7 +103,6 @@ module.exports = (root) => {
     };
 
     const onSentOfferChanged = async (offer, oldState) => {
-        console.log(offer);
         if (offer.itemsToReceive) {
             console.log('Это трейд')
         }

@@ -43,7 +43,6 @@ function WithdrawSteamItems() {
     const getItemsIds = (items) => items.map((item) => item._id);
     const getItemsAmount = (items) => items.reduce((acc, item) => acc + item.parent.cost, 0);
     const addItemToCart = ({ item, index }) => {
-        console.log(item, index);
         setCartItems([...cartItems, item]);
     };
 

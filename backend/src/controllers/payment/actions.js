@@ -39,7 +39,6 @@ async function freeKassaGetAllHandler(ctx) {
 }
 
 async function getMyDepositsHandler(ctx) {
-    console.log('get my deposits', ctx.state.user);
     ctx.body = await Deposit.getByUserId(ctx.state.user._id);
 }
 

@@ -65,8 +65,6 @@ const loginHandler = async (ctx) => {
 const loginVkHandler = (ctx) => {
     const { user } = ctx.state;
 
-    console.log( user._id );
-
     const token = createToken({
         payload: {
             _id: user._id,

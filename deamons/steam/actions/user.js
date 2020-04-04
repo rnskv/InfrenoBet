@@ -3,7 +3,6 @@ module.exports = (root) => {
         return new Promise((resolve, reject) => {
             root.tradeOfferManager.getInventoryContents(gameId, 2, true, function(err, inventory) {
                 if (err) {
-                    console.log(err);
                     reject(err);
                     return;
                 }

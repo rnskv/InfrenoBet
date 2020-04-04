@@ -242,7 +242,6 @@ class Game {
 
             for (const acceptedBet of acceptedBets) {
                 this.bets.push(acceptedBet);
-                console.log(acceptedBet.ticketFrom)
             }
 
             this.app.managers.sockets.emitUserById(betData.user._id, {

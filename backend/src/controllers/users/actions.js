@@ -64,14 +64,14 @@ const getSteamInventoryHandler = async (ctx) => {
             })
         }
 
-        chachedInventories[steamId] = {
+        cachedInventories[steamId] = {
             expires: Date.now() + 60 * 1000,
             items: userItems,
         };
 
         ctx.body = userItems;
     } catch(err) {
-        console.log('Не удалось получить стоимость инвентаря', err)
+        console.log('Не удалось получить стоимость инвентаря', err);
         ctx.throw({ type: INTERNAL_SERVER_ERROR })
     }
 
@@ -106,8 +106,6 @@ const addInventoryHandler = async (ctx) => {
     const currentUser = await User.getBySteamId(user.steamId);
     const itemsIds = items.map((item) => item._id);
 
-    console.log(currentUser.inventory);
-
     const result = await User.addItemsToInventory(currentUser._id, itemsIds);
 
     if (result) {
@@ -130,7 +128,6 @@ const getAllHandler = async (ctx) => {
 };
 
 const getMeHandler = async (ctx) => {
-    console.log(await User.getById(ctx.state.user._id))
     ctx.body = {
         profile: await User.getById(ctx.state.user._id)
     };

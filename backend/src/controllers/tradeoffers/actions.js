@@ -13,7 +13,6 @@ const createHandler = async (ctx) => {
     const { items = [] } = ctx.request.body;
     const userId = ctx.state.user._id;
     //если нет юзера - гуляй василий
-    console.log(items);
     const itemsIds = items.map(item => item._id);
     //проверить наличие каждого предмета в инвентаре пользователя
     if (!(await User.checkUserInventoryItems(userId, itemsIds))) {
