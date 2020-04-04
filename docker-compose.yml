@@ -8,6 +8,7 @@ services:
             - '6001:6001'
         depends_on:
             - db
+            - redis
         container_name: inferno_backend
     realtime:
         build: ./realtime

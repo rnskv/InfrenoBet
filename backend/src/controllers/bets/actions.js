@@ -12,6 +12,7 @@ import config from 'src/config';
 
 import { USER_NOT_ENOUGH_MONEY } from 'src/types/errors';
 import InventoryItem from '../../models/InventoryItem';
+import { INTERNAL_SERVER_ERROR } from 'shared/configs/notificationsTypes';
 
 const getHandler = async (ctx) => {
 
@@ -79,7 +80,10 @@ const createHandler = async (ctx) => {
     switch (bet.type) {
         case 'GAME_CLASSIC': {
             const game = await Game.findById(bet.game);
-            console.log('bet', bet, game)
+            if (!game) {
+                ctx.throw({ type: INTERNAL_SERVER_ERROR })
+            }
+            console.log('bet', bet, game);
 
             game.bets.push(bet._id);
             await game.save();

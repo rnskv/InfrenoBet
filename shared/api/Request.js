@@ -59,7 +59,8 @@ export default class Request {
                             onError({ type: 'INTERNAL_SERVER_ERROR' });
                         }
                         this.promise = null;
-                        reject()
+                        reject(err);
+                        return;
                     }
 
                     err.json()
