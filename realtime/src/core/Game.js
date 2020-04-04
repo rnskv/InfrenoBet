@@ -225,6 +225,10 @@ class Game {
                     resolve();
                 });
 
+                if (!bet) {
+                    continue;
+                }
+
                 if (bet.code === 400) {
                     this.app.managers.sockets.emitUserById(betData.user._id, {
                         eventName: 'project.notification',
