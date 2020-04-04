@@ -16,6 +16,7 @@ import {
     StyledBetItems,
     StyledTitle,
     EmptyMessage,
+    ItemsContainer,
 } from './styled';
 
 function SteamInventory({ inactivityItems, isNeedDrawEmptyCells }) {
@@ -72,14 +73,17 @@ function SteamInventory({ inactivityItems, isNeedDrawEmptyCells }) {
                 <EmptyMessage hidden={!!items.length}>
                     К сожалению, подходящие для игры предметы не обнаружены в вашем инвентаре
                 </EmptyMessage>
-                <StyledBetItems
-                    onItemClick={onItemClick}
-                    items={items}
-                    useExtendedView
-                    selectedItems={selectedItems}
-                    isNeedDrawEmptyCells={isNeedDrawEmptyCells}
-                    isLoading={inventoryIsLoading}
-                />
+
+                <ItemsContainer>
+                    <StyledBetItems
+                        onItemClick={onItemClick}
+                        items={items}
+                        useExtendedView
+                        selectedItems={selectedItems}
+                        isNeedDrawEmptyCells={isNeedDrawEmptyCells}
+                        isLoading={inventoryIsLoading}
+                    />
+                </ItemsContainer>
 
                 <Button
                     onClick={requestWithdrawItem}

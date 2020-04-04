@@ -20,11 +20,8 @@ export const Container = styled.div`
 `;
 
 export const StyledBetItems = styled(BetItems)`
-  width:100%;
-  padding: 15px 0;
-  box-sizing: border-box;
-  margin: 0;
-  background-color: var(--color-grey-550);
+  height: 100%;
+  position: relative;
 `;
 
 export const StyledTitle = styled(Title)`
@@ -46,5 +43,15 @@ export const EmptyMessage = styled.div`
     text-align: center;
     font-size: 16px;
     color: var(--color-white);
-    margin: 15px;
+    margin: 25px;
+`;
+
+export const ItemsContainer = styled.div`
+  width:100%;
+  box-sizing: border-box;
+  margin: 0;
+  background-color: var(--color-grey-550);
+  height: 300px;
+  position: relative;
+  display: flex;
 `;

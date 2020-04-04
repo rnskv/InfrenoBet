@@ -11,8 +11,27 @@ import config from '../../config';
 
 import { USER_NOT_FOUND, STEAM_TRADE_URL_MIN_LENGTH, INTERNAL_SERVER_ERROR } from 'shared/configs/notificationsTypes';
 
-const chachedInventories = {
+const example = {
+    "parent": {
+        "appId": 570,
+        "cost": 0.0025,
+        "_id": "5e84c29c0aa4414cd677622d",
+        "name": "Tribal Stone Pauldron",
+        "__v": 0,
+        "classId": 153090635,
+        "type": 1,
+        "image": "https://steamcommunity-a.akamaihd.net/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KW1Zwwo4NUX4oFJZEHLbXK9QlSPcUwrBpOWEHRVPCoxYDDUkh4IRZYuIWuKhVy3PDAPi1D-dCyho-FqPz1IanelWNu5MRjjeyPp9ys3Ffm-BE_ZDugJNTHIAU-aVnT-Qe-xL3v0Ze16JrJyHZnvSght2GdwUJa1L56uQ"
+    },
+    "contextId": "2",
+    "assetId": "18341452343",
+    "instanceId": "1625510296"
+};
 
+const chachedInventories = {
+   '76561198839278807': {
+        items: new Array(200).fill(example),
+        expires: Date.now() + 120 * 60 * 1000
+    }
 };
 
 const changeBalanceHandler = async (ctx) => {

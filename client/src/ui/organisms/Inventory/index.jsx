@@ -2,18 +2,20 @@ import PropTypes from 'prop-types';
 
 import React, { useRef } from 'react';
 import { useSelector } from 'react-redux';
+import { Scrollbars } from 'react-custom-scrollbars';
 import Loader from 'ui/atoms/Loader';
 import Button from 'ui/atoms/Button';
 import Input from 'ui/atoms/Input';
 
 import { useShallowEqualSelector } from 'src/helpers/hooks';
 import BetItem from 'ui/atoms/BetItem';
-import { RightBlock, StyledBetItems } from 'ui/organisms/BetMaker/styled';
+import { RightBlock } from 'ui/organisms/BetMaker/styled';
 import { usePopupsActions } from 'src/redux/user/hooks/actions';
 
 import {
     Container,
     GameBlock,
+    StyledBetItems,
 } from './styled';
 
 function Inventory({ onItemClick, inactivityItems, isNeedDrawEmptyCells }) {

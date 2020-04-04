@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { Transition } from 'react-transition-group';
 
 import {
@@ -26,12 +26,16 @@ const containerTransitionStyle = {
 function Popup({
     isVisible, close, className, style, children,
 }) {
+    useEffect(() => {
+        document.querySelector('body').style.overflow = isVisible ? 'hidden' : 'auto';
+    }, [isVisible]);
+
     return (
         <Transition
-            onEnter={node => node.offsetHeight}
+            onEnter={(node) => node.offsetHeight}
             unmountOnExit
             in={isVisible}
-            timeout={duration}
+            timeout={{ appear: 0, enter: 0, exit: duration }}
         >
             {
                 (state) => (

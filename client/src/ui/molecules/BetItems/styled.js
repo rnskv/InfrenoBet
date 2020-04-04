@@ -5,6 +5,7 @@ import media from 'src/helpers/media';
 
 export const StyledBetItem = styled(BetItem)`
     margin: 10px;
+    overflow: hidden;
 `;
 
 export const Container = styled.div`
@@ -14,6 +15,9 @@ export const Container = styled.div`
     flex-wrap: wrap;
     align-items: center;
     position: relative;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 15px;
 `;
 
 export const StyledLoader = styled(Loader)`

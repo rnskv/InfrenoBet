@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import diff from 'deep-diff';
-import Loader from 'ui/atoms/Loader';
+import { Scrollbars } from 'react-custom-scrollbars';
 import {
     Container,
     StyledBetItem,
@@ -22,47 +21,49 @@ function BetItems({
     isLoading,
 }) {
     return (
-        <Container style={style} className={className}>
-            <StyledLoader hidden={!isLoading} />
-            {
-                items.map((item, index) => {
-                    function onClick() {
-                        if (onItemClick) {
-                            onItemClick({ item, index });
+        <Scrollbars autoHeight autoHeightMax="100%">
+            <Container style={style} className={className}>
+                <StyledLoader hidden={!isLoading} />
+                {
+                    items.map((item, index) => {
+                        function onClick() {
+                            if (onItemClick) {
+                                onItemClick({ item, index });
+                            }
                         }
-                    }
 
-                    if (!item) return null;
+                        if (!item) return null;
 
-                    return (
-                        <StyledBetItem
-                            key={`${item._id}-${index}`}
-                            onClick={onClick}
-                            isExtendedView={useExtendedView}
-                            cost={item.parent.cost}
-                            image={item.parent.image}
-                            isInactivity={
-                                !!inactivityItems.find((i) => i.assetId === item.assetId)
-                                || checkInactivityItem && checkInactivityItem(item)
-                            }
-                            isSelected={
-                                !!selectedItems.find((i) => i.assetId === item.assetId)
-                            }
-                        />
-                    );
-                })
-            }
-            {
-                isNeedDrawEmptyCells && items.length < emptyCellsCount
-                    ? [...Array(emptyCellsCount - items.length).keys()].map((value, index) => (
-                        <StyledBetItem
-                            style={{ animation: 'none' }}
-                            key={`${value}`}
-                        />
-                    )) : null
+                        return (
+                            <StyledBetItem
+                                key={`${item._id}-${index}`}
+                                onClick={onClick}
+                                isExtendedView={useExtendedView}
+                                cost={item.parent.cost}
+                                image={item.parent.image}
+                                isInactivity={
+                                    !!inactivityItems.find((i) => i.assetId === item.assetId)
+                                    || checkInactivityItem && checkInactivityItem(item)
+                                }
+                                isSelected={
+                                    !!selectedItems.find((i) => i.assetId === item.assetId)
+                                }
+                            />
+                        );
+                    })
+                }
+                {
+                    isNeedDrawEmptyCells && items.length < emptyCellsCount
+                        ? [...Array(emptyCellsCount - items.length).keys()].map((value, index) => (
+                            <StyledBetItem
+                                style={{ animation: 'none' }}
+                                key={`${value}`}
+                            />
+                        )) : null
 
-            }
-        </Container>
+                }
+            </Container>
+        </Scrollbars>
     );
 }
 
