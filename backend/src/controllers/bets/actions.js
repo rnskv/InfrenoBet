@@ -31,9 +31,9 @@ const createHandler = async (ctx) => {
         type
     } = ctx.request.body;
 
-    const lastBet = await Bet.getLastInGameByGameId(game);
     const itemData = await InventoryItem.getById(item);
     const gameData = await Game.getLastCreated();
+    const lastBet = await Bet.getLastInGameByGameId(gameData._id);
 
     if (!gameData) {
         ctx.throw({ type: 'GAME_NOT_FOUND' });

@@ -206,11 +206,9 @@ class Game {
             const acceptedBets = [];
 
             for (const item of betData.items) {
-                console.log('API EXECUTE')
                 const bet = await betsApi.execute('create', {
                     body: {
                         type: 'GAME_CLASSIC',
-                        game: this._id,
                         user: betData.user._id,
                         item: item._id,
                     }
