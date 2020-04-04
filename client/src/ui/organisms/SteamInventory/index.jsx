@@ -9,7 +9,7 @@ import { infernoClient } from 'src/index';
 import { usePopupsActions } from 'src/redux/user/hooks/actions';
 import { useSteamInventorySelector } from 'src/redux/user/hooks/selectors';
 import { useBetMakerActions } from 'src/redux/betMaker/hooks/actions';
-import { STEAM_TRADE_URL_CHANGED } from 'shared/configs/notificationsTypes';
+
 import {
     Container,
     Description,
@@ -31,13 +31,15 @@ function SteamInventory({ inactivityItems, isNeedDrawEmptyCells }) {
     const [selectedItems, setSelectedItems] = useState([]);
 
     useEffect(() => {
+        if (!isVisible) return;
         setInventoryIsLoading(true);
         infernoClient.modules.api.services.user.execute('getInventory').then((items) => {
             setItems(items);
         }).finally(() => {
             setInventoryIsLoading(false);
         });
-    }, []);
+    }, [isVisible]);
+
     useEffect(() => {
         setSelectedItems([]);
     }, [isVisible]);

@@ -94,7 +94,7 @@ function Lottery({
             <GameBeginFooter
                 hash={hash}
             />
-            <SteamInventory />
+            <SteamInventory/>
 
         </DefaultTemplate>
     );

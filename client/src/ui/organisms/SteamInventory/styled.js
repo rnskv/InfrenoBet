@@ -51,7 +51,7 @@ export const ItemsContainer = styled.div`
   box-sizing: border-box;
   margin: 0;
   background-color: var(--color-grey-550);
-  height: 300px;
+  height: 260px;
   position: relative;
   display: flex;
 `;
