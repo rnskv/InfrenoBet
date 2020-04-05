@@ -9,6 +9,11 @@ class RedisManager extends Manager{
         this.pub = pub;
         this.sub = sub;
 
+        this.pub.auth('kjashdhqe!i321lDdasd');
+        this.sub.auth('kjashdhqe!i321lDdasd');
+        this.client.auth('kjashdhqe!i321lDdasd');
+
+
         this.client.on("error", this.onError.bind(this));
         this.pub.on("error", this.onError.bind(this));
         this.sub.on("error", this.onError.bind(this));

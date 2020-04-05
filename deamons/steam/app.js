@@ -9,15 +9,20 @@ const redis = require('redis');
 const rp = require('request-promise');
 const Steam = require('./Steam');
 const config = require('./config')[mode];
+
 const redisClient = redis.createClient({
     host: config.REDIS_HOST,
     port: config.REDIS_PORT
 });
 
+redisClient.auth('kjashdhqe!i321lDdasd');
+
 const redisSub = redis.createClient({
     host: config.REDIS_HOST,
     port: config.REDIS_PORT
 });
+
+redisSub.auth('kjashdhqe!i321lDdasd');
 
 const community = new SteamCommunity();
 const client = new SteamUser();
