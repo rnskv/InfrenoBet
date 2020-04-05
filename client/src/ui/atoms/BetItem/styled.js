@@ -34,6 +34,15 @@ export const Container = styled.div`
     background-color: ${({ cost }) => (cost ? 'var(--color-darkblue-active)' : 'var(--color-grey-800)')};
   }
   
+  svg {
+    background: #0000007a;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
   ${media.tablet`
      width: 70px;
      min-height: 55px;

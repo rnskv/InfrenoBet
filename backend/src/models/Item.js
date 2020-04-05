@@ -28,7 +28,7 @@ const itemSchema = new Schema({
     }
 });
 
-// itemSchema.index({name: 1});
+itemSchema.index({classId: 1});
 
 const Item = mongoose.model('item', itemSchema);
 
@@ -44,6 +44,10 @@ Item.updateOrCreateByName = (name, data) => {
 
 Item.create = async (data) => {
     return new Item(data).save()
+};
+
+Item.getAll = async () => {
+    return await Item.find()
 };
 
 Item.getByClassId = async (classId) => {

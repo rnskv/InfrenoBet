@@ -41,6 +41,7 @@ function BetItems({
                                 isExtendedView={useExtendedView}
                                 cost={item.parent.cost}
                                 image={item.parent.image}
+                                isBlocked={item.parent.cost < 0}
                                 isInactivity={
                                     !!inactivityItems.find((i) => i.assetId === item.assetId)
                                     || checkInactivityItem && checkInactivityItem(item)

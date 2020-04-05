@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { getExchangedSum } from 'src/helpers/system';
+import Svg from 'svg-inline-react';
+import blockSvg from 'src/resources/svg/block.svg';
 
 import {
     Container,
@@ -9,9 +11,9 @@ import {
 } from './styled';
 
 function BetItem({
-    image, cost, className, style, onClick, isExtendedView, isInactivity, isActive, isSelected
+    image, cost, className, style, onClick, isExtendedView, isInactivity, isActive, isBlocked, isSelected,
 }) {
-    console.log('IS SELECTED', isSelected)
+    console.log('IS SELECTED', isSelected);
     return (
         <Container
             className={className}
@@ -19,11 +21,14 @@ function BetItem({
             cost={cost}
             onClick={onClick}
             isActive={isActive}
-            isInactivity={isInactivity}
+            isInactivity={isInactivity || isBlocked}
+            isBlocked={isBlocked}
         >
-            <Selection hidden={!isSelected}/>
+            <Svg src={blockSvg} hidden={!isBlocked} />
+            <Selection hidden={!isSelected} />
             <img src={image} hidden={!cost} />
-            <span hidden={!isExtendedView}>{ getExchangedSum(cost, { accuracy: 2 }) }</span>
+
+            <span hidden={!isExtendedView || isBlocked}>{ getExchangedSum(cost, { accuracy: 2 }) }</span>
         </Container>
     );
 }
@@ -36,6 +41,7 @@ BetItem.propTypes = {
     isActive: PropTypes.bool,
     isInactivity: PropTypes.bool,
     isSelected: PropTypes.bool,
+    isBlocked: PropTypes.bool,
 };
 
 BetItem.defaultProps = {
@@ -45,7 +51,8 @@ BetItem.defaultProps = {
     isSelected: false,
     image: '',
     cost: 0,
-    onClick: null
+    onClick: null,
+    isBlocked: false,
 };
 
 export default BetItem;

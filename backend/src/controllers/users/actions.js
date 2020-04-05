@@ -11,7 +11,9 @@ import config from '../../config';
 
 import { USER_NOT_FOUND, STEAM_TRADE_URL_MIN_LENGTH, INTERNAL_SERVER_ERROR } from 'shared/configs/notificationsTypes';
 
+
 const cachedInventories = {};
+let itemsMap = null;
 
 const changeBalanceHandler = async (ctx) => {
     const { id, amount } = ctx.request.body;
@@ -20,7 +22,20 @@ const changeBalanceHandler = async (ctx) => {
 };
 
 const getSteamInventoryHandler = async (ctx) => {
-    const steamId = ctx.state.user.steamId;
+    if (!itemsMap) {
+        const items = await Item.getAll();
+
+        const map = {};
+
+        items.forEach((value, index) => {
+            map[value.classId] = value;
+        });
+
+        itemsMap = map;
+    }
+
+
+    const steamId = ctx.state.user.steamId; /*'76561198044161202'*/
 
     if (cachedInventories[steamId] && cachedInventories[steamId].expires > Date.now()) {
         console.log('Возвращаем данные о инвентаре из кэша');
@@ -37,7 +52,7 @@ const getSteamInventoryHandler = async (ctx) => {
 
     try {
         const response = await request({
-            uri: `http://steamcommunity.com/inventory/76561198839278807/${gameId.toString()}/2?l=english&count=5000`,
+            uri: `http://steamcommunity.com/inventory/${steamId.toString()}/${gameId.toString()}/2?l=english&count=5000`,
             json: true,
         });
 
@@ -51,10 +66,11 @@ const getSteamInventoryHandler = async (ctx) => {
 
         for (const item of response.assets) {
             const { appid, contextid, assetid, classid, instanceid, amount } = item;
+            console.log(item);
+            const itemData = itemsMap[classid] || { cost: -1 };
 
-            const itemData = await Item.getByClassId(classid);
 
-            if (!itemData) continue;
+            itemData.image = `https://steamcommunity-a.akamaihd.net/economy/image/class/${appid}/${classid}/150fx125f`;
 
             userItems.push({
                 parent: itemData,
