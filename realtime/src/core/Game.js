@@ -26,16 +26,7 @@ class Game {
         this.isWaitingLastBets = false;
         this.publicSecret = 0;
 
-        gameApi.execute('create', {
-            body: {
-                hash,
-                secret
-            }
-        }).then(async (game) => {
-            this.init({ ...game });
-        }).catch((err) => {
-            console.log(err)
-        });
+        this.createGame({ hash, secret });
     }
 
     get users() {
@@ -90,6 +81,20 @@ class Game {
             roulette: this.roulette.state,
             secret: this.publicSecret,
         }
+    }
+
+    createGame({ hash, secret }) {
+        gameApi.execute('create', {
+            body: {
+                hash,
+                secret
+            }
+        }).then(async (game) => {
+            this.init({ ...game });
+        }).catch((err) => {
+            console.log('Не удалось инициализировать игру. Повторная попытка')
+            this.createGame({ hash, secret })
+        });
     }
 
     init({ _id, hash, secret, bets }) {
