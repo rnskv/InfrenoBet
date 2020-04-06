@@ -1,5 +1,6 @@
 import CreditCardsSvg from 'src/resources/svg/credit-cards.svg';
 import QiwiSvg from 'src/resources/svg/qiwi.svg';
+import SteamSvg from 'src/resources/svg/steam-refill.svg';
 
 export default [
     {
@@ -9,8 +10,8 @@ export default [
     },
     {
         name: 'STEAM_ITEMS',
-        title: 'Visa/MasterCard',
-        svg: CreditCardsSvg,
+        title: 'Предметы Steam',
+        svg: SteamSvg,
     },
     {
         name: 'CREDIT_CARDS',

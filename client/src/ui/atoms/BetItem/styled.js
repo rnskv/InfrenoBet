@@ -2,11 +2,21 @@ import styled, { keyframes } from 'styled-components';
 import { flipInX } from 'react-animations';
 import media from 'src/helpers/media';
 
+const SIZES = {
+    normal: `
+      width: 95px;
+      min-height: 75px;
+    `,
+    small: `
+        width: 45px;
+        min-height: 25px;
+    `
+};
+
 export const Container = styled.div`
   animation: .6s ${keyframes`${flipInX}`};
   background-color: ${({ cost, isActive }) => (cost ? isActive ? 'var(--color-yellow) !important' : 'var(--color-darkblue)' : 'var(--color-grey-800)')};
-  width: 95px;
-  min-height: 75px;
+  ${({ size }) => SIZES[size]};
   border-radius: 10px;
   display: flex;
   justify-content: center;

@@ -8,6 +8,7 @@ import User from 'src/models/User';
 import Bet from 'src/models/Bet';
 
 import config from 'src/config';
+import InventoryItem from 'src/models/InventoryItem';
 
 const getHandler = async (ctx) => {
 
@@ -45,7 +46,7 @@ const getWinner = async (ctx) => {
 
     //@todo 0.9 - процент отдаци пользователю (вынести в настройки)
 
-    console.log('Получаем победную игру с cтавками', bets);
+    console.log('Получаем победную игру');
     let globalSum = 0;
     let totalSum = 0;
     let totalGameItems = [];
@@ -88,10 +89,25 @@ const getWinner = async (ctx) => {
         }
     }
 
+    if (!winner.bet.user.steamId || !winner.bet.user.steamTradeUrl) {
+
+        for (const item of userItems) {
+            userSum += (await InventoryItem.getById(item)).parent.cost;
+            commissionItems.push(item);
+        }
+
+        userItems = [];
+    }
+
+    for (const item of commissionItems) {
+        console.log('Переводим статус предмета в комиссию');
+        await InventoryItem.updateById(item, { status: 10 })
+    }
+
     console.log('Предметы в комиссии', commissionItems);
     console.log('Сумма в комиссии', commissionSum);
 
-    console.log('Предметы пользователю', userItems);
+    console.log('Предметыользователю', userItems);
     console.log('Сумма пользователю', userSum);
 
     await User.addItemsToInventory(winner.bet.user._id, userItems);

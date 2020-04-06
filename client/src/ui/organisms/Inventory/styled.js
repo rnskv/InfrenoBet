@@ -16,7 +16,6 @@ export const GameBlock = styled.div`
   background: url('/dist/resources/images/dota.png') center;
   background-size: 100%;
   height: 80px;
-  cursor: pointer;
   transition: .3s background-size;
   display: flex;
   align-items: center;
@@ -24,14 +23,15 @@ export const GameBlock = styled.div`
   margin: 25px 15px 0;
   box-sizing: border-box;
   
+  cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
+  pointer-events: ${({ disabled }) => (disabled ? 'none' : 'auto')};
+  opacity: ${({ disabled }) => (disabled ? 0.7 : 1)};
+  
   &:hover {
     background-size: 120%;
   }
   
   div {
-    //width: 10px;
-    //margin-left: 80px
-    //text-align: center;
     color: var(--color-white);
     font-size: 16px;
     padding-right: 10px;

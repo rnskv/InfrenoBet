@@ -11,9 +11,9 @@ import {
 } from './styled';
 
 function BetItem({
-    image, cost, className, style, onClick, isExtendedView, isInactivity, isActive, isBlocked, isSelected,
+    image, cost, className, style, onClick, isExtendedView, isInactivity, isActive, isBlocked, isSelected, size,
 }) {
-    console.log('IS SELECTED', isSelected);
+    console.log('IS SELECTED', size);
     return (
         <Container
             className={className}
@@ -23,6 +23,7 @@ function BetItem({
             isActive={isActive}
             isInactivity={isInactivity || isBlocked}
             isBlocked={isBlocked}
+            size={size}
         >
             <Svg src={blockSvg} hidden={!isBlocked} />
             <Selection hidden={!isSelected} />
@@ -42,6 +43,7 @@ BetItem.propTypes = {
     isInactivity: PropTypes.bool,
     isSelected: PropTypes.bool,
     isBlocked: PropTypes.bool,
+    size: PropTypes.string
 };
 
 BetItem.defaultProps = {
@@ -53,6 +55,7 @@ BetItem.defaultProps = {
     cost: 0,
     onClick: null,
     isBlocked: false,
+    size: 'normal',
 };
 
 export default BetItem;

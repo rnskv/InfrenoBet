@@ -19,9 +19,13 @@ function BetItems({
     style,
     className,
     isLoading,
+    hidden,
+    viewport,
+    size
 }) {
+    console.log('1', size)
     return (
-        <Scrollbars autoHeight autoHeightMax="100%">
+        <Scrollbars autoHeight autoHeightMax="100%" style={{...viewport}} hidden={hidden}>
             <Container style={style} className={className}>
                 <StyledLoader hidden={!isLoading} />
                 {
@@ -33,11 +37,12 @@ function BetItems({
                         }
 
                         if (!item) return null;
-
+                        console.log('BET ITEMS', size)
                         return (
                             <StyledBetItem
                                 key={`${item._id}-${index}`}
                                 onClick={onClick}
+                                size={size}
                                 isExtendedView={useExtendedView}
                                 cost={item.parent.cost}
                                 image={item.parent.image}
@@ -59,6 +64,7 @@ function BetItems({
                             <StyledBetItem
                                 style={{ animation: 'none' }}
                                 key={`${value}`}
+                                size={size}
                             />
                         )) : null
 

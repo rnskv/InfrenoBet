@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import { Transition } from 'react-transition-group';
+import { Scrollbars } from 'react-custom-scrollbars';
 
 import {
     Container,
@@ -39,6 +40,7 @@ function Popup({
         >
             {
                 (state) => (
+
                     <Background
                         onClick={(e) => e.target === e.currentTarget && close()}
                         style={{
@@ -55,9 +57,14 @@ function Popup({
                             style={{
                                 transition: `${duration}ms ease-in-out`,
                                 ...containerTransitionStyle[state],
+                                ...style
                             }}
                         >
-                            { children }
+                            <Scrollbars autoHeight autoHeightMax="calc(80vh - 6rem)">
+
+                                { children }
+                            </Scrollbars>
+
                         </Container>
                     </Background>
                 )

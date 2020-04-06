@@ -16,6 +16,10 @@ const inventoryItemSchema = new Schema({
     },
     contextId: {
         type: Number,
+    },
+    status: {
+        type: Number,
+        default: 0, //0 - у пользователя, 10 - в комиссии
     }
 });
 
@@ -33,6 +37,10 @@ InventoryItem.updateOrCreateByName = (name, data) => {
 
 InventoryItem.create = async (data) => {
     return new InventoryItem(data).save()
+};
+
+InventoryItem.updateById = async (id, data) => {
+    return await InventoryItem.updateOne({ _id: mongoose.Types.ObjectId(id)}, { $set: data });
 };
 
 InventoryItem.getById = async (id) => {

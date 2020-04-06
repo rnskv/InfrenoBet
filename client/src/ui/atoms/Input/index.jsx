@@ -9,10 +9,10 @@ const StyledInput = styled.input`
     padding: 10px 10px;
     font-size: 14px;
     
-    border-top-left-radius: ${({ before }) => before ? '0' : '3px'};
-    border-top-right-radius: ${({ after }) => after ? '0' : '3px'};
-    border-bottom-right-radius: ${({ after }) => after ? '0' : '3px'};
-    border-bottom-left-radius: ${({ before }) => before ? '0' : '3px'};
+    border-top-left-radius: ${({ before }) => (before ? '0' : '3px')};
+    border-top-right-radius: ${({ after }) => (after ? '0' : '3px')};
+    border-bottom-right-radius: ${({ after }) => (after ? '0' : '3px')};
+    border-bottom-left-radius: ${({ before }) => (before ? '0' : '3px')};
     
     width: 100%;
     box-sizing: border-box;
@@ -37,6 +37,10 @@ const Label = styled.label`
 const Container = styled.div`
     width: 100%;
     box-sizing: border-box;
+    
+    cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
+    pointer-events: ${({ disabled }) => (disabled ? 'none' : 'auto')};
+    opacity: ${({ disabled }) => (disabled ? 0.7 : 1)};
 `;
 
 const Description = styled.span`
@@ -69,7 +73,7 @@ const After = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 0 4px 4px 0px;
+  border-radius: 0 4px 4px 0;
 `;
 
 const Input = React.memo(React.forwardRef((
@@ -89,6 +93,8 @@ const Input = React.memo(React.forwardRef((
         value,
         after,
         before,
+        disabled,
+        hidden,
         ...props
     },
     ref,
@@ -99,7 +105,7 @@ const Input = React.memo(React.forwardRef((
     };
 
     return (
-        <Container style={style} className={className}>
+        <Container style={style} className={className} disabled={disabled} hidden={hidden}>
             <Label>
                 {label ? <span>{label}</span> : null}
                 <Group>

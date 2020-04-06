@@ -6,7 +6,7 @@ export default async (ctx = {}, next) => {
         await next();
     } catch (error) {
         const notification = notifications[error.type] || {};
-
+        console.log('Error wwa handled, ', error)
         ctx.status = notification.status || 500;
         ctx.body = {
             isError: true,
