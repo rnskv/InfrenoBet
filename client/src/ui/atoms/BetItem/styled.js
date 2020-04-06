@@ -18,7 +18,7 @@ const SIZES = {
         
         span {
             position: absolute;
-            font-size: 14px;
+            font-size: 11px;
             background: #00000063;
             width: 100%;
             height: 50%;

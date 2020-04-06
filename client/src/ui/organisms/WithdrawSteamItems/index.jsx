@@ -67,7 +67,9 @@ function WithdrawSteamItems() {
         })
             .then(() => {
                 notificationsActions.addNotification({ type: 'USER_CREATE_STEAM_ITEMS_WITHDRAW' });
-                userProfileActions.getProfile();
+                profileActions.getProfile();
+                setCartItems([]);
+                // console.log('get profile')
             })
             .finally(() => {
                 setIsLoading(false);

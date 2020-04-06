@@ -75,10 +75,6 @@ infernoIO.init().then((app) => {
                     }
                 });
 
-                app.managers.sockets.emitUserById(user._id, {
-                    eventName: 'project.inventory.add'
-                });
-
                 userApi.execute('addInventory', {
                    body: {
                        user,
@@ -90,6 +86,10 @@ infernoIO.init().then((app) => {
                         data: {
                             type:  notificationsTypes.INVENTORY_ITEMS_ADDED
                         }
+                    });
+
+                    app.managers.sockets.emitUserById(user._id, {
+                        eventName: 'project.inventory.add'
                     });
                 }).catch(err => {
                     console.log('Ошибка при обновлении инвентаря', err)
