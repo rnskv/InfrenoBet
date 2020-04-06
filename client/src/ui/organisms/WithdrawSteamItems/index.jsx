@@ -43,6 +43,8 @@ const { createQiwiWithdraw } = infernoClient.modules.store.domains.cashier;
 
 function WithdrawSteamItems() {
     const notificationsActions = useNotificationActions();
+    const profileActions = userProfileActions();
+
     const [isOpened, setIsOpened] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
     const [cartItems, setCartItems] = useState([]);
@@ -84,9 +86,8 @@ function WithdrawSteamItems() {
                                 onItemClick={addItemToCart}
                                 emptyCellsCount={12}
                                 viewport={{ height: '220px' }}
-                                size={'small'}
                                 isNeedShowGamesBlock={false}
-                                useExtendedView={false}
+                                size={'small'}
                             />
                         </ItemsViewport>
                     </InventoryContainer>

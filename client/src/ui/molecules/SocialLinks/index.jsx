@@ -68,7 +68,7 @@ function SocialLinks() {
                     placeholder="Например: https://steamcommunity.com/tradeoffer/new/?partner=879013079&token=EuZ8DXXX"
                     // description={'С помощью этой ссылки наш бот сможет отправлять вам предметы из вашего инвентаря INFERNO.BET в ваш инвентарь STEAM'}
                     maskType={null}
-                    hidden={true}
+                    hidden={!profile.steamId}
                 />
             </TradeLinks>
         </Container>

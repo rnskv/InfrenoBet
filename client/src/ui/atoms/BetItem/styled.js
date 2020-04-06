@@ -6,11 +6,28 @@ const SIZES = {
     normal: `
       width: 95px;
       min-height: 75px;
+      
+      span {
+        margin-top: 10px;
+        font-size: 18px;
+      }
     `,
     small: `
         width: 45px;
         min-height: 25px;
-    `
+        
+        span {
+            position: absolute;
+            font-size: 14px;
+            background: #00000063;
+            width: 100%;
+            height: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            bottom: 0;
+        }
+    `,
 };
 
 export const Container = styled.div`
@@ -35,9 +52,8 @@ export const Container = styled.div`
   }
   
   span {
+    display: ${({ cost }) => (cost ? 'flex' : 'none')};
     color: ${({ isActive }) => (isActive ? 'var(--color-grey-800)' : 'var(--color-yellow)')};
-    margin-top: 10px;
-    font-size: 18px;
   }
   
   &:hover {

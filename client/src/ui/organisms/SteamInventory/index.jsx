@@ -62,6 +62,8 @@ function SteamInventory({ inactivityItems, isNeedDrawEmptyCells }) {
         });
 
         setTimeout(() => {
+            //Пытаося закрыть окно и обновить инвентарь
+
             popupsActions.closeSteamInventory();
             setIsLoading(false);
             betMakerActions.close();
