@@ -6,15 +6,15 @@ class Api {
 
     async sendRequest({ url, body, method = 'get', onSuccess, onError }) {
         try {
-            const tradeRequests = await this.rp({
+            const response = await this.rp({
                 uri: `${this.API_URL}${url}`,
                 method: method,
                 body: body,
                 json: true
             });
 
-            onSuccess(tradeRequests);
-            return tradeRequests;
+            onSuccess(response);
+            return response;
         } catch (err) {
             onError(err);
             return null;

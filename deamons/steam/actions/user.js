@@ -22,7 +22,7 @@ module.exports = (root) => {
         console.log('Аутентификация пройдена');
     };
 
-    const onWebSession =async  (sessionID, cookies) => {
+    const onWebSession = async  (sessionID, cookies) => {
         root.community.setCookies(cookies);
         root.tradeOfferManager.setCookies(cookies, async function(err) {
             if (err) {

@@ -48,7 +48,6 @@ module.exports = (root) => {
        onError = () => console.log('Произошла ошибка при отправке трейда. Попробую позже')
     }) => {
         const offer = root.tradeOfferManager.createOffer(steamTradeUrl);
-        console.log('sendOffer', items, requestedItems);
 
         if (items) {
             offer.addMyItems(items);
@@ -69,50 +68,21 @@ module.exports = (root) => {
         });
     };
 
-    const onNewTradeOffer = async (offer) => {
-        const steamId = SteamID.fromIndividualAccountID(offer.partner.accountid).toString();
-
-        console.log("Новый оффер #" + offer.id + " от пользователя " + steamId.toString());
-
-        const validation = await validateUserOffer({ steamId, offer });
-
-        if (!validation.ok) {
-            offer.cancel(() => {
-                console.log('Закрывает офер по причине:', validation.type);
-                root.redis.publish('user.notifications.add',
-                    JSON.stringify({
-                        userId: validation.user && validation.user._id,
-                        type: validation.type
-                    })
-                );
-            });
-            return;
-        }
-
-        offer.accept(async function(err, status) {
-            const { user } = validation;
-
-            if (err) {
-                console.log("Не получилось принять оффер: " + err.message);
-                return;
-            }
-
-            console.log("Оффер принят со статусом: " + status, offer);
-            addItemsToUserInventory(user, offer)
-        });
-    };
-
     const onSentOfferChanged = async (offer, oldState) => {
         if (offer.itemsToReceive) {
             console.log('Это трейд')
         }
 
-        if (offer.itemsToGive.length === 0 && offer.itemsToReceive.length > 0 && TradeOfferManager.ETradeOfferState[offer.state] === 'Accepted') {
-            console.log(`Трейд ${offer.id} был отправлен на ввод предметов и принят пользователей`);
+        if (offer.itemsToGive.length === 0 &&
+            offer.itemsToReceive.length > 0 &&
+            TradeOfferManager.ETradeOfferState[offer.state] === 'Accepted')
+        {
+            console.log(`Трейд ${offer.id} был отправлен на ввод предметов и принят пользователем`);
             const steamId = SteamID.fromIndividualAccountID(offer.partner.accountid).toString();
             const validation = await validateUserOffer({ steamId, offer });
             const { user } = validation;
             addItemsToUserInventory(user, offer)
+
         } else {
             console.log('Не удалось ввести предмет')
         }
@@ -238,7 +208,6 @@ module.exports = (root) => {
     return {
         confirmTradeOffer,
         sendOffer,
-        onNewTradeOffer,
         onSentOfferChanged,
         sendWithdrawOffer,
         sendDepositOffer

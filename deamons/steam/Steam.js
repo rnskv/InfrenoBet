@@ -1,5 +1,8 @@
 const SteamTotp = require('steam-totp');
 const Api = require('./core/Api');
+const TradeOffers = require('./core/TradeOffers');
+
+const onNewTradeOffer = require('./handlers/newTradeOffer');
 
 class Steam {
     constructor({
@@ -19,6 +22,11 @@ class Steam {
         this.redis = redis;
         this.redisSub = redisSub;
         this.actions = {};
+
+        this.core = {
+            tradeoffers: new TradeOffers({ root: this }),
+        };
+
         this.types = {
             STATUS: {
                 PENDING: 'pending',
@@ -105,9 +113,8 @@ class Steam {
 
         this.client.on('loggedOn', this.actions.user.onLogOn);
         this.client.on('webSession', this.actions.user.onWebSession);
-        this.tradeOfferManager.on('newOffer', this.actions.tradeoffers.onNewTradeOffer);
+        this.tradeOfferManager.on('newOffer', onNewTradeOffer(this));
         this.tradeOfferManager.on('sentOfferChanged', this.actions.tradeoffers.onSentOfferChanged);
-
         this.community.on('sessionExpired', this.client.webLogOn);
 
         this.startWithdrawChecker();
