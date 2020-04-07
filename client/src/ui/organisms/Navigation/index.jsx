@@ -4,6 +4,7 @@ import Svg from 'svg-inline-react';
 import settingsSvg from 'src/resources/svg/settings.svg';
 import supportSvg from 'src/resources/svg/support.svg';
 import classicLogoSvg from 'src/resources/svg/classic-logo.svg';
+import withdrawSvg from 'src/resources/svg/withdraw.svg';
 
 import { useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -51,10 +52,10 @@ const GROUPS = [
             },
             {
                 id: 1,
-                to: '/support',
+                to: '/withdraw',
                 svg: supportSvg,
-                text: 'Поддержка',
-                description: 'Возникли проблемы?',
+                text: 'Вывод',
+                description: 'Забери свой выигрыш!',
                 accessLevel: 0,
             },
         ],

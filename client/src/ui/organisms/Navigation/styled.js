@@ -29,7 +29,7 @@ export const NavigationTitle = styled(Title)`
 
 export const NavigationText = styled.div`
     transition: .3s;
-    font-size: 20px;
+    font-size: 17px;
     color: var(--color-white);
     text-decoration: none;
     font-weight: 700;
@@ -45,7 +45,7 @@ export const NavigationDescription = styled.div`
 `;
 
 export const NavigationName = styled.div`
-    margin-left: ${(props) => (props.isOpened ? '20px' : '0')};
+    margin-left: ${(props) => (props.isOpened ? '10px' : '0')};
     width: ${(props) => (props.isOpened ? '150px' : '0')};
     opacity: ${(props) => (props.isOpened ? '1' : '0')};
     overflow: hidden;
