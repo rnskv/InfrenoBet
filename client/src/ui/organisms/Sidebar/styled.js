@@ -22,7 +22,7 @@ const sidebars = {
         left: 0;
         width: ${isOpened ? '250px' : '60px'};
         ${Wrapper} {
-            width: 250px;
+            width: auto;
         }
     `,
     right: ({ side, isOpened }) => `
