@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import media from 'src/helpers/media';
 
 export const Wrapper = styled.div`
-  width: 280px;
+  //width: 280px;
 `;
 
 export const FixedContainer = styled.div`
@@ -20,7 +20,7 @@ export const FixedContainer = styled.div`
 const sidebars = {
     left: ({ side, isOpened }) => `
         left: 0;
-        width: ${isOpened ? '280px' : '80px'};
+        width: ${isOpened ? '280px' : '60px'};
     `,
     right: ({ side, isOpened }) => `
         right: 0;
@@ -29,7 +29,7 @@ const sidebars = {
 };
 
 export const StaticContainer = styled.div`
-    width: ${({ side, isOpened }) => (isOpened ? '280px' : '80px')};
+    width: ${({ side, isOpened }) => (isOpened ? '280px' : '60px')};
     transition: .3s;
     ${FixedContainer} {
         ${({ side, isOpened }) => sidebars[side]({ side, isOpened })}

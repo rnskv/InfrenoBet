@@ -8,7 +8,6 @@ import media from 'src/helpers/media';
 
 const StyledForm = styled.form`
     width: 500px;
-    background: var(--color-darkblue);
     
     padding: 25px;
     margin: 25px;

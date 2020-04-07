@@ -9,7 +9,6 @@ import {
 
 import LogupForm from 'ui/organisms/LogupForm';
 import AfterLogup from 'ui/organisms/AfterLogup';
-import PopupTemplate from 'ui/templates/Popup';
 import DefaultTemplate from 'ui/templates/Default';
 
 import { mapStateToProps, mapDispatchToProps } from './connect';
@@ -20,7 +19,7 @@ function Logup({
     // if (token) return <Redirect to="/" />;
 
     return (
-        <PopupTemplate>
+        <DefaultTemplate>
             { isRegister
                 ? (
                     <AfterLogup
@@ -34,7 +33,7 @@ function Logup({
                     />
                 )}
 
-        </PopupTemplate>
+        </DefaultTemplate>
     );
 }
 

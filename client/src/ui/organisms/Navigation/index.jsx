@@ -1,5 +1,10 @@
 import PropTypes from 'prop-types';
 import React, { useState, useEffect, useContext } from 'react';
+import Svg from 'svg-inline-react';
+import settingsSvg from 'src/resources/svg/settings.svg';
+import supportSvg from 'src/resources/svg/support.svg';
+import classicLogoSvg from 'src/resources/svg/classic-logo.svg';
+
 import { useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -24,7 +29,7 @@ const GROUPS = [
             {
                 id: 0,
                 to: '/game/lottery',
-                svgId: 'classic-logo',
+                svg: classicLogoSvg,
                 text: 'Рулетка',
                 description: 'Играй и побеждай!',
                 onlyGuest: false,
@@ -39,7 +44,7 @@ const GROUPS = [
             {
                 id: 0,
                 to: '/logup',
-                svgId: 'settings-icon',
+                svg: settingsSvg,
                 text: 'Регистрация',
                 description: 'Создай новый профиль!',
                 accessLevel: 0,
@@ -47,7 +52,7 @@ const GROUPS = [
             {
                 id: 1,
                 to: '/support',
-                svgId: 'tech-support-icon',
+                svg: supportSvg,
                 text: 'Поддержка',
                 description: 'Возникли проблемы?',
                 accessLevel: 0,

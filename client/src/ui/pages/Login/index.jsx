@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
 import LoginForm from 'ui/organisms/LoginForm';
-import PopupTemplate from 'ui/templates/Popup';
+import DefaultTemplate from 'ui/templates/Default';
 
 import { mapStateToProps, mapDispatchToProps } from './connect';
 
@@ -14,13 +14,13 @@ function Login({
 }) {
     if (token) return <Redirect to="/" />;
     return (
-        <PopupTemplate>
+        <DefaultTemplate>
             <LoginForm
                 logIn={logIn}
                 error={error}
                 isLoading={isLoading}
             />
-        </PopupTemplate>
+        </DefaultTemplate>
     );
 }
 

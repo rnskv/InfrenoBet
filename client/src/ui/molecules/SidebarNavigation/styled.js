@@ -1,7 +1,6 @@
 import styled, { keyframes } from 'styled-components';
 import { tada, zoomInDown } from 'react-animations';
 
-
 export const Circle = styled.div`
     @keyframes rotateCircle {
         0% {
@@ -70,6 +69,7 @@ export const Container = styled.div`
   background-color: var(--color-grey-400);
   display: flex;
   justify-content: center;
+  padding-top: 10px;
 `;
 
 export const Icon = styled.div`

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import Svg from 'svg-inline-react';
 
 import {
     Link,
@@ -14,7 +15,7 @@ import {
 } from './styled';
 
 function NavigationLink({
-    to, isOpened, text, description, isActive, isVisible, svgId,
+    to, isOpened, text, description, isActive, isVisible, svg,
 }) {
     if (!isVisible) return null;
 
@@ -22,9 +23,7 @@ function NavigationLink({
         <Link to={to}>
             <NavigationItem isOpened={isOpened} isActive={isActive}>
                 <NavigationIcon>
-                    <svg>
-                        <use xlinkHref={`#${svgId}`} />
-                    </svg>
+                    <Svg src={svg} />
                 </NavigationIcon>
                 <NavigationName isOpened={isOpened}>
                     <NavigationText>
@@ -47,6 +46,7 @@ NavigationLink.propTypes = {
     svgId: PropTypes.string.isRequired,
     isActive: PropTypes.bool.isRequired,
     isVisible: PropTypes.bool.isRequired,
+    svg: PropTypes.string.isRequired,
 };
 
 export default NavigationLink;

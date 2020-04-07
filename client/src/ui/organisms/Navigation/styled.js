@@ -2,8 +2,8 @@ import Title from 'ui/atoms/Title';
 import styled from 'styled-components';
 
 export const NavigationIcon = styled.div`
-    width: 35px;
-    height: 35px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     
     svg {
@@ -45,7 +45,7 @@ export const NavigationDescription = styled.div`
 `;
 
 export const NavigationName = styled.div`
-    margin-left: ${(props) => (props.isOpened ? '20px' : '-20')};
+    margin-left: ${(props) => (props.isOpened ? '20px' : '0')};
     width: ${(props) => (props.isOpened ? '150px' : '0')};
     opacity: ${(props) => (props.isOpened ? '1' : '0')};
     overflow: hidden;
@@ -105,13 +105,14 @@ export const ItemsGroupSystem = styled.div`
 export const NavigationItem = styled.li`
     display: flex;
     align-items: center;
-    padding: 10px 20px;
+    padding: 10px 10px;
     border-bottom: 1px solid var(--color-grey-400);
     cursor: pointer;
-    
     background-color: ${({ isActive }) => (isActive ? 'var(--color-grey-800)' : 'none')};
+    border-right: ${({ isActive }) => (isActive ? '2px solid var(--color-yellow)' : '2px solid var(--color-transparent)')};
     
     ${NavigationIcon} {
+      min-width: 32px;
         svg {
           fill: ${({ isActive }) => (isActive ? 'var(--color-yellow)' : 'var(--color-white)')};
         }
