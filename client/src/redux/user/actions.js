@@ -86,3 +86,8 @@ export const openSteamInventory = () => ({
 export const closeSteamInventory = () => ({
     type: actionTypes.CLOSE_STEAM_INVENTORY,
 });
+
+export const changeSidebarTab = (payload) => ({
+    type: actionTypes.CHANGE_SIDEBAR_TAB,
+    payload,
+});

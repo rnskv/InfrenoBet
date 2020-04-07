@@ -14,17 +14,19 @@ import {
 } from './styled';
 
 import { mapDispatchToProps, mapStateToProps } from './connect';
+import { useSidebarActions } from 'src/redux/user/hooks/actions';
 
 
 function SidebarNotifications({
     notifications, className, style, removeAllNotifications,
 }) {
+    const actions = useSidebarActions();
     const { isOpened } = useContext(StateContext);
     return (
         <Container className={className} style={style} isOpened={isOpened}>
             <Controls>
                 <Button onClick={removeAllNotifications}>Очистить</Button>
-                <Button>Закрыть</Button>
+                <Button onClick={() => actions.changeTab({ name: 'CHAT' })}>Закрыть</Button>
             </Controls>
             <NotificationsList>
                 {

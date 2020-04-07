@@ -8,12 +8,13 @@ import Sidebar from 'ui/organisms/Sidebar';
 import Header from 'ui/organisms/Header';
 
 import SidebarNotifications from 'ui/molecules/SidebarNotifications';
+import SidebarNavigation from 'ui/molecules/SidebarNavigation';
 import SidebarProfile from 'ui/molecules/SidebarProfile';
 import LoginPopup from 'ui/organisms/LoginPopup';
-import Popup from 'ui/molecules/Popup';
 import SidebarCompact from 'ui/molecules/SidebarCompact';
 
 import media from 'src/helpers/media';
+import { useSidebar } from 'src/redux/user/hooks/selectors';
 
 const Content = styled.div`
     margin: 75px auto;
@@ -35,7 +36,14 @@ const Page = styled.div`
     display: flex;
 `;
 
+const SIDEBAR_TABS = {
+    NOTIFICATIONS: <SidebarNotifications />,
+    CHAT: <div style={{ color: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px'}}>В разработке</div>,
+};
+
 function Default({ children, ...props }) {
+    const sidebarData = useSidebar();
+    console.log(sidebarData)
     return (
         <div {...props}>
             <Header />
@@ -57,8 +65,8 @@ function Default({ children, ...props }) {
                     }}
                 >
                     <SidebarProfile />
-                    {/* <SidebarNavigation /> */}
-                    <SidebarNotifications />
+                    <SidebarNavigation />
+                    { SIDEBAR_TABS[sidebarData.activeTabName] }
                 </Sidebar>
                 <SidebarCompact />
             </Page>

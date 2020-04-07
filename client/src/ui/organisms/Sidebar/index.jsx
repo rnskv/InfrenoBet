@@ -53,7 +53,7 @@ const Sidebar = React.memo(({
             </StaticContainer>
         </StateContext.Provider>
     );
-}, (prevProps, nextProps) => prevProps.sidebars[prevProps.params.side] === nextProps.sidebars[nextProps.params.side]);
+});
 
 Sidebar.propTypes = {
 };

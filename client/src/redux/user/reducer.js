@@ -21,6 +21,7 @@ const initialState = {
             isOpened: true,
         },
     },
+    activeSidebarTabName: 'CHAT',
     ...getClearState(),
 };
 
@@ -173,6 +174,13 @@ function userReducer(state = initialState, action) {
         return {
             ...state,
             isOpenedLoginPopup: false,
+        };
+    }
+
+    case actionTypes.CHANGE_SIDEBAR_TAB: {
+        return {
+            ...state,
+            activeSidebarTabName: action.payload.name,
         };
     }
 
