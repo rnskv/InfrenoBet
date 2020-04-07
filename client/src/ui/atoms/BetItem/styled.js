@@ -52,6 +52,10 @@ export const Container = styled.div`
   }
   
   span {
+    &[hidden] {
+      display: none;
+    }
+    
     display: ${({ cost }) => (cost ? 'flex' : 'none')};
     color: ${({ isActive }) => (isActive ? 'var(--color-grey-800)' : 'var(--color-yellow)')};
   }

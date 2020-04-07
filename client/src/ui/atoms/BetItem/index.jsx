@@ -29,7 +29,9 @@ function BetItem({
             <Selection hidden={!isSelected} />
             <img src={image} hidden={!cost} />
 
-            <span hidden={!isExtendedView || isBlocked}>{ getExchangedSum(cost, { accuracy: 2 }) }</span>
+            <span hidden={!isExtendedView || isBlocked}>
+                { getExchangedSum(cost, { accuracy: 2 }) }
+            </span>
         </Container>
     );
 }
@@ -43,7 +45,7 @@ BetItem.propTypes = {
     isInactivity: PropTypes.bool,
     isSelected: PropTypes.bool,
     isBlocked: PropTypes.bool,
-    size: PropTypes.string
+    size: PropTypes.string,
 };
 
 BetItem.defaultProps = {
