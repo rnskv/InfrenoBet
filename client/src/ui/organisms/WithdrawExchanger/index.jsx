@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import SVG from 'svg-inline-react';
 
 import NotAuthPlaceHolder from 'ui/organisms/NotAuthPlaceholder';
@@ -16,6 +16,8 @@ import Input from 'ui/atoms/Input';
 import Button from 'ui/atoms/Button';
 import VerifyAge from 'ui/molecules/VerifyAge';
 import Verify from 'ui/molecules/Verify';
+import { withdraw } from 'shared/configs/settings';
+
 import {
     Container,
     InputsContainer,
@@ -29,13 +31,11 @@ function WithdrawExchanger({
 }) {
     const isLoading = useSelector((state) => state.cashier.isLoading);
     const [isVerifiedAge, setIsVerifiedAge] = useState(false);
-    const [realSum , setRealSum] = useState(0);
-    const [sum , setSum] = useState(0);
+    const [realSum, setRealSum] = useState(0);
+    const [sum, setSum] = useState(0);
 
     const sumInputRef = useRef(null);
     const sumRealInputRef = useRef(null);
-
-    const commission = 0.1;
 
     const onVerifiedChange = () => {
         setIsVerifiedAge(!isVerifiedAge);
@@ -45,17 +45,12 @@ function WithdrawExchanger({
         onSubmit({ amount: sumInputRef.current.value });
     };
 
-    const sumRealOnChange = (e) => {
-        sumInputRef.current.value = (sumRealInputRef.current.value / (1 - commission)).toFixed(0);
+    const sumRealOnChange = () => {
+        sumInputRef.current.value = (sumRealInputRef.current.value / (1 - withdraw.commission)).toFixed(0);
     };
 
-    const sumOnChange = (e) => {
-        sumRealInputRef.current.value = (sumInputRef.current.value * (1 - commission)).toFixed(0);
-    };
-
-    const onFocus = (e) => {
-        sumRealInputRef.current.value = '';
-        sumInputRef.current.value = '';
+    const sumOnChange = () => {
+        sumRealInputRef.current.value = (sumInputRef.current.value * (1 - withdraw.commission)).toFixed(0);
     };
 
     return (
@@ -63,19 +58,17 @@ function WithdrawExchanger({
             <InputsContainer>
                 <WithdrawInput
                     label="Вывести"
-                    description={`Минимум ${getExchangedSum(2)}`}
+                    description={`Минимум ${getExchangedSum(withdraw.minimal)}`}
                     ref={sumInputRef}
-                    maskType="money"
-                    onChange={sumOnChange}
-                    onFocus={onFocus}
+                    onInput={sumOnChange}
+                    type="number"
                 />
                 <WithdrawInput
                     label="Получить"
-                    description={`С учетом комиссии ${commission * 100}%`}
+                    description={`С учетом комиссии ${withdraw.commission * 100}%`}
                     ref={sumRealInputRef}
-                    maskType="money"
-                    onChange={sumRealOnChange}
-                    onFocus={onFocus}
+                    type="number"
+                    onInput={sumRealOnChange}
                 />
             </InputsContainer>
             <Verify

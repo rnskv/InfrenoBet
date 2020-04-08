@@ -6,6 +6,8 @@ import User from 'src/models/User';
 import { exchange } from 'shared/configs/money';
 import accessMiddleware from 'src/middlewares/check-access';
 
+import { withdraw } from 'shared/configs/settings';
+
 const { SWIFT_PAYMENT_API_KEY } = process.env;
 
 const swift =  new SwiftPay(SWIFT_PAYMENT_API_KEY);
@@ -17,7 +19,7 @@ const createSwiftPayout = ({ amount, wallet }) => {
     return new Promise((resolve, reject) => {
         swift.createPayout({
             system_id: SWIFT_SYSTEMS.QIWI, // id системы
-            amount: amount * 0.9 / exchange.RUB, // сумма вывода
+            amount: amount * (1 - withdraw.commission) / exchange.RUB, // сумма вывода
             wallet, // кошелек для вывода
         }, function(err, response, body){
             if (err) {

@@ -12,6 +12,7 @@ import Withdraw from 'src/models/Withdraw';
 import freekassa from 'freekassa-node';
 import accessMiddleware from 'src/middlewares/check-access';
 import { USER_NOT_ENOUGH_MONEY, WITHDRAW_ERROR_DATA_QIWI, WITHDRAW_ERROR_MIN_AMOUNT } from 'shared/configs/notificationsTypes';
+import { withdraw } from 'shared/configs/settings';
 
 async function createWithdraw(ctx) {
     const { user } = ctx.state;
@@ -31,7 +32,7 @@ async function createWithdraw(ctx) {
         ctx.throw({ type: WITHDRAW_ERROR_DATA_QIWI });
         return;
     } else {
-        if (amount < 2) {
+        if (amount < withdraw.minimal) {
             ctx.throw({ type: WITHDRAW_ERROR_MIN_AMOUNT });
         }
     }
