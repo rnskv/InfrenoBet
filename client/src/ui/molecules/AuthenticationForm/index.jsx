@@ -8,12 +8,9 @@ import media from 'src/helpers/media';
 
 const StyledForm = styled.form`
     width: 500px;
-    
-    padding: 25px;
-    margin: 25px;
-    border-radius: 8px;
    
-    
+    border-radius: 8px;
+      
     ${Title} {
         margin: 0 0 25px;
     }
@@ -24,7 +21,7 @@ function AuthenticationForm({
 }) {
     return (
         <StyledForm {...props}>
-            <Title>{title}</Title>
+            { title && <Title>{title}</Title> }
             { children }
         </StyledForm>
     );

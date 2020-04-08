@@ -34,7 +34,7 @@ function LoginForm({ logIn, isLoading }) {
         <Container>
             <StyledForm
                 onSubmit={onSubmit}
-                title="Авторизация"
+                title="Войди в игру!"
             >
                 <Label>
                     <Name>Эл. Почта:</Name>

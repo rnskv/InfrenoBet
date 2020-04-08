@@ -1,10 +1,13 @@
 import PropTypes from 'prop-types';
 
 import React from 'react';
+import Svg from 'svg-inline-react';
 
 import Title from 'ui/atoms/Title';
 import Link from 'ui/atoms/Link';
 import Button from 'ui/atoms/Button';
+
+import leaderSvg from 'src/resources/svg/leader.svg';
 
 import {
     Container,
@@ -16,8 +19,11 @@ function AfterLogup({ reset }) {
         <Container>
             <Title>СПАСИБО ЗА РЕГИСТРАЦИЮ!</Title>
             <Description>
-                ВЫ УСПЕШНО ЗАРЕГИСТРИРОВАНЫ! ТЕПЕРЬ ВЫ МОЖЕТЕ АВТОРИЗИРОВАТЬСЯ И ВСТУПИТЬВ ИГРУ!
+                Вы успешно завершили процедуру регистрации.
+                Теперь вы можете авторизироваться в нашей системе используя
+                свои электронную почту и пароль.
             </Description>
+            <Svg src={leaderSvg} />
             <div>
                 <Link to="/login">
                     <Button>ПЕРЕЙТИ К АВТОРИЗАЦИИ</Button>

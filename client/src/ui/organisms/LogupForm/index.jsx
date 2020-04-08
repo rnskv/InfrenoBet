@@ -36,7 +36,7 @@ function LogupForm({ logUp, isLoading }) {
         <Container>
             <StyledForm
                 onSubmit={onSubmit}
-                title="Регистрация"
+                title="Присоединяйся!"
             >
                 <Input
                     ref={nameInput}

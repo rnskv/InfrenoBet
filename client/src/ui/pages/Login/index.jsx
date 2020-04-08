@@ -7,7 +7,12 @@ import { Redirect } from 'react-router-dom';
 import LoginForm from 'ui/organisms/LoginForm';
 import DefaultTemplate from 'ui/templates/Default';
 
+import RoomNavigation from 'ui/organisms/RoomNavigation';
+import Link from 'ui/atoms/Link';
+import Button from 'ui/atoms/Button';
+import { Alternative, StyledSection } from './styled';
 import { mapStateToProps, mapDispatchToProps } from './connect';
+
 
 function Login({
     isLoading, error, token, logIn,
@@ -15,11 +20,25 @@ function Login({
     if (token) return <Redirect to="/" />;
     return (
         <DefaultTemplate>
-            <LoginForm
-                logIn={logIn}
-                error={error}
-                isLoading={isLoading}
+            <RoomNavigation
+                url="/login"
+                title="Авторизация"
             />
+            <StyledSection>
+                <LoginForm
+                    logIn={logIn}
+                    error={error}
+                    isLoading={isLoading}
+                />
+
+                <Alternative>
+                    <span>
+                        Если вы еще не зарегистрировались в нашей системе,
+                        то вы можете сделать это на странице регистрации.
+                    </span>
+                    <Link to="/logup"><Button type="transparent">Зарегистрироваться</Button></Link>
+                </Alternative>
+            </StyledSection>
         </DefaultTemplate>
     );
 }

@@ -11,28 +11,47 @@ import LogupForm from 'ui/organisms/LogupForm';
 import AfterLogup from 'ui/organisms/AfterLogup';
 import DefaultTemplate from 'ui/templates/Default';
 
+import RoomNavigation from 'ui/organisms/RoomNavigation';
+import classicLogoSvg from 'src/resources/svg/classic-logo.svg';
+import Section from 'ui/atoms/Section';
+import Link from 'ui/atoms/Link';
+import Button from 'ui/atoms/Button';
 import { mapStateToProps, mapDispatchToProps } from './connect';
+
+import {
+    Alternative,
+    StyledSection,
+} from './styled';
 
 function Logup({
     isLoading, isRegister, error, token, logUp, reset,
 }) {
-    // if (token) return <Redirect to="/" />;
-
     return (
         <DefaultTemplate>
-            { isRegister
-                ? (
-                    <AfterLogup
-                        reset={reset}
-                    />
-                )
-                : (
-                    <LogupForm
-                        logUp={logUp}
-                        isLoading={isLoading}
-                    />
-                )}
+            <RoomNavigation
+                url="/logup"
+                title="Регистрация"
+            />
+            <StyledSection>
+                {isRegister
+                    ? <AfterLogup reset={reset} />
+                    : (
+                        <>
+                            <LogupForm
+                                logUp={logUp}
+                                isLoading={isLoading}
+                            />
 
+                            <Alternative>
+                                <span>
+                                Если вы уже зарегистрированы в нашей системе,
+                                то на сайт можно зайти используя уже существующие данные.
+                                </span>
+                                <Link to="/login"><Button type="transparent">Войти</Button></Link>
+                            </Alternative>
+                        </>
+                    )}
+            </StyledSection>
         </DefaultTemplate>
     );
 }
