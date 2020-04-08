@@ -60,6 +60,7 @@ function renderFullPage(html, preloadedState, styleTags) {
             <meta http-equiv="X-UA-Compatible" content="ie=edge">
             <title>INFERNO BET - онлайн лотерея</title>
             <meta name="verification" content="cf0bb3d99b3a1dba77e550d078a322" />
+            <meta name="swiftpay-verification" content="bf4a552b8fef2160a0b001ca4b7f11e3" />
             ${styleTags}
         </head>
         <body>
