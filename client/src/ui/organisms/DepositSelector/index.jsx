@@ -7,6 +7,7 @@ import { getExchangedSum } from 'src/helpers/system';
 import { useSelector } from 'react-redux';
 
 import DepositCreditCards from 'ui/organisms/DepositCreditCards';
+import DepositSteamItems from 'ui/organisms/DepositSteamItems';
 
 import Sidebar from 'ui/organisms/Sidebar';
 import {
@@ -16,6 +17,7 @@ import {
 
 const TAB_COMPONENT = {
     FREE_KASSA: DepositCreditCards,
+    STEAM_ITEMS: DepositSteamItems,
 };
 
 function DepositSelector({

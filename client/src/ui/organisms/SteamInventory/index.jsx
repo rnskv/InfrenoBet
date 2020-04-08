@@ -19,7 +19,7 @@ import {
     ItemsContainer,
 } from './styled';
 
-function SteamInventory({ inactivityItems, isNeedDrawEmptyCells }) {
+function SteamInventory({ isPopup, isNeedDrawEmptyCells }) {
     const { isVisible } = useSteamInventorySelector();
     const [isLoading, setIsLoading] = useState(false);
     const [inventoryIsLoading, setInventoryIsLoading] = useState(false);
@@ -31,14 +31,14 @@ function SteamInventory({ inactivityItems, isNeedDrawEmptyCells }) {
     const [selectedItems, setSelectedItems] = useState([]);
 
     useEffect(() => {
-        if (!isVisible) return;
+        if (!isVisible && isPopup) return;
         setInventoryIsLoading(true);
         infernoClient.modules.api.services.user.execute('getInventory').then((items) => {
             setItems(items);
         }).finally(() => {
             setInventoryIsLoading(false);
         });
-    }, [isVisible]);
+    }, isVisible);
 
     useEffect(() => {
         setSelectedItems([]);
@@ -71,50 +71,49 @@ function SteamInventory({ inactivityItems, isNeedDrawEmptyCells }) {
     };
 
     return (
-        <Popup isVisible={isVisible} close={popupsActions.closeSteamInventory}>
-            <StyledTitle>Выберите предметы из вашего STEAM инвентаря</StyledTitle>
-            <Container>
-                <EmptyMessage hidden={!!items.length}>
-                    К сожалению, подходящие для игры предметы не обнаружены в вашем инвентаре
-                </EmptyMessage>
+        <Container>
+            <EmptyMessage hidden={!!items.length}>
+                К сожалению, подходящие для игры предметы не обнаружены в вашем инвентаре
+            </EmptyMessage>
 
-                <ItemsContainer>
-                    <StyledBetItems
-                        onItemClick={onItemClick}
-                        items={items}
-                        useExtendedView
-                        selectedItems={selectedItems}
-                        isNeedDrawEmptyCells={isNeedDrawEmptyCells}
-                        isLoading={inventoryIsLoading}
-                    />
-                </ItemsContainer>
+            <ItemsContainer>
+                <StyledBetItems
+                    onItemClick={onItemClick}
+                    items={items}
+                    useExtendedView
+                    selectedItems={selectedItems}
+                    isNeedDrawEmptyCells={isNeedDrawEmptyCells}
+                    isLoading={inventoryIsLoading}
+                />
+            </ItemsContainer>
 
-                <Button
-                    onClick={requestWithdrawItem}
-                    disabled={!selectedItems.length}
-                    isLoading={isLoading}
-                >
-                    Пополнить инвентарь
-                </Button>
-                <Description>
-                    Наша система отправит вам предложение обмена с выбранными вещами.
-                </Description>
-                <Description>
-                    <b>ВНИМАНИЕ!</b>
-                    { ' Перед тем как принять предложения обмена, обязательно обратите внимание на проверочный код. Он должен совпадать с кодом из уведомления.' }
-                </Description>
-            </Container>
-        </Popup>
+            <Button
+                onClick={requestWithdrawItem}
+                disabled={!selectedItems.length}
+                isLoading={isLoading}
+            >
+                Пополнить инвентарь
+            </Button>
+            <Description>
+                Наша система отправит вам предложение обмена с выбранными вещами.
+            </Description>
+            <Description>
+                <b>ВНИМАНИЕ!</b>
+                { ' Перед тем как принять предложения обмена, обязательно обратите внимание на проверочный код. Он должен совпадать с кодом из уведомления.' }
+            </Description>
+        </Container>
     );
 }
 
 SteamInventory.propTypes = {
     inactivityItems: PropTypes.array,
     isNeedDrawEmptyCells: PropTypes.bool,
+    isPopup: PropTypes.bool,
 };
 
 SteamInventory.defaultProps = {
     isNeedDrawEmptyCells: true,
+    isPopup: true,
 };
 
 export default SteamInventory;

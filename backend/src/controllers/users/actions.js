@@ -85,7 +85,7 @@ const getSteamInventoryHandler = async (ctx) => {
             items: userItems,
         };
 
-        ctx.body = userItems;
+        ctx.body = userItems.sort((a, b) => a.parent.cost < b.parent.cost ? 1 : -1);
     } catch(err) {
         console.log('Не удалось получить стоимость инвентаря', err);
         ctx.throw({ type: INTERNAL_SERVER_ERROR })

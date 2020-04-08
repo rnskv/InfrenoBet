@@ -13,7 +13,7 @@ import BetMaker from 'ui/organisms/BetMaker';
 import BetsContainer from 'ui/organisms/BetsContainer';
 import RoomNavigation from 'ui/organisms/RoomNavigation';
 import Inventory from 'ui/organisms/Inventory';
-import SteamInventory from 'ui/organisms/SteamInventory';
+import SteamInventoryPopup from 'ui/organisms/SteamInventoryPopup';
 // @todo Все экшены брать из контекста App (примерно так)
 import * as userActions from 'src/redux/user/actions';
 import * as gameActions from 'src/redux/game/actions';
@@ -94,7 +94,7 @@ function Lottery({
             <GameBeginFooter
                 hash={hash}
             />
-            <SteamInventory/>
+            <SteamInventoryPopup/>
 
         </DefaultTemplate>
     );
