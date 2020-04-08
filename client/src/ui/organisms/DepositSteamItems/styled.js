@@ -5,6 +5,8 @@ export const Container = styled.div`
   padding: 25px;
   width: 100%;
   box-sizing: border-box;
+  position: relative;
+  height: 100%;
 `;
 
 export const StyledButton = styled(Button)`

@@ -27,12 +27,14 @@ export function mapDispatchToProps(dispatch) {
 
 // @todo почистить, создать хелперы, вводить потихоньку reselect
 export function mapStateToProps(state) {
+    console.log(state);
     return {
         token: state.user.token,
         time: state.game.time,
         bets: state.game.bets,
         hash: state.game.hash,
         secret: state.game.secret,
+        id: state.game.id,
         betsQueueLength: state.game.betsQueueLength,
         isWaitingLastBets: state.game.isWaitingLastBets,
         users: state.game.users,

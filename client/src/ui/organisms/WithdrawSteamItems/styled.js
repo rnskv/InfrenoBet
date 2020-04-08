@@ -13,6 +13,7 @@ export const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
 `;
 
 export const StyledButton = styled(Button)`
@@ -72,11 +73,12 @@ export const Wrapper = styled.div`
      80% { transform: rotateZ(180deg); rotateX(0); }
      100% { transform: rotateZ(180deg) rotateX(180deg); }
     }
-
+    
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 25px 0;
+    position: relative;
     
     svg {
         width: 40px;

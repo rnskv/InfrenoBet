@@ -21,56 +21,57 @@ function BetItems({
     isLoading,
     hidden,
     viewport,
-    size
+    size,
 }) {
-    console.log('1', size)
     return (
-        <Scrollbars autoHeight autoHeightMax="100%" style={{...viewport}} hidden={hidden}>
-            <Container style={style} className={className}>
-                <StyledLoader hidden={!isLoading} />
-                {
-                    items.map((item, index) => {
-                        function onClick() {
-                            if (onItemClick) {
-                                onItemClick({ item, index });
+        <>
+            <StyledLoader hidden={!isLoading} />
+            <Scrollbars autoHeight autoHeightMax="100%" style={{ ...viewport }} hidden={hidden}>
+                <Container style={style} className={className}>
+                    {
+                        items.map((item, index) => {
+                            function onClick() {
+                                if (onItemClick) {
+                                    onItemClick({ item, index });
+                                }
                             }
-                        }
 
-                        if (!item) return null;
-                        console.log('BET ITEMS', size)
-                        return (
-                            <StyledBetItem
-                                key={`${item._id}-${index}`}
-                                onClick={onClick}
-                                size={size}
-                                isExtendedView={useExtendedView}
-                                cost={item.parent.cost}
-                                image={item.parent.image}
-                                isBlocked={item.parent.cost < 0}
-                                isInactivity={
-                                    !!inactivityItems.find((i) => i.assetId === item.assetId)
+                            if (!item) return null;
+                            console.log('BET ITEMS', size);
+                            return (
+                                <StyledBetItem
+                                    key={`${item._id}-${index}`}
+                                    onClick={onClick}
+                                    size={size}
+                                    isExtendedView={useExtendedView}
+                                    cost={item.parent.cost}
+                                    image={item.parent.image}
+                                    isBlocked={item.parent.cost < 0}
+                                    isInactivity={
+                                        !!inactivityItems.find((i) => i.assetId === item.assetId)
                                     || checkInactivityItem && checkInactivityItem(item)
-                                }
-                                isSelected={
-                                    !!selectedItems.find((i) => i.assetId === item.assetId)
-                                }
-                            />
-                        );
-                    })
-                }
-                {
-                    isNeedDrawEmptyCells && items.length < emptyCellsCount
-                        ? [...Array(emptyCellsCount - items.length).keys()].map((value, index) => (
-                            <StyledBetItem
-                                style={{ animation: 'none' }}
-                                key={`${value}`}
-                                size={size}
-                            />
-                        )) : null
+                                    }
+                                    isSelected={
+                                        !!selectedItems.find((i) => i.assetId === item.assetId)
+                                    }
+                                />
+                            );
+                        })
+                    }
+                    {
+                        isNeedDrawEmptyCells && items.length < emptyCellsCount
+                            ? [...Array(emptyCellsCount - items.length).keys()].map((value, index) => (
+                                <StyledBetItem
+                                    style={{ animation: 'none' }}
+                                    key={`${value}`}
+                                    size={size}
+                                />
+                            )) : null
 
-                }
-            </Container>
-        </Scrollbars>
+                    }
+                </Container>
+            </Scrollbars>
+        </>
     );
 }
 

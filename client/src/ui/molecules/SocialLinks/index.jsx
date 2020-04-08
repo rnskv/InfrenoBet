@@ -49,6 +49,7 @@ function SocialLinks() {
                 <h3>Привязать социальные аккаунты</h3>
                 <SteamSocialButton
                     onClick={openAuthSteamWindow}
+                    disabled={profile.steamId}
                 >
                     Steam
                 </SteamSocialButton>

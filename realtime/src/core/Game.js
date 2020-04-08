@@ -71,6 +71,7 @@ class Game {
 
     get state() {
         return {
+            id: this._id,
             bets: this.bets,
             hash: this.hash,
             time: this.time,

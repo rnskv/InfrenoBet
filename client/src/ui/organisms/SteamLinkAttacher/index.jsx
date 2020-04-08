@@ -21,7 +21,7 @@ function SteamLinkAttacher({ isVisible }) {
         <Container>
             <Svg src={SettingSvg} />
             <p>
-                Для ставок предметами STEAM вам необходимо прикрепить ваш STEAM аккаунт к профилю INFERNO.BET. И добавить трейд-ссылку в настройках профиля
+                Для доступа к предметам STEAM вам необходимо прикрепить ваш STEAM аккаунт к профилю INFERNO.BET, а так же добавить трейд-ссылку в настройках профиля
             </p>
 
             <Link to="/settings">

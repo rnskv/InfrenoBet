@@ -19,7 +19,7 @@ export const Container = styled.div`
     padding: 15px;
     box-sizing: border-box;
     text-align: center;
-    
+    z-index: 2;
     p {
       font-size: 12px;
       margin: 0 0 15px 0;

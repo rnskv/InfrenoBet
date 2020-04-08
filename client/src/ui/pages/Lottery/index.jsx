@@ -23,7 +23,7 @@ import { Container } from 'ui/organisms/BetMaker/styled';
 import { usePopupsActions } from 'src/redux/user/hooks/actions';
 
 function Lottery({
-
+    id,
     time,
     hash,
     secret,
@@ -54,6 +54,7 @@ function Lottery({
                 title="Лотерея"
             />
             <GameInfo
+                id={id}
                 time={time}
                 bets={bets}
                 bank={bank}

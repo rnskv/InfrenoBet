@@ -13,10 +13,12 @@ import { getExchangedSum } from 'src/helpers/system';
 
 import { useSelector } from 'react-redux';
 
-import { useActions } from 'src/helpers/hooks';
+import { useActions, useAuth } from 'src/helpers/hooks';
 import { infernoClient } from 'src/index';
 
 import SteamInventory from 'ui/organisms/SteamInventory';
+import SteamLinkAttacher from 'ui/organisms/SteamLinkAttacher';
+import { useProfile } from 'src/redux/user/hooks/selectors';
 import {
     Container,
     InputContainer,
@@ -28,10 +30,18 @@ const { changeValue } = infernoClient.modules.store.actions.cashier;
 
 
 function DepositSteamItems() {
+    const profile = useProfile();
+    const isAuth = useAuth();
+    const isSteamUser = !profile.steamId || !profile.steamTradeUrl;
     return (
         <Container>
-            <NotAuthPlaceHolder isVisible={false} />
-            <SteamInventory isPopup={false} />
+            <NotAuthPlaceHolder isVisible={!isAuth} />
+            {
+                isSteamUser
+                    ? <SteamLinkAttacher isVisible={isSteamUser} />
+                    : <SteamInventory isPopup={false} />
+            }
+
         </Container>
     );
 }

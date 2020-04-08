@@ -25,7 +25,7 @@ function GameInfo({
 }) {
     return (
         <Container>
-            <Title>{`Игра #${id}`}</Title>
+            <Title>{`ID игры: ${id}`}</Title>
             <Roulette
                 bets={bets}
                 bank={bank}
@@ -76,13 +76,13 @@ function GameInfo({
 }
 
 GameInfo.propTypes = {
-    id: PropTypes.number,
+    id: PropTypes.string,
     openBetMaker: PropTypes.func.isRequired,
 };
 
 
 GameInfo.defaultProps = {
-    id: 100500,
+    id: 'unknown',
 };
 
 export default GameInfo;

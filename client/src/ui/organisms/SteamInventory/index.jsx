@@ -72,7 +72,7 @@ function SteamInventory({ isPopup, isNeedDrawEmptyCells }) {
 
     return (
         <Container>
-            <EmptyMessage hidden={!!items.length}>
+            <EmptyMessage hidden={!!items.length || inventoryIsLoading}>
                 К сожалению, подходящие для игры предметы не обнаружены в вашем инвентаре
             </EmptyMessage>
 

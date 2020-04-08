@@ -19,6 +19,7 @@ import { useActions } from 'src/helpers/hooks';
 import Inventory from 'ui/organisms/Inventory';
 import { infernoClient } from 'src/index';
 import BetItems from 'ui/molecules/BetItems';
+import SteamLinkAttacher from 'ui/organisms/SteamLinkAttacher';
 import chooseSvg from 'src/resources/svg/choose.svg';
 
 import { useNotificationActions, userProfileActions } from 'src/redux/user/hooks/actions';
@@ -36,12 +37,14 @@ import {
     StyledPopup,
     Wrapper
 } from './styled';
+import { useProfile } from 'src/redux/user/hooks/selectors';
 
 const { changeValue } = infernoClient.modules.store.actions.cashier;
 const { createQiwiWithdraw } = infernoClient.modules.store.domains.cashier;
 
 
 function WithdrawSteamItems() {
+    const profile = useProfile();
     const notificationsActions = useNotificationActions();
     const profileActions = userProfileActions();
 
@@ -80,7 +83,9 @@ function WithdrawSteamItems() {
         <div>
             <StyledTitle>Вывод предметов в STEAM</StyledTitle>
             <Container>
+                <SteamLinkAttacher isVisible={!profile.steamId || !profile.steamTradeUrl} />
                 <Wrapper>
+
                     <InventoryContainer>
                         <ItemsViewport>
                             <StyledInventory
