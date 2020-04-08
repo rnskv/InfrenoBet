@@ -5,6 +5,7 @@ const getClearState = () => ({
     notifications: [],
     isOpenedLoginPopup: false,
     isOpenedSteamInventory: false,
+    isRegister: false,
 });
 
 const initialState = {
