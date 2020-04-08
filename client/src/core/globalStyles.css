@@ -1,6 +1,8 @@
 html, body {
     margin: 0;
     padding: 0;
-    background: url('https://d2lomvz2jrw9ac.cloudfront.net/common/backgrounds/csgo.jpg') var(--color-darkblue-active);
+    background: url('/dist/resources/images/currency.jpg') var(--color-darkblue-active);
     font-family: Roboto, Arial, sans-serif;
+    background-position: top;
+    background-attachment: fixed;
 }
