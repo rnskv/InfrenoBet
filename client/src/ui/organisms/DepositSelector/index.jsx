@@ -29,6 +29,7 @@ function DepositSelector({
     if (!Tab) {
         return (
             <Container>
+                <NotAuthPlaceHolder isVisible={!isAuth} />
                 <NotFound>Платежный метод не доступен</NotFound>
             </Container>
         );

@@ -5,6 +5,7 @@ import React, { useRef } from 'react';
 import Button from 'ui/atoms/Button';
 import Input from 'ui/atoms/Input';
 import Link from 'ui/atoms/Link';
+import Svg from 'svg-inline-react';
 
 import {
     Container,
@@ -15,12 +16,12 @@ import {
 } from './styled';
 import { NavigationIcon } from '../Navigation/styled';
 
-function RoomNavigation({ svgId, title, url }) {
+function RoomNavigation({ svgId, svg, title, url }) {
     return (
         <Link to={url}>
             <Container>
                 <Logo>
-                    {svgId && (
+                    {svg && <Svg src={svg}/> || svgId && (
                         <svg>
                             <use xlinkHref={`#${svgId}`} />
                         </svg>

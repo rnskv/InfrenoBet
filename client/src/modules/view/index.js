@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom';
 import Module from 'src/core/Module';
 import IO from 'socket.io-client';
 import { BrowserRouter } from 'react-router-dom';
-// import { createBrowserHistory } from 'history';
 
 class View extends Module {
     constructor({ ...params }) {

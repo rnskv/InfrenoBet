@@ -13,11 +13,12 @@ export const Container = styled.div`
     cursor: pointer;
     
     background-color: ${({ isActive }) => (isActive ? 'var(--color-grey-800) !important' : 'var(--color-grey-500)')};
+    border-right: ${({ isActive }) => (isActive ? '1px solid var(--color-yellow)' : '1px solid transparent')};
 
     &:hover {
         background-color: var(--color-grey-600);
     }
-   
+    
     svg {
         width: 30px;
         height: 30px;

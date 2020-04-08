@@ -21,6 +21,7 @@ import * as betMakerActions from 'src/redux/betMaker/actions';
 import { mapStateToProps, mapDispatchToProps } from './connect';
 import { Container } from 'ui/organisms/BetMaker/styled';
 import { usePopupsActions } from 'src/redux/user/hooks/actions';
+import classicLogoSvg from 'src/resources/svg/classic-logo.svg';
 
 function Lottery({
     id,
@@ -50,6 +51,7 @@ function Lottery({
         <DefaultTemplate>
             <RoomNavigation
                 svgId="classic-logo"
+                svg={classicLogoSvg}
                 url="/game/lottery"
                 title="Лотерея"
             />

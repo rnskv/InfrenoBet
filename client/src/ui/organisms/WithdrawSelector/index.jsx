@@ -32,6 +32,7 @@ function WithdrawSelector({
     if (activeWithdrawTabName === '') {
         return (
             <Container>
+                <NotAuthPlaceHolder isVisible={!isAuth} />
                 <NotFound>
                     <SVG src={chooseSvg} />
                     <span>Выберите платежную систему</span>
