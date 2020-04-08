@@ -58,6 +58,7 @@
     "mongodb-client-encryption": "^1.0.1",
     "nodemon": "^2.0.2",
     "passport-vkontakte-token": "^2.1.0",
+    "swiftpay": "^1.0.2",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10",
     "webpack-node-externals": "^1.7.2"

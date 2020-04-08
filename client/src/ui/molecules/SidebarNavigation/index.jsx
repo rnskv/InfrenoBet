@@ -12,6 +12,7 @@ import { useSidebarActions } from 'src/redux/user/hooks/actions';
 import { useSidebar } from 'src/redux/user/hooks/selectors';
 
 import notifications from 'shared/configs/notifications';
+import { useAuth } from 'src/helpers/hooks';
 import {
     Container,
     Icon,
@@ -22,12 +23,14 @@ function SidebarNavigation({ className, style }) {
     const data = useSidebar();
     const actions = useSidebarActions();
     const history = useHistory();
+    const isAuth = useAuth();
 
     const TABS = [
         {
             name: 'CHAT',
             svg: chatSvg,
             props: {},
+            onlyAuth: true,
         },
         {
             name: 'NOTIFICATIONS',
@@ -46,16 +49,19 @@ function SidebarNavigation({ className, style }) {
             name: 'SETTINGS',
             svg: settingsSvg,
             props: {},
+            onlyAuth: true,
         },
         {
             name: 'WITHDRAW',
             svg: withdrawSvg,
             props: {},
+            onlyAuth: true,
         },
         {
             name: 'SUPPORT',
             svg: supportSvg,
             props: {},
+            onlyAuth: true,
         },
     ];
 
@@ -99,6 +105,7 @@ function SidebarNavigation({ className, style }) {
                         }}
                         isActive={tab.name === data.activeTabName}
                         name={tab.name}
+                        hidden={tab.onlyAuth && !isAuth}
                         {...tab.props}
                     >
                         <Svg src={tab.svg} />

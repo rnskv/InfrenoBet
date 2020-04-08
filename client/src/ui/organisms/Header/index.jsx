@@ -32,7 +32,7 @@ function Header({
                     <use xlinkHref="#currency-logo" />
                 </svg>
             </Logo>
-            <Group>
+            <Group hidden={!isAuth}>
                 <Balance value={profile.balance} />
                 <Link to="/deposit"><Button type="transparent">Пополнить</Button></Link>
                 <Link to="/withdraw"><Button type="transparent">Вывести</Button></Link>

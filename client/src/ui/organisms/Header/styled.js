@@ -20,6 +20,10 @@ export const LoginButton = styled(Button)`
 
 export const Group = styled.div`
   display: flex;
+  
+  &[hidden] {
+    display: none;
+  }
 `;
 
 export const Container = styled.div`

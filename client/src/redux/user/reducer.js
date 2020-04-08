@@ -21,7 +21,7 @@ const initialState = {
             isOpened: true,
         },
     },
-    activeSidebarTabName: 'CHAT',
+    activeSidebarTabName: 'NOTIFICATIONS',
     ...getClearState(),
 };
 
