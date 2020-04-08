@@ -17,6 +17,9 @@ import Deposit from 'ui/pages/Deposit';
 import Withdraw from 'ui/pages/Withdraw';
 import Settings from 'ui/pages/Settings';
 
+import Withdraws from 'ui/pages/Admin/Withdraws';
+
+
 import Lottery from 'ui/pages/Lottery';
 
 function App({ store }) {
@@ -46,6 +49,11 @@ function App({ store }) {
                 <Route path="/game/lottery">
                     <Lottery />
                 </Route>
+
+                <Route path="/admin/withdraws">
+                    <Withdraws />
+                </Route>
+
                 <Route path="/close" exact>
                     <div style={{
                         width: '100vw',

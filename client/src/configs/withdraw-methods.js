@@ -13,9 +13,9 @@ export default [
         title: 'Предметы Steam',
         svg: SteamSvg,
     },
-    {
-        name: 'CREDIT_CARDS',
-        title: 'Visa/MasterCard',
-        svg: CreditCardsSvg,
-    },
+    // {
+    //     name: 'CREDIT_CARDS',
+    //     title: 'Visa/MasterCard',
+    //     svg: CreditCardsSvg,
+    // },
 ];

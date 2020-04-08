@@ -42,7 +42,6 @@ async function getMyDepositsHandler(ctx) {
     ctx.body = await Deposit.getByUserId(ctx.state.user._id);
 }
 
-
 async function getUserDepositsHandler(ctx) {
     ctx.body = await Deposit.getByUserId(ctx.params.id);
 }

@@ -2,6 +2,7 @@ import crypto from 'crypto';
 import moment from 'moment-timezone';
 import Cookies from 'js-cookie';
 import { infernoClient } from 'src/index';
+import { exchange } from 'shared/configs/money';
 
 export function getTimeFromNow(date) {
     moment.locale('ru');
@@ -48,12 +49,6 @@ export function getFormattedTime(time, { minutes = true, seconds = true } = {}) 
 }
 
 const currency = 'RUB';
-
-const exchange = {
-    USD: 1,
-    EUR: 1.07,
-    RUB: 0.0125,
-};
 
 const icon = {
     USD: '$',

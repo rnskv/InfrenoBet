@@ -21,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/rnskv/lottery/issues"
   },
-  "homepage": "https://github.com/rnskv/lottery#readme"
+  "homepage": "https://github.com/rnskv/lottery#readme",
+  "dependencies": {
+    "swiftpay": "^1.0.2"
+  }
 }

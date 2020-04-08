@@ -36,12 +36,22 @@ Withdraw.create = async (data) => {
     return new Withdraw(data).save()
 };
 
-Withdraw.update = async (id, data) => {
-    // return new fkPayment(data).save()
+Withdraw.updateById = async (id, data) => {
+    return await Withdraw.update({ _id: mongoose.Types.ObjectId(id)}, data);
+};
+
+Withdraw.getById = async (id) => {
+    return await Withdraw.findOne({ _id: mongoose.Types.ObjectId(id)});
 };
 
 Withdraw.getAll = async () => {
     return await Withdraw.find()
+        .sort({ createDate: -1 })
+        .populate('user')
+};
+
+Withdraw.getByParams = async (params) => {
+    return await Withdraw.find(params)
         .sort({ createDate: -1 })
         .populate('user')
 };

@@ -41,10 +41,20 @@ async function createWithdraw(ctx) {
         return;
     }
 
+    //@todo ужас
+    let formattedPhone = phone
+        .split(' ')
+        .join('')
+        .split(')')
+        .join('')
+        .split('(')
+        .join('');
+
+
     const createdWithdraw = await Withdraw.create({
         user: user._id,
         amount: amount,
-        destination: phone,
+        destination: formattedPhone,
         system: 'QIWI',
         status: 'CREATED',
     });
@@ -62,8 +72,13 @@ function getWithdraw(ctx) {
     ctx.body = 'ok'
 }
 
-function getAllWithdraws(ctx) {
-    ctx.body = 'ok'
+async function getAllWithdraws(ctx) {
+
+    const withdraws = await Withdraw.getByParams({
+        status: 'CREATED'
+    });
+
+    ctx.body = withdraws
 }
 
 
@@ -111,5 +126,5 @@ export const getAll = new Action({
     method: 'get',
     url: '/',
     handler: getAllWithdraws,
-    middlewares: [passport.authenticate('jwt'), accessMiddleware(100)]
+    // middlewares: [passport.authenticate('jwt'), accessMiddleware(100)]
 });

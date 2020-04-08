@@ -24,6 +24,10 @@ export default ({ app, onError }) => {
             url: '/my',
             method: 'get',
         }),
+        createSwiftPayout: new Request({
+            url: '/swift/payout',
+            method: 'post',
+        }),
     });
 
     return withdraw;
