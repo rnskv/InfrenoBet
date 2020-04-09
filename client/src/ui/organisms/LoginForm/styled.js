@@ -7,6 +7,7 @@ import AuthenticationForm from 'ui/molecules/AuthenticationForm';
 export const Container = styled.div`
     display: flex;
     justify-content: center;
+    width: 500px;
 `;
 
 export const StyledButton = styled(Button)`
