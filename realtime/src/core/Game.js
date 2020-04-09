@@ -1,7 +1,7 @@
 import Roulette from 'src/core/Roulette';
 
 import { gameApi, betsApi } from 'src/modules/api';
-import { getBetsTotalValue } from  'src/helpers/game';
+import { getBetsTotalValue, getGameBank } from  'shared/helpers/game';
 import config from 'src/config';
 import { BET_ACCEPTED } from 'shared/configs/notificationsTypes';
 
@@ -48,25 +48,7 @@ class Game {
     }
 
     get bank() {
-        const total = getBetsTotalValue(this.bets);
-
-        const users = {};
-
-        this.bets.forEach(bet => {
-            //@todo Опасный участок, если удалить пользователя а транзакцию оставить - все ебанется
-            const userId = bet.user._id;
-
-            if (!!users[userId]) {
-                users[userId] += bet.item.parent.cost
-            } else {
-                users[userId] = bet.item.parent.cost;
-            }
-        });
-
-        return {
-            total,
-            users
-        };
+        return getGameBank(this.bets);
     }
 
     get state() {

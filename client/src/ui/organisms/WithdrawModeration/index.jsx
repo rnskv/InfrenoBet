@@ -6,34 +6,17 @@ import { useSelector } from 'react-redux';
 import { infernoClient } from 'src/index';
 import Button from 'ui/atoms/Button';
 import Table from 'ui/atoms/Table';
-
+import Actions from 'ui/organisms/WithdrawModeration/Actions';
 import { getTimeFromNow, getExchangedSum } from 'src/helpers/system';
 import { useAuth } from 'src/helpers/hooks';
 
 import withdrawTypes from 'shared/configs/withdrawTypes';
 
+import { useNotificationActions } from 'src/redux/user/hooks/actions';
 import {
     Container,
     StyledLoader,
 } from './styled';
-
-function renderActions(data) {
-    const { withdraw } = infernoClient.modules.api.services;
-
-    const onClick = async () => {
-        await withdraw.execute('createSwiftPayout', {
-            body: {
-                ...data,
-            },
-        });
-    };
-
-    return (
-        <Button onClick={onClick}>
-            { `Отправить $${data.amount}`}
-        </Button>
-    );
-}
 
 function WithdrawModeration() {
     const { withdraw } = infernoClient.modules.api.services;
@@ -41,14 +24,18 @@ function WithdrawModeration() {
 
     const [history, setHistory] = useState(null);
     const isLoading = useSelector((state) => state.cashier.isLoading);
+    const notificationsActions = useNotificationActions();
 
     useEffect(() => {
-        async function fetchData() {
-            const response = await withdraw.execute('getAll');
+        withdraw.execute('getAll').then((response) => {
             setHistory(response);
-        }
+        })
+            .catch((err) => {
+                console.log(err);
+            })
+            .finally(() => {
 
-        fetchData();
+            });
     }, [isLoading]);
 
     const heads = [
@@ -82,6 +69,11 @@ function WithdrawModeration() {
         }
     };
 
+    const removeRowById = (id) => {
+        setHistory(history.filter(_h => _h._id !== id))
+    };
+
+
     const getRowItemValue = (row, key) => {
         if (key === 'createDate') {
             return getTimeFromNow(row[key]);
@@ -103,7 +95,7 @@ function WithdrawModeration() {
         }
 
         if (key === 'actions') {
-            return renderActions(row);
+            return <Actions {...row} removeRowById={removeRowById}/>;
         }
 
         return row[key];

@@ -70,7 +70,9 @@ const createPayoutHandler = async (ctx) => {
         ctx.throw({ type: err.type })
     }
 
-    ctx.body = 'ok';
+    ctx.body = {
+        ok: true
+    };
 };
 
 

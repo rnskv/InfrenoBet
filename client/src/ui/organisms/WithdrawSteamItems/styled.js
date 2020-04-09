@@ -51,7 +51,7 @@ export const InventoryContainer = styled.div`
 `;
 
 export const ItemsViewport = styled.div`
-  height: 220px;
+  height: 215px;
   position: relative;
 `;
 

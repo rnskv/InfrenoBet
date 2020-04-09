@@ -4,7 +4,7 @@ import Loader from 'ui/atoms/Loader';
 import media from 'src/helpers/media';
 
 export const StyledBetItem = styled(BetItem)`
-    margin: 10px;
+    margin: 5px;
     overflow: hidden;
 `;
 
@@ -13,7 +13,6 @@ export const Container = styled.div`
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    align-items: center;
     position: relative;
     height: 100%;
     box-sizing: border-box;

@@ -31,7 +31,9 @@ import {
     EMPTY_ITEM_COST,
     USER_NOT_REGISTER,
     FORBIDDEN_TAKE_ITEMS,
-    GAME_NOT_FOUND
+    GAME_NOT_FOUND,
+    USER_PAYMENT_SUCCESS,
+    USER_PAYMENT_ERROR
 } from './notificationsTypes';
 
 export default {
@@ -199,6 +201,16 @@ export default {
         type: 'ERROR',
         title: 'Система',
         text: 'Игра не найдена.',
+    },
+    [USER_PAYMENT_SUCCESS]: {
+        type: 'SUCCESS',
+        title: 'Платежная система',
+        text: 'Вывод средств пользователю звершен.',
+    },
+    [USER_PAYMENT_ERROR]: {
+        type: 'ERROR',
+        title: 'Платежная система',
+        text: 'Произошла ошибка при выводе средств. Подробная ифнормация в консоли разработчика.',
     },
     undefined: {
         type: 'ERROR',

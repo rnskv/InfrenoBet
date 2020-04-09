@@ -9,12 +9,13 @@ const SIZES = {
       
       span {
         margin-top: 10px;
-        font-size: 18px;
+        font-size: 16px;
+        font-weight: 700;
       }
     `,
     small: `
-        width: 45px;
-        min-height: 25px;
+        width: 55px;
+        min-height: 35px;
         
         span {
             position: absolute;

@@ -16,9 +16,10 @@ import Logup from 'ui/pages/Logup';
 import Deposit from 'ui/pages/Deposit';
 import Withdraw from 'ui/pages/Withdraw';
 import Settings from 'ui/pages/Settings';
+import GamesHistory from 'ui/pages/GamesHistory';
 
 import Withdraws from 'ui/pages/Admin/Withdraws';
-
+import System from 'ui/pages/Admin/System';
 
 import Lottery from 'ui/pages/Lottery';
 
@@ -46,12 +47,18 @@ function App({ store }) {
                 <Route path="/settings">
                     <Settings />
                 </Route>
-                <Route path="/game/lottery">
+                <Route path="/game/lottery" exact>
                     <Lottery />
                 </Route>
-
+                <Route path="/game/lottery/history" exact>
+                    <GamesHistory />
+                </Route>
                 <Route path="/admin/withdraws">
                     <Withdraws />
+                </Route>
+
+                <Route path="/admin/system">
+                    <System />
                 </Route>
 
                 <Route path="/close" exact>

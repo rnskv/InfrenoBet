@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import privatePaths from 'mongoose-private-paths';
 import Bet from 'src/models/Bet';
+import User from './User';
 
 const { Schema } = mongoose;
 
@@ -22,6 +23,10 @@ const gameSchema = new Schema({
         type: String,
         default: 'CREATED' //IN_PROCCESS, GET_WINNER, FINISHED
     },
+    winner: {
+        type: mongoose.Types.ObjectId,
+        ref: 'user',
+    },
     createDate: {
         type: Date,
         default: Date.now(),
@@ -29,6 +34,28 @@ const gameSchema = new Schema({
 });
 
 const Game = mongoose.model('game', gameSchema);
+
+Game.getByParams = async (params = {}) => {
+    return await Game.find(params)
+        .populate({
+            path: 'bets',
+            model: 'bet',
+            populate: [{
+                path: 'item',
+                model: 'inventoryItem',
+                populate: {
+                    path: 'parent',
+                    model: 'item',
+                }
+            }, 'user'],
+        })
+        .populate({
+            path: 'winner',
+            model: 'user',
+        })
+        .sort({ createDate: -1})
+        .limit(50)
+};
 
 Game.getLastCreated = async () => {
     return Game.findOne({ status: 'CREATED' })

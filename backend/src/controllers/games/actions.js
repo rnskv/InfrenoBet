@@ -15,7 +15,9 @@ const getHandler = async (ctx) => {
 };
 
 const getAllHandler = async (ctx) => {
-
+    ctx.body = await Game.getByParams({
+        status: 'FINISHED'
+    });
 };
 
 const createHandler = async (ctx) => {
@@ -113,6 +115,10 @@ const getWinner = async (ctx) => {
     await User.addItemsToInventory(winner.bet.user._id, userItems);
     await User.changeBalance(winner.bet.user._id, userSum);
 
+    await Game.updateOne({ _id: mongoose.Types.ObjectId(id)}, { $set: {
+        winner: winner.bet.user._id,
+    }});
+
     ctx.body = winner;
 };
 
@@ -147,4 +153,11 @@ export const finishById = new Action({
     method: 'post',
     url: '/finish',
     handler: finishGame,
+});
+
+
+export const getAll = new Action({
+    method: 'get',
+    url: '/',
+    handler: getAllHandler,
 });

@@ -68,8 +68,8 @@ export default ({ app }) => {
         },
     });
 
-    const gameApi = new Api({
-        url: `${SERVER_PROTOCOL}://${SERVER_HOST}:${SERVER_PORT}/api/game`,
+    const gamesApi = new Api({
+        url: `${SERVER_PROTOCOL}://${SERVER_HOST}:${SERVER_PORT}/api/games`,
         headers: {
             'Content-Type': 'application/json',
         },
@@ -79,6 +79,10 @@ export default ({ app }) => {
         getAll: new Request({
             url: '/',
             method: 'get',
+        }),
+        parse: new Request({
+            url: '/parse',
+            method: 'post',
         }),
     });
 
@@ -108,6 +112,14 @@ export default ({ app }) => {
         }),
     });
 
+    gamesApi.addRequests({
+        getAll: new Request({
+            url: '/',
+            method: 'get',
+        }),
+    });
+
+
     rootApi.addRequests({
         test: new Request({
             url: '/',
@@ -133,7 +145,7 @@ export default ({ app }) => {
     return {
         root: rootApi,
         user: usersApi,
-        game: gameApi,
+        games: gamesApi,
         auth: authApi,
         items: itemsApi,
         payment: paymentApi,

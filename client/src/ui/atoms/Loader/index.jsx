@@ -7,19 +7,29 @@ import ovalLoaderSvg from 'src/resources/svg/oval-loader.svg';
 
 import {
     Container,
+    StyledContainer,
 } from './styled';
 
 function Loader({
-    className, style, children, ...props
+    className, style, children, size, color, isStyled, ...props
 }) {
+    const Wrapper = isStyled ? StyledContainer : Container;
+
     return (
-        <Container {...props} className={className} style={style}>
+        <Wrapper {...props} className={className} style={style} size={size} color={color}>
             <InlineSVG src={ovalLoaderSvg} />
-        </Container>
+        </Wrapper>
     );
 }
 
 Loader.propTypes = {
+    size: PropTypes.string,
+    color: PropTypes.string,
+};
+
+Loader.defaultProps = {
+    size: 'small',
+    color: 'dark',
 };
 
 export default Loader;

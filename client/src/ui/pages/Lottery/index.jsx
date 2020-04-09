@@ -54,6 +54,8 @@ function Lottery({
                 svg={classicLogoSvg}
                 url="/game/lottery"
                 title="Лотерея"
+                subPages={[{ name: 'history', title: 'История', url: '/game/lottery/history'}]}
+                currentPage={null}
             />
             <GameInfo
                 id={id}

@@ -16,7 +16,7 @@ function Withdraws() {
             />
 
             <Section>
-                <WithdrawModeration/>
+                <WithdrawModeration />
             </Section>
         </DefaultTemplate>
     );

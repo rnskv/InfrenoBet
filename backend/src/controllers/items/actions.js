@@ -5,6 +5,7 @@ import InventoryItem from 'src/models/InventoryItem';
 import User from 'src/models/User';
 import request from 'request-promise';
 import { EMPTY_ITEM_COST, FORBIDDEN_TAKE_ITEMS, USER_NOT_REGISTER } from 'shared/configs/notificationsTypes';
+import accessMiddleware from 'src/middlewares/check-access';
 
 const dataForMigration = [
     {
@@ -76,16 +77,6 @@ const dataForMigration = [
         cost: 1000,
         type: 0,
         image: '/dist/resources/images/100000_coin.png',
-    },
-    {
-        cost: 1337,
-        type: 0,
-        image: 'https://steamcommunity-a.akamaihd.net/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpovbSsLQJfxPrMfipP7dezhr-KmsjwPKvBmm5D19V5i_rEprPigVC7vCwwOj6rYOnJI0RpNEbVrAXvlOi8gcDtvZrJziA1vCAqt3-MyRHm0hoYaec-1_3PQF7NVfNIAuDcUWvXnfMD/360fx360f',
-    },
-    {
-        cost: 6666,
-        type: 0,
-        image: 'https://steamcommunity-a.akamaihd.net/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17P7NdTRH-t26q4SZlvD7PYTQgXtu5cB1g_zMyoD0mlOx5UM5ZWClcYCUdgU3Z1rQ_FK-xezngZO46MzOziQ1vSMmtCmIyxfkgx5SLrs4SgJFJKs/360fx360f',
     }
 ];
 
@@ -230,9 +221,10 @@ const postHandler = async (ctx) => {
 };
 
 export const parse = new Action({
-    method: 'get',
+    method: 'post',
     url: '/parse',
     handler: parseHandler,
+    middlewares: [passport.authenticate('jwt'), accessMiddleware({ accessLevel: 100 })]
 });
 
 export const getAll = new Action({

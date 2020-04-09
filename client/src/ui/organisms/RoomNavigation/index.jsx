@@ -12,24 +12,35 @@ import {
     StyledForm,
     Label,
     Name,
+    SubPage,
     Logo,
 } from './styled';
 import { NavigationIcon } from '../Navigation/styled';
 
-function RoomNavigation({ svgId, svg, title, url }) {
+function RoomNavigation({
+    svgId, svg, title, url, subPages, currentPage,
+}) {
     return (
-        <Link to={url}>
-            <Container>
+        <Container>
+            <Link to={url}>
                 <Logo>
-                    {svg && <Svg src={svg}/> || svgId && (
+                    {svg && <Svg src={svg} /> || svgId && (
                         <svg>
                             <use xlinkHref={`#${svgId}`} />
                         </svg>
                     )}
                     <span>{ title }</span>
                 </Logo>
-            </Container>
-        </Link>
+            </Link>
+            { subPages.map((page) => (
+                <Link to={page.url}>
+                    <SubPage isActive={page.name === currentPage}>
+                        { page.title }
+                    </SubPage>
+                </Link>
+            ))}
+        </Container>
+
     );
 }
 
@@ -37,10 +48,14 @@ RoomNavigation.propTypes = {
     title: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
     svgId: PropTypes.string,
+    subPages: PropTypes.array,
+    currentPage: PropTypes.string,
 };
 
 RoomNavigation.defaultProps = {
     svgId: null,
+    subPages: [],
+    currentPage: '',
 };
 
 export default RoomNavigation;
