@@ -15,6 +15,7 @@ export const StyledButton = styled(Button)`
 `;
 
 export const StyledForm = styled(AuthenticationForm)`
+    width: 500px;
     ${Input} {
         width: 100%;
         box-sizing: border-box;
