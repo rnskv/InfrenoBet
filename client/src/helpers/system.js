@@ -4,6 +4,22 @@ import Cookies from 'js-cookie';
 import { infernoClient } from 'src/index';
 import { exchange } from 'shared/configs/money';
 
+function djb2(str){
+    var hash = 5381;
+    for (var i = 0; i < str.length; i++) {
+        hash = ((hash << 5) + hash) + str.charCodeAt(i); /* hash * 33 + c */
+    }
+    return hash;
+}
+
+function hashStringToColor(str) {
+    var hash = djb2(str);
+    var r = (hash & 0xFF0000) >> 16;
+    var g = (hash & 0x00FF00) >> 8;
+    var b = hash & 0x0000FF;
+    return "#" + ("0" + r.toString(16)).substr(-2) + ("0" + g.toString(16)).substr(-2) + ("0" + b.toString(16)).substr(-2);
+}
+
 export function getTimeFromNow(date) {
     moment.locale('ru');
     return moment.tz(date, 'Europe/Moscow').fromNow();
@@ -14,9 +30,10 @@ export function getUserColorsById(id) {
         .update(String(id))
         .digest('hex');
 
-    const lightColor = `#${nicknameHash.slice(0, 6)}59`;
-    const darkColor = `#${nicknameHash.slice(0, 6)}db`;
-    const defaultColor = `#${nicknameHash.slice(0, 6)}`;
+    const lightColor = `${hashStringToColor(nicknameHash)}59`;
+    const darkColor = `${hashStringToColor(nicknameHash)}db`;
+    const defaultColor = `${hashStringToColor(nicknameHash)}`;
+
     return {
         nicknameHash,
         lightColor,
