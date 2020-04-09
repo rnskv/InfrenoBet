@@ -80,6 +80,8 @@ export const Text = styled.div`
 `;
 
 export const Items = styled.div`
+  width: 100%;
+  
   h3 {
     color: var(--color-white);
     padding: 0;

@@ -36,15 +36,20 @@ function LoginForm({ logIn, isLoading }) {
                 onSubmit={onSubmit}
                 title="Войди в игру!"
             >
-                <Label>
-                    <Name>Эл. Почта:</Name>
-                    <Input ref={emailInput} type="email" name="email" />
-                </Label>
+                <Input
+                    ref={emailInput}
+                    type="email"
+                    name="email"
+                    label="Электронная почта:"
+                />
 
-                <Label>
-                    <Name>Пароль:</Name>
-                    <Input ref={passwordInput} type="password" name="password" />
-                </Label>
+                <Input
+                    ref={emailInput}
+                    type="password"
+                    name="password"
+                    label="Пароль:"
+                />
+
                 <StyledButton isLoading={isLoading}>Войти</StyledButton>
             </StyledForm>
         </Container>
