@@ -44,7 +44,7 @@ function LoginForm({ logIn, isLoading }) {
                 />
 
                 <Input
-                    ref={emailInput}
+                    ref={passwordInput}
                     type="password"
                     name="password"
                     label="Пароль:"
