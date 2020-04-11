@@ -23,7 +23,7 @@ export const Container = styled.div`
    height: calc(100vh - var(--header-height));
    transition: .6s right;
    box-sizing: border-box;
-   width: 520px;
+   width: 480px;
    
    ${media.tablet`
      right: ${({ isOpened }) => (isOpened ? '0' : 'calc(-100% - 50px)')};

@@ -3,6 +3,7 @@ import Avatar from 'ui/atoms/Avatar';
 import CommonTitle from 'ui/atoms/Title';
 import NumbersPlace from 'ui/atoms/NumbersPlace';
 import media from 'src/helpers/media';
+import BetItems from 'ui/molecules/BetItems';
 
 export const StyledAvatar = styled(Avatar)`
     width: 70px;
@@ -81,7 +82,7 @@ export const Text = styled.div`
 
 export const Items = styled.div`
   width: 100%;
-  
+  justify-content: flex-start;
   h3 {
     color: var(--color-white);
     padding: 0;
@@ -99,4 +100,8 @@ export const Block = styled.div`
   display: flex;
   align-items: center;
   margin: 0 25px 25px;
+`;
+
+export const StyledBetItems = styled(BetItems)`
+  justify-content: flex-start;
 `;

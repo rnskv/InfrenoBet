@@ -9,6 +9,8 @@ export const Container = styled.div`
   top: var(--header-height);
   display: flex;
   align-items: center;
+  z-index: 2;
+
   ${media.tablet`
     display: none;
   `}
@@ -21,4 +23,5 @@ export const Wrapper = styled.div`
   min-height: 50px;
   padding: 15px 5px;
   box-shadow: 0 5px 20px 0 var(--color-black);
+  position: relative;
 `;

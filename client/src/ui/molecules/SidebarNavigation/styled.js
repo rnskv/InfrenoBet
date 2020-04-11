@@ -5,11 +5,11 @@ export const Icon = styled.div`
   padding: 5px;
   margin: 0 5px;
   border-bottom: ${({ isActive }) => (isActive ? '2px solid var(--color-yellow)' : '2px solid transparent')};
-  cursor: pointer;
   transition: .3s;
   position: relative;
   
   svg {
+    cursor: pointer;
     width: 27px;
     height: 27px;
     transform-origin: 50% top 0;
@@ -112,6 +112,7 @@ export const Circle = styled.div`
     }
     
     &[data-isNeedAnimation=true] {
+       pointer-events: none;
        display: block;
        animation: rotateCircle .6s ease-in-out;
     }

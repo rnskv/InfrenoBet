@@ -42,12 +42,23 @@ export const Container = styled.div`
 
 export const Logo = styled.div`
     cursor: pointer;
-    width: 100px;
     align-items: center;
     display: flex;
-     
+    
+    span {
+      margin-left: 25px;
+      color: var(--color-white);
+      font-size: 20px;
+      font-weight: 700;
+    }
+    
+    b {
+      color: var(--color-yellow);
+    }
+    
     svg {
       height: 40px;
+      width: 90px;
     }
     
    ${media.tablet`

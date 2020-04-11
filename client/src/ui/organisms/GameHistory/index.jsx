@@ -9,7 +9,6 @@ import { getGameBank } from 'shared/helpers/game';
 import { getFormattedTime, getExchangedSum, getTimeFromNow } from 'src/helpers/system';
 import { getUniqueObjectsInArray } from 'shared/helpers/system';
 import UsersBanks from 'ui/organisms/UsersBanks';
-import BetItems from 'ui/molecules/BetItems';
 import {
     Container,
     Horizontal,
@@ -23,6 +22,7 @@ import {
     Block,
     StyledAvatar,
     Chances,
+    StyledBetItems,
 } from './styled';
 
 function GameHistory({ game }) {
@@ -62,8 +62,7 @@ function GameHistory({ game }) {
                             Шанс:
                             <span data-color="blue">
                                 <b>
-                                    { winnerBet / bank.total * 100 }
-%
+                                    { winnerBet / bank.total * 100 }%
                                 </b>
                             </span>
                         </Text>
@@ -87,7 +86,7 @@ function GameHistory({ game }) {
             </Chances>
             <Items>
                 <h3>Выигрыш без учёта комиссии:</h3>
-                <BetItems
+                <StyledBetItems
                     useExtendedView
                     items={items}
                     emptyCellsCount={0}

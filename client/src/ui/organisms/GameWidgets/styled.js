@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import Checkbox from 'ui/atoms/Checkbox';
 
 export const Container = styled.div`
   width: 250px;
@@ -7,11 +6,12 @@ export const Container = styled.div`
   min-height: 20px;
   box-sizing: border-box;
   flex-wrap: wrap;
-  display: inline-flex;
+  display: block;
   
-  @media (max-width: 1470px) {
+  @media (max-width: 1900px) {
     width: 100%;
     margin-top: 25px;
     justify-content: center;
+    display: inline-flex;
   }
 `;

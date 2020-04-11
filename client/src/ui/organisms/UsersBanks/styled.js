@@ -6,7 +6,7 @@ export const Container = styled.div`
     background: var(--color-grey-800);
     position: relative;
     flex-direction: column;
-    z-index: 9; 
+    z-index: 2; 
 `;
 
 export const ChancesBar = styled.div`
