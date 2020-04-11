@@ -13,7 +13,7 @@ export const Container = styled.div`
     padding: 25px;
     box-sizing: border-box;
     flex-grow: 0;
-    z-index: 9;
+    z-index: 2;
 `;
 
 export const WinnerTicket = styled.div`

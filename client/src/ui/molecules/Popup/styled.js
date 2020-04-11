@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import media from 'src/helpers/media';
 
 export const Container = styled.div`
-  width: 700px;
+  width: 710px;
   min-height: 200px;
   background-color: var(--color-grey-600);
   border-radius: 4px;

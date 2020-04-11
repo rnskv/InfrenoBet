@@ -17,7 +17,7 @@ export const Container = styled.div`
     height: 100%;
     top: 0;
     left: 0;
-    z-index: 9;
+    z-index: 2;
 `;
 
 export const Title = styled.h4`

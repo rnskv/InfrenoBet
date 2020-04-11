@@ -112,7 +112,7 @@ export const Circle = styled.div`
     }
     
     &[data-isNeedAnimation=true] {
-       display: block;
+       display: span;
        animation: rotateCircle .6s ease-in-out;
     }
 `;
