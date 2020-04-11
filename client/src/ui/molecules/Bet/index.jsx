@@ -15,7 +15,7 @@ import {
 function Bet({
     user, ticketFrom, ticketTo, item,
 }) {
-    console.log('ITEM', item)
+
     return (
         <Container>
             <StyledAvatar src={user.avatar} />

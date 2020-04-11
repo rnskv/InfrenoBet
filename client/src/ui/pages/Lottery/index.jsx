@@ -22,6 +22,7 @@ import { mapStateToProps, mapDispatchToProps } from './connect';
 import { Container } from 'ui/organisms/BetMaker/styled';
 import { usePopupsActions } from 'src/redux/user/hooks/actions';
 import classicLogoSvg from 'src/resources/svg/classic-logo.svg';
+import GameWidgets from 'ui/organisms/GameWidgets';
 
 function Lottery({
     id,
@@ -48,7 +49,7 @@ function Lottery({
     const popupActions = usePopupsActions();
 
     return (
-        <DefaultTemplate>
+        <DefaultTemplate widgets={<GameWidgets/>}>
             <RoomNavigation
                 svgId="classic-logo"
                 svg={classicLogoSvg}

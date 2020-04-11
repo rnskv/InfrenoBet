@@ -36,46 +36,67 @@ const Page = styled.div`
     display: flex;
 `;
 
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+`;
+
 const SIDEBAR_TABS = {
     NOTIFICATIONS: <SidebarNotifications />,
-    CHAT: <div style={{ color: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px'}}>В разработке</div>,
+    CHAT: <div style={{
+        color: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px',
+    }}
+    >
+        В разработке
+    </div>,
 };
 
-function Default({ children, ...props }) {
+function Default({ children, widgets, ...props }) {
     const sidebarData = useSidebar();
-    console.log(sidebarData)
+
     return (
         <div {...props}>
             <Header />
             <LoginPopup />
-            <Page>
-                <Sidebar
-                    params={{
-                        side: 'left',
-                    }}
-                >
-                    <Navigation />
-                </Sidebar>
-                <Content>
-                    {children}
-                </Content>
-                <Sidebar
-                    params={{
-                        side: 'right',
-                    }}
-                >
-                    <SidebarProfile />
-                    <SidebarNavigation />
-                    { SIDEBAR_TABS[sidebarData.activeTabName] }
-                </Sidebar>
-                <SidebarCompact />
-            </Page>
+            <Wrapper>
+                <Page>
+                    <Sidebar
+                        params={{
+                            side: 'left',
+                        }}
+                    >
+                        <Navigation />
+                    </Sidebar>
+                    <Wrapper>
+                        <Content>
+                            {children}
+                        </Content>
+                        { widgets }
+                    </Wrapper>
+                    <Sidebar
+                        params={{
+                            side: 'right',
+                        }}
+                    >
+                        <SidebarProfile />
+                        <SidebarNavigation />
+                        { SIDEBAR_TABS[sidebarData.activeTabName] }
+                    </Sidebar>
+                    <SidebarCompact />
+                </Page>
+            </Wrapper>
         </div>
     );
 }
 
 Default.propTypes = {
     children: PropTypes.node.isRequired,
+    widgets: PropTypes.array,
+};
+
+Default.defaultProps = {
+    widgets: [],
 };
 
 export default React.memo(Default, () => false);

@@ -37,7 +37,7 @@ function BetItems({
                             }
 
                             if (!item) return null;
-                            console.log('BET ITEMS', size);
+
                             return (
                                 <StyledBetItem
                                     key={`${item._id}-${index}`}

@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import moment from 'moment';
 import privatePaths from 'mongoose-private-paths';
 import Bet from 'src/models/Bet';
 import User from './User';
@@ -27,6 +28,14 @@ const gameSchema = new Schema({
         type: mongoose.Types.ObjectId,
         ref: 'user',
     },
+    totalBank: {
+        type: Number,
+        default: 0,
+    },
+    chance: {
+        type: Number,
+        default: 0,
+    },
     createDate: {
         type: Date,
         default: Date.now(),
@@ -34,6 +43,82 @@ const gameSchema = new Schema({
 });
 
 const Game = mongoose.model('game', gameSchema);
+
+Game.getLuckyOfDay = async () => {
+    const today = moment().startOf('day');
+    const winner = await Game.find({
+        status: 'FINISHED',
+        chance: {
+            $gt: 0,
+        },
+        createDate: {
+            $gte: today.toDate(),
+            $lte: moment(today).endOf('day').toDate()
+        }
+    })
+        .populate({
+            path: 'bets',
+            model: 'bet',
+            populate: [{
+                path: 'item',
+                model: 'inventoryItem',
+                populate: {
+                    path: 'parent',
+                    model: 'item',
+                }
+            }, 'user'],
+        })
+        .populate({
+            path: 'winner',
+            model: 'user',
+        })
+        .sort({ chance: 1 })
+        .limit(1);
+
+    return winner[0];
+};
+
+Game.getGreatestOfDay = async () => {
+    const today = moment().startOf('day');
+
+    const winner = await Game.find({
+        status: 'FINISHED',
+        chance: {
+            $gt: 0,
+        },
+        createDate: {
+            $gte: today.toDate(),
+            $lte: moment(today).endOf('day').toDate()
+        }
+    })
+        .populate({
+            path: 'bets',
+            model: 'bet',
+            populate: [{
+                path: 'item',
+                model: 'inventoryItem',
+                populate: {
+                    path: 'parent',
+                    model: 'item',
+                }
+            }, 'user'],
+        })
+        .populate({
+            path: 'winner',
+            model: 'user',
+        })
+        .sort({ totalBank: -1 })
+        .limit(1);
+
+    return winner[0];
+};
+
+
+Game.getById = async (id) => {
+    return (await Game.getByParams({
+        _id:  mongoose.Types.ObjectId(id)
+    }))[0]
+};
 
 Game.getByParams = async (params = {}) => {
     return await Game.find(params)
@@ -53,8 +138,29 @@ Game.getByParams = async (params = {}) => {
             path: 'winner',
             model: 'user',
         })
-        .sort({ createDate: -1})
+        .sort({ _id: -1})
         .limit(50)
+};
+
+Game.getLastByParams = async (params = {}) => {
+    return await Game.findOne(params)
+        .populate({
+            path: 'bets',
+            model: 'bet',
+            populate: [{
+                path: 'item',
+                model: 'inventoryItem',
+                populate: {
+                    path: 'parent',
+                    model: 'item',
+                }
+            }, 'user'],
+        })
+        .populate({
+            path: 'winner',
+            model: 'user',
+        })
+        .sort({ _id: -1})
 };
 
 Game.getLastCreated = async () => {

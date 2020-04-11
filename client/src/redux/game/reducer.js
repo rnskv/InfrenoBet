@@ -20,6 +20,24 @@ const getClearGameState = () => ({
         isVisible: false,
         winner: null,
     },
+    lastWinner: {
+        avatar: '/dist/resources/images/avatar-fallback.png',
+        name: '???',
+        amount: 0,
+        chance: 0,
+    },
+    luckyWinner: {
+        avatar: '/dist/resources/images/avatar-fallback.png',
+        name: '???',
+        amount: 0,
+        chance: 0,
+    },
+    greatestWinner: {
+        avatar: '/dist/resources/images/avatar-fallback.png',
+        name: '???',
+        amount: 0,
+        chance: 0,
+    },
 });
 
 const initialState = {
@@ -116,6 +134,27 @@ function gameReducer(state = initialState, action) {
         return {
             ...state,
             userDepositsCount: state.userDepositsCount + 1,
+        };
+    }
+
+    case actionTypes.GAME_SET_LAST_WINNER: {
+        return {
+            ...state,
+            lastWinner: action.payload.winner,
+        };
+    }
+
+    case actionTypes.GAME_SET_LUCKY_WINNER: {
+        return {
+            ...state,
+            luckyWinner: action.payload.winner,
+        };
+    }
+
+    case actionTypes.GAME_SET_GREATEST_WINNER: {
+        return {
+            ...state,
+            greatestWinner: action.payload.winner,
         };
     }
 

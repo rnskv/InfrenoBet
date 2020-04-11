@@ -59,3 +59,18 @@ export const betSended = (payload) => ({
     type: actionTypes.GAME_BET_SENDED,
     payload,
 });
+
+export const setLastWinner = (payload) => ({
+    type: actionTypes.GAME_SET_LAST_WINNER,
+    payload,
+});
+
+export const setLuckyWinner = (payload) => ({
+    type: actionTypes.GAME_SET_LUCKY_WINNER,
+    payload,
+});
+
+export const setGreatestWinner = (payload) => ({
+    type: actionTypes.GAME_SET_GREATEST_WINNER,
+    payload,
+});

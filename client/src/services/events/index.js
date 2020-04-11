@@ -1,11 +1,15 @@
 import * as notificationsTypes from 'shared/configs/notificationsTypes';
 
-export default function ({ app }) {
+export default async function ({ app }) {
     const { realtime, store } = app.modules;
     const { actions, domains } = store;
 
     store.dispatch(domains.user.getProfile());
     store.dispatch(domains.betMaker.getItems());
+
+    await store.dispatch(domains.game.getLastWinner());
+    await store.dispatch(domains.game.getLuckyWinner());
+    await store.dispatch(domains.game.getGreatestWinner());
 
     realtime.io.emit('game.roulette.sync');
 
@@ -36,9 +40,20 @@ export default function ({ app }) {
         store.dispatch(actions.game.getWinner({ winner, secret }));
     });
 
-    realtime.io.on('game.reset', (state) => {
+    realtime.io.on('game.reset', async (state) => {
+        const { game } = store.getState();
         store.dispatch(actions.game.reset({ state }));
         store.dispatch(domains.user.getProfile());
+
+        await store.dispatch(domains.game.getLastWinner());
+
+        if (game.luckyWinner.chance <= game.lastWinner.chance) {
+            await store.dispatch(domains.game.getLuckyWinner());
+        }
+
+        if (game.greatestWinner.amount <= game.lastWinner.amount) {
+            await store.dispatch(domains.game.getGreatestWinner());
+        }
     });
 
     realtime.io.on('game.roulette.sync', (state) => {

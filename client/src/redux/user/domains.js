@@ -15,7 +15,7 @@ export default ({ app }) => {
         }
 
         const { profile } = await api.services.user.execute('getProfile');
-        console.log('setProfile')
+
         dispatch(actions.user.setProfile({ profile }));
     };
 

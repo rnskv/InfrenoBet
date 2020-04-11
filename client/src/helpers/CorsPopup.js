@@ -30,7 +30,6 @@ class CorsPopup {
     }
 
     check() {
-        console.log('check', this._window.closed);
         if (!this._window.closed) {
             if (this._checkMethod()) {
                 this.close();

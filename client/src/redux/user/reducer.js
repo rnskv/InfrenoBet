@@ -19,7 +19,7 @@ const initialState = {
             isOpened: false,
         },
         right: {
-            isOpened: true,
+            isOpened: false,
         },
     },
     activeSidebarTabName: 'NOTIFICATIONS',

@@ -117,6 +117,18 @@ export default ({ app }) => {
             url: '/',
             method: 'get',
         }),
+        getLastFinished: new Request({
+            url: '/last',
+            method: 'get',
+        }),
+        getLucky: new Request({
+            url: '/lucky',
+            method: 'get',
+        }),
+        getGreatest: new Request({
+            url: '/greatest',
+            method: 'get',
+        }),
     });
 
 

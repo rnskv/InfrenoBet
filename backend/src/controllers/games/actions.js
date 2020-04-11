@@ -9,6 +9,7 @@ import Bet from 'src/models/Bet';
 
 import config from 'src/config';
 import InventoryItem from 'src/models/InventoryItem';
+import { getGameBank, getWinnerInfoFromGame } from 'shared/helpers/game';
 
 const getHandler = async (ctx) => {
 
@@ -16,6 +17,20 @@ const getHandler = async (ctx) => {
 
 const getAllHandler = async (ctx) => {
     ctx.body = await Game.getByParams({
+        status: 'FINISHED'
+    });
+};
+
+const getLuckyOfDayHandler = async (ctx) => {
+    ctx.body = await Game.getLuckyOfDay();
+};
+
+const getGreatestOfDayHandler = async (ctx) => {
+    ctx.body = await Game.getGreatestOfDay();
+};
+
+const getLastFinishedHandler = async (ctx) => {
+    ctx.body = await Game.getLastByParams({
         status: 'FINISHED'
     });
 };
@@ -127,8 +142,14 @@ const finishGame = async (ctx) => {
         id
     } = ctx.request.body;
 
+    const game = await Game.getById(id);
+    const winnerInfo = getWinnerInfoFromGame(game);
+    const bank = getGameBank(game.bets);
+
     await Game.updateOne({ _id: mongoose.Types.ObjectId(id)}, { $set: {
-        status: 'FINISHED'
+        status: 'FINISHED',
+        chance: winnerInfo.chance,
+        totalBank: bank.total
     }});
 
     ctx.body = {
@@ -160,4 +181,22 @@ export const getAll = new Action({
     method: 'get',
     url: '/',
     handler: getAllHandler,
+});
+
+export const getLastFinished = new Action({
+    method: 'get',
+    url: '/last',
+    handler: getLastFinishedHandler,
+});
+
+export const getLuckyOfDay = new Action({
+    method: 'get',
+    url: '/lucky',
+    handler: getLuckyOfDayHandler,
+});
+
+export const getGreatestOfDay = new Action({
+    method: 'get',
+    url: '/greatest',
+    handler: getGreatestOfDayHandler,
 });

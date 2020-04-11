@@ -55,6 +55,7 @@
     "eslint-plugin-import": "^2.20.0",
     "eslint-plugin-jsx-a11y": "^2.2.3",
     "eslint-plugin-react": "^7.18.0",
+    "moment": "^2.24.0",
     "mongodb-client-encryption": "^1.0.1",
     "nodemon": "^2.0.2",
     "passport-vkontakte-token": "^2.1.0",
