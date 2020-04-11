@@ -1,6 +1,58 @@
 import styled, { keyframes } from 'styled-components';
 import { tada, zoomInDown } from 'react-animations';
 
+export const Icon = styled.div`
+  padding: 5px;
+  margin: 0 5px;
+  border-bottom: ${({ isActive }) => (isActive ? '2px solid var(--color-yellow)' : '2px solid transparent')};
+  cursor: pointer;
+  transition: .3s;
+  position: relative;
+  
+  svg {
+    width: 27px;
+    height: 27px;
+    transform-origin: 50% top 0;
+    fill: ${({ isActive }) => (isActive ? 'var(--color-yellow)' : 'var(--color-grey)')};
+  }
+  
+  
+  
+  &[name=NOTIFICATIONS] {      
+      &:after {
+        content: '';
+        width: 7px;
+        height: 7px;
+        position: absolute;
+        border-radius: 50%;
+        background-color: var(--color-yellow);
+        display: none; 
+        top: 0;
+        right: 0;
+      }
+  }
+  
+  &[data-isNeedAnimation=true] {
+      svg{
+        animation: dingle .3s linear;
+        animation-iteration-count: 7;
+      }
+     
+       &:after {
+          display: block;
+          animation: pulse .7s ease-in-out;
+          animation-iteration-count: 3;
+       }
+  }
+  
+  &:hover {
+      svg {
+          fill: var(--color-yellow);
+      }
+  }
+`;
+
+
 export const Circle = styled.div`
     @keyframes rotateCircle {
         0% {
@@ -70,55 +122,21 @@ export const Container = styled.div`
   display: flex;
   justify-content: center;
   padding-top: 10px;
-`;
-
-export const Icon = styled.div`
-  padding: 5px;
-  margin: 0 5px;
-  border-bottom: ${({ isActive }) => (isActive ? '2px solid var(--color-yellow)' : '2px solid transparent')};
-  cursor: pointer;
-  transition: .3s;
-  position: relative;
   
-  svg {
-    width: 27px;
-    height: 27px;
-    transform-origin: 50% top 0;
-    fill: ${({ isActive }) => (isActive ? 'var(--color-yellow)' : 'var(--color-grey)')};
-  }
-  
-  
-  
-  &[name=NOTIFICATIONS] {      
-      &:after {
-        content: '';
-        width: 7px;
-        height: 7px;
-        position: absolute;
-        border-radius: 50%;
-        background-color: var(--color-yellow);
-        display: none; 
-        top: 0;
-        right: 0;
-      }
-  }
-  
-  &[data-isNeedAnimation=true] {
-      svg{
-        animation: dingle .3s linear;
-        animation-iteration-count: 7;
-      }
-     
-       &:after {
-          display: block;
-          animation: pulse .7s ease-in-out;
-          animation-iteration-count: 3;
-       }
-  }
-  
-  &:hover {
-      svg {
-          fill: var(--color-yellow);
-      }
-  }
+  ${({isCompact}) => isCompact ? `
+    width: 100%;
+    flex-wrap: wrap;
+    height: 100%;
+    ${Icon} {
+        border: none;
+        margin-top: 10px;
+        svg {       
+            fill: var(--color-grey);
+        }
+        
+        svg:hover {
+            fill: var(--color-yellow);
+        }
+    }
+  ` : ''}
 `;

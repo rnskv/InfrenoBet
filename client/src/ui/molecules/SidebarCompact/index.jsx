@@ -9,6 +9,7 @@ import {
     Container,
     Wrapper,
 } from './styled';
+import SidebarNavigation from 'ui/molecules/SidebarNavigation';
 
 const { openSidebar, closeSidebar } = infernoClient.modules.store.actions.user;
 
@@ -23,6 +24,7 @@ function SidebarCompact({ className, style }) {
                     side="right"
                     onClick={() => actions.openSidebar({ side: 'right' })}
                 />
+                <SidebarNavigation isCompact />
             </Wrapper>
         </Container>
     );

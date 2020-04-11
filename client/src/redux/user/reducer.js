@@ -16,7 +16,7 @@ const initialState = {
     },
     sidebars: {
         left: {
-            isOpened: false,
+            isOpened: true,
         },
         right: {
             isOpened: false,

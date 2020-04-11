@@ -7,7 +7,7 @@ export const Container = styled.div`
   transition: 1s;
   width: 200px;
   height: 331px;
-  margin: 0 15px 25px;
+  margin: 0 25px 25px;
   box-sizing: border-box;  
 `;
 

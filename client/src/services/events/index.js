@@ -7,10 +7,6 @@ export default async function ({ app }) {
     store.dispatch(domains.user.getProfile());
     store.dispatch(domains.betMaker.getItems());
 
-    await store.dispatch(domains.game.getLastWinner());
-    await store.dispatch(domains.game.getLuckyWinner());
-    await store.dispatch(domains.game.getGreatestWinner());
-
     realtime.io.emit('game.roulette.sync');
 
     realtime.io.on('disconnect', () => {
@@ -99,4 +95,8 @@ export default async function ({ app }) {
     realtime.io.on('project.notification', ({ type, params }) => {
         store.dispatch(actions.user.addNotification({ type, params }));
     });
+
+    await store.dispatch(domains.game.getLastWinner());
+    await store.dispatch(domains.game.getLuckyWinner());
+    await store.dispatch(domains.game.getGreatestWinner());
 }

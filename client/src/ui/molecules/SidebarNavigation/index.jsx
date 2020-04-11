@@ -19,7 +19,7 @@ import {
     Circle,
 } from './styled';
 
-function SidebarNavigation({ className, style }) {
+function SidebarNavigation({ isCompact, className, style }) {
     const data = useSidebar();
     const actions = useSidebarActions();
     const history = useHistory();
@@ -68,11 +68,13 @@ function SidebarNavigation({ className, style }) {
     const executeTabAction = ({ name }) => {
         switch (name) {
         case 'CHAT': {
+            actions.open({ side: 'right' });
             actions.changeTab({ name });
             break;
         }
 
         case 'NOTIFICATIONS': {
+            actions.open({ side: 'right' });
             actions.changeTab({ name });
             break;
         }
@@ -95,7 +97,7 @@ function SidebarNavigation({ className, style }) {
     };
 
     return (
-        <Container className={className} style={style}>
+        <Container isCompact={isCompact} className={className} style={style}>
             {
                 TABS.map((tab) => (
                     <Icon

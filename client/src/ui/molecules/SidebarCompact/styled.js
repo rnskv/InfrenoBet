@@ -18,7 +18,7 @@ export const Wrapper = styled.div`
   width: 100%;
   background-color: var(--color-grey-400);
   border-radius: 5px 0 0 5px;
-  min-height: 300px;
+  min-height: 50px;
   padding: 15px 5px;
   box-shadow: 0 5px 20px 0 var(--color-black);
 `;

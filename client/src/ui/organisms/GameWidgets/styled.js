@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import Checkbox from 'ui/atoms/Checkbox';
 
 export const Container = styled.div`
-  width: 230px;
+  width: 250px;
   margin-top: calc(var(--header-height) + 15px);
   min-height: 20px;
   box-sizing: border-box;

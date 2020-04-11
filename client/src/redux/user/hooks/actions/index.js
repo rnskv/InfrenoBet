@@ -9,6 +9,8 @@ const {
     closeSteamInventory,
     openSteamInventory,
     changeSidebarTab,
+    openSidebar,
+    closeSidebar,
 } = infernoClient.modules.store.actions.user;
 
 const { getProfile } = infernoClient.modules.store.domains.user;
@@ -26,4 +28,6 @@ export const usePopupsActions = () => useActions({
 
 export const useSidebarActions = () => useActions({
     changeTab: changeSidebarTab,
+    open: openSidebar,
+    close: closeSidebar,
 });
