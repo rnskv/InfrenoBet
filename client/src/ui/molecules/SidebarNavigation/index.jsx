@@ -30,7 +30,6 @@ function SidebarNavigation({ isCompact, className, style }) {
             name: 'CHAT',
             svg: chatSvg,
             props: {},
-            onlyAuth: true,
         },
         {
             name: 'NOTIFICATIONS',
