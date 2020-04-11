@@ -6,7 +6,7 @@ export function getWinnerInfoFromGame(game) {
     return {
         avatar: game.winner.avatar,
         name: game.winner.name,
-        amount: winnerBet,
+        amount: bank.total,
         chance: winnerBet / bank.total * 100,
         _id: game._id,
     };
