@@ -62,7 +62,7 @@ function SteamInventory({ isPopup, isNeedDrawEmptyCells }) {
         });
 
         setTimeout(() => {
-            //Пытаося закрыть окно и обновить инвентарь
+            // Пытаося закрыть окно и обновить инвентарь
 
             popupsActions.closeSteamInventory();
             setIsLoading(false);

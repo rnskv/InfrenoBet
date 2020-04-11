@@ -5,10 +5,10 @@ import Avatar from 'ui/atoms/Avatar';
 export const Container = styled.div`
   position: relative;
   transition: 1s;
-  display: flex;  
-  width: 100%;
+  width: 200px;
   height: 331px;
-  margin-bottom: 25px;
+  margin: 0 15px 25px;
+  box-sizing: border-box;  
 `;
 
 export const Title = styled.div`
@@ -19,7 +19,7 @@ export const Title = styled.div`
   width: 100%;
   color: var(--color-white);
   text-transform: uppercase;
-  padding: 10px 0;
+  padding: 10px 0;  
 `;
 
 export const AvatarBlock = styled.div`

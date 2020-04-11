@@ -57,7 +57,7 @@ function Popup({
                             style={{
                                 transition: `${duration}ms ease-in-out`,
                                 ...containerTransitionStyle[state],
-                                ...style
+                                ...style,
                             }}
                         >
                             <Scrollbars autoHeight autoHeightMax="calc(80vh - 6rem)">

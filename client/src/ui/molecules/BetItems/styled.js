@@ -29,7 +29,7 @@ export const StyledLoader = styled(Loader)`
     z-index: 2;
     justify-content: center;
     align-items: center;
-    display: ${({hidden}) => hidden ? 'none' : 'flex'};
+    display: ${({ hidden }) => (hidden ? 'none' : 'flex')};
     
     svg {
       width: 70px;

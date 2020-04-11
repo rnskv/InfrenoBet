@@ -17,7 +17,7 @@ import media from 'src/helpers/media';
 import { useSidebar } from 'src/redux/user/hooks/selectors';
 
 const Content = styled.div`
-    margin: 75px auto;
+    margin: 75px auto 0;
     background: var(--color-grey-500);
     box-sizing: border-box;
     width: 900px;
@@ -26,7 +26,6 @@ const Content = styled.div`
     box-shadow: 0px 0px 3px 0px var(--color-shadow);
     align-self: flex-start;
     overflow: hidden;
-
     ${media.tablet`
         width: 100%;
     `}
@@ -40,6 +39,10 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  
+  &:first-line {
+    border: 5px solid red;
+  }
 `;
 
 const SIDEBAR_TABS = {

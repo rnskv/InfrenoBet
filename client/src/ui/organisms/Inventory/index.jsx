@@ -18,7 +18,9 @@ import {
     StyledBetItems,
 } from './styled';
 
-function Inventory({ useExtendedView, onItemClick, inactivityItems, isNeedDrawEmptyCells, emptyCellsCount, isNeedShowGamesBlock, viewport, className, style, size }) {
+function Inventory({
+    useExtendedView, onItemClick, inactivityItems, isNeedDrawEmptyCells, emptyCellsCount, isNeedShowGamesBlock, viewport, className, style, size,
+}) {
     const profile = useSelector((state) => state.user.profile);
     const popupsActions = usePopupsActions();
     const isDisabled = !profile.steamId || !profile.steamTradeUrl;
@@ -32,15 +34,17 @@ function Inventory({ useExtendedView, onItemClick, inactivityItems, isNeedDrawEm
             {/* <Button onClick={popupsActions.openSteamInventory}>Пополнить</Button> */}
 
             {
-                isNeedShowGamesBlock && <GameBlock
-                    disabled={isDisabled}
-                    onClick={popupsActions.openSteamInventory}
-                >
-                    <div>
+                isNeedShowGamesBlock && (
+                    <GameBlock
+                        disabled={isDisabled}
+                        onClick={popupsActions.openSteamInventory}
+                    >
+                        <div>
                         Пополнить
-                        <b>DOTA 2</b>
-                    </div>
-                </GameBlock>
+                            <b>DOTA 2</b>
+                        </div>
+                    </GameBlock>
+                )
             }
             <StyledBetItems
                 onItemClick={onItemClick}

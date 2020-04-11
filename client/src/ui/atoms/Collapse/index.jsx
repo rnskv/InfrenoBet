@@ -5,7 +5,9 @@ import {
     Container,
 } from './styled';
 
-function Collapse({ className, style, side, isOpened, onClick, backgroundColor }) {
+function Collapse({
+    className, style, side, isOpened, onClick, backgroundColor,
+}) {
     return (
         <Container
             className={className}

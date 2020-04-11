@@ -42,7 +42,7 @@ export const SubPage = styled.div`
       margin-left: 15px;
       font-size: 18px;
       font-weight: bold;
-      color: ${({ isActive }) => isActive ? 'var(--color-white) !important' : 'var(--color-grey)'};
+      color: ${({ isActive }) => (isActive ? 'var(--color-white) !important' : 'var(--color-grey)')};
       cursor: pointer;
       
       &:hover {

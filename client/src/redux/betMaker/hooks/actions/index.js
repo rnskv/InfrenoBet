@@ -2,7 +2,7 @@ import { useActions } from 'src/helpers/hooks';
 import { infernoClient } from 'src/index';
 
 const {
-    open, close
+    open, close,
 } = infernoClient.modules.store.actions.betMaker;
 
 

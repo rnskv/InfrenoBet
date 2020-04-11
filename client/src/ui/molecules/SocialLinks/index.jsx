@@ -10,6 +10,7 @@ import { openAuthSteamWindow } from 'src/helpers/auth';
 import Input from 'ui/atoms/Input';
 import { infernoClient } from 'src/index';
 import { useNotificationActions } from 'src/redux/user/hooks/actions';
+import { STEAM_TRADE_URL_CHANGED } from 'shared/configs/notificationsTypes';
 import {
     Container,
     SteamSocialButton,
@@ -17,14 +18,13 @@ import {
     TradeLinks,
     ConfirmButton,
 } from './styled';
-import { STEAM_TRADE_URL_CHANGED } from 'shared/configs/notificationsTypes';
 
 function SocialLinks() {
     const [isLoading, setIsLoading] = useState(false);
     const notificationActions = useNotificationActions();
     const tradeLinkInputRef = useRef(null);
 
-    const profile = useSelector(state => state.user.profile, shallowEqual);
+    const profile = useSelector((state) => state.user.profile, shallowEqual);
 
     const onConfirmSteamTradeLink = () => {
         setIsLoading(true);
@@ -33,7 +33,7 @@ function SocialLinks() {
                 url: tradeLinkInputRef.current.value,
             },
         }).then(() => {
-            notificationActions.addNotification({ type: STEAM_TRADE_URL_CHANGED })
+            notificationActions.addNotification({ type: STEAM_TRADE_URL_CHANGED });
         }).finally(() => {
             setIsLoading(false);
         });

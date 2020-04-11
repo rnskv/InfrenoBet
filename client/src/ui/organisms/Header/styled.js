@@ -36,6 +36,7 @@ export const Container = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 0 25px;
+  top: 0;
   box-sizing: border-box;
 `;
 

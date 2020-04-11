@@ -70,7 +70,7 @@ function WithdrawModeration() {
     };
 
     const removeRowById = (id) => {
-        setHistory(history.filter(_h => _h._id !== id))
+        setHistory(history.filter((_h) => _h._id !== id));
     };
 
 
@@ -95,7 +95,7 @@ function WithdrawModeration() {
         }
 
         if (key === 'actions') {
-            return <Actions {...row} removeRowById={removeRowById}/>;
+            return <Actions {...row} removeRowById={removeRowById} />;
         }
 
         return row[key];

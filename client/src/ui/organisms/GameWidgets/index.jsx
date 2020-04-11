@@ -15,18 +15,18 @@ function GameWidgets() {
     return (
         <Container>
             <UserWidget
-                title={'Последний победитель'}
+                title="Последний победитель"
                 winner={lastWinner}
             />
             <UserWidget
-                title={'Счастливчик дня'}
+                title="Счастливчик дня"
                 winner={luckyWinner}
-                backgroundUrl={'/dist/resources/images/lucky-bg.png'}
+                backgroundUrl="/dist/resources/images/lucky-bg.png"
             />
             <UserWidget
-                title={'Победитель дня'}
+                title="Победитель дня"
                 winner={greatestWinner}
-                backgroundUrl={'/dist/resources/images/dollars-widget.png'}
+                backgroundUrl="/dist/resources/images/dollars-widget.png"
             />
         </Container>
     );

@@ -18,11 +18,11 @@ import SteamInventoryPopup from 'ui/organisms/SteamInventoryPopup';
 import * as userActions from 'src/redux/user/actions';
 import * as gameActions from 'src/redux/game/actions';
 import * as betMakerActions from 'src/redux/betMaker/actions';
-import { mapStateToProps, mapDispatchToProps } from './connect';
 import { Container } from 'ui/organisms/BetMaker/styled';
 import { usePopupsActions } from 'src/redux/user/hooks/actions';
 import classicLogoSvg from 'src/resources/svg/classic-logo.svg';
 import GameWidgets from 'ui/organisms/GameWidgets';
+import { mapStateToProps, mapDispatchToProps } from './connect';
 
 function Lottery({
     id,
@@ -49,13 +49,13 @@ function Lottery({
     const popupActions = usePopupsActions();
 
     return (
-        <DefaultTemplate widgets={<GameWidgets/>}>
+        <DefaultTemplate widgets={<GameWidgets />}>
             <RoomNavigation
                 svgId="classic-logo"
                 svg={classicLogoSvg}
                 url="/game/lottery"
                 title="Лотерея"
-                subPages={[{ name: 'history', title: 'История', url: '/game/lottery/history'}]}
+                subPages={[{ name: 'history', title: 'История', url: '/game/lottery/history' }]}
                 currentPage={null}
             />
             <GameInfo
@@ -79,7 +79,7 @@ function Lottery({
                 openBetMaker={actions.betMaker.open}
                 isAuth={isAuth}
             />
-            {/*<Inventory />*/}
+            {/* <Inventory /> */}
 
             <UsersBanks
                 users={users}
@@ -100,7 +100,7 @@ function Lottery({
             <GameBeginFooter
                 hash={hash}
             />
-            <SteamInventoryPopup/>
+            <SteamInventoryPopup />
 
         </DefaultTemplate>
     );

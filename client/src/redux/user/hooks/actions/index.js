@@ -8,7 +8,7 @@ const {
     openLoginPopup,
     closeSteamInventory,
     openSteamInventory,
-    changeSidebarTab
+    changeSidebarTab,
 } = infernoClient.modules.store.actions.user;
 
 const { getProfile } = infernoClient.modules.store.domains.user;

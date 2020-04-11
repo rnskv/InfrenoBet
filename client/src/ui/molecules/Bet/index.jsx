@@ -15,7 +15,6 @@ import {
 function Bet({
     user, ticketFrom, ticketTo, item,
 }) {
-
     return (
         <Container>
             <StyledAvatar src={user.avatar} />

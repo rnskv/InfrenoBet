@@ -13,7 +13,6 @@ import {
 function BetItem({
     image, cost, className, style, onClick, isExtendedView, isInactivity, isActive, isBlocked, isSelected, size,
 }) {
-
     return (
         <Container
             className={className}

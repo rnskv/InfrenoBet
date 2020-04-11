@@ -7,7 +7,7 @@ import { infernoClient } from 'src/index';
 import { useActions } from 'src/helpers/hooks';
 import {
     Container,
-    Wrapper
+    Wrapper,
 } from './styled';
 
 const { openSidebar, closeSidebar } = infernoClient.modules.store.actions.user;

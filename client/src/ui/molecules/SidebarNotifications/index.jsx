@@ -3,6 +3,7 @@ import React, { useContext } from 'react';
 import { connect } from 'react-redux';
 
 import { StateContext } from 'ui/organisms/Sidebar';
+import { useSidebarActions } from 'src/redux/user/hooks/actions';
 import {
     Container,
     Controls,
@@ -14,7 +15,6 @@ import {
 } from './styled';
 
 import { mapDispatchToProps, mapStateToProps } from './connect';
-import { useSidebarActions } from 'src/redux/user/hooks/actions';
 
 
 function SidebarNotifications({

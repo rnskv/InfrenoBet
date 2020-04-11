@@ -26,7 +26,7 @@ import {
 } from './styled';
 
 function GameHistory({ game }) {
-    if (!game.winner) { return <div>Игра не завершена</div>}
+    if (!game.winner) { return <div>Игра не завершена</div>; }
 
     const { bets } = game;
     const items = game.bets.map((bet) => bet.item);
@@ -61,7 +61,10 @@ function GameHistory({ game }) {
                         <Text>
                             Шанс:
                             <span data-color="blue">
-                                <b>{ winnerBet / bank.total * 100 }%</b>
+                                <b>
+                                    { winnerBet / bank.total * 100 }
+%
+                                </b>
                             </span>
                         </Text>
                     </Cash>

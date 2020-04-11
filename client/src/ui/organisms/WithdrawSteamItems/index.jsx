@@ -25,6 +25,7 @@ import chooseSvg from 'src/resources/svg/choose.svg';
 import { useNotificationActions, userProfileActions } from 'src/redux/user/hooks/actions';
 
 import Popup from 'ui/molecules/Popup';
+import { useProfile } from 'src/redux/user/hooks/selectors';
 import {
     Container,
     InputContainer,
@@ -35,9 +36,8 @@ import {
     ItemsViewport,
     StyledInventory,
     StyledPopup,
-    Wrapper
+    Wrapper,
 } from './styled';
-import { useProfile } from 'src/redux/user/hooks/selectors';
 
 const { changeValue } = infernoClient.modules.store.actions.cashier;
 const { createQiwiWithdraw } = infernoClient.modules.store.domains.cashier;
@@ -94,7 +94,7 @@ function WithdrawSteamItems() {
                                 emptyCellsCount={12}
                                 viewport={{ height: '220px' }}
                                 isNeedShowGamesBlock={false}
-                                size={'small'}
+                                size="small"
                             />
                         </ItemsViewport>
                     </InventoryContainer>
@@ -106,7 +106,7 @@ function WithdrawSteamItems() {
                                 onItemClick={removeItemFromCart}
                                 emptyCellsCount={12}
                                 viewport={{ height: '220px' }}
-                                size={'small'}
+                                size="small"
                             />
                         </ItemsViewport>
                     </Cart>

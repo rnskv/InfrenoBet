@@ -27,7 +27,7 @@ export const Container = styled.div`
     z-index: 1;
     position: relative;
     
-    ${ media.tablet`
+    ${media.tablet`
         flex-direction: column;
    `}
 `;
@@ -46,7 +46,7 @@ export const Chance = styled.div`
   color: var(--color-black);
   font-size: 24px;
   
-  ${ media.tablet`
+  ${media.tablet`
         font-size: 20px;
         margin: 25px 0;
   `}
@@ -68,7 +68,7 @@ export const SplitArrow = styled.div`
     background-position: 0 -142px;
     height: 60px;
     
-    ${ media.tablet`
+    ${media.tablet`
         display: none;
    `}
 `;
@@ -82,7 +82,7 @@ export const ItemsCount = styled.div`
   flex-direction: column;
   width: 40%;
   
-  ${ media.tablet`
+  ${media.tablet`
        width: 100%;
        text-align: center;
   `}
