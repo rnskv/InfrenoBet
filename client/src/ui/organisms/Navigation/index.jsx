@@ -88,7 +88,7 @@ function Navigation({ token }) {
                                     key={item.id}
                                     {...item}
                                     isOpened={sidebarState.isOpened}
-                                    isActive={item.to === location.pathname}
+                                    isActive={location.pathname.indexOf(item.to) !== -1}
                                     isVisible={
                                         token
                                             ? item.accessLevel > -1 && item.accessLevel < 666 // replace from token
