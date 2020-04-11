@@ -31,6 +31,9 @@ function Header({
                 <svg>
                     <use xlinkHref="#currency-logo" />
                 </svg>
+                <span>
+                    INFERNO<b>BET</b>.RU
+                </span>
             </Logo>
             <Group hidden={!isAuth}>
                 <Balance value={profile.balance} />
