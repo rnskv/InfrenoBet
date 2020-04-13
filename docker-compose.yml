@@ -10,6 +10,8 @@ services:
             - db
             - redis
         container_name: inferno_backend
+        networks:
+            - app-network
     realtime:
         build: ./realtime
         image: rnskv/inferno_realtime
@@ -18,14 +20,18 @@ services:
         depends_on:
             - backend
         container_name: inferno_realtime
+        networks:
+            - app-network
     client:
         build: ./client
         image: rnskv/inferno_client
         ports:
-            - '80:6003'
+            - '6003:6003'
         depends_on:
             - realtime
         container_name: inferno_client
+        networks:
+            - app-network
     deamons:
         build: ./deamons
         image: rnskv/inferno_deamons
@@ -43,3 +49,13 @@ services:
             - "6379:6379"
         command: redis-server --requirepass kjashdhqe!i321lDdasd
         container_name: inferno_redis
+    nginx:
+        restart: always
+        build: ./nginx/
+        image: rnskv/inferno_nginx
+        ports:
+            - "80:80"
+        volumes_from:
+            - web
+        links:
+            - client:client

@@ -39,3 +39,12 @@ services:
       - "6379:6379"
     command: redis-server --requirepass kjashdhqe!i321lDdasd
     container_name: inferno_redis
+  nginx:
+    restart: always
+    image: rnskv/inferno_nginx
+    ports:
+      - "80:80"
+    volumes_from:
+      - web
+    links:
+      - client:client
