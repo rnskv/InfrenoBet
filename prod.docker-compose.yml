@@ -1,0 +1,41 @@
+version: '3.7'
+
+services:
+  backend:
+    image: rnskv/inferno_backend
+    ports:
+      - '6001:6001'
+    depends_on:
+      - db
+      - redis
+    container_name: inferno_backend
+  realtime:
+    image: rnskv/inferno_realtime
+    ports:
+      - '6002:6002'
+    depends_on:
+      - backend
+    container_name: inferno_realtime
+  client:
+    image: rnskv/inferno_client
+    ports:
+      - '80:6003'
+    depends_on:
+      - realtime
+    container_name: inferno_client
+  deamons:
+    image: rnskv/inferno_deamons
+    depends_on:
+      - realtime
+    container_name: inferno_deamons
+  db:
+    image: mongo
+    ports:
+      - "27017:27017"
+    container_name: inferno_db
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+    command: redis-server --requirepass kjashdhqe!i321lDdasd
+    container_name: inferno_redis
