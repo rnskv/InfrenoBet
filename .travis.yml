@@ -35,7 +35,7 @@ jobs:
     - chmod 600 ./deploy_key
     - echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
     - ssh-add ./deploy_key
-    - ssh -i -o "StrictHostKeyChecking no" ./deploy_key root@95.217.157.192 pwd
+    - ssh -i ./deploy_key -o "StrictHostKeyChecking no" root@95.217.157.192 pwd
     - echo HELLO WORLD FRON MY SERVER IN FINLAND MATHER FUCKER IP $SERVER_IP_ADDRESS
 
     script:
