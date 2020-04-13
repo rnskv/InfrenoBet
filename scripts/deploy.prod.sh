@@ -6,4 +6,5 @@ URL="$SERVER_IP_ADDRESS:$USER"
 echo "URL => $URL"
 
 DEPLOY="docker-compose pull && docker-compose stop && docker-compose up"
-$($DEPLOY)
+
+$SSH $DEPLOY
