@@ -40,6 +40,7 @@ jobs:
     script:
     - bash ./scripts/compile.prod.sh
     - bash ./scripts/test.sh
+    - bash ./scripts/docker-compose_push.sh
 
     deploy:
       provider: script
