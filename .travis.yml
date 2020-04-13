@@ -8,6 +8,21 @@ stages:
   if: branch = sandbox
 - name: deploy
   if: branch = master
+
+before_install:
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname
+    -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+  - openssl aes-256-cbc -K $encrypted_dfdcfd5172af_key -iv $encrypted_dfdcfd5172af_iv
+    -in deploy_key.enc -out ./deploy_key -d
+
+  - eval "$(ssh-agent -s)"
+  - chmod 600 ./deploy_key
+  - echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+  - ssh-add ./deploy_key
+
 jobs:
   include:
   - stage: sandbox
@@ -22,20 +37,6 @@ jobs:
       - SERVER_IP_ADDRESS=95.217.157.192
     services:
       - docker
-    before_install:
-      - sudo rm /usr/local/bin/docker-compose
-      - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname
-        -s`-`uname -m` > docker-compose
-      - chmod +x docker-compose
-      - sudo mv docker-compose /usr/local/bin
-      - openssl aes-256-cbc -K $encrypted_dfdcfd5172af_key -iv $encrypted_dfdcfd5172af_iv
-        -in deploy_key.enc -out ./deploy_key -d
-
-      - eval "$(ssh-agent -s)"
-      - chmod 600 ./deploy_key
-      - echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
-      - ssh-add ./deploy_key
-      - ssh -i ./deploy_key -o "StrictHostKeyChecking no" root@95.217.157.192 pwd
 
     script:
     - bash ./scripts/compile.prod.sh
