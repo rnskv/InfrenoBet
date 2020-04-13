@@ -19,32 +19,28 @@ jobs:
   - stage: deploy
     name: Deploy Stage
     env:
-    - DOCKER_COMPOSE_VERSION=1.25.4
+      - DOCKER_COMPOSE_VERSION=1.25.4
     services:
-    - docker
+      - docker
     before_install:
-    - sudo rm /usr/local/bin/docker-compose
-    - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname
-      -s`-`uname -m` > docker-compose
-    - chmod +x docker-compose
-    - sudo mv docker-compose /usr/local/bin
-    - openssl aes-256-cbc -K $encrypted_dfdcfd5172af_key -iv $encrypted_dfdcfd5172af_iv
-      -in deploy_key.enc -out ./deploy_key -d
+      - sudo rm /usr/local/bin/docker-compose
+      - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname
+        -s`-`uname -m` > docker-compose
+      - chmod +x docker-compose
+      - sudo mv docker-compose /usr/local/bin
+      - openssl aes-256-cbc -K $encrypted_dfdcfd5172af_key -iv $encrypted_dfdcfd5172af_iv
+        -in deploy_key.enc -out ./deploy_key -d
 
-    - eval "$(ssh-agent -s)"
-    - chmod 600 ./deploy_key
-    - echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
-    - ssh-add ./deploy_key
-    - ssh -i ./deploy_key -o "StrictHostKeyChecking no" root@95.217.157.192 pwd
-
-    after_success:
-      - echo -e "I am ready to docker-compose run"
-      - pwd
+      - eval "$(ssh-agent -s)"
+      - chmod 600 ./deploy_key
+      - echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+      - ssh-add ./deploy_key
+      - ssh -i ./deploy_key -o "StrictHostKeyChecking no" root@95.217.157.192 pwd
 
     script:
     - bash ./scripts/compile.prod.sh
     - bash ./scripts/test.sh
-    - bash ./scripts/docker-compose_build.sh
+
     deploy:
       provider: script
       script: bash ./scripts/deploy.prod.sh
