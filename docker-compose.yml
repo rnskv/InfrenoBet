@@ -10,8 +10,6 @@ services:
             - db
             - redis
         container_name: inferno_backend
-        networks:
-            - app-network
     realtime:
         build: ./realtime
         image: rnskv/inferno_realtime
@@ -20,8 +18,6 @@ services:
         depends_on:
             - backend
         container_name: inferno_realtime
-        networks:
-            - app-network
     client:
         build: ./client
         image: rnskv/inferno_client
@@ -30,8 +26,6 @@ services:
         depends_on:
             - realtime
         container_name: inferno_client
-        networks:
-            - app-network
     deamons:
         build: ./deamons
         image: rnskv/inferno_deamons
