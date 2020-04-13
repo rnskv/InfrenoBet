@@ -2,8 +2,7 @@ language: node_js
 node_js:
 - '10'
 sudo: required
-env:
-  - SERVER_IP_ADDRESS=95.217.157.192
+
 stages:
 - name: sandbox
   if: branch = sandbox
@@ -20,6 +19,7 @@ jobs:
     name: Deploy Stage
     env:
       - DOCKER_COMPOSE_VERSION=1.25.4
+      - SERVER_IP_ADDRESS=95.217.157.192
     services:
       - docker
     before_install:
