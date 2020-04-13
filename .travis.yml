@@ -47,6 +47,6 @@ jobs:
     - bash ./scripts/docker-compose_build.sh
     deploy:
       provider: script
-      script: bash ./scripts/docker-compose_push.sh
+      script: bash ./scripts/deploy.prod.sh
       on:
         branch: master
