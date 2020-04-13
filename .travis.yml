@@ -2,6 +2,8 @@ language: node_js
 node_js:
 - '10'
 sudo: required
+env:
+  - SERVER_IP_ADDRESS=95.217.157.192
 stages:
 - name: sandbox
   if: branch = sandbox
