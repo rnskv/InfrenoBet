@@ -174,7 +174,7 @@ const parseHandler = async (ctx) => {
     for (let [name, data] of Object.entries(response.items)) {
         const { bcount, price, bprice, count } = data;
         console.log('Check item: ', name);
-        if (bcount === 0 || bprice > price * 2 || count === 0 ) {
+        if (bcount < 15 || bprice > price * 1.5 || count < 15 ) {
             console.log('Skip item', name);
             continue;
         }
@@ -199,8 +199,9 @@ const getAllHandler = async (ctx) => {
         console.log('Run migration for collection items');
 
         for (const data of dataForMigration) {
+            console.log(data.cost);
             const item = await Item.create(data);
-            const inventoryItem = await InventoryItem.create({ parent: item._id, type: 0 })
+            await InventoryItem.create({ parent: item._id, type: 0 })
         }
 
 

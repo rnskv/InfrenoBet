@@ -8,6 +8,7 @@ import items from './items/index.js';
 import payment from './payment/index.js';
 import withdraw from './withdraw/index.js';
 import tradeoffers from './tradeoffers/index.js';
+import commissions from './commissions/index.js';
 
 const router = new Router().prefix('/api');
 
@@ -20,5 +21,6 @@ router.use(items.routes);
 router.use(payment.routes);
 router.use(withdraw.routes);
 router.use(tradeoffers.routes);
+router.use(commissions.routes);
 
 export default router;

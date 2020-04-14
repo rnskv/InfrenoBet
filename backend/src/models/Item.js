@@ -12,8 +12,7 @@ const itemSchema = new Schema({
     },
     classId: {
         type: Number,
-        index: true,
-        unique: true,
+        index: true
     },
     name: {
         type: String,
