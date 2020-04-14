@@ -3,6 +3,7 @@ import passport from 'koa-passport';
 import TradeOffer from 'src/models/TradeOffer';
 import User from 'src/models/User';
 import * as notificationsTypes from 'shared/configs/notificationsTypes';
+import accessMiddleware from 'src/middlewares/check-access';
 
 const getAllHandler = async (ctx) => {
     const { params = { status: 'CREATED' } } = ctx.request.body;
@@ -66,6 +67,7 @@ export const updateWithdrowRequest = new Action({
     method: 'put',
     url: '/',
     handler: updateHandler,
+    middlewares: [passport.authenticate('jwt'), accessMiddleware({ accessLevel: 50 })],
 });
 
 export const getAll = new Action({

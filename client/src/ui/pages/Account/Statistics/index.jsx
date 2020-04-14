@@ -8,6 +8,7 @@ import { useProfile } from 'src/redux/user/hooks/selectors';
 import SocialLinks from 'ui/molecules/SocialLinks';
 import ProfileHead from 'ui/organisms/ProfileHead';
 import TABS from 'src/configs/account-tabs';
+import NotAccessPlaceholder from 'ui/organisms/NotAccessPlaceholder';
 
 function Statisctics() {
     const profile = useProfile();
@@ -18,7 +19,7 @@ function Statisctics() {
                 tabs={TABS}
             />
             <Section>
-                Статистика
+                <NotAccessPlaceholder isVisible />
             </Section>
         </DefaultTemplate>
     );

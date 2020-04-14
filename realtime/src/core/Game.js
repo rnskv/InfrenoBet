@@ -75,8 +75,10 @@ class Game {
         }).then(async (game) => {
             this.init({ ...game });
         }).catch((err) => {
-            console.log('Не удалось инициализировать игру. Повторная попытка')
-            this.createGame({ hash, secret })
+            console.log('Не удалось инициализировать игру. Повторная попытка');
+            setTimeout(() => {
+                this.createGame({ hash, secret })
+            }, 5000)
         });
     }
 

@@ -9,6 +9,14 @@ export const itemsApi = new Api({
     },
 });
 
+export const authApi = new Api({
+    url: `http://${config.server_host}:${config.server_port}/api/auth`,
+    headers: {
+        'Content-Type': 'application/json',
+    },
+});
+
+
 export const userApi = new Api({
     url: `http://${config.server_host}:${config.server_port}/api/users`,
     headers: {
@@ -76,4 +84,11 @@ betsApi.addRequests({
         url: '/',
         method: 'post',
     })
+});
+
+authApi.addRequests({
+    logIn: new Request({
+        url: '/login',
+        method: 'post',
+    }),
 });

@@ -3,11 +3,11 @@ import passport from 'koa-passport';
 import request from 'request-promise';
 
 import Action from 'src/core/Action';
-import bcrypt from 'bcryptjs';
+import accessMiddleware from 'src/middlewares/check-access';
+
 import jwt from 'jsonwebtoken';
 import User from 'src/models/User';
 import Item from 'src/models/Item';
-import config from '../../config';
 
 import { USER_NOT_FOUND, STEAM_TRADE_URL_MIN_LENGTH, INTERNAL_SERVER_ERROR } from 'shared/configs/notificationsTypes';
 
@@ -172,18 +172,21 @@ export const changeBalance = new Action({
     method: 'put',
     url: '/changeBalance',
     handler: changeBalanceHandler,
+    middlewares: [passport.authenticate('jwt'), accessMiddleware({ accessLevel: 50 })],
 });
 
 export const addInventory = new Action({
     method: 'put',
     url: '/inventory',
-    handler: addInventoryHandler
+    handler: addInventoryHandler,
+    middlewares: [passport.authenticate('jwt'), accessMiddleware({ accessLevel: 50 })],
 });
 
 export const removeInventory = new Action({
     method: 'delete',
     url: '/inventory',
-    handler: removeInventoryHandler
+    handler: removeInventoryHandler,
+    middlewares: [passport.authenticate('jwt'), accessMiddleware({ accessLevel: 50 })],
 });
 
 

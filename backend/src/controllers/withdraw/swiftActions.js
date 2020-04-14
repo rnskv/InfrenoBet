@@ -80,5 +80,5 @@ export const createPayout = new Action({
     method: 'post',
     url: '/swift/payout',
     handler: createPayoutHandler,
-    middlewares: [passport.authenticate('jwt'), accessMiddleware(100)]
+    middlewares: [passport.authenticate('jwt'), accessMiddleware({ accessLevel: 100 })]
 });
