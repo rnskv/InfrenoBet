@@ -26,7 +26,7 @@ import Statisctics from 'ui/pages/Account/Statistics';
 import Balance from 'ui/pages/Account/Balance';
 import Levels from 'ui/pages/Account/Levels';
 import Referals from 'ui/pages/Account/Referals';
-import Settings from 'ui/pages/account/Settings';
+import Settings from 'ui/pages/Account/Settings';
 
 function App({ store }) {
     if (typeof window === 'undefined') return 'Hello from server';

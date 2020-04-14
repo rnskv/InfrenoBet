@@ -10,8 +10,6 @@ import ProfileHead from 'ui/organisms/ProfileHead';
 import TABS from 'src/configs/account-tabs';
 
 function Settings() {
-    const profile = useProfile();
-
     return (
         <DefaultTemplate prevContent={[<ProfileHead />]}>
             <Tabs
