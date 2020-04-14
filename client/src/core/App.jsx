@@ -15,13 +15,18 @@ import Login from 'ui/pages/Login';
 import Logup from 'ui/pages/Logup';
 import Deposit from 'ui/pages/Deposit';
 import Withdraw from 'ui/pages/Withdraw';
-import Settings from 'ui/pages/Settings';
 import GamesHistory from 'ui/pages/GamesHistory';
 
 import Withdraws from 'ui/pages/Admin/Withdraws';
 import System from 'ui/pages/Admin/System';
 
 import Lottery from 'ui/pages/Lottery';
+
+import Statisctics from 'ui/pages/Account/Statistics';
+import Balance from 'ui/pages/Account/Balance';
+import Levels from 'ui/pages/Account/Levels';
+import Referals from 'ui/pages/Account/Referals';
+import Settings from 'ui/pages/account/Settings';
 
 function App({ store }) {
     if (typeof window === 'undefined') return 'Hello from server';
@@ -44,7 +49,19 @@ function App({ store }) {
                 <Route path="/logup">
                     <Logup />
                 </Route>
-                <Route path="/settings">
+                <Route path="/account" exact>
+                    <Statisctics />
+                </Route>
+                <Route path="/account/balance">
+                    <Balance />
+                </Route>
+                <Route path="/account/levels">
+                    <Levels />
+                </Route>
+                <Route path="/account/partner">
+                    <Referals />
+                </Route>
+                <Route path="/account/settings">
                     <Settings />
                 </Route>
                 <Route path="/game/lottery" exact>

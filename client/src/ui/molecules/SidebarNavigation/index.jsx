@@ -79,7 +79,7 @@ function SidebarNavigation({ isCompact, className, style }) {
         }
 
         case 'SETTINGS': {
-            history.push('/settings');
+            history.push('/account/settings');
             break;
         }
 

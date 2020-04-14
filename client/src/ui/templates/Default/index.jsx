@@ -17,7 +17,7 @@ import media from 'src/helpers/media';
 import { useSidebar } from 'src/redux/user/hooks/selectors';
 
 const Content = styled.div`
-    margin: 75px auto 0;
+    margin: 25px auto 0;
     background: var(--color-grey-500);
     box-sizing: border-box;
     width: 900px;
@@ -31,8 +31,13 @@ const Content = styled.div`
     `}
 `;
 
+const PrevContent = styled.div`
+  margin-top: 25px;
+`;
+
 const Page = styled.div`
     display: flex;
+    margin-top: calc(var(--header-height));
 `;
 
 const Wrapper = styled.div`
@@ -55,7 +60,7 @@ const SIDEBAR_TABS = {
     </div>,
 };
 
-function Default({ children, widgets, ...props }) {
+function Default({ children, widgets, prevContent, ...props }) {
     const sidebarData = useSidebar();
 
     return (
@@ -72,6 +77,9 @@ function Default({ children, widgets, ...props }) {
                         <Navigation />
                     </Sidebar>
                     <Wrapper>
+                        <PrevContent>
+                            { prevContent }
+                        </PrevContent>
                         <Content>
                             {children}
                         </Content>
@@ -96,10 +104,12 @@ function Default({ children, widgets, ...props }) {
 Default.propTypes = {
     children: PropTypes.node.isRequired,
     widgets: PropTypes.array,
+    prevContent: PropTypes.array,
 };
 
 Default.defaultProps = {
     widgets: [],
+    prevContent: [],
 };
 
 export default React.memo(Default, () => false);

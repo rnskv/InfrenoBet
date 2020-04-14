@@ -24,7 +24,7 @@ function SteamLinkAttacher({ isVisible }) {
                 Для доступа к предметам STEAM вам необходимо прикрепить ваш STEAM аккаунт к профилю INFERNO.BET, а так же добавить трейд-ссылку в настройках профиля
             </p>
 
-            <Link to="/settings">
+            <Link to="/account/settings">
                 <Button>
                     Перейти в настройки
                 </Button>
