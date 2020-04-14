@@ -34,7 +34,7 @@ const betSchema = new Schema({
     },
     createDate: {
         type: Date,
-        default: Date.now(),
+        default: new Date(),
     }
 });
 const Bet = mongoose.model('bet', betSchema);

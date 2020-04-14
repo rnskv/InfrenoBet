@@ -45,7 +45,7 @@ function GameHistory({ game }) {
                     <GameId>
                         { `ID игры: ${game._id}` }
                     </GameId>
-                    <Date>{ getTimeFromNow(game.createDate)}</Date>
+                    <Date>Начало игры: { getTimeFromNow(game.createDate)}</Date>
                 </Information>
             </Horizontal>
             <Horizontal>
@@ -62,7 +62,7 @@ function GameHistory({ game }) {
                             Шанс:
                             <span data-color="blue">
                                 <b>
-                                    { winnerBet / bank.total * 100 }%
+                                    { (winnerBet / bank.total * 100).toFixed(2) }%
                                 </b>
                             </span>
                         </Text>

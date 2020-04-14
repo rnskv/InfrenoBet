@@ -21,8 +21,8 @@ function hashStringToColor(str) {
 }
 
 export function getTimeFromNow(date) {
-    moment.locale('ru');
-    return moment.tz(date, 'Europe/Moscow').fromNow();
+    moment.lang('ru');
+    return moment(date).fromNow();
 }
 
 export function getUserColorsById(id) {

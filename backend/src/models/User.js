@@ -62,7 +62,7 @@ const userSchema = new Schema({
     },
     createDate: {
         type: Date,
-        default: Date.now(),
+        default: new Date(),
     },
 });
 
