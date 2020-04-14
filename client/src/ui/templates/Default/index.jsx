@@ -32,7 +32,7 @@ const Content = styled.div`
 `;
 
 const PrevContent = styled.div`
-  margin-top: 25px;
+  margin-top: ${({ isNeedMargin }) => (isNeedMargin ? '25px' : 0)};
   width: 900px;
 `;
 
@@ -46,10 +46,10 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  
-  &:first-line {
-    border: 5px solid red;
-  }
+`;
+
+const Vertical = styled.div`
+
 `;
 
 const SIDEBAR_TABS = {
@@ -62,7 +62,9 @@ const SIDEBAR_TABS = {
     </div>,
 };
 
-function Default({ children, widgets, prevContent, ...props }) {
+function Default({
+    children, widgets, prevContent, ...props
+}) {
     const sidebarData = useSidebar();
 
     return (
@@ -79,12 +81,14 @@ function Default({ children, widgets, prevContent, ...props }) {
                         <Navigation />
                     </Sidebar>
                     <Wrapper>
-                        <PrevContent>
-                            { prevContent }
-                        </PrevContent>
-                        <Content>
-                            {children}
-                        </Content>
+                        <Vertical>
+                            <PrevContent isNeedMargin={!!prevContent.length}>
+                                { prevContent }
+                            </PrevContent>
+                            <Content>
+                                {children}
+                            </Content>
+                        </Vertical>
                         { widgets }
                     </Wrapper>
                     <Sidebar
