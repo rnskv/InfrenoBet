@@ -99,7 +99,6 @@ infernoIO.init().then(async (app) => {
             }
         }
     })
-
 });
 
 socketsManager.init({ handlers });
