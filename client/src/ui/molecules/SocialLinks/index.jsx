@@ -17,6 +17,7 @@ import {
     Accounts,
     TradeLinks,
     ConfirmButton,
+    TradeUrl,
 } from './styled';
 
 function SocialLinks() {
@@ -46,7 +47,7 @@ function SocialLinks() {
     return (
         <Container>
             <Accounts>
-                <h3>Привязать социальные аккаунты</h3>
+                <h3>Cоциальные аккаунты:</h3>
                 <SteamSocialButton
                     onClick={openAuthSteamWindow}
                     disabled={profile.steamId}
@@ -55,9 +56,12 @@ function SocialLinks() {
                 </SteamSocialButton>
             </Accounts>
             <TradeLinks>
+                <h3>Необходимые ссылки:</h3>
                 <Input
                     ref={tradeLinkInputRef}
-                    before={<a href="https://steamcommunity.com/id/me/tradeoffers/privacy#trade_offer_access_url" target="_blank">TRADE</a>}
+                    before={
+                        <TradeUrl href="https://steamcommunity.com/id/me/tradeoffers/privacy#trade_offer_access_url" target="_blank">TRADE</TradeUrl>
+                    }
                     after={(
                         <ConfirmButton
                             onClick={onConfirmSteamTradeLink}

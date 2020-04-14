@@ -33,6 +33,7 @@ const Content = styled.div`
 
 const PrevContent = styled.div`
   margin-top: 25px;
+  width: 900px;
 `;
 
 const Page = styled.div`

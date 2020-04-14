@@ -7,15 +7,38 @@ import Input from 'ui/atoms/Input';
 import Link from 'ui/atoms/Link';
 import Svg from 'svg-inline-react';
 
+import { useProfile } from 'src/redux/user/hooks/selectors';
 import {
     Container,
+    AvatarBlock, StyledAvatar, InformationBlock, Name, Stats, Status
 } from './styled';
-import { NavigationIcon } from '../Navigation/styled';
+
 
 function ProfileHead({}) {
+    const profile = useProfile();
+
     return (
         <Container>
-           Бошка профиля
+            <AvatarBlock>
+                <StyledAvatar src={profile.avatar} />
+            </AvatarBlock>
+            <InformationBlock>
+                <Name>
+                    <span>{ profile.name }</span>
+                    <Status>Обычный аккаунт</Status>
+                </Name>
+
+                <Stats>
+                    <span>
+                        Дата регистрации:
+                        <b>{ profile.createDate }</b>
+                    </span>
+                    <span>
+                        Inferno ID:
+                        <b>{ profile._id }</b>
+                    </span>
+                </Stats>
+            </InformationBlock>
         </Container>
 
     );

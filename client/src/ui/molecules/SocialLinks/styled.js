@@ -32,3 +32,28 @@ export const ConfirmButton = styled(Button)`
   width: 100%;
   border-radius: 0 4px 4px 0;
 `;
+
+export const TradeUrl = styled.a`
+  color: var(--color-white);
+  text-decoration: none;
+  width: 100%;
+  height: 100%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  background-color: var(--color-blue);
+  position: relative;
+  flex-direction: column;
+  
+  &:after {
+    content: 'Ссылка на обмен';
+    font-size: 10px;
+    font-weight: bold;
+    display: flex;
+    color: var(--color-yellow);
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+  }
+`;

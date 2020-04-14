@@ -63,6 +63,7 @@ const Before = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: 4px 0 0 4px;
+  overflow: hidden;
 `;
 
 const After = styled.div`
@@ -74,6 +75,7 @@ const After = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: 0 4px 4px 0;
+  overflow: hidden;
 `;
 
 const Input = React.memo(React.forwardRef((
