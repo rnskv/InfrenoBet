@@ -18,7 +18,9 @@ import {
     TradeLinks,
     ConfirmButton,
     TradeUrl,
+    Url
 } from './styled';
+import NotAccessPlaceholder from 'ui/organisms/NotAccessPlaceholder';
 
 function SocialLinks() {
     const [isLoading, setIsLoading] = useState(false);
@@ -57,24 +59,26 @@ function SocialLinks() {
             </Accounts>
             <TradeLinks>
                 <h3>Необходимые ссылки:</h3>
-                <Input
-                    ref={tradeLinkInputRef}
-                    before={
-                        <TradeUrl href="https://steamcommunity.com/id/me/tradeoffers/privacy#trade_offer_access_url" target="_blank">TRADE</TradeUrl>
-                    }
-                    after={(
-                        <ConfirmButton
-                            onClick={onConfirmSteamTradeLink}
-                            isLoading={isLoading}
-                        >
-                            Сохранить
-                        </ConfirmButton>
-                    )}
-                    placeholder="Например: https://steamcommunity.com/tradeoffer/new/?partner=879013079&token=EuZ8DXXX"
-                    // description={'С помощью этой ссылки наш бот сможет отправлять вам предметы из вашего инвентаря INFERNO.BET в ваш инвентарь STEAM'}
-                    maskType={null}
-                    hidden={!profile.steamId}
-                />
+                <Url>
+                    <NotAccessPlaceholder isVisible={!profile.steamId}/>
+                    <Input
+                        ref={tradeLinkInputRef}
+                        before={
+                            <TradeUrl href="https://steamcommunity.com/id/me/tradeoffers/privacy#trade_offer_access_url" target="_blank">TRADE</TradeUrl>
+                        }
+                        after={(
+                            <ConfirmButton
+                                onClick={onConfirmSteamTradeLink}
+                                isLoading={isLoading}
+                            >
+                                Сохранить
+                            </ConfirmButton>
+                        )}
+                        placeholder="Например: https://steamcommunity.com/tradeoffer/new/?partner=879013079&token=EuZ8DXXX"
+                        // description={'С помощью этой ссылки наш бот сможет отправлять вам предметы из вашего инвентаря INFERNO.BET в ваш инвентарь STEAM'}
+                        maskType={null}
+                    />
+                </Url>
             </TradeLinks>
         </Container>
     );

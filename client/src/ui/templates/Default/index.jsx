@@ -39,6 +39,7 @@ const PrevContent = styled.div`
 const Page = styled.div`
     display: flex;
     margin-top: calc(var(--header-height));
+    margin-bottom: 75px;
 `;
 
 const Wrapper = styled.div`

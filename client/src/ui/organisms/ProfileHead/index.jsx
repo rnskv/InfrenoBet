@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
-
 import React, { useRef } from 'react';
+import moment from 'moment';
 
 import Button from 'ui/atoms/Button';
 import Input from 'ui/atoms/Input';
@@ -31,7 +31,7 @@ function ProfileHead({}) {
                 <Stats>
                     <span>
                         Дата регистрации:
-                        <b>{ profile.createDate }</b>
+                        <b>{ moment(profile.createDate).format('DD.MM.YYYY hh:mm') }</b>
                     </span>
                     <span>
                         Inferno ID:

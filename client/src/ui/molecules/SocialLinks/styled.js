@@ -57,3 +57,7 @@ export const TradeUrl = styled.a`
     border-radius: 4px;
   }
 `;
+
+export const Url = styled.div`
+ position: relative;
+`;
