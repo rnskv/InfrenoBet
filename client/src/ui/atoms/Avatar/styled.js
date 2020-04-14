@@ -14,10 +14,12 @@ export const Container = styled.div`
    border: 2px solid var(--color-white);
    border-radius: 50%;
    box-shadow: inset 0 0 0 6px var(--color-black);
+   padding: 3px;
 `;
 
 export const Image = styled.img`
   height: 100%;
   min-width: 100%;
   object-fit: cover;
+  border-radius: 50%;
 `;
