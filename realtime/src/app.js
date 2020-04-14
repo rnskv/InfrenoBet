@@ -2,7 +2,7 @@ import express from 'express';
 import http from 'http';
 import socket from 'socket.io';
 const redis = require("redis");
-import { userApi } from 'src/modules/api';
+import { userApi, authApi } from 'src/modules/api';
 
 import { spawn, execFile } from 'child_process';
 
@@ -45,7 +45,7 @@ infernoIO.addManager('rooms', roomsManager);
 infernoIO.addManager('redis', redisManager);
 // infernoIO.addPlugin('steam', SteamPlugin);
 
-infernoIO.init().then((app) => {
+infernoIO.init().then(async (app) => {
     app.managers.redis.subscribe('user.notifications.add');
     app.managers.redis.subscribe('user.inventory.add');
     app.managers.redis.on('message', (channel, message) => {

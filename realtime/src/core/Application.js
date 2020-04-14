@@ -1,4 +1,6 @@
 import Room from './Room';
+import { authApi } from 'src/modules/api';
+import * as API from 'src/modules/api';
 
 class Application {
     constructor() {
@@ -8,10 +10,26 @@ class Application {
     }
 
     init() {
-        return new Promise(resolve => {
+        return new Promise((resolve, reject) => {
             this.provideAppToManagers();
 
-            resolve(this);
+            authApi.execute('logIn', {
+                body: {
+                    email: process.env.INFERNO_EMAIL,
+                    password: process.env.INFERNO_PASSWORD,
+                },
+            }).then(({ token }) => {
+                console.log('Авторизация IO сервера INFERNO завершена. Токен получен');
+
+                Object.values(API).forEach(api => {
+                    api.setBearer(token);
+                });
+
+                resolve(this);
+            }).catch((err) => {
+                console.log('Не удалось авторизироваться');
+                reject(err);
+            });
         })
     }
 

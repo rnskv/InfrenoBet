@@ -2,6 +2,9 @@ import mongoose from 'mongoose';
 
 import Action from 'src/core/Action';
 import bcrypt from 'bcryptjs';
+import passport from 'koa-passport';
+import accessMiddleware from 'src/middlewares/check-access';
+
 import jwt from 'jsonwebtoken';
 import Game from 'src/models/Game';
 import User from 'src/models/User';
@@ -162,18 +165,21 @@ export const create = new Action({
     method: 'post',
     url: '/',
     handler: createHandler,
+    middlewares: [passport.authenticate('jwt'), accessMiddleware({ accessLevel: 50 })],
 });
 
 export const getWinnerById = new Action({
     method: 'post',
     url: '/winner',
     handler: getWinner,
+    middlewares: [passport.authenticate('jwt'), accessMiddleware({ accessLevel: 50 })],
 });
 
 export const finishById = new Action({
     method: 'post',
     url: '/finish',
     handler: finishGame,
+    middlewares: [passport.authenticate('jwt'), accessMiddleware({ accessLevel: 50 })]
 });
 
 

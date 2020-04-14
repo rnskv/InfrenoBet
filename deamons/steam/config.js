@@ -8,6 +8,8 @@ module.exports = {
         API_URL: 'http://127.0.0.1:6001',
         REDIS_HOST: '127.0.0.1',
         REDIS_PORT: 6379,
+        INFERNO_EMAIL: 'inferno_bot_1@gmail.com',
+        INFERNO_PASSWORD: 'BpqEn74H0z2z'
     },
     production: {
         LOGIN: 'xtrell322',
@@ -18,5 +20,7 @@ module.exports = {
         API_URL: 'http://backend:6001',
         REDIS_HOST: 'redis',
         REDIS_PORT: '6379',
+        INFERNO_EMAIL: 'inferno_bot_1@gmail.com',
+        INFERNO_PASSWORD: 'BpqEn74H0z2z'
     }
 };

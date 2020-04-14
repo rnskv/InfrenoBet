@@ -85,5 +85,5 @@ function renderFullPage(html, preloadedState, styleTags) {
 }
 
 app.listen(port, process.env.CLIENT_HOST, () => {
-    console.log('Server started at', process.env.CLIENT_HOST, port, app);
+    console.log(`Fronted SSR server started at ${process.env.CLIENT_HOST}:${process.env.CLIENT_PORT}`);
 });

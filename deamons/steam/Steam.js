@@ -12,9 +12,8 @@ class Steam {
         community,
         redis,
         redisSub,
-        rp
+        api
     }) {
-        this.rp = rp;
         this.config = config;
         this.tradeOfferManager = tradeOfferManager;
         this.client = client;
@@ -33,10 +32,7 @@ class Steam {
                 SENT: 'sent'
             }
         };
-        this.api = new Api({
-            rp,
-            API_URL: config.API_URL
-        });
+        this.api = api
     }
 
     addActions(name, actions) {
@@ -93,14 +89,13 @@ class Steam {
     };
 
     async subscribes() {
-        console.log('подписуемся');
+        console.log(`Start async events' listening`);
         this.redisSub.subscribe('user.steam.deposit.items');
 
         this.redisSub.on('message', (channel, message) => {
             const data = JSON.parse(message);
             switch (channel) {
                 case 'user.steam.deposit.items': {
-                    console.log('ОПА ИТЕМЫ', data);
                     const { profile, items } = data;
                     this.actions.tradeoffers.sendDepositOffer({ profile, items });
                     break;

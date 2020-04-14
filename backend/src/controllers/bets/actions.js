@@ -1,17 +1,14 @@
 import mongoose from 'mongoose';
 
 import Action from 'src/core/Action';
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
+import passport from 'koa-passport';
+import accessMiddleware from 'src/middlewares/check-access';
+
 import Bet from 'src/models/Bet';
 import Game from 'src/models/Game';
 import User from 'src/models/User';
-import Item from 'src/models/Item';
 
-import config from 'src/config';
-
-import { USER_NOT_ENOUGH_MONEY } from 'src/types/errors';
-import InventoryItem from '../../models/InventoryItem';
+import InventoryItem from 'src/models/InventoryItem';
 import { INTERNAL_SERVER_ERROR } from 'shared/configs/notificationsTypes';
 
 const getHandler = async (ctx) => {
@@ -107,7 +104,7 @@ const getGameBankSumById = async (ctx) => {
     ctx.body = await Bet.getGameBankSumById(id);
 };
 
-export const getBankSunById = new Action({
+export const getBankSumById = new Action({
     method: 'post',
     url: '/bank',
     handler: getGameBankSumById
@@ -117,4 +114,5 @@ export const create = new Action({
     method: 'post',
     url: '/',
     handler: createHandler,
+    middlewares: [passport.authenticate('jwt'), accessMiddleware({ accessLevel: 50 })],
 });

@@ -9,6 +9,7 @@ const redis = require('redis');
 const rp = require('request-promise');
 const Steam = require('./Steam');
 const config = require('./config')[mode];
+const Api =  require('./core/Api');
 
 const redisClient = redis.createClient({
     host: config.REDIS_HOST,
@@ -37,18 +38,28 @@ const tradeOfferManager = new TradeOfferManager({
     "language": "ru",
 });
 
-const bot1 = new Steam({
-    config,
-    tradeOfferManager,
-    client,
-    community,
-    redis: redisClient,
-    redisSub: redisSub,
-    rp
+const api = new Api({
+    rp,
+    API_URL: config.API_URL
 });
 
-bot1.addActions('user', userActions);
-bot1.addActions('tradeoffers', tradeOffersActions);
+api.logIn({
+    email: config.INFERNO_EMAIL,
+    password: config.INFERNO_PASSWORD
+}).then(() => {
+    const bot1 = new Steam({
+        config,
+        tradeOfferManager,
+        client,
+        community,
+        redis: redisClient,
+        redisSub: redisSub,
+        api
+    });
 
-bot1.subscribes();
-bot1.logOn();
+    bot1.addActions('user', userActions);
+    bot1.addActions('tradeoffers', tradeOffersActions);
+
+    bot1.subscribes();
+    bot1.logOn();
+});

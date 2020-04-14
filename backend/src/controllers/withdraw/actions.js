@@ -119,7 +119,7 @@ export const update = new Action({
     method: 'put',
     url: '/:id',
     handler: updateWithdraw,
-    middlewares: [passport.authenticate('jwt'), accessMiddleware(100)]
+    middlewares: [passport.authenticate('jwt'), accessMiddleware({ accessLevel: 100 })]
 });
 
 
