@@ -33,10 +33,33 @@ import {
     FORBIDDEN_TAKE_ITEMS,
     GAME_NOT_FOUND,
     USER_PAYMENT_SUCCESS,
-    USER_PAYMENT_ERROR
+    USER_PAYMENT_ERROR,
+    REFERRAL_CASHOUT_ERROR,
+    REFERRAL_CASHOUT_SUCCESS,
+    REFERRAL_CODE_ALREADY_EXIST,
+    REFERRAL_CODE_CREATE_SUCCESS,
+    REFERRAL_CODE_WRONG,
+    REFERRAL_CODE_COPY_SUCCESS,
+    REFERRAL_COPY_ERROR,
+    REFERRAL_LINK_COPY_SUCCESS
 } from './notificationsTypes';
 
 export default {
+    [REFERRAL_CODE_COPY_SUCCESS]: {
+        type: 'SUCCESS',
+        title: 'Партнёрка',
+        text: 'Партнёрский код скопирован в буфер обмена.',
+    },
+    [REFERRAL_COPY_ERROR]: {
+        type: 'ERROR',
+        title: 'Партнёрка',
+        text: 'Произошла ошибка во время записи в буфер обмена.',
+    },
+    [REFERRAL_LINK_COPY_SUCCESS]: {
+        type: 'SUCCESS',
+        title: 'Партнёрка',
+        text: 'Партнёрская ссылка скопирован в буфер обмена.',
+    },
     [USER_ALREADY_EXIST]: {
         type: 'ERROR',
         title: 'Система',
@@ -211,6 +234,31 @@ export default {
         type: 'ERROR',
         title: 'Платежная система',
         text: 'Произошла ошибка при выводе средств. Подробная ифнормация в консоли разработчика.',
+    },
+    [REFERRAL_CASHOUT_SUCCESS]: {
+        type: 'SUCCESS',
+        title: 'Партнёрка',
+        text: 'Вывод средств на баланс завершён.',
+    },
+    [REFERRAL_CASHOUT_ERROR]: {
+        type: 'ERROR',
+        title: 'Партнёрка',
+        text: 'Произошла ошибка при выводе средств с партнёрского счета.',
+    },
+    [REFERRAL_CODE_CREATE_SUCCESS]: {
+        type: 'SUCCESS',
+        title: 'Партнёрка',
+        text: 'Реферальный код создан!',
+    },
+    [REFERRAL_CODE_WRONG]: {
+        type: 'ERROR',
+        title: 'Партнёрка',
+        text: 'Формат реферального кода неверный.',
+    },
+    [REFERRAL_CODE_ALREADY_EXIST]: {
+        type: 'ERROR',
+        title: 'Партнёрка',
+        text: 'Этот реферальный код уже занят.',
     },
     undefined: {
         type: 'ERROR',

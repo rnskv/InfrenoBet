@@ -5,6 +5,7 @@ import { infernoClient } from 'src/index';
 
 export default ({ app }) => {
     const { api, store, realtime } = app.modules;
+    const { services } = api;
     const { actions, domains } = store;
 
     const getProfile = () => async (dispatch) => {
@@ -15,6 +16,7 @@ export default ({ app }) => {
         }
 
         const { profile } = await api.services.user.execute('getProfile');
+        services.referrals.execute('connect');
 
         dispatch(actions.user.setProfile({ profile }));
     };

@@ -60,15 +60,28 @@ const userSchema = new Schema({
         type: Number,
         default: 1,
     },
+    referralCode: {
+        type: String,
+        default: null,
+    },
+    referralShare: {
+        type: Number,
+        default: 0.05
+    },
     createDate: {
         type: Date,
         default: new Date(),
-    },
+    }
 });
 
 userSchema.plugin(privatePaths);
 
 const User = mongoose.model('user', userSchema);
+
+User.checkReferralCode = async (referralCode) => {
+    return Boolean(await User.findOne({ referralCode }));
+};
+
 User.getByParams = async (params) => {
     return await User.findOne(params)
         .populate({
@@ -79,6 +92,12 @@ User.getByParams = async (params) => {
                 model: 'item',
             }
         })
+};
+
+User.create = async (data) => {
+    const user = await new User(data);
+    await user.save();
+    return user;
 };
 
 User.getById = async (id) => {

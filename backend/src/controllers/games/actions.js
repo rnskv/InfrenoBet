@@ -14,6 +14,7 @@ import config from 'src/config';
 import InventoryItem from 'src/models/InventoryItem';
 import { getGameBank, getWinnerInfoFromGame } from 'shared/helpers/game';
 import Commission from '../../models/Comission';
+import ReferralPayment from '../../models/ReferralPayment';
 
 const getHandler = async (ctx) => {
 
@@ -128,6 +129,16 @@ const getWinner = async (ctx) => {
             game: id
         });
         await InventoryItem.updateById(item, { status: 10 })
+    }
+
+
+    const payment = await ReferralPayment.createForUser({
+        user: winner.bet.user._id,
+        totalAmount: commissionSum
+    });
+
+    if (payment.amount) {
+        commissionSum -= payment.amount;
     }
 
     await Commission.create({

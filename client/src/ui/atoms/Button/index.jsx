@@ -15,6 +15,10 @@ const getButtonStyle = (type, props) => {
             &:hover {
                background-color: var(--color-yellow-active);
             }
+            
+            &:active {
+               background-color: var(--color-yellow-focus);
+            }
         `;
     }
 

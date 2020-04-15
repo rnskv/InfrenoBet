@@ -7,6 +7,7 @@ export default class Api {
         url = '/',
         headers = {},
         body = {},
+        credentials = 'same-origin',
         onError = null
     }) {
         this.url = url;
@@ -14,6 +15,7 @@ export default class Api {
         this.body = body;
         this.requests = {};
         this.onError = onError;
+        this.credentials = credentials;
     }
 
     setHeader(headerName, value) {
@@ -50,6 +52,7 @@ export default class Api {
                 apiUrl: this.url,
                 headers: { ...this.headers, ...headers },
                 body: { ...this.body, ...body },
+                credentials: this.credentials,
                 onError: onError || this.onError
             });
     }

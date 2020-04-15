@@ -1,8 +1,11 @@
 import { Api, Request } from 'shared/api';
 import { USER_NOT_FOUND } from 'shared/configs/notificationsTypes';
 
+import Cookies from 'js-cookie';
+import { moveReferralCodeToCookies } from 'src/helpers/system';
 import createWithdrawApi from './withdraw';
 import createTradeOffersApi from './tradeoffers';
+import createReferralsApi from './referrals';
 
 const { SERVER_PROTOCOL, SERVER_PORT, SERVER_HOST } = process.env;
 
@@ -16,10 +19,14 @@ export default ({ app }) => {
         domains,
     } = store;
 
+    const params = new URLSearchParams(location.search);
+    moveReferralCodeToCookies({ referralCode: params.get('r') });
+
     const errorDefaultHandler = ({ type }) => app.modules.store.dispatch(actions.user.addNotification({ type }));
 
     const withdrawApi = createWithdrawApi({ app, onError: errorDefaultHandler });
     const tradeOffersApi = createTradeOffersApi({ app, onError: errorDefaultHandler });
+    const referralsApi = createReferralsApi({ app, onError: errorDefaultHandler });
 
     const paymentApi = new Api({
         url: `${SERVER_PROTOCOL}://${SERVER_HOST}:${SERVER_PORT}/api/payment`,
@@ -34,7 +41,6 @@ export default ({ app }) => {
         url: `${SERVER_PROTOCOL}://${SERVER_HOST}:${SERVER_PORT}/api/items`,
         headers: {
             'Content-Type': 'application/json',
-            // Authorization: store.getState().user.token,
         },
         onError: errorDefaultHandler,
     });
@@ -43,6 +49,9 @@ export default ({ app }) => {
         url: `${SERVER_PROTOCOL}://${SERVER_HOST}:${SERVER_PORT}/api/auth`,
         headers: {
             'Content-Type': 'application/json',
+        },
+        body: {
+            cookies: Cookies.get(),
         },
         onError: errorDefaultHandler,
     });
@@ -163,5 +172,6 @@ export default ({ app }) => {
         payment: paymentApi,
         withdraw: withdrawApi,
         tradeOffers: tradeOffersApi,
+        referrals: referralsApi,
     };
 };

@@ -20,10 +20,12 @@ const SIZES = {
 
 export const StyledContainer = styled.div`
   width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
-  padding: 15px;
- 
+  position: relative;
+  align-items: center;
+  
   svg {
     ${({ size }) => SIZES[size]} 
     path {

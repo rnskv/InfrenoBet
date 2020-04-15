@@ -19,6 +19,7 @@ export default class Request {
         apiUrl,
         body = {},
         headers = {},
+        credentials,
         onError = null,
         useCache = true
     }) {
@@ -29,6 +30,7 @@ export default class Request {
 
             const resultOptions = {
                 method: this.method,
+                credentials,
                 headers: { ...headers, ...this.headers },
             };
 
@@ -36,7 +38,9 @@ export default class Request {
                 resultOptions.body = JSON.stringify({ ...body, ...this.body });
             }
 
-            fetcher(url, resultOptions)
+            const fetchFunction = global.fetch || fetcher;
+
+            fetchFunction(url, resultOptions)
                 .then(async (response) => {
                     return response.json();
                 })

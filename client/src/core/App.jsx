@@ -25,8 +25,9 @@ import Lottery from 'ui/pages/Lottery';
 import Statisctics from 'ui/pages/Account/Statistics';
 import Balance from 'ui/pages/Account/Balance';
 import Levels from 'ui/pages/Account/Levels';
-import Referals from 'ui/pages/Account/Referals';
+import Referrals from 'ui/pages/Account/Referrals';
 import Settings from 'ui/pages/Account/Settings';
+import { useQuery } from 'src/helpers/hooks';
 
 function App({ store }) {
     if (typeof window === 'undefined') return 'Hello from server';
@@ -59,7 +60,7 @@ function App({ store }) {
                     <Levels />
                 </Route>
                 <Route path="/account/partner">
-                    <Referals />
+                    <Referrals />
                 </Route>
                 <Route path="/account/settings">
                     <Settings />
