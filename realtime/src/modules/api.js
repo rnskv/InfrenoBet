@@ -3,14 +3,14 @@ import { connection } from 'src/app';
 import config from 'src/config';
 
 export const itemsApi = new Api({
-    url: `http://${config.server_host}:${config.server_port}/api/items`,
+    url: `${config.server_protocol}://${config.server_host}:${config.server_port}/api/items`,
     headers: {
         'Content-Type': 'application/json',
     },
 });
 
 export const authApi = new Api({
-    url: `http://${config.server_host}:${config.server_port}/api/auth`,
+    url: `${config.server_protocol}://${config.server_host}:${config.server_port}/api/auth`,
     headers: {
         'Content-Type': 'application/json',
     },
