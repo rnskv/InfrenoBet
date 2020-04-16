@@ -123,11 +123,13 @@ const getWinner = async (ctx) => {
 
     for (const item of commissionItems) {
         console.log('Переводим статус предмета в комиссию');
+
         await Commission.create({
             type: 1,
             inventoryItem: item,
             game: id
         });
+
         await InventoryItem.updateById(item, { status: 10 })
     }
 
@@ -137,7 +139,7 @@ const getWinner = async (ctx) => {
         totalAmount: commissionSum
     });
 
-    if (payment.amount) {
+    if (payment && payment.amount) {
         commissionSum -= payment.amount;
     }
 

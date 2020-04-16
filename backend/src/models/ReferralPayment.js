@@ -28,7 +28,7 @@ const referralPaymentSchema = new Schema({
     },
     createDate: {
         type: Date,
-        default: new Date(),
+        default: Date.now(),
     },
 });
 
@@ -51,7 +51,7 @@ ReferralPayment.getByParams = async (params) => {
 ReferralPayment.createForUser = async ({ user, totalAmount }) => {
     const partner = await Referral.getUserPartnerById(user);
 
-    if (!partner) return;
+    if (!partner) return null;
 
     return await ReferralPayment.create({
         user: user,

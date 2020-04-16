@@ -18,7 +18,7 @@ const referralSchema = new Schema({
     },
     createDate: {
         type: Date,
-        default: new Date(),
+        default: Date.now(),
     },
 });
 
@@ -65,7 +65,7 @@ Referral.getUserPartnerById = async (id) => {
     const referral = await Referral.findOne({ user: mongoose.Types.ObjectId(id)})
         .populate('user')
         .populate('partner');
-
+    if (!referral) return referral;
     return referral.partner;
 };
 

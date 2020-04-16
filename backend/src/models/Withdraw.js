@@ -26,7 +26,7 @@ const withdrawSchema = new Schema({
     },
     createDate: {
         type: Date,
-        default: new Date(),
+        default: Date.now(),
     },
 });
 
