@@ -9,6 +9,8 @@ server {
   access_log /var/log/nginx/nodejs_project.log;
   charset utf-8;
 
+  if ($ssl_protocol = "") {rewrite ^ https://$server_name$request_uri? permanent;}
+
   location / {
     proxy_pass http://client:6003;
     proxy_set_header Upgrade $http_upgrade;
