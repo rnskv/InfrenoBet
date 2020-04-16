@@ -22,13 +22,14 @@ export default ({ app }) => {
     };
 
 
-    const logUp = ({ email, name, password }) => async (dispatch) => {
+    const logUp = ({ email, name, password, referralCode }) => async (dispatch) => {
         dispatch(actions.user.loading());
         await api.services.auth.execute('logUp', {
             body: {
                 email,
                 password,
                 name,
+                referralCode,
             },
         }).then(() => {
             dispatch(actions.user.register());

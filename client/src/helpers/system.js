@@ -113,7 +113,7 @@ export const logInProccesing = ({ app }) => {
 
 export const moveReferralCodeToCookies = ({ referralCode }) => {
     console.log('Устанавливаем реферальный код в куки');
-    if (!Cookies.get('referralCode')) {
+    if (!Cookies.get('referralCode') && referralCode) {
         Cookies.set('referralCode', referralCode, { expires: 1000 * 60 * 24 * 7 });
     }
 };

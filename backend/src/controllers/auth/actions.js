@@ -5,9 +5,9 @@ import jwt from 'jsonwebtoken';
 import User from '../../models/User';
 import config from '../../config';
 const request = require('request-promise');
+import { connectWithPartner} from '../shared';
 
 import { USER_ALREADY_EXIST, USER_NOT_FOUND, USER_WRONG_PASSWORD, USER_WRONG_REGISTER_DATA } from 'shared/configs/notificationsTypes';
-import Referral from '../../models/Referral';
 const { VK_CLIENT_ID, VK_CLIENT_SECRET, VK_REDIRECT_URL, VK_CLOSE_PAGE_URL } = process.env;
 
 function createToken({ payload, expiresIn = 1000 * 60 * 60 * 24 }) {
@@ -16,7 +16,7 @@ function createToken({ payload, expiresIn = 1000 * 60 * 60 * 24 }) {
 }
 
 const registerHandler = async (ctx) => {
-    const { name, email, password, cookies } = ctx.request.body;
+    const { name, email, password, referralCode } = ctx.request.body;
 
     const user = await User.getByParams({ email });
     if (!password || !email) {
@@ -31,7 +31,9 @@ const registerHandler = async (ctx) => {
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
 
-    await User.create({ email, name, password: hash, avatar: `https://api.adorable.io/avatars/70/${email}`});
+    const newUser = await User.create({ email, name, password: hash, avatar: `https://api.adorable.io/avatars/70/${email}`});
+
+    await connectWithPartner({referralCode, user: newUser});
 
     ctx.body = {
         ok: true
