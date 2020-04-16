@@ -55,7 +55,7 @@ server {
   charset utf-8;
 
   location / {
-    proxy_pass http://backend:6002;
+    proxy_pass http://realtime:6002;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection 'upgrade';
     proxy_set_header Host $host;
