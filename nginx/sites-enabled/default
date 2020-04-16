@@ -1,6 +1,8 @@
 server {
-  listen 80;
+  listen 443 ssl;
   server_name infernobet.ru;
+  ssl_certificate /etc/nginx/certs/infernobet.crt;
+  ssl_certificate_key /etc/nginx/certs/infernobet.key;
   access_log /var/log/nginx/nodejs_project.log;
   charset utf-8;
 
