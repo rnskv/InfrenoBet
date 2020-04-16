@@ -17,7 +17,7 @@ module.exports = {
         SHARED_SECRET: 'EYJzPPtrYCLs5la5c8ru6avZBn4=',
         IDENTITY_SECRET: 'xiQFxcTGiYNmfO8HzPYx2Gy5CIk=',
         DOMAIN: 'infernobet.ru',
-        API_URL: 'https://backend:6004',
+        API_URL: 'https://nginx:6004',
         REDIS_HOST: 'redis',
         REDIS_PORT: '6379',
         INFERNO_EMAIL: 'inferno_bot_1@gmail.com',
