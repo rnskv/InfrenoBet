@@ -18,21 +18,21 @@ export const authApi = new Api({
 
 
 export const userApi = new Api({
-    url: `http://${config.server_host}:${config.server_port}/api/users`,
+    url: `${config.server_protocol}://${config.server_host}:${config.server_port}/api/users`,
     headers: {
         'Content-Type': 'application/json',
     },
 });
 
 export const gameApi = new Api({
-    url: `http://${config.server_host}:${config.server_port}/api/games`,
+    url: `${config.server_protocol}://${config.server_host}:${config.server_port}/api/games`,
     headers: {
         'Content-Type': 'application/json',
     },
 });
 
 export const betsApi = new Api({
-    url: `http://${config.server_host}:${config.server_port}/api/bets`,
+    url: `${config.server_protocol}://${config.server_host}:${config.server_port}/api/bets`,
     headers: {
         'Content-Type': 'application/json',
     }
