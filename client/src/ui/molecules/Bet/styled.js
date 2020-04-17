@@ -63,6 +63,7 @@ export const Item = styled.div`
     
   img {
     width: 50px;
+    border-radius: 5px;
     
     ${media.tablet`
         width: 30px;

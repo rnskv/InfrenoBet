@@ -13,9 +13,11 @@ function SocialNetworks({
 }) {
     return (
         <Container>
-            <Icon>
-                <Svg src={vkSVG} />
-            </Icon>
+            <a href="https://vk.com/infernobet_official" target="_blank">
+                <Icon>
+                    <Svg src={vkSVG} />
+                </Icon>
+            </a>
         </Container>
     );
 }

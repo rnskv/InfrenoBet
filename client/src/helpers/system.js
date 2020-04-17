@@ -17,7 +17,9 @@ function hashStringToColor(str) {
     const r = (hash & 0xFF0000) >> 16;
     const g = (hash & 0x00FF00) >> 8;
     const b = hash & 0x0000FF;
-    return `#${(`0${r.toString(16)}`).substr(-2)}${(`0${g.toString(16)}`).substr(-2)}${(`0${b.toString(16)}`).substr(-2)}`;
+    const hex = `#${(`0${r.toString(16)}`).substr(-2)}${(`0${g.toString(16)}`).substr(-2)}${(`0${b.toString(16)}`).substr(-2)}`;
+
+    return hex;
 }
 
 export function getTimeFromNow(date) {
@@ -30,7 +32,7 @@ export function getUserColorsById(id) {
         .update(String(id))
         .digest('hex');
 
-    const lightColor = `${hashStringToColor(nicknameHash)}59`;
+    const lightColor = `${hashStringToColor(nicknameHash)}a5`;
     const darkColor = `${hashStringToColor(nicknameHash)}db`;
     const defaultColor = `${hashStringToColor(nicknameHash)}`;
 

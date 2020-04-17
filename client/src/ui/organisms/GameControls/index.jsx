@@ -28,11 +28,11 @@ function GameControls({
             <NotAuthPlaceHolder isVisible={!isAuth} />
             <ItemsCount>
                 <Information>
-                    {`Вы вложили в игру - ${itemsCount} из 10 монет.`}
+                    {`Вы вложили в игру ${itemsCount} (из 10) предметов.`}
                 </Information>
                 <Description>
-                    {`Мин.ставка ${getExchangedSum(0.01)}, максимум предметов 10.
-                    Чем выше ставка, тем больше шанс победить.`}
+                    {`Мин.ставка ${getExchangedSum(0.01)}, максимум предметов 10.`}
+                    <br/><span>Чем выше ставка, тем больше шанс победить.</span>
                     <More>Подробнее</More>
                 </Description>
             </ItemsCount>
@@ -40,7 +40,7 @@ function GameControls({
             <Chance>
                 Шанс:
                 <span>
-                    {`${percent.toFixed(2)}%`}
+                    {`${percent % 10 === 0 ? percent : percent.toFixed(2)}%`}
                 </span>
             </Chance>
             <Button onClick={openBetMaker}>Сделать ставку</Button>

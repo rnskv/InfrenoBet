@@ -32,6 +32,7 @@ export const Title = styled(CommonTitle)`
 export const Timer = styled(NumbersPlace)`
   padding: 0 15px;
   height: 55px;
+  border-radius: 5px;
 `;
 
 export const Or = styled.div`
