@@ -23,7 +23,7 @@ const commissionSchema = new Schema({
     },
     createDate: {
         type: Date,
-        default: Date.now(),
+        default: () => Date.now(),
     },
 });
 
