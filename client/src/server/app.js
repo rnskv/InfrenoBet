@@ -63,7 +63,9 @@ function renderFullPage(html, preloadedState, styleTags) {
             <meta name="viewport"
                   content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
             <meta http-equiv="X-UA-Compatible" content="ie=edge">
-            <title>INFERNOBET - онлайн лотерея</title>
+            <title>INFERNOBET - играй и побеждай!</title>
+            <meta name=description content="Сервис, в котором игроки DOTA 2 и обычные пользователи могут испытать свою удачу в захватывающей игре и получить уникальные скины!">
+            <meta name=keywords content="рулетка, бомж рулетка, ставки дота2, лотерея на деньги, рулетка дота 2, скины дота 2, магазин скинов дота 2, лотерея дота, быстрые скины дота 2, дабл ставки, быстрые скины дота 2, быстрые ставки, рулетка dota2, скины dota 2, лотерея dota, розыгрыши dota"/>
             <link rel="shortcut icon" href="/dist/resources/images/favicon.png" type="image/png">
 
             <meta name="verification" content="cf0bb3d99b3a1dba77e550d078a322" />
