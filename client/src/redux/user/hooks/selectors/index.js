@@ -9,8 +9,10 @@ const SELECTOR = {
     steamInventory: (state) => ({
         isVisible: state.user.isOpenedSteamInventory,
     }),
+    totalOnline: (state) => state.user.totalOnline,
 };
 
 export const useProfile = () => useSelector(SELECTOR.profile);
 export const useSidebar = () => useSelector(SELECTOR.sidebar);
 export const useSteamInventorySelector = () => useSelector(SELECTOR.steamInventory);
+export const useTotalOnline = () => useSelector(SELECTOR.totalOnline);

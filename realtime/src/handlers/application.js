@@ -16,17 +16,30 @@ export default function ({ app }) {
             socket.user = jwtDecode(token);
             if (!socket.user) return;
             app.managers.sockets.addSocketToUserById(socket.user._id, { socket });
+            app.managers.sockets.emitAllUsers({
+                eventName: 'project.users.online',
+                data: { count: app.managers.sockets.totalOnline }
+            });
         });
 
         socket.on('project.logOut', (token) => {
             if (!socket.user) return;
+            console.log('Remove user on logOut');
             app.managers.sockets.removeSocketFromUserById(socket.user._id, { socket });
+            app.managers.sockets.emitAllUsers({
+                eventName: 'project.users.online',
+                data: { count: app.managers.sockets.totalOnline }
+            });
             delete socket.jwtToken;
             delete socket.user;
         });
 
         socket.on('disconnect', () => {
             if (!socket.user) return;
+            app.managers.sockets.emitAllUsers({
+                eventName: 'project.users.online',
+                data: { count: app.managers.sockets.totalOnline }
+            });
             app.managers.sockets.removeSocketFromUserById(socket.user._id, { socket });
         });
 

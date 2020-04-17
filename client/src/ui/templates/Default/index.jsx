@@ -15,6 +15,8 @@ import SidebarCompact from 'ui/molecules/SidebarCompact';
 
 import media from 'src/helpers/media';
 import { useSidebar } from 'src/redux/user/hooks/selectors';
+import OnlineUsers from 'ui/molecules/OnlineUsers';
+import SocialNetworks from 'ui/molecules/SocialNetworks';
 
 const Content = styled.div`
     margin: 25px auto 0;
@@ -82,6 +84,8 @@ function Default({
                         }}
                     >
                         <Navigation />
+                        <OnlineUsers />
+                        <SocialNetworks />
                     </Sidebar>
                     <Wrapper>
                         <Vertical>

@@ -63,7 +63,9 @@ function renderFullPage(html, preloadedState, styleTags) {
             <meta name="viewport"
                   content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
             <meta http-equiv="X-UA-Compatible" content="ie=edge">
-            <title>INFERNO BET - онлайн лотерея</title>
+            <title>INFERNOBET - онлайн лотерея</title>
+            <link rel="shortcut icon" href="/dist/resources/images/favicon.png" type="image/png">
+
             <meta name="verification" content="cf0bb3d99b3a1dba77e550d078a322" />
             <meta name="swiftpay-verification" content="bf4a552b8fef2160a0b001ca4b7f11e3" />
             ${styleTags}

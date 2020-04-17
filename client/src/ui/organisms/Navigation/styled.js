@@ -69,15 +69,32 @@ export const NavigationList = styled.ul`
 `;
 
 export const ItemsGroupPVP = styled.div`
-    border-left: 30px solid var(--color-violet);
+    border-left: 25px solid var(--color-violet);
     position: relative;
     min-height: 40px;
-    margin-left: ${(props) => (props.isOpened ? '0' : '-25px')};
+    margin-left: ${(props) => (props.isOpened ? '0' : '-20px')};
     transition: .3s;
     &::after {
         content: 'PVP';
         position: absolute;
-        left: -26px;
+        left: -23px;
+        top: 50%;
+        color: var(--color-white);
+        transform-origin: 0 0;
+        transform: rotate(-90deg) translate(-50%, 2px);
+    }
+`;
+
+export const ItemsGroupFree = styled.div`
+    border-left: 25px solid #5d8427;
+    position: relative;
+    min-height: 40px;
+    margin-left: ${(props) => (props.isOpened ? '0' : '-20px')};
+    transition: .3s;
+    &::after {
+        content: 'MONEY';
+        position: absolute;
+        left: -23px;
         top: 50%;
         color: var(--color-white);
         transform-origin: 0 0;
@@ -86,15 +103,15 @@ export const ItemsGroupPVP = styled.div`
 `;
 
 export const ItemsGroupSystem = styled.div`
-    border-left: 30px solid var(--color-greyblue);
+    border-left: 25px solid var(--color-greyblue);
     position: relative;
     min-height: 80px;
-    margin-left: ${(props) => (props.isOpened ? '0' : '-25px')};
+    margin-left: ${(props) => (props.isOpened ? '0' : '-20px')};
     transition: .3s;
     &::after {
-        content: 'SYS';
+        content: 'COMMON';
         position: absolute;
-        left: -26px;
+        left: -23px;
         top: 50%;
         color: var(--color-white);
         transform-origin: 0 0;

@@ -5,6 +5,9 @@ import settingsSvg from 'src/resources/svg/settings.svg';
 import supportSvg from 'src/resources/svg/support.svg';
 import classicLogoSvg from 'src/resources/svg/classic-logo.svg';
 import withdrawSvg from 'src/resources/svg/withdraw.svg';
+import partnersSvg from 'src/resources/svg/partners.svg';
+import moneySvg from 'src/resources/svg/money.svg';
+import keySvg from 'src/resources/svg/key.svg';
 
 import { useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -16,6 +19,7 @@ import { mapDispatchToProps, mapStateToProps } from './connect';
 
 import {
     NavigationContainer,
+    ItemsGroupFree,
     NavigationList,
     NavigationTitle,
     ItemsGroupPVP,
@@ -40,22 +44,52 @@ const GROUPS = [
     },
     {
         id: 1,
+        WRAPPER: ItemsGroupFree,
+        items: [
+            {
+                id: 1,
+                to: '/deposit',
+                svg: moneySvg,
+                text: 'Пополнение',
+                description: 'Пополни счет или добавь скины в инвентарь!',
+                accessLevel: 0,
+            },
+            {
+                id: 2,
+                to: '/withdraw',
+                svg: withdrawSvg,
+                text: 'Вывод',
+                description: 'Забери свой выигрыш!',
+                accessLevel: 0,
+            },
+            {
+                id: 0,
+                to: '/account/partner',
+                svg: partnersSvg,
+                text: 'Партнерка',
+                description: 'Получай диведенды с выигрышей рефералов!',
+                accessLevel: 1,
+            },
+        ],
+    },
+    {
+        id: 1,
         WRAPPER: ItemsGroupSystem,
         items: [
             {
                 id: 0,
                 to: '/logup',
-                svg: settingsSvg,
+                svg: keySvg,
                 text: 'Регистрация',
                 description: 'Создай новый профиль!',
                 accessLevel: 0,
             },
             {
                 id: 1,
-                to: '/withdraw',
+                to: '/support',
                 svg: supportSvg,
-                text: 'Вывод',
-                description: 'Забери свой выигрыш!',
+                text: 'Поддержка',
+                description: 'Задавай вопросы!',
                 accessLevel: 0,
             },
         ],

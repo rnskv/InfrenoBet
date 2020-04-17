@@ -5,7 +5,10 @@ class SocketsManager extends Manager {
         super();
         this.io = null;
         this.usersSocketsMap = {};
+    }
 
+    get totalOnline() {
+        return Object.keys(this.usersSocketsMap).length
     }
 
     init({ handlers }) {
@@ -57,7 +60,7 @@ class SocketsManager extends Manager {
     addSocketToUserById(id, { socket }) {
         if (!id) return;
         if (!this.usersSocketsMap[id]) {
-            this.usersSocketsMap[id] = [socket.id]
+            this.usersSocketsMap[id] = [socket.id];
         } else {
             if (this.usersSocketsMap[id].includes(socket.id)) return;
             this.usersSocketsMap[id].push(socket.id);

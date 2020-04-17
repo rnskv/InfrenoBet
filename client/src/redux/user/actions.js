@@ -74,6 +74,11 @@ export const openLoginPopup = () => ({
     type: actionTypes.OPEN_LOGIN_POPUP,
 });
 
+export const updateTotalOnline = (payload) => ({
+    type: actionTypes.UPDATE_TOTAL_ONLINE,
+    payload,
+});
+
 
 export const closeLoginPopup = () => ({
     type: actionTypes.CLOSE_LOGIN_POPUP,

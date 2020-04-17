@@ -96,6 +96,11 @@ export default async function ({ app }) {
         store.dispatch(actions.user.addNotification({ type, params }));
     });
 
+    realtime.io.on('project.users.online', ({ count }) => {
+        console.log('Новые кол-во пользователей', count);
+        store.dispatch(actions.user.updateTotalOnline({ count }));
+    });
+
     await store.dispatch(domains.game.getLastWinner());
     await store.dispatch(domains.game.getLuckyWinner());
     await store.dispatch(domains.game.getGreatestWinner());
