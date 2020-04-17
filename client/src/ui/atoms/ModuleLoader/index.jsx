@@ -2,14 +2,16 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import Loader from 'ui/atoms/Loader';
-import { Container } from './styled';
+import { Container, LoadingPage } from './styled';
 
-function ModuleLoader({ isLoading }) {
+function ModuleLoader({ isLoading, fullScreen }) {
     if (!isLoading) return <></>;
 
     return (
-        <Container>
-            <Loader isStyled color="white" size="big" />
+        <Container fullScreen={fullScreen}>
+            {
+                fullScreen ? <LoadingPage src={'/dist/resources/images/loading.gif'}/> : <Loader isStyled color="white" size="big" />
+            }
         </Container>
     );
 }
@@ -19,7 +21,7 @@ ModuleLoader.propTypes = {
 };
 
 ModuleLoader.defaultProps = {
-    isLoading: false
+    isLoading: false,
 };
 
 export default ModuleLoader;

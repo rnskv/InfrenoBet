@@ -33,21 +33,26 @@ function handleRender(req, res) {
 
     // Render the component to a string
     const context = {};
-    const html = renderToString(
-        <StyleSheetManager sheet={sheet.instance}>
-            <StaticRouter location={req.url} context={context}>
-                <App store={store} />
-            </StaticRouter>
-        </StyleSheetManager>,
-    );
+    try {
+        const html = renderToString(
+            <StyleSheetManager sheet={sheet.instance}>
+                <StaticRouter location={req.url} context={context}>
+                    <App store={store} />
+                </StaticRouter>
+            </StyleSheetManager>,
+        );
 
-    // Grab the initial state from our Redux store
-    const preloadedState = store.getState();
+        // Grab the initial state from our Redux store
+        const preloadedState = store.getState();
 
-    const styleTags = sheet.getStyleTags(); // or sheet.getStyleElement();
-    sheet.seal();
-    // Send the rendered page back to the client
-    res.send(renderFullPage(html, preloadedState, styleTags));
+        const styleTags = sheet.getStyleTags(); // or sheet.getStyleElement();
+        // Send the rendered page back to the client
+        res.send(renderFullPage(html, preloadedState, styleTags));
+    } catch (err) {
+
+    } finally {
+        sheet.seal();
+    }
 }
 function renderFullPage(html, preloadedState, styleTags) {
     return `
