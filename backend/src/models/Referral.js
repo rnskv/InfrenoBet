@@ -52,6 +52,7 @@ Referral.getByParams = async (params) => {
 Referral.getByPartnerId = async (id, filter) => {
     return {
         body: await Referral.find({ partner: mongoose.Types.ObjectId(id)})
+            .sort({ createDate: -1 })
             .limit(filter.limit)
             .populate('user')
             .populate('partner'),
