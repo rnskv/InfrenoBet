@@ -34,6 +34,9 @@ const Content = styled.div`
 const PrevContent = styled.div`
   margin-top: ${({ isNeedMargin }) => (isNeedMargin ? '25px' : 0)};
   width: 900px;
+  ${media.tablet`
+    width: 100%;
+  `}
 `;
 
 const Page = styled.div`

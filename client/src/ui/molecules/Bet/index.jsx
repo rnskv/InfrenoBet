@@ -20,11 +20,13 @@ function Bet({
             <StyledAvatar src={user.avatar} />
             <Description>
                 <div>
-                    {`${user.name} вложил монету ( ${getExchangedSum(item.parent.cost)} )` }
+                    {`${user.name} вложил
+                    ${item.parent.type === 0 ? 'монету' : item.parent.name }
+                    ( ${getExchangedSum(item.parent.cost)} )` }
                 </div>
                 <div>
                     <b>
-                        {`Билеты: от ${ticketFrom} до ${ticketTo}`}
+                        {`Билеты: от #${ticketFrom} до #${ticketTo}`}
                     </b>
                 </div>
             </Description>
