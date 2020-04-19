@@ -70,6 +70,9 @@ class SocketsManager extends Manager {
     removeSocketFromUserById(id, { socket }) {
         if (!id) return;
         this.usersSocketsMap[id] = this.usersSocketsMap[id].filter((socketId) => socketId !== socket.id);
+        if (this.usersSocketsMap[id].length === 0) {
+            delete this.usersSocketsMap[id];
+        }
     }
 }
 
