@@ -57,6 +57,22 @@ const Vertical = styled.div`
 
 `;
 
+const Beta = styled.div`
+  b {
+    color: var(--color-yellow);
+    font-size: 16px;
+  }  
+  
+  a {
+    color: var(--color-blue);
+  }
+  
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+  padding: 25px;
+  background: var(--color-grey-400);
+`;
+
 const SIDEBAR_TABS = {
     NOTIFICATIONS: <SidebarNotifications />,
     CHAT: <div style={{
@@ -89,6 +105,16 @@ function Default({
                     </Sidebar>
                     <Wrapper>
                         <Vertical>
+                            <PrevContent isNeedMargin>
+                                <Beta>
+                                    <b>BETA</b> версия. В данных момент сайт находится на стадии разработки.
+                                    Ключевые функции уже доступны, и нам нужны тестировщики
+                                    которые помогут выявить слабые места уже сейчас,
+                                    что бы мы могли улучшить игровой опыт участников перед релизом.
+                                    Связь с разработчиками <a target="_blank" href="https://vk.com/board128633025">здесь</a>
+                                </Beta>
+                            </PrevContent>
+
                             <PrevContent isNeedMargin={!!prevContent.length}>
                                 { prevContent }
                             </PrevContent>
