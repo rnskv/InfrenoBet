@@ -45,61 +45,64 @@ infernoIO.addManager('rooms', roomsManager);
 infernoIO.addManager('redis', redisManager);
 // infernoIO.addPlugin('steam', SteamPlugin);
 
-infernoIO.init().then(async (app) => {
-    app.managers.redis.subscribe('user.notifications.add');
-    app.managers.redis.subscribe('user.inventory.add');
-    app.managers.redis.on('message', (channel, message) => {
-        console.log('redis учуял кровь!', channel);
-        switch (channel) {
-            case 'user.notifications.add': {
-                const { userId, type, params } = JSON.parse(message);
-                if (!userId) return;
-                app.managers.sockets.emitUserById(userId, {
-                    eventName: 'project.notification',
-                    data: {
-                        type,
-                        params
-                    }
-                });
-            }
+infernoIO.init({
+    afterInitCallback: (app) => {
+        app.managers.redis.subscribe('user.notifications.add');
+        app.managers.redis.subscribe('user.inventory.add');
 
-            case 'user.inventory.add': {
-                const { user, items } = JSON.parse(message);
+        app.managers.redis.on('message', (channel, message) => {
+            console.log('redis учуял кровь!', channel);
+            switch (channel) {
+                case 'user.notifications.add': {
+                    const { userId, type, params } = JSON.parse(message);
+                    if (!userId) return;
+                    app.managers.sockets.emitUserById(userId, {
+                        eventName: 'project.notification',
+                        data: {
+                            type,
+                            params
+                        }
+                    });
+                }
 
-                if (!user) return;
+                case 'user.inventory.add': {
+                    const { user, items } = JSON.parse(message);
 
-                app.managers.sockets.emitUserById(user._id, {
-                    eventName: 'project.notification',
-                    data: {
-                        type:  notificationsTypes.TRADEOFFER_ACCEPTED
-                    }
-                });
+                    if (!user) return;
 
-                userApi.execute('addInventory', {
-                   body: {
-                       user,
-                       items
-                   }
-                }).then((response) => {
                     app.managers.sockets.emitUserById(user._id, {
                         eventName: 'project.notification',
                         data: {
-                            type:  notificationsTypes.INVENTORY_ITEMS_ADDED
+                            type:  notificationsTypes.TRADEOFFER_ACCEPTED
                         }
                     });
 
-                    app.managers.sockets.emitUserById(user._id, {
-                        eventName: 'project.inventory.add'
-                    });
-                }).catch(err => {
-                    console.log('Ошибка при обновлении инвентаря', err)
-                });
+                    userApi.execute('addInventory', {
+                        body: {
+                            user,
+                            items
+                        }
+                    }).then((response) => {
+                        app.managers.sockets.emitUserById(user._id, {
+                            eventName: 'project.notification',
+                            data: {
+                                type:  notificationsTypes.INVENTORY_ITEMS_ADDED
+                            }
+                        });
 
-                break;
+                        app.managers.sockets.emitUserById(user._id, {
+                            eventName: 'project.inventory.add'
+                        });
+                    }).catch(err => {
+                        console.log('Ошибка при обновлении инвентаря', err)
+                    });
+
+                    break;
+                }
             }
-        }
-    })
-});
+        })
+    }
+})
 
 socketsManager.init({ handlers });
 socketsManager.connect({ socket, server });

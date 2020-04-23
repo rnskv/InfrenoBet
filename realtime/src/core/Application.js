@@ -9,7 +9,7 @@ class Application {
         this.plugins = {};
     }
 
-    init() {
+    init({ afterInitCallback }) {
         return new Promise((resolve, reject) => {
             this.provideAppToManagers();
 
@@ -25,6 +25,7 @@ class Application {
                     api.setBearer(token);
                 });
 
+                afterInitCallback(this);
                 resolve(this);
             }).catch((err) => {
                 console.log('Не удалось авторизироваться');
