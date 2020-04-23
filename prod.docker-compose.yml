@@ -35,6 +35,7 @@ services:
     container_name: inferno_db
   redis:
     image: redis
+    restart: always
     ports:
       - "6379:6379"
     command: redis-server --requirepass kjashdhqe!i321lDdasd
