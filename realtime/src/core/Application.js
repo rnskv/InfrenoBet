@@ -31,7 +31,7 @@ class Application {
                 resolve(this);
             }).catch((err) => {
                 console.log('Не удалось авторизироваться');
-                setTimeout(this.init.bind(this), 5000);
+                setTimeout(this.init.bind(this), 5000, afterInitCallback);
                 reject(err);
             });
         })
