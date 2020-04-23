@@ -41,6 +41,7 @@ services:
         image: redis
         sysctls:
             net.core.somaxconn: 1024
+            vm.overcommit_memory: 1
         restart: always
         ports:
             - "6379:6379"
