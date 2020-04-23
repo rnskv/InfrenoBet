@@ -39,6 +39,8 @@ services:
         container_name: inferno_db
     redis:
         image: redis
+        sysctls:
+            net.core.somaxconn: 1024
         restart: always
         ports:
             - "6379:6379"

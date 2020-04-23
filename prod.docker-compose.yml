@@ -36,6 +36,8 @@ services:
   redis:
     image: redis
     restart: always
+    sysctls:
+      net.core.somaxconn: 1024
     ports:
       - "6379:6379"
     command: redis-server --requirepass kjashdhqe!i321lDdasd
