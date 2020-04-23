@@ -58,16 +58,21 @@ const Vertical = styled.div`
 `;
 
 const Beta = styled.div`
+  line-height: 28px;
   b {
     color: var(--color-yellow);
-    font-size: 16px;
+    font-size: 22px;
+    padding: 5px 10px;
+    background-color: var(--color-grey-500);
+    border-radius: 5px;
+    margin: 0 10px 0 0;
   }  
   
   a {
     color: var(--color-blue);
   }
   
-  font-size: 14px;
+  font-size: 15px;
   color: rgba(255, 255, 255, 0.6);
   padding: 25px;
   background: var(--color-grey-400);
@@ -107,7 +112,7 @@ function Default({
                         <Vertical>
                             <PrevContent isNeedMargin>
                                 <Beta>
-                                    <b>BETA</b> версия. В данный момент сайт находится на стадии разработки.
+                                    <b>BETA</b>
                                     Ключевые функции уже доступны, и нам нужны тестировщики
                                     которые помогут выявить слабые места уже сейчас,
                                     чтобы мы смогли улучшить игровой опыт участников перед релизом.
