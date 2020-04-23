@@ -9,10 +9,28 @@ export const Container = styled.div`
     box-sizing: border-box;
 `;
 
+export const Yellow = styled.span`
+    color: var(--color-yellow);
+`;
+
+export const Blue = styled.span`
+    color: var(--color-blue);
+`;
+
+
 export const Description = styled.div`
   color: var(--color-white);
-  font-size: 14px;
+  font-size: 20px;
   padding: 0 25px;
+  line-height: 34px;
+  
+  b {
+    display: block;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+    padding: 5px;
+    font-weight: 400;
+  }
 `;
 
 export const AwardsContainer = styled.div`
