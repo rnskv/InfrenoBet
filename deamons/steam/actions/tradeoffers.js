@@ -143,10 +143,14 @@ module.exports = (root) => {
                         JSON.stringify({
                             userId: profile._id,
                             type: 'TRADEOFFER_SENT_ERROR',
-                        })
+                        }), (err) => {
+                            console.log('Send message to redis', err)
+                        }
                     );
                 },
                 onSuccess: async (offer) => {
+                    console.log('Publish notification with verify code to redis');
+
                     root.redis.publish('user.notifications.add',
                         JSON.stringify({
                             userId: profile._id,
