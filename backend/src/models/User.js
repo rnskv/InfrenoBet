@@ -5,6 +5,9 @@ import Bet from './Bet';
 const { Schema } = mongoose;
 import { USER_NOT_ENOUGH_MONEY, USER_NOT_FOUND } from 'src/types/errors';
 import TradeOffer from './TradeOffer';
+import Experience from './Experience';
+import { getAwardForLevel, getExperienceForLevel, getLevelIndexByExperience } from 'shared/helpers/levels';
+import { USER_NOT_GET_NEEDED_LEVEL, USER_WRONG_AWARD_LEVEL } from 'shared/configs/notificationsTypes';
 
 const userSchema = new Schema({
     vkId: {
@@ -52,6 +55,10 @@ const userSchema = new Schema({
         type: Number,
         default: 0,
     },
+    receivedAwards: {
+        type: Number,
+        default: 0,
+    },
     isConfirmed: {
         type: Boolean,
         default: false,
@@ -70,7 +77,7 @@ const userSchema = new Schema({
     },
     createDate: {
         type: Date,
-        default: Date.now(),
+        default: () => Date.now(),
     }
 });
 
@@ -150,6 +157,25 @@ User.removeItemsFromInventory = async (id, itemsIds) => {
     return true;
 };
 
+User.addExperience = async ({ id, amount, type }) => {
+    const user = await User.getById(id);
+
+    if (!user) {
+        throw USER_NOT_FOUND;
+    }
+
+    user.experience = Number(user.experience) + Number(amount);
+    user.save();
+
+    await Experience.create({
+        user: id,
+        amount,
+        type,
+    });
+
+    return user
+};
+
 User.changeBalance = async (id, amount) => {
     const user = await User.getById(id);
 
@@ -177,6 +203,33 @@ User.checkUserInventoryItems = async (id, itemsIds) => {
     }
 
     return true;
+};
+
+User.addAward = async ({ id, lvl }) => {
+    const user = await User.getById(id);
+    const { receivedAwards, experience } = user;
+    console.log('id', id);
+    const level = getLevelIndexByExperience(experience) + 1;
+    const award = getAwardForLevel(lvl);
+    const awardLevelExperience = getExperienceForLevel(lvl);
+
+    if (lvl - 1 !== receivedAwards) {
+        console.log('Награда за уровень', lvl);
+        console.log('Получено наград', receivedAwards);
+        throw USER_WRONG_AWARD_LEVEL;
+    }
+
+    if (awardLevelExperience > experience) {
+        throw USER_NOT_GET_NEEDED_LEVEL;
+    }
+
+    user.receivedAwards = lvl;
+    await user.save();
+    await User.changeBalance(user._id, award);
+
+    return {
+        ok: true
+    }
 };
 
 export default User;

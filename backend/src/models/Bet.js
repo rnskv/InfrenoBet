@@ -40,7 +40,7 @@ const betSchema = new Schema({
 const Bet = mongoose.model('bet', betSchema);
 
 Bet.create = async (data) => {
-    console.log('New bet creating...')
+    console.log('New bet creating...');
     return new Bet(data).save()
 };
 

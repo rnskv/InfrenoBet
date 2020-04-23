@@ -119,6 +119,10 @@ export default ({ app }) => {
             url: '/steam/inventory',
             method: 'get',
         }),
+        getAward: new Request({
+            url: '/lvl/award',
+            method: 'post',
+        }),
     });
 
     gamesApi.addRequests({

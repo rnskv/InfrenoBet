@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import CommonFooter from 'ui/molecules/Footer';
 
 export const Footer = styled(CommonFooter)`
-    background: var(--color-blue);
+    background: linear-gradient(180deg, var(--color-blue), var(--color-blue-500));
 `;
 
 export const Icon = styled.div`

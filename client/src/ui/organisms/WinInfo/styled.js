@@ -5,7 +5,7 @@ import Button from 'ui/atoms/Button';
 
 export const Container = styled.div`
     animation: .6s ${keyframes`${fadeInUp}`};
-    background: var(--color-blue);
+    background: linear-gradient(180deg, var(--color-blue), var(--color-blue-500));
     width: 100%;
     display: flex;
     position: relative;

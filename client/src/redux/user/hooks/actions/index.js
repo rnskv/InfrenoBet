@@ -13,7 +13,7 @@ const {
     closeSidebar,
 } = infernoClient.modules.store.actions.user;
 
-const { getProfile } = infernoClient.modules.store.domains.user;
+const { getProfile, getAward } = infernoClient.modules.store.domains.user;
 
 export const useNotificationActions = () => useActions({ removeAllNotifications, addNotification });
 
@@ -30,4 +30,8 @@ export const useSidebarActions = () => useActions({
     changeTab: changeSidebarTab,
     open: openSidebar,
     close: closeSidebar,
+});
+
+export const useLevelActions = () => useActions({
+    getAward,
 });

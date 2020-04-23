@@ -149,6 +149,22 @@ const getMeHandler = async (ctx) => {
     };
 };
 
+const receiveAwardHandler = async (ctx) => {
+    const { user } = ctx.state;
+    const { lvl } = ctx.request.body;
+
+    if (!lvl || !user) {
+        ctx.throw(INTERNAL_SERVER_ERROR);
+    }
+
+    try {
+        await User.addAward({ id: user._id, lvl });
+        ctx.body = { ok: true }
+    } catch (err) {
+        ctx.throw({ type: err })
+    }
+};
+
 export const getMe = new Action({
     method: 'get',
     url: '/me',
@@ -201,5 +217,12 @@ export const getSteamInventory = new Action({
     method: 'get',
     url: '/steam/inventory',
     handler: getSteamInventoryHandler,
+    middlewares: [passport.authenticate('jwt')],
+});
+
+export const receiveAward = new Action({
+    method: 'post',
+    url: '/lvl/award',
+    handler: receiveAwardHandler,
     middlewares: [passport.authenticate('jwt')],
 });

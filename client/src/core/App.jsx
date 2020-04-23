@@ -70,11 +70,11 @@ function App({ store }) {
                 <Route path="/game/lottery/history" exact>
                     <GamesHistory />
                 </Route>
-                <Route path="/admin/withdraws">
+                <Route path="/admin/withdraws" exact>
                     <Withdraws />
                 </Route>
 
-                <Route path="/admin/system">
+                <Route path="/admin/system" exact>
                     <System />
                 </Route>
 

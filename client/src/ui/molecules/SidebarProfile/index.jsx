@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import Avatar from 'ui/atoms/Avatar';
+import { getExperienceForLevel, getLevelIndexByExperience } from 'shared/helpers/levels';
 import { mapDispatchToProps, mapStateToProps } from './connect';
 
 
@@ -32,6 +33,10 @@ function SidebarProfile({
     profile, token, className, style,
 }) {
     if (!token) return null;
+    const lvlIndex = getLevelIndexByExperience(profile.experience);
+    const nextLevelExperience = getExperienceForLevel(lvlIndex + 1);
+    const currentLevelExperience = getExperienceForLevel(lvlIndex);
+
     return (
         <Container className={className} style={style}>
             {
@@ -43,11 +48,19 @@ function SidebarProfile({
                             <Wrapper>
                                 <Name>{ profile.name || '%name%'}</Name>
                                 <TotalExperienceBar>
-                                    <ExperienceBar />
+                                    <ExperienceBar percent={
+                                        Math.floor(profile.experience - currentLevelExperience)
+                                        / (nextLevelExperience - currentLevelExperience) * 100
+                                    }
+                                    />
                                 </TotalExperienceBar>
                                 <Information>
-                                    <Level>LVL 1</Level>
-                                    <Experience>0/500XP</Experience>
+                                    <Level>
+                                        { `LVL ${lvlIndex + 1}` }
+                                    </Level>
+                                    <Experience>
+                                        { `${Math.floor(profile.experience)} / ${nextLevelExperience}XP` }
+                                    </Experience>
                                 </Information>
                             </Wrapper>
                         </>

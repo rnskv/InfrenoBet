@@ -5,7 +5,7 @@ import NumbersPlace from 'ui/atoms/NumbersPlace';
 import media from 'src/helpers/media';
 
 export const Container = styled.div`
-    background: var(--color-blue);
+    background: linear-gradient(180deg, var(--color-blue), var(--color-blue-500));
     display: flex;
     align-items: center;
     flex-direction: column;

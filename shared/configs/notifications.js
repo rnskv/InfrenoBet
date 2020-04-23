@@ -41,10 +41,28 @@ import {
     REFERRAL_CODE_WRONG,
     REFERRAL_CODE_COPY_SUCCESS,
     REFERRAL_COPY_ERROR,
-    REFERRAL_LINK_COPY_SUCCESS
+    REFERRAL_LINK_COPY_SUCCESS,
+    USER_NOT_GET_NEEDED_LEVEL,
+    USER_WRONG_AWARD_LEVEL,
+    USER_GET_AWARD_FOR_LEVEL
 } from './notificationsTypes';
 
 export default {
+    [USER_NOT_GET_NEEDED_LEVEL]: {
+        type: 'ERROR',
+        title: 'Награда за уровень',
+        text: 'Вы не достигли необходимого уровня.',
+    },
+    [USER_WRONG_AWARD_LEVEL]: {
+        type: 'ERROR',
+        title: 'Награда за уровень',
+        text: 'Вы не можете получить награду за этот уровень.',
+    },
+    [USER_GET_AWARD_FOR_LEVEL]: {
+        type: 'SUCCESS',
+        title: 'Награда за уровень',
+        text: 'Награда за достижение уровня получена!',
+    },
     [REFERRAL_CODE_COPY_SUCCESS]: {
         type: 'SUCCESS',
         title: 'Партнёрка',

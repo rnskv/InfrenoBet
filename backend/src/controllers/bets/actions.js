@@ -10,6 +10,7 @@ import User from 'src/models/User';
 
 import InventoryItem from 'src/models/InventoryItem';
 import { INTERNAL_SERVER_ERROR } from 'shared/configs/notificationsTypes';
+import Experience from '../../models/Experience';
 
 const getHandler = async (ctx) => {
 
@@ -56,6 +57,12 @@ const createHandler = async (ctx) => {
             return;
         }
     }
+
+    await User.addExperience({
+        id: user,
+        amount: Math.floor(itemData.parent.cost * 100),
+        type: 'GAME_CLASSIC'
+    });
 
     console.log('Find in bet item with cost:', itemData.parent.cost);
 
