@@ -9,7 +9,7 @@ class Application {
         this.plugins = {};
     }
 
-    init({ afterInitCallback }) {
+    init({ afterInitCallback } = {}) {
         return new Promise((resolve, reject) => {
             this.provideAppToManagers();
 
