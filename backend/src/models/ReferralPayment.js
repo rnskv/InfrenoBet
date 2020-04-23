@@ -73,10 +73,10 @@ ReferralPayment.cashOutToUserBalanceById = async (id) => {
 
     await User.changeBalance(id, amount);
 
-    return await ReferralPayment.update({
-        partner:  mongoose.Types.ObjectId(id),
+    return await ReferralPayment.updateMany({
+        partner: mongoose.Types.ObjectId(id),
         status: 0,
-    }, { status: 1 });
+    }, { $set: { status: 1 } });
 };
 
 ReferralPayment.getPartnerAmountById = async (id) => {
