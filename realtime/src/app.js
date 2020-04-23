@@ -47,11 +47,12 @@ infernoIO.addManager('redis', redisManager);
 
 infernoIO.init({
     afterInitCallback: (app) => {
+        console.log('subscribes to redis channels')
         app.managers.redis.subscribe('user.notifications.add');
         app.managers.redis.subscribe('user.inventory.add');
 
         app.managers.redis.on('message', (channel, message) => {
-            console.log('redis учуял кровь!', channel);
+            console.log('redis blood seeker!', channel);
             switch (channel) {
                 case 'user.notifications.add': {
                     const { userId, type, params } = JSON.parse(message);
