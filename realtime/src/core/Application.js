@@ -10,6 +10,8 @@ class Application {
     }
 
     init(afterInitCallback) {
+        console.log('Init start. After init:', afterInitCallback);
+
         return new Promise((resolve, reject) => {
             this.provideAppToManagers();
 

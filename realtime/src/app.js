@@ -45,7 +45,7 @@ infernoIO.addManager('rooms', roomsManager);
 infernoIO.addManager('redis', redisManager);
 // infernoIO.addPlugin('steam', SteamPlugin);
 
-infernoIO.init((app) => {
+const afterInitCallback = (app) => {
     console.log('subscribes to redis channels')
     app.managers.redis.subscribe('user.notifications.add');
     app.managers.redis.subscribe('user.inventory.add');
@@ -73,7 +73,7 @@ infernoIO.init((app) => {
                 app.managers.sockets.emitUserById(user._id, {
                     eventName: 'project.notification',
                     data: {
-                        type:  notificationsTypes.TRADEOFFER_ACCEPTED
+                        type: notificationsTypes.TRADEOFFER_ACCEPTED
                     }
                 });
 
@@ -86,7 +86,7 @@ infernoIO.init((app) => {
                     app.managers.sockets.emitUserById(user._id, {
                         eventName: 'project.notification',
                         data: {
-                            type:  notificationsTypes.INVENTORY_ITEMS_ADDED
+                            type: notificationsTypes.INVENTORY_ITEMS_ADDED
                         }
                     });
 
@@ -101,7 +101,9 @@ infernoIO.init((app) => {
             }
         }
     })
-});
+};
+
+infernoIO.init(afterInitCallback);
 
 socketsManager.init({ handlers });
 socketsManager.connect({ socket, server });
