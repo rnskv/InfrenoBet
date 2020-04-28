@@ -74,12 +74,18 @@ function getWithdraw(ctx) {
 }
 
 async function getAllWithdraws(ctx) {
+    const { limit, offset } = ctx.request.query;
+    const filter = { status: 'CREATED' };
+    console.log('offset', ctx.request.body, offset);
 
-    const withdraws = await Withdraw.getByParams({
-        status: 'CREATED'
-    });
+    const withdraws = await Withdraw.getByParams(filter, {limit: Number(limit), offset: Number(offset)});
 
-    ctx.body = withdraws
+    ctx.body = {
+        data: withdraws,
+        extra: {
+            totalCount: await Withdraw.count(filter)
+        }
+    }
 }
 
 
@@ -127,5 +133,5 @@ export const getAll = new Action({
     method: 'get',
     url: '/',
     handler: getAllWithdraws,
-    // middlewares: [passport.authenticate('jwt'), accessMiddleware(100)]
+    middlewares: [passport.authenticate('jwt'), accessMiddleware(100)]
 });

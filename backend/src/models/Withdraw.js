@@ -50,9 +50,11 @@ Withdraw.getAll = async () => {
         .populate('user')
 };
 
-Withdraw.getByParams = async (params) => {
+Withdraw.getByParams = async (params, { limit, offset }) => {
     return await Withdraw.find(params)
         .sort({ createDate: -1 })
+        .limit(limit)
+        .skip(offset)
         .populate('user')
 };
 

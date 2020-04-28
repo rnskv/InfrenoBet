@@ -23,7 +23,8 @@ export const StyledContainer = styled.div`
   height: 100%;
   display: flex;
   justify-content: center;
-  position: relative;
+  position: ${({ isCover }) => isCover ? 'absolute' : 'relative'};
+  background-color: ${({ isCover }) => isCover ? 'var(--color-black-transparent)' : 'transparent'};
   align-items: center;
   
   svg {
