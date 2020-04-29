@@ -9,6 +9,7 @@ import partnersSvg from 'src/resources/svg/partners.svg';
 import moneySvg from 'src/resources/svg/money.svg';
 import keySvg from 'src/resources/svg/key.svg';
 import levelsSvg from 'src/resources/svg/levels.svg';
+import questionSvg from 'src/resources/svg/question.svg';
 
 import { useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -26,6 +27,7 @@ import {
     ItemsGroupPVP,
     ItemsGroupSystem,
 } from './styled';
+import { useProfile } from 'src/redux/user/hooks/selectors';
 
 const GROUPS = [
     {
@@ -91,7 +93,7 @@ const GROUPS = [
                 svg: keySvg,
                 text: 'Регистрация',
                 description: 'Создай новый профиль!',
-                accessLevel: 0,
+                accessLevel: -1,
             },
             {
                 id: 1,
@@ -99,7 +101,7 @@ const GROUPS = [
                 svg: settingsSvg,
                 text: 'Настройки',
                 description: 'Управляй аккаунтом!',
-                accessLevel: 0,
+                accessLevel: 1,
             },
             {
                 id: 2,
@@ -125,6 +127,14 @@ const GROUPS = [
                 description: 'Выводы нала пользователям!',
                 accessLevel: 100,
             },
+            {
+                id: 5,
+                to: '/faq',
+                svg: questionSvg,
+                text: 'FAQ',
+                description: 'Ответы на вопросы.',
+                accessLevel: 0,
+            },
         ],
     },
 ];
@@ -135,6 +145,7 @@ const state = {
 
 function Navigation({ token }) {
     const [isOpened, setIsOpened] = useState(state.isOpened);
+    const profile = useProfile();
 
     useEffect(() => {
         state.isOpened = isOpened;
@@ -158,7 +169,7 @@ function Navigation({ token }) {
                                     isActive={location.pathname.indexOf(item.to) !== -1}
                                     isVisible={
                                         token
-                                            ? item.accessLevel > -1 && item.accessLevel < 666 // replace from token
+                                            ? item.accessLevel > -1 && item.accessLevel < profile.accessLevel // replace from token
                                             : item.accessLevel >= -1 && item.accessLevel <= 0
                                     }
                                 />
