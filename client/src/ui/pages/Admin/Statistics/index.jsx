@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import DefaultTemplate from 'ui/templates/Default';
 import RoomNavigation from 'ui/organisms/RoomNavigation';
@@ -10,25 +10,34 @@ import { useServices } from 'src/helpers/hooks';
 import DatePicker from 'ui/atoms/DatePicker';
 
 function Statistics() {
-    const [dates, setDates] = useState([new Date(), new Date()]);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const tomorrow = new Date(today);
+
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    const [dates, setDates] = useState([today,tomorrow]);
     const [data, setData] = useState({});
 
     const services = useServices();
 
-    const loadStatistics = ({
-        startDate, endDate,
-    }) => async () => {
+    const loadStatistics = async () => {
         const { statistics } = services;
 
         const response = await statistics.execute('getAll', {
             params: {
-                startDate,
-                endDate,
+                startDate: dates[0],
+                endDate: dates[1],
             },
         });
 
         setData(response);
     };
+
+    useEffect(() => {
+        loadStatistics();
+    }, []);
+
 
     const items = [
         {
@@ -66,7 +75,7 @@ function Statistics() {
                         onChange={setDates}
                         value={dates}
                     />
-                    <Button onClick={loadStatistics({ startDate: dates[0], endDate: dates[1] })}>
+                    <Button onClick={loadStatistics}>
                         Загрузить
                     </Button>
                 </Filters>
