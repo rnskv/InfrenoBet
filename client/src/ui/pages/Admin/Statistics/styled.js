@@ -6,7 +6,6 @@ export const Wrapper = styled.div`
 `;
 
 export const Filters = styled.div`
-  margin-top: 25px;
   display: flex;
   justify-content: space-between;
 `;

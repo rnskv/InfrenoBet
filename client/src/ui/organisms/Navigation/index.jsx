@@ -8,6 +8,7 @@ import withdrawSvg from 'src/resources/svg/withdraw.svg';
 import partnersSvg from 'src/resources/svg/partners.svg';
 import moneySvg from 'src/resources/svg/money.svg';
 import keySvg from 'src/resources/svg/key.svg';
+import levelsSvg from 'src/resources/svg/levels.svg';
 
 import { useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -70,6 +71,14 @@ const GROUPS = [
                 description: 'Получай диведенды с выигрышей рефералов!',
                 accessLevel: 1,
             },
+            {
+                id: 3,
+                to: '/account/levels',
+                svg: levelsSvg,
+                text: 'Уровни',
+                description: 'Повышай уровень - получай награду!',
+                accessLevel: 1,
+            },
         ],
     },
     {
@@ -86,11 +95,35 @@ const GROUPS = [
             },
             {
                 id: 1,
-                to: '/support',
-                svg: supportSvg,
-                text: 'Поддержка',
-                description: 'Задавай вопросы!',
+                to: '/account/settings',
+                svg: settingsSvg,
+                text: 'Настройки',
+                description: 'Управляй аккаунтом!',
                 accessLevel: 0,
+            },
+            {
+                id: 2,
+                to: '/admin/statistics',
+                svg: settingsSvg,
+                text: 'Статистика',
+                description: 'Общая информация!',
+                accessLevel: 100,
+            },
+            {
+                id: 3,
+                to: '/admin/system',
+                svg: settingsSvg,
+                text: 'Системное',
+                description: 'Системные функции!',
+                accessLevel: 100,
+            },
+            {
+                id: 4,
+                to: '/admin/withdraws',
+                svg: settingsSvg,
+                text: 'Выводы',
+                description: 'Выводы нала пользователям!',
+                accessLevel: 100,
             },
         ],
     },

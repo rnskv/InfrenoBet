@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import User from './User';
 
 const { Schema } = mongoose;
 
@@ -19,7 +20,7 @@ const inventoryItemSchema = new Schema({
     },
     status: {
         type: Number,
-        default: 0, //0 - у пользователя, 10 - в комиссии
+        default: 0, //0 - у пользователя, 10 - в комиссии //20 - выведен
     }
 });
 
@@ -38,6 +39,11 @@ InventoryItem.updateOrCreateByName = (name, data) => {
 InventoryItem.create = async (data) => {
     return new InventoryItem(data).save()
 };
+
+InventoryItem.getAllByParams = async (params) => {
+    return await InventoryItem.find(params).populate('parent');
+};
+
 
 InventoryItem.updateById = async (id, data) => {
     return await InventoryItem.updateOne({ _id: mongoose.Types.ObjectId(id)}, { $set: data });

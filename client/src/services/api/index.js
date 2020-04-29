@@ -95,6 +95,14 @@ export default ({ app }) => {
             url: '/parse',
             method: 'post',
         }),
+        collectComission: new Request({
+            url: '/comission/collect',
+            method: 'post',
+        }),
+        getComission: new Request({
+            url: '/comission',
+            method: 'get',
+        }),
     });
 
     authApi.addRequests({

@@ -5,6 +5,7 @@ import Deposit from '../../models/Deposit';
 import Commission from '../../models/Comission';
 import Withdraw from '../../models/Withdraw';
 import ReferralPayment from '../../models/ReferralPayment';
+import Award from '../../models/Award';
 
 const getAllHandler = async (ctx) => {
     console.log('hello', ctx.request.query);
@@ -21,10 +22,11 @@ const getAllHandler = async (ctx) => {
     const totalComission = await Commission.getTotalSum(startDate, endDate) || defaultValue;
     const totalWithdraws = await Withdraw.getTotalSum(startDate, endDate) || defaultValue;
     const totalRevShare = await ReferralPayment.getTotalSum(startDate, endDate) || defaultValue;
+    const totalAwards = await Award.getTotalSum(startDate, endDate) || defaultValue;
 
     console.log(totalDeposits, totalComission, totalWithdraws, totalRevShare);
 
-    const NGR = (totalComission.amount - totalRevShare.amount) * 0.9;
+    const NGR = (totalComission.amount - totalRevShare.amount - totalAwards.amount) * 0.9;
 
 
     //TOTAL COMISSIONS
@@ -38,6 +40,7 @@ const getAllHandler = async (ctx) => {
         totalDeposits: totalDeposits.amount,
         totalRevShare: totalRevShare.amount,
         totalWithdraws: totalWithdraws.amount,
+        totalAwards: totalAwards.amount,
         NGR,
     };
 };

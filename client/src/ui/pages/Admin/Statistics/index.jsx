@@ -8,6 +8,7 @@ import { Wrapper, Filters } from 'ui/pages/Admin/Statistics/styled';
 import Button from 'ui/atoms/Button';
 import { useServices } from 'src/helpers/hooks';
 import DatePicker from 'ui/atoms/DatePicker';
+import ItemsCollector from 'ui/organisms/ItemsCollector';
 
 function Statistics() {
     const today = new Date();
@@ -39,19 +40,22 @@ function Statistics() {
     }, []);
 
 
-    const items = [
+    const mainItems = [
         {
             title: 'NGR',
             value: data.NGR,
         },
         {
-            title: 'Revshare',
+            title: 'RevShare',
             value: data.totalRevShare,
         },
         {
             title: 'Comission',
             value: data.totalComission,
         },
+    ];
+
+    const moneyItems = [
         {
             title: 'Deposits',
             value: data.totalDeposits,
@@ -59,6 +63,10 @@ function Statistics() {
         {
             title: 'Withdraws',
             value: data.totalWithdraws,
+        },
+        {
+            title: 'Awards',
+            value: data.totalAwards,
         },
     ];
 
@@ -69,7 +77,6 @@ function Statistics() {
                 title="Статистика сайта"
             />
             <Wrapper>
-                <StatisticsItem items={items} />
                 <Filters>
                     <DatePicker
                         onChange={setDates}
@@ -79,6 +86,9 @@ function Statistics() {
                         Загрузить
                     </Button>
                 </Filters>
+                <StatisticsItem title="MAIN" items={mainItems} />
+                <StatisticsItem title="MONEY" items={moneyItems} />
+                <ItemsCollector />
             </Wrapper>
         </DefaultTemplate>
     );

@@ -11,11 +11,11 @@ import {
     Title,
 } from './styled';
 
-function StatisticsItem({ items }) {
+function StatisticsItem({ title, items }) {
     return (
         <Container>
             <Icon>
-                TOTAL
+                { title }
             </Icon>
 
             {

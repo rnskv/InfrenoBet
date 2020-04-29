@@ -8,6 +8,7 @@ import TradeOffer from './TradeOffer';
 import Experience from './Experience';
 import { getAwardForLevel, getExperienceForLevel, getLevelIndexByExperience } from 'shared/helpers/levels';
 import { USER_NOT_GET_NEEDED_LEVEL, USER_WRONG_AWARD_LEVEL } from 'shared/configs/notificationsTypes';
+import Award from './Award';
 
 const userSchema = new Schema({
     vkId: {
@@ -226,6 +227,11 @@ User.addAward = async ({ id, lvl }) => {
     user.receivedAwards = lvl;
     await user.save();
     await User.changeBalance(user._id, award);
+    await Award.create({
+        amount: award,
+        source: 'LEVEL_UP',
+        user: user._id,
+    });
 
     return {
         ok: true

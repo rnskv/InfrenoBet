@@ -5,11 +5,12 @@ export const Container = styled.div`
    background: linear-gradient(to right, #3a4364, var(--color-grey-500));
    border: solid 2px #3a4364;
    display: flex;
+   margin-top: 25px;
 `;
 
 export const Icon = styled.div`
    color: var(--color-white);
-   font-size: 15px;
+   font-size: 30px;
    width: 150px;
    display: flex;
    justify-content: center;
