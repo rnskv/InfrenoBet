@@ -146,7 +146,7 @@ export default {
     [GAME_CLOSED_FOR_BETS]: {
         type: 'ERROR',
         title: 'Игра',
-        text: 'Ставки больше не принимаются. Игра скоро начнется"',
+        text: 'Ставки больше не принимаются. Игра скоро начнется!',
     },
     [BET_SENDING]: {
         type: 'SUCCESS',
@@ -161,7 +161,7 @@ export default {
     [REALTIME_DISCONNECTED]: {
         type: 'ERROR',
         title: 'Сервер',
-        text: 'На сервере возникли технические неполадки!',
+        text: 'Произошёл разрыв соединения!',
     },
     [WAITING_LAST_BETS]: {
         type: 'SUCCESS',
