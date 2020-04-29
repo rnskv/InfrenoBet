@@ -17,6 +17,7 @@ import GamesHistory from 'ui/pages/GamesHistory';
 
 import Withdraws from 'ui/pages/Admin/Withdraws';
 import System from 'ui/pages/Admin/System';
+import SiteStatistics from 'ui/pages/Admin/Statistics';
 
 import Lottery from 'ui/pages/Lottery';
 
@@ -70,6 +71,11 @@ function App({ store }) {
                 <Route path="/game/lottery/history" exact>
                     <GamesHistory />
                 </Route>
+
+                <Route path="/admin/statistics" exact>
+                    <SiteStatistics />
+                </Route>
+
                 <Route path="/admin/withdraws" exact>
                     <Withdraws />
                 </Route>
@@ -200,7 +206,7 @@ App.propTypes = {
 };
 
 App.defaultProps = {
-    store: {}
+    store: {},
 };
 
 export default App;

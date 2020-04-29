@@ -6,6 +6,7 @@ import { moveReferralCodeToCookies } from 'src/helpers/system';
 import createWithdrawApi from './withdraw';
 import createTradeOffersApi from './tradeoffers';
 import createReferralsApi from './referrals';
+import createStatisticsApi from './statistics';
 
 const { SERVER_PROTOCOL, SERVER_PORT, SERVER_HOST } = process.env;
 
@@ -27,6 +28,7 @@ export default ({ app }) => {
     const withdrawApi = createWithdrawApi({ app, onError: errorDefaultHandler });
     const tradeOffersApi = createTradeOffersApi({ app, onError: errorDefaultHandler });
     const referralsApi = createReferralsApi({ app, onError: errorDefaultHandler });
+    const statisticsApi = createStatisticsApi({ app, onError: errorDefaultHandler });
 
     const paymentApi = new Api({
         url: `${SERVER_PROTOCOL}://${SERVER_HOST}:${SERVER_PORT}/api/payment`,
@@ -177,5 +179,6 @@ export default ({ app }) => {
         withdraw: withdrawApi,
         tradeOffers: tradeOffersApi,
         referrals: referralsApi,
+        statistics: statisticsApi,
     };
 };

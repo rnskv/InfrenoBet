@@ -40,7 +40,7 @@ const userSchema = new Schema({
     },
     balance: {
         type: Number,
-        default: 0.01,
+        default: 0,
     },
     inventory: {
         type: [mongoose.Types.ObjectId],

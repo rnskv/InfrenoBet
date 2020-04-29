@@ -4,6 +4,7 @@ import Referral from './Referral';
 import User from './User';
 
 import { INTERNAL_SERVER_ERROR, REFERRAL_CODE_ALREADY_EXIST } from 'shared/configs/notificationsTypes';
+import Withdraw from './Withdraw';
 
 const { Schema } = mongoose;
 
@@ -100,6 +101,27 @@ ReferralPayment.getPartnerAmountById = async (id) => {
     if (!data[0]) return 0;
 
     return data[0].amount;
+};
+
+ReferralPayment.getTotalSum = async (startDate, endDate) => {
+    return (await ReferralPayment.aggregate([
+        {
+            $match : {
+                createDate: {
+                    $gte: startDate,
+                    $lte: endDate
+                }
+            },
+        },
+        {
+            $group: {
+                _id: null,
+                amount: {
+                    $sum: "$amount"
+                }
+            }
+        }
+    ]))[0]
 };
 
 export default ReferralPayment;

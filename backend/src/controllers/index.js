@@ -10,6 +10,7 @@ import withdraw from './withdraw/index.js';
 import tradeoffers from './tradeoffers/index.js';
 import commissions from './commissions/index.js';
 import referrals from './referrals/index.js';
+import statistics from './statistics/index.js';
 
 const router = new Router().prefix('/api');
 
@@ -24,5 +25,6 @@ router.use(withdraw.routes);
 router.use(tradeoffers.routes);
 router.use(commissions.routes);
 router.use(referrals.routes);
+router.use(statistics.routes);
 
 export default router;

@@ -1,5 +1,6 @@
 
 import mongoose from 'mongoose';
+import Deposit from './Deposit';
 
 const { Schema } = mongoose;
 
@@ -41,6 +42,27 @@ Commission.getByParams = async (params) => {
     return await Commission.find(params)
         .populate('inventoryItem')
         .populate('game');
+};
+
+Commission.getTotalSum = async (startDate, endDate) => {
+    return (await Commission.aggregate([
+        {
+            $match : {
+                createDate: {
+                    $gte: startDate,
+                    $lte: endDate
+                }
+            },
+        },
+        {
+            $group: {
+                _id: null,
+                amount: {
+                    $sum: "$amount"
+                }
+            }
+        }
+    ]))[0]
 };
 
 export default Commission;
