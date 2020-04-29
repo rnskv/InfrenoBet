@@ -74,7 +74,7 @@ const userSchema = new Schema({
     },
     referralShare: {
         type: Number,
-        default: 0.05
+        default: 0.1
     },
     createDate: {
         type: Date,
