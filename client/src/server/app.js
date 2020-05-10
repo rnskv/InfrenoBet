@@ -71,6 +71,7 @@ function renderFullPage(html, preloadedState, styleTags) {
             <link rel="canonical" href="https://infernobet.ru/"/>
             <meta name="verification" content="cf0bb3d99b3a1dba77e550d078a322" />
             <meta name="swiftpay-verification" content="bf4a552b8fef2160a0b001ca4b7f11e3" />
+            <meta name="yandex-verification" content="266251ef2bca23cc" />
             ${styleTags}
         </head>
         <body>
