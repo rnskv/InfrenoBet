@@ -16,6 +16,7 @@ import {
     More,
     StyledButton as Button,
 } from './styled';
+import Link from 'ui/atoms/Link';
 
 
 function GameControls({
@@ -33,7 +34,7 @@ function GameControls({
                 <Description>
                     {`Мин.ставка ${getExchangedSum(0.01)}, максимум предметов 10.`}
                     <br/><span>Чем выше ставка, тем больше шанс победить.</span>
-                    <More>Подробнее</More>
+                    <Link to="/faq"><More>Подробнее</More></Link>
                 </Description>
             </ItemsCount>
             <SplitArrow />

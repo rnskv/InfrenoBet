@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import { AgeConfirm, StyledCheckbox } from './styled';
+import Link from 'ui/atoms/Link';
 
 
 function VerifyAge({
@@ -15,7 +16,7 @@ function VerifyAge({
                 checked={isVerified}
             />
             {'Мне уже исполнилось 18 лет, а так же я ознакомился с '}
-            <a>правилами и условиями</a>
+            <Link to="/faq">правилами и условиями</Link>
         </AgeConfirm>
     );
 }
