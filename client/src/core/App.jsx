@@ -11,6 +11,7 @@ import {
 
 import Login from 'ui/pages/Login';
 import Logup from 'ui/pages/Logup';
+import Faq from 'ui/pages/Faq';
 import Deposit from 'ui/pages/Deposit';
 import Withdraw from 'ui/pages/Withdraw';
 import GamesHistory from 'ui/pages/GamesHistory';
@@ -82,6 +83,10 @@ function App({ store }) {
 
                 <Route path="/admin/system" exact>
                     <System />
+                </Route>
+
+                <Route path="/faq" exact>
+                    <Faq />
                 </Route>
 
                 <Route path="/close" exact>

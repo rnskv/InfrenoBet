@@ -5,12 +5,11 @@ const Section = styled.section`
     display: flex;
     position: relative;
     min-height: 400px;
-    background: var(--color-grey-500);
-
+    background: ${ ({ backgroundColor }) => backgroundColor || 'var(--color-grey-500)'};
+    box-sizing: border-box;
     ${media.tablet`
         flex-direction: column;
     `}
 `;
-
 
 export default Section;
