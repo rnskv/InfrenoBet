@@ -250,7 +250,7 @@ export const parse = new Action({
     method: 'post',
     url: '/parse',
     handler: parseHandler,
-    middlewares: [passport.authenticate('jwt'), accessMiddleware({ accessLevel: 100 })]
+    middlewares: [passport.authenticate('jwt'), accessMiddleware({ accessLevel: 50 })]
 });
 
 export const getAll = new Action({
@@ -263,21 +263,21 @@ export const add = new Action({
     method: 'post',
     url: '/',
     handler: postHandler,
-    middlewares: [passport.authenticate('jwt'), accessMiddleware({ accessLevel: 100 })]
+    middlewares: [passport.authenticate('jwt'), accessMiddleware({ accessLevel: 50 })]
 });
 
 export const validate = new Action({
     method: 'post',
     url: '/validate',
     handler: validateHandler,
-    middlewares: [passport.authenticate('jwt'), accessMiddleware({ accessLevel: 100 })]
+    middlewares: [passport.authenticate('jwt'), accessMiddleware({ accessLevel: 50 })]
 });
 
 export const register = new Action({
     method: 'post',
     url: '/register',
     handler: registerHandler,
-    middlewares: [passport.authenticate('jwt'), accessMiddleware({ accessLevel: 100 })]
+    middlewares: [passport.authenticate('jwt'), accessMiddleware({ accessLevel: 50 })]
 });
 
 export const collectComission = new Action({

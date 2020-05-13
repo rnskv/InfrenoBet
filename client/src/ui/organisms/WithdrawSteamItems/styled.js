@@ -48,6 +48,7 @@ export const InventoryContainer = styled.div`
   background-color: var(--color-blue);
   margin-right: 10px;
   border-radius: 8px;
+  max-width: 776px;
 `;
 
 export const ItemsViewport = styled.div`

@@ -85,7 +85,6 @@ function WithdrawSteamItems() {
             <Container>
                 <SteamLinkAttacher isVisible={!profile.steamId || !profile.steamTradeUrl} />
                 <Wrapper>
-
                     <InventoryContainer>
                         <ItemsViewport>
                             <StyledInventory

@@ -19,7 +19,7 @@ class Api {
             },
             onError: (err) => {
                 console.log('При авторизации DEAMONS сервера INFERNO произошла ошибка. Повторяем попытку...');
-                setTimeout(this.logIn.bind(this), 5000)
+                setTimeout(() => this.logIn({ email, password }), 5000)
             }
         })
     }
