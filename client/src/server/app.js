@@ -64,7 +64,7 @@ function renderFullPage(html, preloadedState, styleTags) {
                   content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
             <meta http-equiv="X-UA-Compatible" content="ie=edge">
             <meta name="viewport" content="width=1100px, initial-scale=0.3">
-            <title>INFERNOBET - играй и побеждай!</title>
+            <title>INFERNOBET - Ставки от 1 рубля!</title>
             <meta name=description content="Рулетка скинов дота 2, место, в котором каждый может испытать свою удачу в захватывающей игре и получить уникальные предметы!">
             <meta name=keywords content="рулетка, лотерея, ставки, ставки дота2, рулетка дота 2, скины дота 2, дота, быстрые скины дота 2, дабл ставки, быстрые ставки, рулетка dota2"/>
             <link rel="shortcut icon" href="/dist/resources/images/favicon.png" type="image/png">
