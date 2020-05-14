@@ -23,7 +23,7 @@ function GameBeginFooter({
             icon={<Icon />}
             text="ИГРА НАЧАЛАСЬ, УДАЧИ!"
         >
-            <FairGame>
+            <FairGame href="http://www.md5.cz/" target="_blank">
                 <div>Честная игра</div>
                 <span>
                     Хэш игры md5:

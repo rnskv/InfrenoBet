@@ -17,7 +17,9 @@ export const connectWithPartner = async function ({ referralCode, user }) {
                 user: user._id
             });
 
-            if (r.ok === false) {
+            if (r.ok === true) {
+                // await User.changeBalance(user._id, 0.01);
+            } else {
                 console.log('Пользователь уже является рефералом');
             }
         } else {

@@ -21,7 +21,7 @@ function StatisticsItem({ title, items }) {
             {
                 items.map((item) => (
                     <Item>
-                        <Value>{ getExchangedSum(item.value) }</Value>
+                        <Value>{ getExchangedSum(item.value || 0) }</Value>
                         <Title>{ item.title }</Title>
                     </Item>
                 ))

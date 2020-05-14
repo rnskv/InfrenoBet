@@ -16,6 +16,7 @@ export const GameBlock = styled.div`
   background: url('/dist/resources/images/dota.png') center;
   background-size: 100%;
   height: 80px;
+  min-height: 80px;
   transition: .3s background-size;
   display: flex;
   align-items: center;

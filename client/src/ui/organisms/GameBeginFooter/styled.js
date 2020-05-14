@@ -14,11 +14,12 @@ export const Icon = styled.div`
     left: 23px;
 `;
 
-export const FairGame = styled.div`
+export const FairGame = styled.a`
   display: flex;
   align-items: center;
   font-size: 12px;
   text-align: center;
+  text-decoration: none;
   
   div {
     color: var(--color-white);
