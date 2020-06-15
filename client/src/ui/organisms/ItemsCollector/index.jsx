@@ -11,6 +11,7 @@ import {
 } from './styled';
 import { Items } from 'ui/organisms/GameHistory/styled';
 import Title from 'ui/atoms/Title';
+import { getExchangedSum } from 'src/helpers/system';
 
 function ItemsCollector({ className, style }) {
     const services = useServices();
@@ -30,9 +31,11 @@ function ItemsCollector({ className, style }) {
         setComission(response);
     };
 
+    const totalSum = comission.reduce((acc, item) => acc + item.parent.cost, 0);
+
     return (
         <Container className={className} style={style}>
-            <Title>Предметы в комиссии:</Title>
+            <Title>Предметы в комиссии на сумму { getExchangedSum(totalSum) }:</Title>
             <Wrapper>
                 <BetItems
                     items={comission}
