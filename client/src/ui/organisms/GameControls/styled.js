@@ -44,7 +44,8 @@ export const Chance = styled.div`
   align-items: center;
   margin: 0 50px;
   color: var(--color-black);
-  font-size: 24px;
+  font-size: 18px;
+  font-weight: 400;
   
   ${media.tablet`
         font-size: 20px;
@@ -53,7 +54,8 @@ export const Chance = styled.div`
   span {
     color: var(--color-blue);
     margin-left: 10px;
-    font-size: 28px;
+    font-size: 35px;
+    font-weight: bold;
   }
   
   
@@ -75,13 +77,13 @@ export const SplitArrow = styled.div`
 
 export const Information = styled.div`
   color: var(--color-black);
-  font-size: 20px;
+  font-size: 18px;
 `;
 export const ItemsCount = styled.div`
   display: flex;
   flex-direction: column;
-  width: 40%;
-  
+  width: 45%;
+
   ${media.tablet`
        width: 100%;
        text-align: center;

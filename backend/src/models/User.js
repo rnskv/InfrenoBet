@@ -5,6 +5,10 @@ import Bet from './Bet';
 const { Schema } = mongoose;
 import { USER_NOT_ENOUGH_MONEY, USER_NOT_FOUND } from 'src/types/errors';
 import TradeOffer from './TradeOffer';
+import Experience from './Experience';
+import { getAwardForLevel, getExperienceForLevel, getLevelIndexByExperience } from 'shared/helpers/levels';
+import { USER_NOT_GET_NEEDED_LEVEL, USER_WRONG_AWARD_LEVEL } from 'shared/configs/notificationsTypes';
+import Award from './Award';
 
 const userSchema = new Schema({
     vkId: {
@@ -52,6 +56,10 @@ const userSchema = new Schema({
         type: Number,
         default: 0,
     },
+    receivedAwards: {
+        type: Number,
+        default: 0,
+    },
     isConfirmed: {
         type: Boolean,
         default: false,
@@ -60,15 +68,28 @@ const userSchema = new Schema({
         type: Number,
         default: 1,
     },
+    referralCode: {
+        type: String,
+        default: null,
+    },
+    referralShare: {
+        type: Number,
+        default: 0.1
+    },
     createDate: {
         type: Date,
-        default: new Date(),
-    },
+        default: () => Date.now(),
+    }
 });
 
 userSchema.plugin(privatePaths);
 
 const User = mongoose.model('user', userSchema);
+
+User.checkReferralCode = async (referralCode) => {
+    return Boolean(await User.findOne({ referralCode }));
+};
+
 User.getByParams = async (params) => {
     return await User.findOne(params)
         .populate({
@@ -79,6 +100,12 @@ User.getByParams = async (params) => {
                 model: 'item',
             }
         })
+};
+
+User.create = async (data) => {
+    const user = await new User(data);
+    await user.save();
+    return user;
 };
 
 User.getById = async (id) => {
@@ -131,6 +158,25 @@ User.removeItemsFromInventory = async (id, itemsIds) => {
     return true;
 };
 
+User.addExperience = async ({ id, amount, type }) => {
+    const user = await User.getById(id);
+
+    if (!user) {
+        throw USER_NOT_FOUND;
+    }
+
+    user.experience = Number(user.experience) + Number(amount);
+    user.save();
+
+    await Experience.create({
+        user: id,
+        amount,
+        type,
+    });
+
+    return user
+};
+
 User.changeBalance = async (id, amount) => {
     const user = await User.getById(id);
 
@@ -158,6 +204,38 @@ User.checkUserInventoryItems = async (id, itemsIds) => {
     }
 
     return true;
+};
+
+User.addAward = async ({ id, lvl }) => {
+    const user = await User.getById(id);
+    const { receivedAwards, experience } = user;
+    console.log('id', id);
+    const level = getLevelIndexByExperience(experience) + 1;
+    const award = getAwardForLevel(lvl);
+    const awardLevelExperience = getExperienceForLevel(lvl);
+
+    if (lvl - 1 !== receivedAwards) {
+        console.log('Награда за уровень', lvl);
+        console.log('Получено наград', receivedAwards);
+        throw USER_WRONG_AWARD_LEVEL;
+    }
+
+    if (awardLevelExperience > experience) {
+        throw USER_NOT_GET_NEEDED_LEVEL;
+    }
+
+    user.receivedAwards = lvl;
+    await user.save();
+    await User.changeBalance(user._id, award);
+    await Award.create({
+        amount: award,
+        source: 'LEVEL_UP',
+        user: user._id,
+    });
+
+    return {
+        ok: true
+    }
 };
 
 export default User;

@@ -50,6 +50,7 @@ export const usePassportStrategies = (passport) => {
             clientID: VK_CLIENT_ID,
             clientSecret: VK_CLIENT_SECRET,
             callbackURL:  VK_REDIRECT_URL,
+            apiVersion: '5.21',
             profileFields: ['uid', 'first_name', 'last_name', 'screen_name', 'sex', 'photo', 'photo_200', 'bdate']
         },
         async function(accessToken, refreshToken, profile, next) {
@@ -59,15 +60,14 @@ export const usePassportStrategies = (passport) => {
 
             const user = await User.getByParams({ vkId: profile.id });
 
-            console.log(user);
-
             if (!user) {
-                const user = await new User({
+                const user = await User.create({
                     vkId: profile.id,
                     name: profile.displayName,
                     login: profile.username,
                     avatar: profile._json.photo_200
-                }).save();
+                });
+
                 return next(null, user);
             } else {
                 user.avatar = profile._json.photo_200;

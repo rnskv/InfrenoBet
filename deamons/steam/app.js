@@ -16,13 +16,14 @@ const redisClient = redis.createClient({
     port: config.REDIS_PORT
 });
 
-redisClient.auth('kjashdhqe!i321lDdasd');
 
 const redisSub = redis.createClient({
     host: config.REDIS_HOST,
     port: config.REDIS_PORT
 });
 
+console.log('redisClient connect on', config.REDIS_HOST, config.REDIS_PORT);
+redisClient.auth('kjashdhqe!i321lDdasd');
 redisSub.auth('kjashdhqe!i321lDdasd');
 
 const community = new SteamCommunity();

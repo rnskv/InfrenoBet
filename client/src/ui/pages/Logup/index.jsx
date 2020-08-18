@@ -3,17 +3,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import {
-    Redirect,
-} from 'react-router-dom';
-
 import LogupForm from 'ui/organisms/LogupForm';
 import AfterLogup from 'ui/organisms/AfterLogup';
 import DefaultTemplate from 'ui/templates/Default';
 
 import RoomNavigation from 'ui/organisms/RoomNavigation';
-import classicLogoSvg from 'src/resources/svg/classic-logo.svg';
-import Section from 'ui/atoms/Section';
 import Link from 'ui/atoms/Link';
 import Button from 'ui/atoms/Button';
 import { mapStateToProps, mapDispatchToProps } from './connect';

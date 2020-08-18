@@ -6,6 +6,7 @@ import User from 'src/models/User';
 import request from 'request-promise';
 import { EMPTY_ITEM_COST, FORBIDDEN_TAKE_ITEMS, USER_NOT_REGISTER } from 'shared/configs/notificationsTypes';
 import accessMiddleware from 'src/middlewares/check-access';
+import TradeOffer from '../../models/TradeOffer';
 
 const dataForMigration = [
     {
@@ -79,6 +80,30 @@ const dataForMigration = [
         image: '/dist/resources/images/100000_coin.png',
     }
 ];
+
+const collectComissionHandler = async (ctx) => {
+    const { user } = ctx.state;
+    const items = await InventoryItem.getAllByParams({ status: 10 });
+
+    for (const item of items) {
+        await InventoryItem.updateById(item._id, { status: 20})
+    }
+
+    await TradeOffer.create({
+        user: user._id,
+        items
+    });
+
+    ctx.body = {
+        ok: true,
+    };
+};
+
+const getComissionHandler = async (ctx) => {
+    const items = await InventoryItem.getAllByParams({ status: 10 });
+
+    ctx.body = items;
+};
 
 const validateHandler = async (ctx) => {
     const { steamId, offer } = ctx.request.body;
@@ -174,7 +199,7 @@ const parseHandler = async (ctx) => {
     for (let [name, data] of Object.entries(response.items)) {
         const { bcount, price, bprice, count } = data;
         console.log('Check item: ', name);
-        if (bcount === 0 || bprice > price * 2 || count === 0 ) {
+        if (bcount < 15 || bprice > price * 1.5 || count < 15 ) {
             console.log('Skip item', name);
             continue;
         }
@@ -199,8 +224,9 @@ const getAllHandler = async (ctx) => {
         console.log('Run migration for collection items');
 
         for (const data of dataForMigration) {
+            console.log(data.cost);
             const item = await Item.create(data);
-            const inventoryItem = await InventoryItem.create({ parent: item._id, type: 0 })
+            await InventoryItem.create({ parent: item._id, type: 0 })
         }
 
 
@@ -224,7 +250,7 @@ export const parse = new Action({
     method: 'post',
     url: '/parse',
     handler: parseHandler,
-    middlewares: [passport.authenticate('jwt'), accessMiddleware({ accessLevel: 100 })]
+    middlewares: [passport.authenticate('jwt'), accessMiddleware({ accessLevel: 50 })]
 });
 
 export const getAll = new Action({
@@ -237,16 +263,33 @@ export const add = new Action({
     method: 'post',
     url: '/',
     handler: postHandler,
+    middlewares: [passport.authenticate('jwt'), accessMiddleware({ accessLevel: 50 })]
 });
 
 export const validate = new Action({
     method: 'post',
     url: '/validate',
     handler: validateHandler,
+    middlewares: [passport.authenticate('jwt'), accessMiddleware({ accessLevel: 50 })]
 });
 
 export const register = new Action({
     method: 'post',
     url: '/register',
     handler: registerHandler,
+    middlewares: [passport.authenticate('jwt'), accessMiddleware({ accessLevel: 50 })]
+});
+
+export const collectComission = new Action({
+    method: 'post',
+    url: '/comission/collect',
+    handler: collectComissionHandler,
+    middlewares: [passport.authenticate('jwt'), accessMiddleware({ accessLevel: 100 })]
+});
+
+export const getComission = new Action({
+    method: 'get',
+    url: '/comission',
+    handler: getComissionHandler,
+    middlewares: [passport.authenticate('jwt'), accessMiddleware({ accessLevel: 100 })]
 });

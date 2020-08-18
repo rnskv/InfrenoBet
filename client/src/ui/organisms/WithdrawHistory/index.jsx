@@ -20,6 +20,7 @@ import {
 
 function WithdrawHistory() {
     const isAuth = useAuth();
+    if (!isAuth) return <></>;
 
     const [history, setHistory] = useState(null);
     const isLoading = useSelector((state) => state.cashier.isLoading);

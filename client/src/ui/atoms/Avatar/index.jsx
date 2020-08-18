@@ -6,7 +6,7 @@ import {
     Image,
 } from './styled';
 
-function Avatar({ src, className, style }) {
+function Avatar({ src, className, style, hidden }) {
     return (
         <Container className={className} style={style}>
             <Image src={src} />

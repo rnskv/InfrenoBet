@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import media from 'src/helpers/media';
+import Avatar from 'ui/atoms/Avatar';
 
 export const Container = styled.div`
   position: fixed;
@@ -24,4 +25,13 @@ export const Wrapper = styled.div`
   padding: 15px 5px;
   box-shadow: 0 5px 20px 0 var(--color-black);
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+export const StyledAvatar = styled(Avatar)`
+  width: 30px;
+  height: 30px;
+  margin-top: 15px;
 `;

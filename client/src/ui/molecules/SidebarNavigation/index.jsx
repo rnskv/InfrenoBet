@@ -84,7 +84,8 @@ function SidebarNavigation({ isCompact, className, style }) {
         }
 
         case 'SUPPORT': {
-            history.push('/support');
+            // history.push('/support');
+            window.open('https://vk.com/im?media=&sel=-128633025')
             break;
         }
 

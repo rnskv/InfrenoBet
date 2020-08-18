@@ -14,8 +14,10 @@ export const TotalExperienceBar = styled.div`
 `;
 export const ExperienceBar = styled.div`
   height: 100%;
-  width: 0%;
+  width: ${({ percent }) => percent}%;
   background-color: #35b6d3;
+  transition: width .6s;
+  will-change: width;
 `;
 export const Name = styled.div`
   color: var(--color-white);

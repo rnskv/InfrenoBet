@@ -17,8 +17,29 @@ export const StyledLoader = styled(Loader)`
     }
   }
 `;
+
 export const Container = styled.div`
   width: 100%;
   box-sizing: border-box;
   overflow-x: auto;
+  position: relative;
+  padding: 15px;
+`;
+
+export const LastWithdraw = styled.div`
+  width: 100%;
+  box-sizing: border-box;
+  overflow-x: auto;
+  position: relative;
+  display: flex;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: var(--color-grey-400);
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+`;
+
+export const LastWithdrawInformation = styled.div`
+  padding: 10px;
 `;

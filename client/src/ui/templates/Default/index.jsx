@@ -15,6 +15,9 @@ import SidebarCompact from 'ui/molecules/SidebarCompact';
 
 import media from 'src/helpers/media';
 import { useSidebar } from 'src/redux/user/hooks/selectors';
+import OnlineUsers from 'ui/molecules/OnlineUsers';
+import SocialNetworks from 'ui/molecules/SocialNetworks';
+import PageFooter from 'ui/molecules/PageFooter';
 
 const Content = styled.div`
     margin: 25px auto 0;
@@ -34,6 +37,9 @@ const Content = styled.div`
 const PrevContent = styled.div`
   margin-top: ${({ isNeedMargin }) => (isNeedMargin ? '25px' : 0)};
   width: 900px;
+  ${media.tablet`
+    width: 100%;
+  `}
 `;
 
 const Page = styled.div`
@@ -50,6 +56,27 @@ const Wrapper = styled.div`
 
 const Vertical = styled.div`
 
+`;
+
+const Beta = styled.div`
+  line-height: 28px;
+  b {
+    color: var(--color-yellow);
+    font-size: 22px;
+    padding: 5px 10px;
+    background-color: var(--color-grey-500);
+    border-radius: 5px;
+    margin: 0 10px 0 0;
+  }  
+  
+  a {
+    color: var(--color-blue);
+  }
+  
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.6);
+  padding: 25px;
+  background: var(--color-grey-400);
 `;
 
 const SIDEBAR_TABS = {
@@ -79,15 +106,33 @@ function Default({
                         }}
                     >
                         <Navigation />
+                        <OnlineUsers />
+                        <SocialNetworks />
                     </Sidebar>
                     <Wrapper>
                         <Vertical>
+                            {/*<PrevContent isNeedMargin>*/}
+                            {/*    <Beta>*/}
+                            {/*        <b>BETA</b>*/}
+                            {/*        Ключевые функции уже доступны, и нам нужны тестировщики*/}
+                            {/*        которые помогут выявить слабые места уже сейчас,*/}
+                            {/*        чтобы мы смогли улучшить игровой опыт участников перед релизом.*/}
+                            {/*        Связь с разработчиками*/}
+                            {/*        {' '}*/}
+                            {/*        <a target="_blank" href="https://vk.com/board128633025">здесь</a>*/}
+                            {/*        <br />*/}
+                            {/*        Сразу после регистрация вам на баланс*/}
+                            {/*        будет зачисленна сумма размером в 1 ставку.*/}
+                            {/*    </Beta>*/}
+                            {/*</PrevContent>*/}
+
                             <PrevContent isNeedMargin={!!prevContent.length}>
                                 { prevContent }
                             </PrevContent>
                             <Content>
                                 {children}
                             </Content>
+                            <PageFooter />
                         </Vertical>
                         { widgets }
                     </Wrapper>

@@ -22,6 +22,7 @@ const initialState = {
             isOpened: false,
         },
     },
+    totalOnline: 0,
     activeSidebarTabName: 'NOTIFICATIONS',
     ...getClearState(),
 };
@@ -182,6 +183,13 @@ function userReducer(state = initialState, action) {
         return {
             ...state,
             activeSidebarTabName: action.payload.name,
+        };
+    }
+
+    case actionTypes.UPDATE_TOTAL_ONLINE: {
+        return {
+            ...state,
+            totalOnline: action.payload.count
         };
     }
 

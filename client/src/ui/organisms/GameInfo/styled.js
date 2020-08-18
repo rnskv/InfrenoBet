@@ -5,22 +5,34 @@ import NumbersPlace from 'ui/atoms/NumbersPlace';
 import media from 'src/helpers/media';
 
 export const Container = styled.div`
-    background: var(--color-blue);
+    background: linear-gradient(180deg, var(--color-blue), var(--color-blue-500));
     display: flex;
     align-items: center;
     flex-direction: column;
 `;
 
 export const Title = styled(CommonTitle)`
-  width: 100%;
-  font-size: 15px;
-  padding: 15px;
-  box-sizing: border-box;
+    display: block;
+    /* width: 100%; */
+    font-size: 12px;
+    padding: 10px 15px;
+    box-sizing: border-box;
+    background: var(--color-darkblue-active);
+    margin: 15px;
+    align-self: self-start;
+    border-radius: 5px;
+    font-weight: 400;
+    color: var(--color-white);
+
+    span {
+      color: var(--color-grey-active);
+    }
 `;
 
 export const Timer = styled(NumbersPlace)`
   padding: 0 15px;
   height: 55px;
+  border-radius: 5px;
 `;
 
 export const Or = styled.div`

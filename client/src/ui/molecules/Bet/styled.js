@@ -17,8 +17,11 @@ export const Container = styled.div`
 export const StyledAvatar = styled(Avatar)`
   margin: 5px 25px;
   width: 60px;
-  height: 60px;
-  border: 2px solid var(--color-grey-400);
+  height: 60px;  
+  background: transparent;
+  box-shadow: none;
+  border: 2px solid var(--color-grey-400);  
+  padding: 2px;
   
   ${media.tablet`
       min-width: 30px;
@@ -60,6 +63,7 @@ export const Item = styled.div`
     
   img {
     width: 50px;
+    border-radius: 5px;
     
     ${media.tablet`
         width: 30px;

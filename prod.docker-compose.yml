@@ -35,6 +35,9 @@ services:
     container_name: inferno_db
   redis:
     image: redis
+    restart: always
+    sysctls:
+      - net.core.somaxconn=65535
     ports:
       - "6379:6379"
     command: redis-server --requirepass kjashdhqe!i321lDdasd
@@ -43,6 +46,9 @@ services:
     restart: always
     image: rnskv/inferno_nginx
     ports:
-      - "80:80"
+      - "0.0.0.0:80:80"
+      - "0.0.0.0:443:443"
+      - "0.0.0.0:6004:6004"
+      - "0.0.0.0:6005:6005"
     links:
       - client:client

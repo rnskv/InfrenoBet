@@ -11,6 +11,7 @@ import WinInfo from 'ui/organisms/WinInfo';
 import {
     Footer,
     FairGame,
+    Icon
 } from './styled';
 
 
@@ -18,13 +19,15 @@ function GameBeginFooter({
     children, text, hash, position,
 }) {
     return (
-        <Footer text="ИГРА НАЧАЛАСЬ, ПОКУПАЙТЕ БИЛЕТЫ!">
-            <FairGame>
+        <Footer
+            icon={<Icon />}
+            text="ИГРА НАЧАЛАСЬ, УДАЧИ!"
+        >
+            <FairGame href="http://www.md5.cz/" target="_blank">
                 <div>Честная игра</div>
                 <span>
                     Хэш игры md5:
-                    {' '}
-                    { hash }
+                    <b>#{ hash }</b>
                 </span>
             </FairGame>
         </Footer>

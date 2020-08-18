@@ -34,13 +34,13 @@ const betSchema = new Schema({
     },
     createDate: {
         type: Date,
-        default: new Date(),
+        default: () => Date.now(),
     }
 });
 const Bet = mongoose.model('bet', betSchema);
 
 Bet.create = async (data) => {
-    console.log('New bet creating...')
+    console.log('New bet creating...');
     return new Bet(data).save()
 };
 

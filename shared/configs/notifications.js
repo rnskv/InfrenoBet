@@ -33,10 +33,51 @@ import {
     FORBIDDEN_TAKE_ITEMS,
     GAME_NOT_FOUND,
     USER_PAYMENT_SUCCESS,
-    USER_PAYMENT_ERROR
+    USER_PAYMENT_ERROR,
+    REFERRAL_CASHOUT_ERROR,
+    REFERRAL_CASHOUT_SUCCESS,
+    REFERRAL_CODE_ALREADY_EXIST,
+    REFERRAL_CODE_CREATE_SUCCESS,
+    REFERRAL_CODE_WRONG,
+    REFERRAL_CODE_COPY_SUCCESS,
+    REFERRAL_COPY_ERROR,
+    REFERRAL_LINK_COPY_SUCCESS,
+    USER_NOT_GET_NEEDED_LEVEL,
+    USER_WRONG_AWARD_LEVEL,
+    USER_GET_AWARD_FOR_LEVEL
 } from './notificationsTypes';
 
 export default {
+    [USER_NOT_GET_NEEDED_LEVEL]: {
+        type: 'ERROR',
+        title: 'Награда за уровень',
+        text: 'Вы не достигли необходимого уровня.',
+    },
+    [USER_WRONG_AWARD_LEVEL]: {
+        type: 'ERROR',
+        title: 'Награда за уровень',
+        text: 'Вы не можете получить награду за этот уровень.',
+    },
+    [USER_GET_AWARD_FOR_LEVEL]: {
+        type: 'SUCCESS',
+        title: 'Награда за уровень',
+        text: 'Награда за достижение уровня получена!',
+    },
+    [REFERRAL_CODE_COPY_SUCCESS]: {
+        type: 'SUCCESS',
+        title: 'Партнёрка',
+        text: 'Партнёрский код скопирован в буфер обмена.',
+    },
+    [REFERRAL_COPY_ERROR]: {
+        type: 'ERROR',
+        title: 'Партнёрка',
+        text: 'Произошла ошибка во время записи в буфер обмена.',
+    },
+    [REFERRAL_LINK_COPY_SUCCESS]: {
+        type: 'SUCCESS',
+        title: 'Партнёрка',
+        text: 'Партнёрская ссылка скопирован в буфер обмена.',
+    },
     [USER_ALREADY_EXIST]: {
         type: 'ERROR',
         title: 'Система',
@@ -105,7 +146,7 @@ export default {
     [GAME_CLOSED_FOR_BETS]: {
         type: 'ERROR',
         title: 'Игра',
-        text: 'Ставки больше не принимаются. Игра скоро начнется"',
+        text: 'Ставки больше не принимаются. Игра скоро начнется!',
     },
     [BET_SENDING]: {
         type: 'SUCCESS',
@@ -120,7 +161,7 @@ export default {
     [REALTIME_DISCONNECTED]: {
         type: 'ERROR',
         title: 'Сервер',
-        text: 'На сервере возникли технические неполадки!',
+        text: 'Произошёл разрыв соединения!',
     },
     [WAITING_LAST_BETS]: {
         type: 'SUCCESS',
@@ -211,6 +252,31 @@ export default {
         type: 'ERROR',
         title: 'Платежная система',
         text: 'Произошла ошибка при выводе средств. Подробная ифнормация в консоли разработчика.',
+    },
+    [REFERRAL_CASHOUT_SUCCESS]: {
+        type: 'SUCCESS',
+        title: 'Партнёрка',
+        text: 'Вывод средств на баланс завершён.',
+    },
+    [REFERRAL_CASHOUT_ERROR]: {
+        type: 'ERROR',
+        title: 'Партнёрка',
+        text: 'Произошла ошибка при выводе средств с партнёрского счета.',
+    },
+    [REFERRAL_CODE_CREATE_SUCCESS]: {
+        type: 'SUCCESS',
+        title: 'Партнёрка',
+        text: 'Реферальный код создан!',
+    },
+    [REFERRAL_CODE_WRONG]: {
+        type: 'ERROR',
+        title: 'Партнёрка',
+        text: 'Формат реферального кода неверный.',
+    },
+    [REFERRAL_CODE_ALREADY_EXIST]: {
+        type: 'ERROR',
+        title: 'Партнёрка',
+        text: 'Этот реферальный код уже занят.',
     },
     undefined: {
         type: 'ERROR',

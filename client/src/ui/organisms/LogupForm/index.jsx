@@ -17,6 +17,7 @@ function LogupForm({ logUp, isLoading }) {
     const emailInput = useRef(null);
     const passwordInput = useRef(null);
     const nameInput = useRef(null);
+    const referralInput = useRef(null);
 
     function onSubmit(e) {
         e.preventDefault();
@@ -24,11 +25,13 @@ function LogupForm({ logUp, isLoading }) {
         const name = nameInput.current.value;
         const email = emailInput.current.value;
         const password = passwordInput.current.value;
+        const referralCode = passwordInput.current.value;
 
         logUp({
             name,
             email,
             password,
+            referralCode,
         });
     }
 
@@ -57,6 +60,13 @@ function LogupForm({ logUp, isLoading }) {
                     type="password"
                     name="password"
                     label="Пароль"
+                />
+
+                <Input
+                    ref={referralInput}
+                    type="text"
+                    name="referral"
+                    label="Реферальный код (при наличии)"
                 />
 
                 <StyledButton isLoading={isLoading}>Зарегистрироваться</StyledButton>

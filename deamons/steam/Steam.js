@@ -93,7 +93,10 @@ class Steam {
         this.redisSub.subscribe('user.steam.deposit.items');
 
         this.redisSub.on('message', (channel, message) => {
+            console.log('Redis get a message');
             const data = JSON.parse(message);
+            console.log('Redis channel is:', channel);
+
             switch (channel) {
                 case 'user.steam.deposit.items': {
                     const { profile, items } = data;

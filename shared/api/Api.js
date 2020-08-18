@@ -7,13 +7,17 @@ export default class Api {
         url = '/',
         headers = {},
         body = {},
+        params = {},
+        credentials = 'same-origin',
         onError = null
     }) {
         this.url = url;
         this.headers = headers;
         this.body = body;
         this.requests = {};
+        this.params = params;
         this.onError = onError;
+        this.credentials = credentials;
     }
 
     setHeader(headerName, value) {
@@ -39,8 +43,10 @@ export default class Api {
     execute(requestName, {
         headers,
         body,
+        params,
         onError,
     } = {}) {
+        console.log('make api request with params', body)
         if (!this.requests[requestName]) {
             throw new Error(`Request ${requestName} isn't defined`);
         }
@@ -50,6 +56,8 @@ export default class Api {
                 apiUrl: this.url,
                 headers: { ...this.headers, ...headers },
                 body: { ...this.body, ...body },
+                params: { ...this.params, ...params },
+                credentials: this.credentials,
                 onError: onError || this.onError
             });
     }

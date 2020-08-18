@@ -25,7 +25,7 @@ function GameInfo({
 }) {
     return (
         <Container>
-            <Title>{`ID игры: ${id}`}</Title>
+            <Title>Игра <span>#{id}</span></Title>
             <Roulette
                 bets={bets}
                 bank={bank}

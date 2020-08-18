@@ -17,8 +17,6 @@ function Tabs({ tabs }) {
         <Container>
             {
                 tabs.map((tab => {
-                    console.log('Location:', tab, location.pathname, tab.url === location.pathname);
-
                     return <Tab isActive={tab.url === location.pathname}>
                         <Link to={tab.url}>{ tab.title }</Link>
                     </Tab>

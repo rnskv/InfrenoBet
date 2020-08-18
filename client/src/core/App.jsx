@@ -1,4 +1,5 @@
 import 'babel-polyfill';
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import { Provider } from 'react-redux';
@@ -8,31 +9,32 @@ import {
     Route,
 } from 'react-router-dom';
 
-import './cssVariables.css';
-import './globalStyles.css';
-
 import Login from 'ui/pages/Login';
 import Logup from 'ui/pages/Logup';
+import Faq from 'ui/pages/Faq';
 import Deposit from 'ui/pages/Deposit';
 import Withdraw from 'ui/pages/Withdraw';
 import GamesHistory from 'ui/pages/GamesHistory';
 
 import Withdraws from 'ui/pages/Admin/Withdraws';
 import System from 'ui/pages/Admin/System';
+import SiteStatistics from 'ui/pages/Admin/Statistics';
 
 import Lottery from 'ui/pages/Lottery';
 
 import Statisctics from 'ui/pages/Account/Statistics';
 import Balance from 'ui/pages/Account/Balance';
 import Levels from 'ui/pages/Account/Levels';
-import Referals from 'ui/pages/Account/Referals';
+import Referrals from 'ui/pages/Account/Referrals';
 import Settings from 'ui/pages/Account/Settings';
+import ModuleLoader from 'ui/atoms/ModuleLoader';
+import GlobalStyles from 'src/core/GlobalStyles';
 
 function App({ store }) {
-    if (typeof window === 'undefined') return 'Hello from server';
-
     return (
         <Provider store={store}>
+            <GlobalStyles />
+            { typeof window === 'undefined' && <ModuleLoader isLoading fullScreen />}
             <Switch>
                 <Route path="/" exact>
                     <Lottery />
@@ -59,7 +61,7 @@ function App({ store }) {
                     <Levels />
                 </Route>
                 <Route path="/account/partner">
-                    <Referals />
+                    <Referrals />
                 </Route>
                 <Route path="/account/settings">
                     <Settings />
@@ -70,12 +72,21 @@ function App({ store }) {
                 <Route path="/game/lottery/history" exact>
                     <GamesHistory />
                 </Route>
-                <Route path="/admin/withdraws">
+
+                <Route path="/admin/statistics" exact>
+                    <SiteStatistics />
+                </Route>
+
+                <Route path="/admin/withdraws" exact>
                     <Withdraws />
                 </Route>
 
-                <Route path="/admin/system">
+                <Route path="/admin/system" exact>
                     <System />
+                </Route>
+
+                <Route path="/faq" exact>
+                    <Faq />
                 </Route>
 
                 <Route path="/close" exact>
@@ -194,5 +205,13 @@ function App({ store }) {
         </Provider>
     );
 }
+
+App.propTypes = {
+    store: PropTypes.object,
+};
+
+App.defaultProps = {
+    store: {},
+};
 
 export default App;

@@ -15,6 +15,10 @@ const getButtonStyle = (type, props) => {
             &:hover {
                background-color: var(--color-yellow-active);
             }
+            
+            &:active {
+               background-color: var(--color-yellow-focus);
+            }
         `;
     }
 
@@ -65,8 +69,10 @@ const StyledButton = styled.button`
 `;
 
 function Button({
-    type, disabled, children, isLoading, ...props
+    isVisible, type, disabled, children, isLoading, ...props
 }) {
+    if (!isVisible) return <></>;
+
     return (
         <StyledButton type={type} {...props} disabled={disabled}>
             {!isLoading ? children : <Loader type="small" />}
@@ -76,10 +82,12 @@ function Button({
 
 Button.propTypes = {
     isLoading: PropTypes.bool,
+    isVisible: PropTypes.bool,
     type: PropTypes.string,
 };
 
 Button.defaultProps = {
+    isVisible: true,
     isLoading: false,
     type: 'classic',
 };

@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import Commission from './Comission';
 
 const { Schema } = mongoose;
 
@@ -26,7 +27,7 @@ const withdrawSchema = new Schema({
     },
     createDate: {
         type: Date,
-        default: new Date(),
+        default: () => Date.now(),
     },
 });
 
@@ -50,9 +51,11 @@ Withdraw.getAll = async () => {
         .populate('user')
 };
 
-Withdraw.getByParams = async (params) => {
+Withdraw.getByParams = async (params, { limit, offset }) => {
     return await Withdraw.find(params)
         .sort({ createDate: -1 })
+        .limit(limit)
+        .skip(offset)
         .populate('user')
 };
 
@@ -60,6 +63,27 @@ Withdraw.getByUserId = async (id) => {
     return await Withdraw.find({ user: mongoose.Types.ObjectId(id)})
         .sort({ createDate: -1 })
         .populate('user') || []
+};
+
+Withdraw.getTotalSum = async (startDate, endDate) => {
+    return (await Withdraw.aggregate([
+        {
+            $match : {
+                createDate: {
+                    $gte: startDate,
+                    $lte: endDate
+                }
+            },
+        },
+        {
+            $group: {
+                _id: null,
+                amount: {
+                    $sum: "$amount"
+                }
+            }
+        }
+    ]))[0]
 };
 
 export default Withdraw

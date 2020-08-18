@@ -15,7 +15,7 @@ import {
 
 
 function GameEndFooter({ secret, isVisible }) {
-    if (!isVisible) return null;
+    if (!isVisible) return <></>;
     return (
         <Footer text="ИГРА ЗАКОНЧИЛАСЬ!">
             <Secret>

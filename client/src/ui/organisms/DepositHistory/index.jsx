@@ -18,6 +18,7 @@ import {
 
 function DepositHistory() {
     const isAuth = useAuth();
+    if (!isAuth) return <></>;
 
     const [history, setHistory] = useState(null);
     useEffect(() => {

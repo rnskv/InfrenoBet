@@ -19,7 +19,7 @@ module.exports = {
         DOMAIN: 'infernobet.ru',
         API_URL: 'http://backend:6001',
         REDIS_HOST: 'redis',
-        REDIS_PORT: '6379',
+        REDIS_PORT: 6379,
         INFERNO_EMAIL: 'inferno_bot_1@gmail.com',
         INFERNO_PASSWORD: 'BpqEn74H0z2z'
     }

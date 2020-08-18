@@ -34,4 +34,10 @@ export const Tab = styled.li`
     color: var(--color-white);
     font-size: 14px;
   }
+  
+  &:hover {
+      a {
+          color: var(--color-yellow);
+      }
+  }
 `;

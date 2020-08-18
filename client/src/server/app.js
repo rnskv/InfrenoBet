@@ -33,21 +33,26 @@ function handleRender(req, res) {
 
     // Render the component to a string
     const context = {};
-    const html = renderToString(
-        <StyleSheetManager sheet={sheet.instance}>
-            <StaticRouter location={req.url} context={context}>
-                <App store={store} />
-            </StaticRouter>
-        </StyleSheetManager>,
-    );
+    try {
+        const html = renderToString(
+            <StyleSheetManager sheet={sheet.instance}>
+                <StaticRouter location={req.url} context={context}>
+                    <App store={store} />
+                </StaticRouter>
+            </StyleSheetManager>,
+        );
 
-    // Grab the initial state from our Redux store
-    const preloadedState = store.getState();
+        // Grab the initial state from our Redux store
+        const preloadedState = store.getState();
 
-    const styleTags = sheet.getStyleTags(); // or sheet.getStyleElement();
-    sheet.seal();
-    // Send the rendered page back to the client
-    res.send(renderFullPage(html, preloadedState, styleTags));
+        const styleTags = sheet.getStyleTags(); // or sheet.getStyleElement();
+        // Send the rendered page back to the client
+        res.send(renderFullPage(html, preloadedState, styleTags));
+    } catch (err) {
+
+    } finally {
+        sheet.seal();
+    }
 }
 function renderFullPage(html, preloadedState, styleTags) {
     return `
@@ -58,9 +63,15 @@ function renderFullPage(html, preloadedState, styleTags) {
             <meta name="viewport"
                   content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
             <meta http-equiv="X-UA-Compatible" content="ie=edge">
-            <title>INFERNO BET - онлайн лотерея</title>
+            <meta name="viewport" content="width=1100px, initial-scale=0.3">
+            <title>INFERNOBET - Ставки от 1 рубля!</title>
+            <meta name=description content="Рулетка скинов дота 2 - место, в котором каждый может испытать свою удачу в захватывающей игре и получить уникальные предметы!">
+            <meta name=keywords content="рулетка, лотерея, ставки, ставки дота2, скины дота 2, дота, быстрые скины дота 2, дабл ставки, быстрые ставки, рулетка dota2"/>
+            <link rel="shortcut icon" href="/dist/resources/images/favicon.png" type="image/png">
+            <link rel="canonical" href="https://infernobet.ru/"/>
             <meta name="verification" content="cf0bb3d99b3a1dba77e550d078a322" />
             <meta name="swiftpay-verification" content="bf4a552b8fef2160a0b001ca4b7f11e3" />
+            <meta name="yandex-verification" content="266251ef2bca23cc" />
             ${styleTags}
         </head>
         <body>

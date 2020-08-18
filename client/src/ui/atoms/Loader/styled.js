@@ -20,10 +20,13 @@ const SIZES = {
 
 export const StyledContainer = styled.div`
   width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
-  padding: 15px;
- 
+  position: ${({ isCover }) => isCover ? 'absolute' : 'relative'};
+  background-color: ${({ isCover }) => isCover ? 'var(--color-black-transparent)' : 'transparent'};
+  align-items: center;
+  
   svg {
     ${({ size }) => SIZES[size]} 
     path {

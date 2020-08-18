@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken';
 import User from '../../models/User';
 import config from '../../config';
 const request = require('request-promise');
+import { connectWithPartner} from '../shared';
 
 import { USER_ALREADY_EXIST, USER_NOT_FOUND, USER_WRONG_PASSWORD, USER_WRONG_REGISTER_DATA } from 'shared/configs/notificationsTypes';
 const { VK_CLIENT_ID, VK_CLIENT_SECRET, VK_REDIRECT_URL, VK_CLOSE_PAGE_URL } = process.env;
@@ -12,10 +13,11 @@ const { VK_CLIENT_ID, VK_CLIENT_SECRET, VK_REDIRECT_URL, VK_CLOSE_PAGE_URL } = p
 function createToken({ payload, expiresIn = 1000 * 60 * 60 * 24 }) {
     const token = jwt.sign(payload, config.jwtSecret, { expiresIn });
     return `Bearer ${token}`;
-
 }
+
 const registerHandler = async (ctx) => {
-    const { name, email, password } = ctx.request.body;
+    const { name, email, password, referralCode } = ctx.request.body;
+
     const user = await User.getByParams({ email });
     if (!password || !email) {
         ctx.throw({ type: USER_WRONG_REGISTER_DATA });
@@ -29,7 +31,9 @@ const registerHandler = async (ctx) => {
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
 
-    await new User({ email, name, password: hash, avatar: `https://api.adorable.io/avatars/70/${email}`}).save();
+    const newUser = await User.create({ email, name, password: hash, avatar: `https://api.adorable.io/avatars/70/${email}`});
+
+    await connectWithPartner({referralCode, user: newUser});
 
     ctx.body = {
         ok: true
@@ -62,7 +66,7 @@ const loginHandler = async (ctx) => {
 };
 
 
-const loginVkHandler = (ctx) => {
+const loginVkHandler = async (ctx) => {
     const { user } = ctx.state;
 
     const token = createToken({
@@ -71,6 +75,7 @@ const loginVkHandler = (ctx) => {
             login: user.name
         }
     });
+
 
     ctx.cookies.set('token', token, { httpOnly: false });
     ctx.cookies.set('isLinkVk', token, { httpOnly: false, maxAge: 60000 });

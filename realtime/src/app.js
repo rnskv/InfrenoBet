@@ -45,11 +45,13 @@ infernoIO.addManager('rooms', roomsManager);
 infernoIO.addManager('redis', redisManager);
 // infernoIO.addPlugin('steam', SteamPlugin);
 
-infernoIO.init().then(async (app) => {
+const afterInitCallback = (app) => {
+    console.log('subscribes to redis channels')
     app.managers.redis.subscribe('user.notifications.add');
     app.managers.redis.subscribe('user.inventory.add');
+
     app.managers.redis.on('message', (channel, message) => {
-        console.log('redis учуял кровь!', channel);
+        console.log('redis blood seeker!', channel);
         switch (channel) {
             case 'user.notifications.add': {
                 const { userId, type, params } = JSON.parse(message);
@@ -71,20 +73,20 @@ infernoIO.init().then(async (app) => {
                 app.managers.sockets.emitUserById(user._id, {
                     eventName: 'project.notification',
                     data: {
-                        type:  notificationsTypes.TRADEOFFER_ACCEPTED
+                        type: notificationsTypes.TRADEOFFER_ACCEPTED
                     }
                 });
 
                 userApi.execute('addInventory', {
-                   body: {
-                       user,
-                       items
-                   }
+                    body: {
+                        user,
+                        items
+                    }
                 }).then((response) => {
                     app.managers.sockets.emitUserById(user._id, {
                         eventName: 'project.notification',
                         data: {
-                            type:  notificationsTypes.INVENTORY_ITEMS_ADDED
+                            type: notificationsTypes.INVENTORY_ITEMS_ADDED
                         }
                     });
 
@@ -99,8 +101,9 @@ infernoIO.init().then(async (app) => {
             }
         }
     })
+};
 
-});
+infernoIO.init(afterInitCallback);
 
 socketsManager.init({ handlers });
 socketsManager.connect({ socket, server });

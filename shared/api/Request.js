@@ -15,10 +15,21 @@ export default class Request {
         this.isLoading = true;
     }
 
+    static serialize(obj) {
+        const str = [];
+        for (const p in obj)
+            if (obj.hasOwnProperty(p)) {
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+            }
+        return str.join("&");
+    }
+
     execute({
         apiUrl,
         body = {},
         headers = {},
+        params = {},
+        credentials,
         onError = null,
         useCache = true
     }) {
@@ -29,6 +40,7 @@ export default class Request {
 
             const resultOptions = {
                 method: this.method,
+                credentials,
                 headers: { ...headers, ...this.headers },
             };
 
@@ -36,7 +48,9 @@ export default class Request {
                 resultOptions.body = JSON.stringify({ ...body, ...this.body });
             }
 
-            fetcher(url, resultOptions)
+            const fetchFunction = global.fetch || fetcher;
+
+            fetchFunction(url + `?${Request.serialize(params)}`, resultOptions)
                 .then(async (response) => {
                     return response.json();
                 })

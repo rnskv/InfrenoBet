@@ -3,14 +3,14 @@ import { connection } from 'src/app';
 import config from 'src/config';
 
 export const itemsApi = new Api({
-    url: `http://${config.server_host}:${config.server_port}/api/items`,
+    url: `${config.server_protocol}://${config.server_host}:${config.server_port}/api/items`,
     headers: {
         'Content-Type': 'application/json',
     },
 });
 
 export const authApi = new Api({
-    url: `http://${config.server_host}:${config.server_port}/api/auth`,
+    url: `${config.server_protocol}://${config.server_host}:${config.server_port}/api/auth`,
     headers: {
         'Content-Type': 'application/json',
     },
@@ -18,21 +18,21 @@ export const authApi = new Api({
 
 
 export const userApi = new Api({
-    url: `http://${config.server_host}:${config.server_port}/api/users`,
+    url: `${config.server_protocol}://${config.server_host}:${config.server_port}/api/users`,
     headers: {
         'Content-Type': 'application/json',
     },
 });
 
 export const gameApi = new Api({
-    url: `http://${config.server_host}:${config.server_port}/api/games`,
+    url: `${config.server_protocol}://${config.server_host}:${config.server_port}/api/games`,
     headers: {
         'Content-Type': 'application/json',
     },
 });
 
 export const betsApi = new Api({
-    url: `http://${config.server_host}:${config.server_port}/api/bets`,
+    url: `${config.server_protocol}://${config.server_host}:${config.server_port}/api/bets`,
     headers: {
         'Content-Type': 'application/json',
     }

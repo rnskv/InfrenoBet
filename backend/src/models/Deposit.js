@@ -19,7 +19,7 @@ const depositSchema = new Schema({
     },
     createDate: {
         type: Date,
-        default: new Date(),
+        default: () => Date.now(),
     },
 });
 
@@ -43,6 +43,27 @@ Deposit.getByUserId = async (id) => {
     return await Deposit.find({ user: mongoose.Types.ObjectId(id)})
         .sort({ createDate: -1 })
         .populate('user') || []
+};
+
+Deposit.getTotalSum = async (startDate, endDate) => {
+    return (await Deposit.aggregate([
+        {
+            $match : {
+                createDate: {
+                    $gte: startDate,
+                    $lte: endDate
+                }
+            },
+        },
+        {
+            $group: {
+                _id: null,
+                amount: {
+                    $sum: "$amount"
+                }
+            }
+        }
+    ]))[0]
 };
 
 export default Deposit

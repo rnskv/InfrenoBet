@@ -9,6 +9,7 @@ import SocialLinks from 'ui/molecules/SocialLinks';
 import ProfileHead from 'ui/organisms/ProfileHead';
 import TABS from 'src/configs/account-tabs';
 import NotAccessPlaceholder from 'ui/organisms/NotAccessPlaceholder';
+import LevelsAwards from 'ui/organisms/LevelsAwards';
 
 function Levels() {
     const profile = useProfile();
@@ -19,7 +20,8 @@ function Levels() {
                 tabs={TABS}
             />
             <Section>
-                <NotAccessPlaceholder isVisible />
+                <LevelsAwards/>
+
             </Section>
         </DefaultTemplate>
     );
