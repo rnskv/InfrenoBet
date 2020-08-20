@@ -35,9 +35,9 @@ const Content = styled.div`
 `;
 
 const PrevContent = styled.div`
-  margin-top: ${({ isNeedMargin }) => (isNeedMargin ? '25px' : 0)};
-  width: 900px;
-  ${media.tablet`
+    margin-top: ${({ isNeedMargin }) => (isNeedMargin ? '25px' : 0)};
+    width: 900px;
+    ${media.tablet`
     width: 100%;
   `}
 `;
@@ -49,49 +49,52 @@ const Page = styled.div`
 `;
 
 const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
 `;
 
-const Vertical = styled.div`
-
-`;
+const Vertical = styled.div``;
 
 const Beta = styled.div`
-  line-height: 28px;
-  b {
-    color: var(--color-yellow);
-    font-size: 22px;
-    padding: 5px 10px;
-    background-color: var(--color-grey-500);
-    border-radius: 5px;
-    margin: 0 10px 0 0;
-  }  
-  
-  a {
-    color: var(--color-blue);
-  }
-  
-  font-size: 15px;
-  color: rgba(255, 255, 255, 0.6);
-  padding: 25px;
-  background: var(--color-grey-400);
+    line-height: 28px;
+    b {
+        color: var(--color-yellow);
+        font-size: 22px;
+        padding: 5px 10px;
+        background-color: var(--color-grey-500);
+        border-radius: 5px;
+        margin: 0 10px 0 0;
+    }
+
+    a {
+        color: var(--color-blue);
+    }
+
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.6);
+    padding: 25px;
+    background: var(--color-grey-400);
 `;
 
 const SIDEBAR_TABS = {
     NOTIFICATIONS: <SidebarNotifications />,
-    CHAT: <div style={{
-        color: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px',
-    }}
-    >
-        В разработке
-    </div>,
+    CHAT: (
+        <div
+            style={{
+                color: '#fff',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: '200px',
+            }}
+        >
+            В разработке
+        </div>
+    ),
 };
 
-function Default({
-    children, widgets, prevContent, ...props
-}) {
+function Default({ children, widgets, prevContent, ...props }) {
     const sidebarData = useSidebar();
 
     return (
@@ -127,14 +130,12 @@ function Default({
                             {/*</PrevContent>*/}
 
                             <PrevContent isNeedMargin={!!prevContent.length}>
-                                { prevContent }
+                                {prevContent}
                             </PrevContent>
-                            <Content>
-                                {children}
-                            </Content>
+                            <Content>{children}</Content>
                             <PageFooter />
                         </Vertical>
-                        { widgets }
+                        {widgets}
                     </Wrapper>
                     <Sidebar
                         params={{
@@ -143,7 +144,7 @@ function Default({
                     >
                         <SidebarProfile />
                         <SidebarNavigation />
-                        { SIDEBAR_TABS[sidebarData.activeTabName] }
+                        {SIDEBAR_TABS[sidebarData.activeTabName]}
                     </Sidebar>
                     <SidebarCompact />
                 </Page>
