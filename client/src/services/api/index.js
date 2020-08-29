@@ -117,6 +117,10 @@ export default ({ app }) => {
     });
 
     usersApi.addRequests({
+        takeBonus: new Request({
+            url: '/bonus',
+            method: 'get',
+        }),
         getProfile: new Request({
             url: '/me',
             method: 'get',
@@ -152,6 +156,10 @@ export default ({ app }) => {
             url: '/greatest',
             method: 'get',
         }),
+        getTopPlayersOfLastWeek: new Request({
+            url: '/top/week',
+            method: 'get', 
+        })
     });
 
 

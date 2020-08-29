@@ -7,7 +7,7 @@ import { USER_NOT_ENOUGH_MONEY, USER_NOT_FOUND } from 'src/types/errors';
 import TradeOffer from './TradeOffer';
 import Experience from './Experience';
 import { getAwardForLevel, getExperienceForLevel, getLevelIndexByExperience } from 'shared/helpers/levels';
-import { USER_NOT_GET_NEEDED_LEVEL, USER_WRONG_AWARD_LEVEL } from 'shared/configs/notificationsTypes';
+import { USER_NOT_GET_NEEDED_LEVEL, USER_WRONG_AWARD_LEVEL, USER_ALREADY_GET_BONUS } from 'shared/configs/notificationsTypes';
 import Award from './Award';
 
 const userSchema = new Schema({
@@ -41,7 +41,7 @@ const userSchema = new Schema({
     },
     balance: {
         type: Number,
-        default: 0.01,
+        default: 1,
     },
     inventory: {
         type: [mongoose.Types.ObjectId],
@@ -75,6 +75,10 @@ const userSchema = new Schema({
     referralShare: {
         type: Number,
         default: 0.1
+    },
+    takedBonusDate: {
+        type: Date,
+        default: 0,
     },
     createDate: {
         type: Date,
@@ -193,6 +197,28 @@ User.changeBalance = async (id, amount) => {
 
     return user
 };
+
+User.takeBonus = async (id) => {
+    console.log('take bonus by ', id)
+    const user = await User.getById(id);
+    const now = Date.now();
+    const requestTime = new Date(now).getTime();
+    const lastTakedTime = new Date(user.takedBonusDate).getTime();
+    if (!user) {
+        throw USER_NOT_FOUND;
+    }
+
+    console.log('time left:', requestTime - lastTakedTime);
+
+    await User.changeBalance(id, 1);
+
+    if (requestTime - lastTakedTime < 60000) {
+        throw USER_ALREADY_GET_BONUS;
+    }
+
+    user.takedBonusDate = now;
+    await user.save();
+}
 
 User.checkUserInventoryItems = async (id, itemsIds) => {
     const user = await User.getById(id);

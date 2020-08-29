@@ -7,6 +7,7 @@ import Section from 'ui/atoms/Section';
 import WithdrawSelector from 'ui/organisms/WithdrawSelector';
 import WithdrawRouter from 'ui/organisms/WithdrawRouter';
 import WithdrawHistory from 'ui/organisms/WithdrawHistory';
+import AllFree from 'ui/organisms/AllFree';
 
 function Deposit() {
     return (
@@ -16,6 +17,7 @@ function Deposit() {
                 title="Вывод"
             />
             <Section>
+                <AllFree />
                 <WithdrawRouter />
                 <WithdrawSelector />
             </Section>

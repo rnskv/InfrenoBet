@@ -44,10 +44,22 @@ import {
     REFERRAL_LINK_COPY_SUCCESS,
     USER_NOT_GET_NEEDED_LEVEL,
     USER_WRONG_AWARD_LEVEL,
-    USER_GET_AWARD_FOR_LEVEL
+    USER_GET_AWARD_FOR_LEVEL,
+    USER_ALREADY_GET_BONUS,
+    USER_BONUS_TAKEN
 } from './notificationsTypes';
 
 export default {
+    [USER_BONUS_TAKEN]: {
+        type: 'SUCCESS',
+        title: 'Бонус',
+        text: 'Бонус получен!',
+    },
+    [USER_ALREADY_GET_BONUS]: {
+        type: 'ERROR',
+        title: 'Бонус',
+        text: 'Вы уже получили бонус. Попробуйте позже',
+    },
     [USER_NOT_GET_NEEDED_LEVEL]: {
         type: 'ERROR',
         title: 'Награда за уровень',

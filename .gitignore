@@ -1,2 +1,5 @@
 .idea/
 deploy_key
+package-lock.json
+package.json
+node_modules/
