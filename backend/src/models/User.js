@@ -78,7 +78,7 @@ const userSchema = new Schema({
     },
     takedBonusDate: {
         type: Date,
-        default: () => Date.now(),
+        default: 0,
     },
     createDate: {
         type: Date,

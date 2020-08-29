@@ -189,6 +189,8 @@ function Default({
     children, widgets, prevContent, ...props
 }) {
     const sidebarData = useSidebar();
+    const isAuth = useAuth();
+    
     return (
         <div {...props}>
             <Header />
@@ -234,6 +236,16 @@ function Default({
                             <PrevContent isNeedMargin>
                                 <TakeBonus/>
                             </PrevContent>
+                            { isAuth && <PrevContent isNeedMargin>
+                                <a target="__blank" href="https://trafoff.com/13775/1?l=1" title="">
+                                    <img 
+                                        src="https://vlkpcdn.com/public/banners/5/e/5e95f453046d6b94270b642bba3be8bd.gif"
+                                        width="100%"
+                                        height="auto"
+                                        alt=""   
+                                    />
+                                </a>
+                            </PrevContent> }
                             <PrevContent isNeedMargin={!!prevContent.length}>
                                 {prevContent}
                             </PrevContent>
