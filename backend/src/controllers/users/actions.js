@@ -139,6 +139,20 @@ const removeInventoryHandler = async (ctx) => {
     const { userId, itemsIds } = ctx;
     await User.removeItemsFromInventory(userId, itemsIds)
 };
+
+const takeBonusHandler = async (ctx) => {
+    const { user } = ctx.state;
+    console.log('take bonus handler', user);
+
+    try {
+        await User.takeBonus(user._id);
+
+        ctx.body = { ok: true }
+    } catch (err) {
+        ctx.throw({ type: err })
+    }
+};
+
 const getAllHandler = async (ctx) => {
     ctx.body = 'getAllHandler'
 };
@@ -170,6 +184,13 @@ export const getMe = new Action({
     url: '/me',
     middlewares: [passport.authenticate('jwt')],
     handler: getMeHandler,
+});
+
+export const takeBonus = new Action({
+    method: 'get',
+    url: '/bonus',
+    middlewares: [passport.authenticate('jwt')],
+    handler: takeBonusHandler,
 });
 
 export const get = new Action({

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import Navigation from 'ui/organisms/Navigation';
@@ -18,7 +18,45 @@ import { useSidebar } from 'src/redux/user/hooks/selectors';
 import OnlineUsers from 'ui/molecules/OnlineUsers';
 import SocialNetworks from 'ui/molecules/SocialNetworks';
 import PageFooter from 'ui/molecules/PageFooter';
+import { useServices } from 'src/helpers/hooks';
+import { useProfile } from 'src/redux/user/hooks/selectors';
+import { useNotificationActions, userProfileActions } from 'src/redux/user/hooks/actions';
+import Button from 'ui/atoms/Button';
 
+const FreeTournament = styled.div`
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    color: #272727;
+    border-radius: 5px;
+    box-shadow: 0 0 9px 0px #0e1014;
+    background: url(/dist/resources/images/free.jpg) black;
+    height: 230px;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    b {
+        color: var(--color-yellow);
+        text-shadow: 1px 1px #00000061;
+    }
+
+    p {
+        font-size: 18px;
+        color: #fff;
+        width: 85%;
+        line-height: 28px;
+    }
+
+    h1 {
+        text-align: left;
+        width: 100%;
+        color: #fff;
+        text-shadow: 0px 1px 1px black;
+        font-size: 35px;
+    }
+`
+    
 const Content = styled.div`
     margin: 25px auto 0;
     background: var(--color-grey-500);
@@ -94,14 +132,53 @@ const SIDEBAR_TABS = {
     ),
 };
 
-function Default({ children, widgets, prevContent, ...props }) {
-    const sidebarData = useSidebar();
+function TakeBonus() {
+    const [pending, setPending] = useState(false);
+    const [now, setNow] = useState(Date.now())
+    const services = useServices();
+    const profile = useProfile();
+    const notificationActions = useNotificationActions();
+    const profileActions = userProfileActions();
 
+    const canTakeEvery = 60 * 1000;
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setNow(Date.now())
+        }, 1000)
+
+        return () => clearInterval(interval)
+    }, []);
+
+    const takeBonus = async () => {
+        setPending(true);
+        services.user.execute('takeBonus').then(async () => {
+            notificationActions.addNotification({ type: 'USER_BONUS_TAKEN' });
+            await profileActions.getProfile();
+        }).finally(() => {
+            setPending(false);
+        })
+    }
+
+    const time = (new Date(now).getTime() - new Date(profile.takedBonusDate).getTime());
+    const timeLeft = time > canTakeEvery ? 0 : Math.floor((canTakeEvery - time) / 1000);
+    return (
+        <FreeTournament>  
+            <p>{ timeLeft > 0 ? <div>Можно забрать через: {timeLeft} секунд! </div> : <div>Заберите выигрыш!</div> }</p> 
+            <Button isLoading={pending} disabled={timeLeft > 0} onClick={takeBonus}>Забрать бонус!</Button>
+        </FreeTournament>
+    )
+}
+function Default({
+    children, widgets, prevContent, ...props
+}) {
+    const sidebarData = useSidebar();
     return (
         <div {...props}>
             <Header />
             <LoginPopup />
             <Wrapper>
+            
                 <Page>
                     <Sidebar
                         params={{
@@ -114,7 +191,7 @@ function Default({ children, widgets, prevContent, ...props }) {
                     </Sidebar>
                     <Wrapper>
                         <Vertical>
-                            {/*<PrevContent isNeedMargin>*/}
+                            {/* <PrevContent isNeedMargin>*/}
                             {/*    <Beta>*/}
                             {/*        <b>BETA</b>*/}
                             {/*        Ключевые функции уже доступны, и нам нужны тестировщики*/}
@@ -127,8 +204,20 @@ function Default({ children, widgets, prevContent, ...props }) {
                             {/*        Сразу после регистрация вам на баланс*/}
                             {/*        будет зачисленна сумма размером в 1 ставку.*/}
                             {/*    </Beta>*/}
-                            {/*</PrevContent>*/}
-
+                            {/*</PrevContent> */}
+                            <PrevContent isNeedMargin>
+                                <FreeTournament>
+                                <h1>Бесплатный турнир!</h1>
+                                <p>
+                                    Играй бесплатно и получай реальные деньги!<br/>
+                                    До <b>01.01.2021</b>, каждое воскресенье, <br/>все игроки,
+                                    на балансе которых находится <b> {'> 5000' }</b> монет, <br/>
+                                    получат приз - <b>1000</b> рублей</p>
+                                </FreeTournament>
+                            </PrevContent>   
+                            <PrevContent isNeedMargin>
+                                <TakeBonus/>
+                            </PrevContent>
                             <PrevContent isNeedMargin={!!prevContent.length}>
                                 {prevContent}
                             </PrevContent>

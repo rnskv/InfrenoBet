@@ -9,6 +9,7 @@ import DepositSelector from 'ui/organisms/DepositSelector';
 import DepositHistory from 'ui/organisms/DepositHistory';
 
 import Section from 'ui/atoms/Section';
+import AllFree from 'ui/organisms/AllFree';
 
 function Deposit() {
     return (
@@ -18,6 +19,7 @@ function Deposit() {
                 title="Пополнение"
             />
             <Section>
+                <AllFree/>
                 <DepositRouter />
                 <DepositSelector />
             </Section>
