@@ -58,6 +58,7 @@ function Lottery({
                 subPages={[{ name: 'history', title: 'История', url: '/game/lottery/history' }]}
                 currentPage={null}
             />
+            
             <GameInfo
                 id={id}
                 time={time}
@@ -69,6 +70,7 @@ function Lottery({
                 openBetMaker={actions.betMaker.open}
                 isAuth={isAuth}
             />
+
             <BetMaker />
 
             <GameControls

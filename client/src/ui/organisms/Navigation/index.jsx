@@ -43,8 +43,18 @@ const GROUPS = [
                 onlyGuest: false,
                 accessLevel: 0,
             },
+            {
+                id: 1,
+                to: '/game/top_players',
+                svg: classicLogoSvg,
+                text: 'Топ игроков',
+                description: 'Победители недели!',
+                onlyGuest: false,
+                accessLevel: 0,
+            },
         ],
     },
+
     {
         id: 1,
         WRAPPER: ItemsGroupFree,
@@ -83,8 +93,9 @@ const GROUPS = [
             },
         ],
     },
+
     {
-        id: 1,
+        id: 2,
         WRAPPER: ItemsGroupSystem,
         items: [
             {
@@ -154,30 +165,27 @@ function Navigation({ token }) {
     const location = useLocation();
 
     const sidebarState = useContext(StateContext);
-
     return (
         <NavigationList>
-            {
-                GROUPS.map((group) => (
-                    <group.WRAPPER key={group.id} isOpened={sidebarState.isOpened}>
-                        {
-                            group.items.map((item) => (
-                                <NavigationLink
-                                    key={item.id}
-                                    {...item}
-                                    isOpened={sidebarState.isOpened}
-                                    isActive={location.pathname.indexOf(item.to) !== -1}
-                                    isVisible={
-                                        token
-                                            ? item.accessLevel > -1 && item.accessLevel < profile.accessLevel // replace from token
-                                            : item.accessLevel >= -1 && item.accessLevel <= 0
-                                    }
-                                />
-                            ))
-                        }
-                    </group.WRAPPER>
-                ))
-            }
+            {GROUPS.map(group => (
+                <group.WRAPPER key={group.id} isOpened={sidebarState.isOpened}>
+                    {group.items.map(item => (
+                        <NavigationLink
+                            key={item.id}
+                            {...item}
+                            isOpened={sidebarState.isOpened}
+                            isActive={location.pathname.indexOf(item.to) !== -1}
+                            isVisible={
+                                token
+                                    ? item.accessLevel > -1 &&
+                                      item.accessLevel < profile.accessLevel // replace from token
+                                    : item.accessLevel >= -1 &&
+                                      item.accessLevel <= 0
+                            }
+                        />
+                    ))}
+                </group.WRAPPER>
+            ))}
         </NavigationList>
     );
 }
@@ -186,4 +194,7 @@ Navigation.propTypes = {
     token: PropTypes.string.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Navigation);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(Navigation);

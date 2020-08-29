@@ -44,6 +44,65 @@ const gameSchema = new Schema({
 
 const Game = mongoose.model('game', gameSchema);
 
+Game.getTopPlayersOfWeek = async () => {
+    //Получить все игры за последнюю неделю
+    //Получить мапу где ключ - id победителя а значение - сумма выиграных денег за эту неделю.
+    //Сделать сортировка по значению
+    //Взять первые 10 значений
+    const today = moment().startOf('day');
+
+    const startOfWeek = moment(today).startOf('week');
+    const endOfWeek = moment(today).endOf('week');
+
+    const aggregation = Game.aggregate([
+        {
+            $match: {
+                status: 'FINISHED',
+                createDate: {
+                    $gte: startOfWeek.toDate(),
+                    $lte: endOfWeek.toDate()
+                }
+            },
+        },
+        {
+            $group: {
+                _id: '$winner',
+                totalWin: {
+                    $sum: '$totalBank'
+                }
+            },
+        },
+        {
+            $sort: {
+                totalWin: -1,
+            }
+        },
+        {
+            $lookup: {
+                from: 'users',
+                localField: '_id',
+                foreignField: '_id',
+                as: 'user'
+            }
+        },
+        {
+            $project: {
+                totalWin: 1,
+                'user.login': 1,
+                'user.name': 1,
+                'user.avatar': 1,
+            }
+        },
+        {
+            $unwind: {
+                path: '$user'
+            }
+        }
+    ])
+
+    return aggregation
+}
+
 Game.getLuckyOfDay = async () => {
     const today = moment().startOf('day');
     const winner = await Game.find({
