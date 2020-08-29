@@ -160,7 +160,7 @@ function TakeBonus() {
     const timeLeft = time > canTakeEvery ? 0 : Math.floor((canTakeEvery - time) / 1000);
     return (
         isAuth ? <FreeTournament>  
-            <p>{ timeLeft > 0 ? <div>Можно забрать через: {timeLeft} секунд! </div> : <div>Заберите выигрыш!</div> }</p> 
+            <p>{ timeLeft > 0 ? <div>Можно забрать через: {timeLeft} секунд! </div> : <div>Заберите бонус!</div> }</p> 
             <Button isLoading={pending} disabled={timeLeft > 0} onClick={takeBonus}>Забрать бонус!</Button>
         </FreeTournament> : null
     )
