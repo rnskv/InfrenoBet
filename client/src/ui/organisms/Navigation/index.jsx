@@ -48,7 +48,7 @@ const GROUPS = [
                 to: '/game/top_players',
                 svg: classicLogoSvg,
                 text: 'Топ игроков',
-                description: 'Элитка подъехала',
+                description: 'Победители недели!',
                 onlyGuest: false,
                 accessLevel: 0,
             },
