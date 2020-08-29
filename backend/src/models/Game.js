@@ -100,7 +100,7 @@ Game.getTopPlayersOfWeek = async () => {
         }
     ])
 
-    return await aggregation;
+    return aggregation
 }
 
 Game.getLuckyOfDay = async () => {
