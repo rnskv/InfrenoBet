@@ -26,6 +26,10 @@ const getAllHandler = async (ctx) => {
     });
 };
 
+const getTopPlayersOfWeekHandler = async (ctx) => {
+    ctx.body = await Game.getTopPlayersOfWeek();
+}
+
 const getLuckyOfDayHandler = async (ctx) => {
     ctx.body = await Game.getLuckyOfDay();
 };
@@ -230,4 +234,10 @@ export const getGreatestOfDay = new Action({
     method: 'get',
     url: '/greatest',
     handler: getGreatestOfDayHandler,
+});
+
+export const getTopPlayersOfWeek = new Action({
+    method: 'get',
+    url: '/top/week',
+    handler: getTopPlayersOfWeekHandler,
 });

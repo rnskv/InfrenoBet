@@ -5,6 +5,7 @@ import Collapse from 'ui/atoms/Collapse';
 
 import { infernoClient } from 'src/index';
 import { useActions, useAuth } from 'src/helpers/hooks';
+
 import {
     Container,
     Wrapper,

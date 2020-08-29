@@ -22,6 +22,7 @@ import { useServices } from 'src/helpers/hooks';
 import { useProfile } from 'src/redux/user/hooks/selectors';
 import { useNotificationActions, userProfileActions } from 'src/redux/user/hooks/actions';
 import Button from 'ui/atoms/Button';
+import { useAuth } from 'src/helpers/hooks';
 
 const FreeTournament = styled.div`
     padding: 10px 15px;
@@ -134,7 +135,7 @@ function TakeBonus() {
     const profile = useProfile();
     const notificationActions = useNotificationActions();
     const profileActions = userProfileActions();
-
+    const isAuth = useAuth();
     const canTakeEvery = 60 * 1000;
 
     useEffect(() => {
@@ -158,10 +159,10 @@ function TakeBonus() {
     const time = (new Date(now).getTime() - new Date(profile.takedBonusDate).getTime());
     const timeLeft = time > canTakeEvery ? 0 : Math.floor((canTakeEvery - time) / 1000);
     return (
-        <FreeTournament>  
+        isAuth ? <FreeTournament>  
             <p>{ timeLeft > 0 ? <div>Можно забрать через: {timeLeft} секунд! </div> : <div>Заберите выигрыш!</div> }</p> 
             <Button isLoading={pending} disabled={timeLeft > 0} onClick={takeBonus}>Забрать бонус!</Button>
-        </FreeTournament>
+        </FreeTournament> : null
     )
 }
 function Default({
