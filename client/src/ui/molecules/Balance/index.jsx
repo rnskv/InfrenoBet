@@ -33,7 +33,7 @@ Balance.propTypes = {
 };
 
 Balance.defaultProps = {
-    currency: 'RUB',
+    currency: 'Coins',
     value: 0,
 };
 
