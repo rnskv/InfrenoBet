@@ -24,6 +24,21 @@ import { useNotificationActions, userProfileActions } from 'src/redux/user/hooks
 import Button from 'ui/atoms/Button';
 import { useAuth } from 'src/helpers/hooks';
 
+const Bonus = styled.div`
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;;
+    color: var(--color-white);
+    flex-wrap: wrap;
+    box-shadow: 0 0 9px 0px #0e1014;
+    background: var(--color-grey-500);
+`;
+
+const TakeBonusButton = styled(Button)`
+    min-width: 130px;
+`;
+
 const FreeTournament = styled.div`
     padding: 10px 15px;
     display: flex;
@@ -164,10 +179,10 @@ function TakeBonus() {
     const time = (new Date(now).getTime() - new Date(profile.takedBonusDate).getTime());
     const timeLeft = time > canTakeEvery ? 0 : Math.floor((canTakeEvery - time) / 1000);
     return (
-        isAuth ? <FreeTournament>  
-            <p>{ timeLeft > 0 ? <div>Можно забрать через: {timeLeft} секунд! </div> : <div>Заберите бонус!</div> }</p> 
-            <Button isLoading={pending} disabled={timeLeft > 0} onClick={takeBonus}>Забрать бонус!</Button>
-        </FreeTournament> : null
+        isAuth ? <Bonus>  
+            <p>{ timeLeft > 0 ? <div>Следующий бесплатный бонус можно забрать через: {timeLeft} секунд! </div> : <div>Вам доступен бесплатный бонус! Он мгновенно начислится на Ваш баланс!</div> }</p> 
+            <TakeBonusButton isLoading={pending} disabled={timeLeft > 0} onClick={takeBonus}>Забрать бонус!</TakeBonusButton>
+        </Bonus> : null
     )
 }
 function Default({
@@ -211,9 +226,9 @@ function Default({
                                 <h1>Бесплатный турнир!</h1>
                                 <p>
                                     Играй бесплатно и получай реальные деньги!<br/>
-                                    До <b>01.01.2021</b>, каждое воскресенье, <br/>все игроки,
-                                    на балансе которых находится <b> {'> 5000' }</b> монет, <br/>
-                                    получат приз - <b>1000</b> рублей</p>
+                                    До <b>01.01.2021</b>, каждую неделю, <br/>все игроки,
+                                    попавшие в <b>ТОП-3</b> игроков недели, <br/>
+                                    получат подарок - до <b>1000</b> рублей</p>
                                 </FreeTournament>
                             </PrevContent>   
                             <PrevContent isNeedMargin>
