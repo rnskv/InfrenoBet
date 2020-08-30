@@ -9,8 +9,11 @@ import Button from 'ui/atoms/Button';
 import { useServices } from 'src/helpers/hooks';
 import DatePicker from 'ui/atoms/DatePicker';
 import ItemsCollector from 'ui/organisms/ItemsCollector';
+import useCurrentGame from './hooks/useCurrentGame';
 
 function Statistics() {
+    const { data: currentGame, pending, error } = useCurrentGame();
+
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const tomorrow = new Date(today);
@@ -76,6 +79,12 @@ function Statistics() {
                 url="/admin/statistics"
                 title="Статистика сайта"
             />
+            <div>
+                { currentGame && <ul>
+                    <li>ID игры: { currentGame._id }</li>
+                    <li>Число раунда: { currentGame.secret }</li>
+                </ul> }
+            </div>
             <Wrapper>
                 <Filters>
                     <DatePicker

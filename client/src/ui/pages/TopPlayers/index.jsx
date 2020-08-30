@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
+import ModuleLoader from 'ui/atoms/ModuleLoader';
 
 import GameWidgets from 'ui/organisms/GameWidgets';
 import DefaultTemplate from 'ui/templates/Default';
@@ -9,6 +10,7 @@ import Loader from 'ui/atoms/Loader';
 import useTopPlayers from './hooks/useTopPlayers';
 import { getExchangedSum } from 'src/helpers/system';
 import { Container, Player, Position, Name, TotalWin, HeaderCell, AvatarBlock, Prize, Empty } from './styled';
+import moment from 'moment';
 
 function TopPlayers({ backgroundUrl, avatar, name }) {
     const { data: topPlayers = [], error, pending } = useTopPlayers();
@@ -28,12 +30,16 @@ function TopPlayers({ backgroundUrl, avatar, name }) {
 
         if (!topPlayers) return empty;
 
-        return [...topPlayers, ...empty].slice(0, 10);
+        return [...topPlayers.list, ...empty].slice(0, 10);
     }, [topPlayers])
+
+    if (!topPlayers) { 
+        return <ModuleLoader isLoading fullScreen />
+    }
 
     return (
         <DefaultTemplate widgets={<GameWidgets />}>
-            <RoomNavigation url="/game/top_players" title="TОП игроков" />
+            <RoomNavigation url="/game/top_players" title={"TОП игроков: " + moment(topPlayers.start).format('DD/MM/YYYY') + ' - ' + moment(topPlayers.end).format('DD/MM/YYYY')} />
             <Container>
                 <Loader isVisible={pending}/>
                 <thead>
@@ -53,7 +59,7 @@ function TopPlayers({ backgroundUrl, avatar, name }) {
                                 { index + 1 }
                             </Position>
                             <AvatarBlock>
-                                <Avatar src={player.user.avatar} style={{ display: 'flex' }} />
+                                <Avatar experience={player.user.experience} src={player.user.avatar} style={{ display: 'flex' }} />
                             </AvatarBlock>
                             <Name>{player.user.name || player.user.login}</Name>
                             <TotalWin>{ getExchangedSum(player.totalWin, { accuracy: 2 }) }</TotalWin>

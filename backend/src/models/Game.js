@@ -91,6 +91,8 @@ Game.getTopPlayersOfWeek = async () => {
                 'user.login': 1,
                 'user.name': 1,
                 'user.avatar': 1,
+                'user.avatar': 1,
+                'user.experience': 1,
             }
         },
         {

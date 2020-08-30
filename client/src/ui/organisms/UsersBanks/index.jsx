@@ -58,6 +58,7 @@ function UsersBanks({ users, bank, bets }) {
                                 <UserBank
                                     key={user._id}
                                     avatar={user.avatar}
+                                    experience={user.experience}
                                     percent={getUserChances(user, bank) || 0}
                                     value={bank.users[user._id] || 10}
                                     containerColor={lightColor}

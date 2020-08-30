@@ -17,7 +17,7 @@ function Bet({
 }) {
     return (
         <Container>
-            <StyledAvatar src={user.avatar} />
+            <StyledAvatar src={user.avatar} experience={user.experience}/>
             <Description>
                 <div>
                     {`${user.name} вложил

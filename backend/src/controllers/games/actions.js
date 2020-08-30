@@ -15,6 +15,7 @@ import InventoryItem from 'src/models/InventoryItem';
 import { getGameBank, getWinnerInfoFromGame } from 'shared/helpers/game';
 import Commission from '../../models/Comission';
 import ReferralPayment from '../../models/ReferralPayment';
+import moment from 'moment';
 
 const getHandler = async (ctx) => {
 
@@ -27,7 +28,17 @@ const getAllHandler = async (ctx) => {
 };
 
 const getTopPlayersOfWeekHandler = async (ctx) => {
-    ctx.body = await Game.getTopPlayersOfWeek();
+    const today = moment().startOf('day');
+
+    const startOfWeek = moment(today).startOf('week');
+    const endOfWeek = moment(today).endOf('week');
+
+
+    ctx.body = {
+        list: await Game.getTopPlayersOfWeek(),
+        start: startOfWeek,
+        end: endOfWeek,
+    };
 }
 
 const getLuckyOfDayHandler = async (ctx) => {
@@ -42,6 +53,10 @@ const getLastFinishedHandler = async (ctx) => {
     ctx.body = await Game.getLastByParams({
         status: 'FINISHED'
     });
+};
+
+const getLastCreatedHandler = async (ctx) => {
+    ctx.body = await Game.getLastCreated();
 };
 
 const createHandler = async (ctx) => {
@@ -211,6 +226,12 @@ export const finishById = new Action({
     middlewares: [passport.authenticate('jwt'), accessMiddleware({ accessLevel: 50 })]
 });
 
+export const getLastCreated = new Action({
+    method: 'get',
+    url: '/last/created',
+    handler: getLastCreatedHandler,
+    middlewares: [passport.authenticate('jwt'), accessMiddleware({ accessLevel: 50 })]
+});
 
 export const getAll = new Action({
     method: 'get',

@@ -11,11 +11,11 @@ import {
 } from './styled';
 
 function UserBank({
-    avatar, value, percent, containerColor, borderColor,
+    avatar, value, percent, containerColor, borderColor, experience,
 }) {
     return (
         <Container containerColor={containerColor} borderColor={borderColor}>
-            <Avatar src={avatar} />
+            <Avatar src={avatar} experience={experience} />
             <Chance>
                 { `${percent}%` }
             </Chance>

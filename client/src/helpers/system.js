@@ -27,6 +27,32 @@ export function getTimeFromNow(date) {
     return moment(date).fromNow();
 }
 
+export function getLevelColor(level) {
+    switch (true) {
+        case level === 0: {
+            return 'var(--color-grey)'
+        }
+
+        case level > 0 && level <= 10: {
+            return 'var(--color-white)'
+        }
+
+        case level > 10 && level <= 20: {
+            return 'var(--color-blue)'
+        }
+
+        case level > 20 && level < 30: {
+            return 'var(--color-yellow)'
+        }
+
+        default: {
+            return 'var(--color-red)'
+        }
+    }
+
+    return `${hashStringToColor(hash)}`;
+}
+
 export function getUserColorsById(id) {
     const nicknameHash = crypto.createHash('md5')
         .update(String(id))

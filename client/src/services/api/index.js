@@ -159,6 +159,10 @@ export default ({ app }) => {
         getTopPlayersOfLastWeek: new Request({
             url: '/top/week',
             method: 'get', 
+        }),
+        getLastCreated: new Request({
+            url: '/last/created',
+            method: 'get', 
         })
     });
 

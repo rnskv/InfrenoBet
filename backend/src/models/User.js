@@ -7,7 +7,7 @@ import { USER_NOT_ENOUGH_MONEY, USER_NOT_FOUND } from 'src/types/errors';
 import TradeOffer from './TradeOffer';
 import Experience from './Experience';
 import { getAwardForLevel, getExperienceForLevel, getLevelIndexByExperience } from 'shared/helpers/levels';
-import { USER_NOT_GET_NEEDED_LEVEL, USER_WRONG_AWARD_LEVEL, USER_ALREADY_GET_BONUS } from 'shared/configs/notificationsTypes';
+import { USER_NOT_GET_NEEDED_LEVEL, USER_WRONG_AWARD_LEVEL, USER_ALREADY_GET_BONUS, USER_BONUS_BALANCE } from 'shared/configs/notificationsTypes';
 import Award from './Award';
 
 const userSchema = new Schema({
@@ -206,6 +206,10 @@ User.takeBonus = async (id) => {
     const lastTakedTime = new Date(user.takedBonusDate).getTime();
     if (!user) {
         throw USER_NOT_FOUND;
+    }
+
+    if (user.balance > 0) {
+        throw USER_BONUS_BALANCE;
     }
 
     console.log('time left:', requestTime - lastTakedTime);

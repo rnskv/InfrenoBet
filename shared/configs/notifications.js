@@ -46,10 +46,16 @@ import {
     USER_WRONG_AWARD_LEVEL,
     USER_GET_AWARD_FOR_LEVEL,
     USER_ALREADY_GET_BONUS,
-    USER_BONUS_TAKEN
+    USER_BONUS_TAKEN,
+    USER_BONUS_BALANCE,
 } from './notificationsTypes';
 
 export default {
+    [USER_BONUS_BALANCE]: {
+        type: 'ERROR',
+        title: 'Бонус',
+        text: 'Для получения бонуса на балансе не должно оставаться средств!',
+    },
     [USER_BONUS_TAKEN]: {
         type: 'SUCCESS',
         title: 'Бонус',
