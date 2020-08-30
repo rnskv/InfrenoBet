@@ -208,7 +208,7 @@ User.takeBonus = async (id) => {
         throw USER_NOT_FOUND;
     }
 
-    if (user.balance > 0) {
+    if (user.balance >= 0.01) {
         throw USER_BONUS_BALANCE;
     }
 
