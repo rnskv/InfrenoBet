@@ -72,6 +72,7 @@ function renderFullPage(html, preloadedState, styleTags) {
             <meta name="verification" content="cf0bb3d99b3a1dba77e550d078a322" />
             <meta name="swiftpay-verification" content="bf4a552b8fef2160a0b001ca4b7f11e3" />
             <meta name="yandex-verification" content="266251ef2bca23cc" />
+            <script data-ad-client="ca-pub-4020574099528906" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
             ${styleTags}
         </head>
         <body>
